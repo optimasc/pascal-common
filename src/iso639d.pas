@@ -1,5 +1,9 @@
-{ File Generated on 2004-08-16 automatically }
+{ File Generated on 2004-11-14 automatically }
 { and encoded in the ISO-8859-1 character set}
+unit iso639d;
+
+interface
+
 const
   MAX_ENTRIES =469;
 type
@@ -2830,5 +2834,13 @@ const
   )
 );
 {$else}
+procedure langcodesproc; 
+{$endif}
+
+implementation
+
+{$ifdef TP}
 procedure langcodesproc; external; {$L iso639.obj}
 {$endif}
+
+end.
