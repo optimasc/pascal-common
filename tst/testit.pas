@@ -20,18 +20,20 @@ uses dpautils,
      ietf,
      unicode,
      dos,
-     strings
+     strings,
+     iso639,
+     utils
      ;
 
   var
    infilepath:string;
-  
+
   { Convert UTF-8 to UTF-32 and then convert it to ISO8859-1 }
   procedure testreadutf8;
   var
    F: file;
    utfstr,outstr: utf8string;
-   utf32str: utf32string;
+   utf32str: ucs4string;
    i: integer;
    s: string;
   begin
@@ -45,15 +47,15 @@ uses dpautils,
    Until Eof(F);
    utfstr[0]:=chr(i-1);
    Close(F);
-   if (ConvertUTF8ToUTF32(utfstr,utf32str) <> 0) then
+   if (ConvertUTF8ToUCS4(utfstr,utf32str) <> 0) then
       RunError(255);
-   if (ConvertFromUTF32(utf32str, s,'ISO-8859-1') <> 0) then
+   if (ConvertFromUCS4(utf32str, s,'ISO-8859-1') <> 0) then
       RunError(255);
    WriteLn(s);
    { Now verify if we get the original value by reconverting to
      an UTF-8 stream
    }
-   if (ConvertUTF32ToUTF8(utf32str,outstr) <> 0) then
+   if (ConvertUCS4ToUTF8(utf32str,outstr) <> 0) then
       RunError(255);
    for i:=1 to ord(utfstr[0]) do
        begin
@@ -67,7 +69,7 @@ uses dpautils,
   var
    F: file;
    utfstr,outstr: utf16string;
-   utf32str: utf32string;
+   utf32str: ucs4string;
    i: integer;
    s: string;
   begin
@@ -84,15 +86,15 @@ uses dpautils,
    Until Eof(F);
    utfstr[0]:=i-1;
    Close(F);
-   if (ConvertUTF16ToUTF32(utfstr,utf32str) <> 0) then
+   if (ConvertUTF16ToUCS4(utfstr,utf32str) <> 0) then
       RunError(255);
-   if (ConvertFromUTF32(utf32str, s,'ISO-8859-1') <> 0) then
+   if (ConvertFromUCS4(utf32str, s,'ISO-8859-1') <> 0) then
       RunError(255); 
    WriteLn(s);   
    { Now verify if we get the original value by reconverting to
      an UTF-16 stream
    }
-   if (ConvertUTF32ToUTF16(utf32str,outstr) <> 0) then
+   if (ConvertUCS4ToUTF16(utf32str,outstr) <> 0) then
       RunError(255);
    for i:=1 to ord(utfstr[0]) do
        begin
@@ -106,7 +108,7 @@ uses dpautils,
   var
    F: file;
    utfstr: string;
-   utf32str: utf32string;
+   utf32str: ucs4string;
    i: integer;
    s: string;
   begin
@@ -119,100 +121,100 @@ uses dpautils,
    Until Eof(F);
    SetLength(utfstr,i-1);
    Close(F);
-   if (ConvertToUTF32(utfstr,utf32str,'cp850') <> 0) then
+   if (ConvertToUCS4(utfstr,utf32str,'cp850') <> 0) then
       RunError(255);
-   if (ConvertFromUTF32(utf32str, s,'ISO-8859-1') <> 0) then
+   if (ConvertFromUCS4(utf32str, s,'ISO-8859-1') <> 0) then
       RunError(255); 
    WriteLn(s);
   end;
 
 
   {
-  procedure utf32_delete(var s: utf32string; index: integer; count: integer);
+  procedure ucs4_delete(var s: ucs4string; index: integer; count: integer);
 }
   
   procedure testutf32;
   var
    s1ascii: string;
    s2ascii: string;
-   s1utf: utf32string;
-   s2utf: utf32string;
-   resultstr: utf32string;
+   s1utf: ucs4string;
+   s2utf: ucs4string;
+   resultstr: ucs4string;
    s3ascii: string;
-   utfchar: array[1..1] of utf32;
-   utfstr: utf32string;
+   utfchar: array[1..1] of ucs4char;
+   utfstr: ucs4string;
    idx: integer;
   begin
    s1ascii:='Hello';
    s2ascii:='This is a small Hello';
-   ConvertToUTF32(s1ascii,s1utf,'ASCII');
-   if utf32_length(s1utf) <> length(s1ascii) then
+   ConvertToUCS4(s1ascii,s1utf,'ASCII');
+   if ucs4_length(s1utf) <> length(s1ascii) then
      RunError(255);
-   ConvertToUTF32(s2ascii,s2utf,'ASCII');
-   if utf32_length(s2utf) <> length(s2ascii) then
+   ConvertToUCS4(s2ascii,s2utf,'ASCII');
+   if ucs4_length(s2utf) <> length(s2ascii) then
      RunError(255);
 
-   utf32_copy(resultstr,s2utf,6,200);
-   ConvertFromUTF32(resultstr,s3ascii,'ASCII');
+   ucs4_copy(resultstr,s2utf,6,200);
+   ConvertFromUCS4(resultstr,s3ascii,'ASCII');
    if s3ascii <> 'is a small Hello' then
      RunError(255);
-   if utf32_pos(s1utf,s2utf) <> pos(s1ascii,s2ascii) then
+   if ucs4_pos(s1utf,s2utf) <> pos(s1ascii,s2ascii) then
      RunError(255);
-   utf32_copy(resultstr,s2utf,utf32_pos(s1utf,s2utf),utf32_length(s2utf));
-   ConvertFromUTF32(resultstr,s3ascii,'ASCII');
+   ucs4_copy(resultstr,s2utf,ucs4_pos(s1utf,s2utf),ucs4_length(s2utf));
+   ConvertFromUCS4(resultstr,s3ascii,'ASCII');
    WriteLn(s3ascii);
    if s3ascii <> s1ascii then
      RunError(255);
    utfchar[1]:=ord('!');
-   utf32_setlength(resultstr,0);
-   utf32_copy(resultstr,s1utf,1,utf32_length(s1utf));
-   utf32_concat(resultstr,s1utf,utfchar);
-   if utf32_length(resultstr) <> (length(s1ascii)+1) then
+   ucs4_setlength(resultstr,0);
+   ucs4_copy(resultstr,s1utf,1,ucs4_length(s1utf));
+   ucs4_concat(resultstr,s1utf,utfchar);
+   if ucs4_length(resultstr) <> (length(s1ascii)+1) then
      Runerror(255);
-   ConvertFromUTF32(resultstr,s3ascii,'ASCII');
+   ConvertFromUCS4(resultstr,s3ascii,'ASCII');
    if s3ascii <> 'Hello!' then
      RunError(255);
-   utf32_setlength(resultstr,0);
-   utf32_concat(resultstr,s1utf,s2utf);
-   if utf32_length(resultstr) <> (length(s1ascii)+length(s2ascii)) then
+   ucs4_setlength(resultstr,0);
+   ucs4_concat(resultstr,s1utf,s2utf);
+   if ucs4_length(resultstr) <> (length(s1ascii)+length(s2ascii)) then
      Runerror(255);
-   ConvertFromUTF32(resultstr,s3ascii,'ASCII');
+   ConvertFromUCS4(resultstr,s3ascii,'ASCII');
    if s3ascii <> (s1ascii+s2ascii) then
      RunError(255);
-   utf32_setlength(resultstr,0);
-   utf32_concat(resultstr,resultstr,s2utf);
-   if utf32_length(resultstr) <> (length(s2ascii)) then
+   ucs4_setlength(resultstr,0);
+   ucs4_concat(resultstr,resultstr,s2utf);
+   if ucs4_length(resultstr) <> (length(s2ascii)) then
      Runerror(255);
-   ConvertFromUTF32(resultstr,s3ascii,'ASCII');
+   ConvertFromUCS4(resultstr,s3ascii,'ASCII');
    if s3ascii <> (s2ascii) then
      RunError(255);
    { delete testing }
 
-   utf32_copy(resultstr,s2utf,1,255);
-   utf32_delete(resultstr,1,utf32_length(resultstr));
-   if utf32_length(resultstr) <> 0 then
+   ucs4_copy(resultstr,s2utf,1,255);
+   ucs4_delete(resultstr,1,ucs4_length(resultstr));
+   if ucs4_length(resultstr) <> 0 then
      Runerror(255);
 
 
-   utf32_copy(resultstr,s1utf,1,255);
-   utf32_setlength(utfstr,0);
+   ucs4_copy(resultstr,s1utf,1,255);
+   ucs4_setlength(utfstr,0);
    utfchar[1]:=ord('o');
-   utf32_concat(utfstr,utfstr,utfchar);
-   idx:=utf32_pos(utfstr,resultstr);
-   utf32_delete(resultstr,idx,utf32_length(resultstr));
-   if utf32_length(resultstr) <> length('Hell') then
+   ucs4_concat(utfstr,utfstr,utfchar);
+   idx:=ucs4_pos(utfstr,resultstr);
+   ucs4_delete(resultstr,idx,ucs4_length(resultstr));
+   if ucs4_length(resultstr) <> length('Hell') then
      Runerror(255);
-   ConvertFromUTF32(resultstr,s3ascii,'ASCII');
+   ConvertFromUCS4(resultstr,s3ascii,'ASCII');
    if s3ascii <> 'Hell' then
      RunError(255);
 
-   utf32_copy(resultstr,s1utf,1,255);
-   utf32_setlength(utfstr,0);
+   ucs4_copy(resultstr,s1utf,1,255);
+   ucs4_setlength(utfstr,0);
    utfchar[1]:=ord('l');
-   utf32_concat(utfstr,utfstr,utfchar);
-   idx:=utf32_pos(utfstr,resultstr);
-   utf32_delete(resultstr,idx,2);
-   ConvertFromUTF32(resultstr,s3ascii,'ASCII');
+   ucs4_concat(utfstr,utfstr,utfchar);
+   idx:=ucs4_pos(utfstr,resultstr);
+   ucs4_delete(resultstr,idx,2);
+   ConvertFromUCS4(resultstr,s3ascii,'ASCII');
    if s3ascii <> 'Heo' then
      RunError(255);
 
@@ -272,7 +274,7 @@ uses dpautils,
      RunError(255);
    if not IsValidIsoTimeString('0059') then
      RunError(255);
-     
+
   end;
   
 
@@ -333,55 +335,126 @@ uses dpautils,
   { Test UTF-32 and UTF-8 null terminated string encodings }
   procedure testutfnull;
   const
-   utf32null: array[0..5] of utf32 =
+   utf32null: array[0..5] of ucs4char =
    (ord('H'),ord('e'),Ord('l'),Ord('l'),Ord('o'),0);
+   utf32string: array[0..8] of ucs4char =
+   (9,ord('H'),ord('e'),Ord('l'),Ord('l'),Ord('o'),0,0,ord('J'));
    strnull:pchar = 'Hello';
    utf8null: pchar =
    'récéption donnée pour mon reçu.'#0;
   var
-   utf32s: utf32string;
-   utf32buffer: array[0..1023] of utf32;
+   utf32s: ucs4string;
+   utf32buffer: array[0..1023] of ucs4char;
    p: pchar;
-   putf: putf32char;
+   putf: pucs4char;
    s: string;
   begin
-    if utf32strlen(nil) <> 0 then
+    if ucs4strlen(nil) <> 0 then
        RunError(255);
-    if utf32strlen(putf32char(@utf32null)) <> ((sizeof(utf32null) div sizeof(utf32)) - 1) then
+    if ucs4strlen(pucs4char(@utf32null)) <> ((sizeof(utf32null) div sizeof(ucs4char)) - 1) then
        RunError(255);
-    utf32strpas(nil,utf32s);
-    if utf32_length(utf32s) <> 0 then
+    ucs4strpas(nil,utf32s);
+    if ucs4_length(utf32s) <> 0 then
        RunError(255);
-    utf32strpas(putf32char(@utf32null),utf32s);
-    if not utf32_equalascii(utf32s,'Hello') then
+    ucs4strpas(pucs4char(@utf32null),utf32s);
+    if not ucs4_equalascii(utf32s,'Hello') then
        RunError(255);
-    if utf32strpasToISO8859_1(nil) <> '' then
+    if ucs4strpasToISO8859_1(nil) <> '' then
        RunError(255);
-    if utf32strpasToISO8859_1(putf32char(@utf32null)) <> 'Hello' then
+    if ucs4strpasToISO8859_1(pucs4char(@utf32null)) <> 'Hello' then
        RunError(255);
-    if UTF32StrPCopy(nil, utf32s) <> nil then
+    if ucs4StrPCopy(nil, utf32s) <> nil then
        RunError(255);
-    if UTF32StrPCopyISO8859_1(nil, 'Hello') <> nil then
-       RunError(255);
-    p:=UTF8StrNew(putf32char(@utf32null));
+    { Check that null are removed from the resulting string,
+      first create an UTF-32 string.
+    }
+    move(utf32string,utf32s,sizeof(utf32string));
+    putf:=ucs4StrPCopy(putf,utf32s);
+    s:=ucs4strpastoiso8859_1(putf);
+    if s <> 'HelloJ' then
+      RunError(255);
+
+    p:=UTF8StrNew(pucs4char(@utf32null));
     if strcomp(p,'Hello') <> 0 then
       RunError(255);
-    putf:=utf32strnew(strnull,'CP850');
+    putf:=ucs4Strnew(strnull,'CP850');
     if assigned(putf) then
        RunError(255);
-    putf:=utf32strnew(strnull,'cp850');
-    putf:=utf32strdispose(putf);
+    putf:=ucs4Strnew(strnull,'cp850');
+    putf:=ucs4Strdispose(putf);
     if assigned(putf) then
        RunError(255);
-    putf:=utf32strnew(nil,'cp850');
+    putf:=ucs4Strnew(nil,'cp850');
     if assigned(putf) then
        RunError(255);
-    putf:=utf32strdispose(putf);
-    putf:=utf32strnew(utf8null,'UTF-8');
-    s:=utf32strpastoiso8859_1(putf);
-    putf:=utf32strdispose(putf);
+    putf:=ucs4Strdispose(putf);
+    putf:=ucs4Strnew(utf8null,'UTF-8');
+    s:=ucs4strpastoiso8859_1(putf);
+    putf:=ucs4Strdispose(putf);
   end;
-  
+
+  procedure testiso639;
+  var
+   b: boolean;
+   s: string;
+  begin
+    b:=isvalidlangcode('');
+    if b = TRUE then
+       RunError(255);
+    b:=isvalidlangcode('fr');
+    if not b then
+       RunError(255);
+    b:=isvalidlangcode('xal');
+    if not b then
+       RunError(255);
+    b:=isvalidlangcode('francais');
+    if b then
+       RunError(255);
+    { Verify French decoding }
+    s:=getlangname_fr('');
+    if s <> '' then
+        RunError(255);
+    s:=getlangname_fr('en');
+    if upstring(s) <> 'ANGLAIS' then
+        RunError(255);
+    s:=getlangname_fr('english');
+    if upstring(s) <> '' then
+        RunError(255);
+    s:=getlangname_fr('xal');
+    if upstring(s) <> 'KALMOUK' then
+        RunError(255);
+    { Verify english decoding }
+    s:=getlangname_en('');
+    if s <> '' then
+        RunError(255);
+    s:=getlangname_en('fr');
+    if upstring(s) <> 'FRENCH' then
+        RunError(255);
+    s:=getlangname_en('xal');
+    if upstring(s) <> 'KALMYK' then
+        RunError(255);
+    s:=getlangname_en('english');
+    if upstring(s) <> '' then
+        RunError(255);
+  end;
+
+  procedure testremovenulls;
+  var
+   s1,s2: string;
+  begin
+   s1:=removenulls('Hello');
+   if s1 <> 'Hello' then
+     RunError(255);
+   s1:=removenulls('Hello'#0#0'Je');
+   if s1 <> 'HelloJe' then
+     RunError(255);
+   s1:=removenulls('');
+   if s1 <> '' then
+     RunError(255);
+   s1:=removenulls(#0);
+   if s1 <> '' then
+     RunError(255);
+  end;
 
 
 var
@@ -420,10 +493,15 @@ Begin
   testutf32;
   testcharencoding;
   testutfnull;
+  testiso639;
+  testremovenulls;
 end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.7  2004/07/15 01:02:23  carl
+    + more testing of unicode
+
   Revision 1.6  2004/07/05 02:29:26  carl
     + add testsuit for UTF null terminated strings
 
