@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: utils.pas,v 1.5 2004-07-05 02:25:45 carl Exp $
+    $Id: utils.pas,v 1.6 2004-07-15 01:01:07 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Common utilities
@@ -21,7 +21,7 @@ Interface
  {$X+} { Extended syntax }
  {$V-} { Strict VAR strings }
  {$P-} { Implicit open strings }
- {$T-} { Typed pointers }
+ {$T+} { Typed pointers }
  {$IFNDEF TP}
  {$J+} { Writeable constants }
  {$ENDIF}
@@ -91,8 +91,19 @@ CONST
   {** @abstract(Convert a value to an ASCII decimal representation) 
   
       To avoid left padding with zeros, set @code(cnt) to zero.
+      
+      @param(val Signed 32-bit value to convert)
   }      
   function decstr(val : longint;cnt : byte) : string;
+  
+  {** @abstract(Convert a value to an ASCII decimal representation) 
+  
+      To avoid left padding with zeros, set @code(cnt) to zero.
+      
+      @param(val unsigned 32-bit value to convert)
+  }      
+  function decstrunsigned(l : longword;cnt: byte): string;
+  
   
  {** @abstract(Convert a boolean value to an ASCII representation) 
   
@@ -168,6 +179,8 @@ CONST
 
 
   function ChangeFileExt(const FileName, Extension: string): string;
+  
+
 
 Implementation
 
@@ -485,6 +498,25 @@ begin
   decstr:=fillwithzero(s,cnt);
 end;
 
+function decstrunsigned(l : longword;cnt: byte): string;
+var
+ s: string;
+begin
+  s:='';
+  if l = 0 then
+  begin
+    decstrunsigned := fillwithzero('0',cnt);
+    exit;
+  end;
+  while l>0 do
+    begin
+       s:=char(ord('0')+(l mod 10))+s;
+       l:=l div 10;
+    end;
+  decstrunsigned:=fillwithzero(s,cnt);
+end;
+
+
 
 {   TrimLeft returns a copy of S with all blank characters on the left stripped off  }
 
@@ -767,6 +799,10 @@ end;
 end.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.5  2004/07/05 02:25:45  carl
+    + fix some compiler option targets
+    - remove some compiler warnings
+
   Revision 1.4  2004/06/20 18:49:40  carl
     + added  GPC support
 
