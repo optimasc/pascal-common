@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: unicode.pas,v 1.17 2004-09-16 02:32:58 carl Exp $
+    $Id: unicode.pas,v 1.18 2004-10-13 23:25:43 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Unicode related routines
@@ -938,7 +938,6 @@ const
   begin
     ConvertUCS4ToUTF8:=UNICODE_ERR_OK;
     OutIndex := 1;
-    bytestoWrite:=0; 
     OutStringLength := 0;
     utf8_setlength(outstr,0);
     { Check if only one character is passed as src, in that case
@@ -955,7 +954,7 @@ const
         StartIndex:=1;
         EndIndex:=UCS4_Length(s);
       end;
-      
+
     for i:=StartIndex to EndIndex do
      begin
        ch:=s[i];    
@@ -1839,6 +1838,7 @@ end;
    ch: ucs4char;
    ExtraBytesToRead: integer;
    p:pchararray;
+   l: longint;
   begin
     str:=removenulls(str);
     ucs4strnewstr:=nil;
@@ -1942,14 +1942,15 @@ end;
             exit;
         for i:=0 to length(str)-1 do
           begin
-            ch:=p^[str[i+1]];
-            if ch = ucs4char(-1) then
-              begin
-                continue;
-              end;
+            l:=p^[str[i+1]];
+            { invalid character }
+            if l = -1 then
+              continue
+            else
+              ch:=ucs4char(l);
             dest^[i]:=ucs4char(ch);
           end;
-        { add null character }  
+        { add null character }
         dest^[length(str)]:=0;
         ucs4strnewstr:=pucs4char(dest);
       end;
@@ -1975,7 +1976,7 @@ end;
   ucs4_setlength(outstr,j-1);
   dest:=outstr;
  end;
- 
+
  function ucs4strnew(str: pchar; srctype: string): pucs4char;
   var
    i: integer;
@@ -1986,6 +1987,7 @@ end;
    ch: ucs4char;
    ExtraBytesToRead: integer;
    p:pchararray;
+   l: longint;
   begin
     ucs4strnew:=nil;
     dest:=nil;
@@ -2071,6 +2073,7 @@ end;
           end;
         { add null character }
         dest^[outindex]:=0;
+        ucs4strnew:=pucs4char(dest);
       end
     else
       begin
@@ -2088,19 +2091,20 @@ end;
             exit;
         for i:=0 to strlen(str)-1 do
           begin
-            ch:=p^[str[i]];
-            if ch = ucs4char(-1) then
-              begin
-                continue;
-              end;
+            l:=p^[str[i]];
+            { invalid character }
+            if l = -1 then
+              continue
+            else
+              ch:=ucs4char(l);
             dest^[i]:=ucs4char(ch);
           end;
-        { add null character }  
+        { add null character }
         dest^[strlen(str)]:=0;
         ucs4strnew:=pucs4char(dest);
       end;
   end;
- 
+
  function ucs4strdispose(str: pucs4char): pucs4char;
  begin
     ucs4strdispose := nil;
@@ -2169,7 +2173,7 @@ end;
    ucs4stringlen: integer;
    p: pchar;
    ch: ucs4char;
-   OutIndex,BytesToWrite,OutStringLength,StartIndex: integer;
+   OutIndex,BytesToWrite,StartIndex: integer;
    CurrentIndex, EndIndex: integer;
    i: integer;
    ResultPtr: putf8char;
@@ -2186,14 +2190,12 @@ end;
     GetMem(p,sizetoalloc);
     fillchar(p^,sizetoalloc,0);
     OutIndex := 0;
-    bytestoWrite:=0; 
-    OutStringLength := 0;
     StartIndex:=0;
     EndIndex:=ucs4stringlen-1;
-      
+
     for i:=StartIndex to EndIndex do
      begin
-       ch:=instr^[i];    
+       ch:=instr^[i];
 
        if (ch > UNI_MAX_UTF16) then
        begin
@@ -2201,15 +2203,15 @@ end;
          FreeMem(p,sizetoalloc);
          exit;
        end;
-     
-     
+
+
        if ((ch >= UNI_SUR_HIGH_START) and (ch <= UNI_SUR_LOW_END)) then
        begin
          UTF8StrNew := nil;
          FreeMem(p,sizetoalloc);
          exit;
        end;
-    
+
       if (ch < ucs4char($80)) then
         bytesToWrite:=1
       else
@@ -2226,8 +2228,8 @@ end;
           ch:=UNI_REPLACEMENT_CHAR;
           bytesToWrite:=2;
         end;
-      Inc(outindex,BytesToWrite);  
-        
+      Inc(outindex,BytesToWrite);
+
         CurrentIndex := BytesToWrite;
         if CurrentIndex = 4 then
         begin
@@ -2254,10 +2256,9 @@ end;
         begin
           dec(OutIndex);
           p[outindex] := utf8char((byte(ch) or byte(FirstbyteMark[BytesToWrite])));
-        end;  
-        inc(OutStringLength);
+        end;
         Inc(OutIndex,BytesToWrite);
-      end;    
+      end;
       { Copy the values, and free the old buffer }
       Getmem(ResultPtr,Outindex+1);
       move(p^,ResultPtr^,Outindex);
@@ -2265,7 +2266,7 @@ end;
       ResultPtr[OutIndex] := #0;
       UTF8StrNew:=ResultPtr;
   end;
-  
+
 
   function utf8strlcopyucs4(src: pchar; dst: pucs4char; maxlen: integer): pucs4char;
   var
@@ -2363,7 +2364,6 @@ end;
    s: string;
    i: integer;
    StringLength: integer;
-   Outindex: integer;
    ExtraBytesToRead: integer;
    CurrentIndex: integer;
   begin
@@ -2373,7 +2373,6 @@ end;
     if not assigned(src) then
        exit;
     stringlength := 0;
-    OutIndex := 1;
     while i < strlen(src) do
       begin
         ch := 0;
@@ -2432,7 +2431,6 @@ end;
               end
             else
                s:=s+chr(ch and $ff);
-            inc(OutIndex);
           end
         else
           begin
@@ -2442,12 +2440,11 @@ end;
               end
             else
                s:=s+chr(ch and $ff);
-            inc(OutIndex);
           end;
       end;
-     utf8strpastoISO8859_1:=s;      
+     utf8strpastoISO8859_1:=s;
   end;
-  
+
 
   function utf8strpastoascii(src: pchar): string;
   var
@@ -2455,7 +2452,6 @@ end;
    s: string;
    i: integer;
    StringLength: integer;
-   Outindex: integer;
    ExtraBytesToRead: integer;
    CurrentIndex: integer;
   begin
@@ -2465,7 +2461,6 @@ end;
     if not assigned(src) then
        exit;
     stringlength := 0;
-    OutIndex := 1;
     while i < strlen(src) do
       begin
         ch := 0;
@@ -2524,7 +2519,6 @@ end;
               end
             else
                s:=s+chr(ch and $7f);
-            inc(OutIndex);
           end
         else
           begin
@@ -2534,12 +2528,11 @@ end;
               end
             else
                s:=s+chr(ch and $7f);
-            inc(OutIndex);
           end;
       end;
-     utf8strpastoASCII:=s;      
+     utf8strpastoASCII:=s;
   end;
-  
+
   
   function ucs2_isvalid(ch: ucs2char): boolean;
   begin
@@ -2710,6 +2703,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.17  2004/09/16 02:32:58  carl
+    * small fix in comments
+
   Revision 1.16  2004/09/06 20:35:33  carl
     * utf8string is now a shortstring
 
