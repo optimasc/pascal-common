@@ -1,0 +1,134 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.1 Strict//EN" "http://www.w3.org/TR/REC-html4/strict.dtd">
+<html>
+<head>
+<meta name="GENERATOR" content="PasDoc 0.8.8.3"/>
+<title>Common pascal units documentation: fileio</title>
+<link rel="StyleSheet" href="pasdoc.css"/>
+</head>
+<body bgcolor="#ffffff" text="#000000" link="#0000ff" vlink="#800080" alink="#FF0000">
+<h1>Unit fileio</h1>
+<table class="sections"><tr>
+<td><a class="normal" href="#@Description">Description</a></td><td>uses</td><td>Classes, Interfaces and Objects</td><td><a class="normal" href="#@FuncsProcs">Functions and Procedures</a></td><td>Types</td><td>Constants</td><td>Variables</td></tr></table>
+<a name="@Description"></a><h2>Description</h2>
+File I/O unit<p>This a replacement File I/O unit containing routines
+    to access files on disk. They are a better replacement
+    of the standard system I/O routines since they support
+    larger file sizes, as well as debugging features.</p><p>If DEBUG is defined, when the application quits, files
+    that are still opened will be displayed on the console.
+    It is important to note, that only the files opened
+    with this API can be checked this way.</p>
+<a name="@FuncsProcs"></a><h2>Functions and Procedures</h2>
+<h3>Overview</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><code>procedure <a class="normal" href="#FileAssign"><b>FileAssign</b></a>(var F: file; Name: string);</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>procedure <a class="normal" href="#FileReset"><b>FileReset</b></a>(var F: file; mode: integer);</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>procedure <a class="normal" href="#FileRewrite"><b>FileRewrite</b></a>(var F: file; mode: integer);</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>procedure <a class="normal" href="#FileClose"><b>FileClose</b></a>(var F: file);</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#FileBlockRead"><b>FileBlockRead</b></a>(var F: file; var Buf; Count: integer): integer;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#FileBlockWrite"><b>FileBlockWrite</b></a>(var F: file; var Buf; Count: integer): integer;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>procedure <a class="normal" href="#FileSeek"><b>FileSeek</b></a>(var F: file; N: big_integer_t);</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#FileGetSize"><b>FileGetSize</b></a>(var F: file): big_integer_t;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#FileGetPos"><b>FileGetPos</b></a>(var F: file): big_integer_t;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#FileIOResult"><b>FileIOResult</b></a>: integer;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>procedure <a class="normal" href="#FileTruncate"><b>FileTruncate</b></a>(var F: file);</code></td>
+</tr>
+</table>
+<h3>Description</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="FileAssign"></a><code>procedure <b>FileAssign</b>(var F: file; Name: string);</code></td>
+</tr>
+</table>
+<p>Assign a filename to a file<p>This is uased to assign a filename with a file. This assignment
+    will then permit to operate on the file. The assignment is
+    completely compatible with the standard <code>AssignFile</code>
+    system unit routine.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="FileBlockRead"></a><code>function <b>FileBlockRead</b>(var F: file; var Buf; Count: integer): integer;</code></td>
+</tr>
+</table>
+<p>Read data from a file<p>Reads data bytes from the specified opened file. Returns 
+    the number of bytes actually read.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="FileBlockWrite"></a><code>function <b>FileBlockWrite</b>(var F: file; var Buf; Count: integer): integer;</code></td>
+</tr>
+</table>
+<p>Write data to a file<p>Write data bytes to the specified opened file. Returns 
+    the number of bytes actually written.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="FileClose"></a><code>procedure <b>FileClose</b>(var F: file);</code></td>
+</tr>
+</table>
+<p>Close a previously opened file<p>This closes a file that was previously opened by a call to
+    FileOpen or FileReset.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="FileGetPos"></a><code>function <b>FileGetPos</b>(var F: file): big_integer_t;</code></td>
+</tr>
+</table>
+<p>Return the current file pointer position<p>Returns the current file pointer position within the file. The
+    start of the file is at position zero.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="FileGetSize"></a><code>function <b>FileGetSize</b>(var F: file): big_integer_t;</code></td>
+</tr>
+</table>
+<p>Get the size of a file in bytes<p>Returns the current size of the file in bytes. The file must
+    be assigned and opened to access this routine.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="FileIOResult"></a><code>function <b>FileIOResult</b>: integer;</code></td>
+</tr>
+</table>
+<p>Return the result of the last I/O operation<p>Returns the I/O Result of the last operation. If this routine
+    is not called and the unit is compiled with the DEBUG define, and
+    if there was an error in the last operation, then the next File I/O 
+    operation will cause a runtime error with the I/O error code.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="FileReset"></a><code>procedure <b>FileReset</b>(var F: file; mode: integer);</code></td>
+</tr>
+</table>
+<p>Open a file for reading or writing<p>This opens a file using a specified file mode. The filemonde
+    constants are defined in other units (fmXXXX constants). The
+    file should have previously been assigned using <code>FileAssign</code>.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="FileRewrite"></a><code>procedure <b>FileRewrite</b>(var F: file; mode: integer);</code></td>
+</tr>
+</table>
+<p>Open/Overwrite a file<p>This creates a file or overwrites a file (if it does not exist).
+    Currently the mode constant is not used, since the file is 
+    always opened in read/write mode.</p><p>The file should have previously been assigned using 
+    <code>FileAssign</code>.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="FileSeek"></a><code>procedure <b>FileSeek</b>(var F: file; N: big_integer_t);</code></td>
+</tr>
+</table>
+<p>Change the file pointer position of an opened file<p>Seeks to a specific file position in a file (starting from zero 
+    which is the start of the file).</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="FileTruncate"></a><code>procedure <b>FileTruncate</b>(var F: file);</code></td>
+</tr>
+</table>
+<p>Truncate a file at the current file position<p>Truncates a file at the current file position. File must be
+    assigned and opened.</p>
+</p>
+<a name="@Types"></a><a name="@Constants"></a><a name="@Variables"></a><h2>Author</h2>
+<p>Carl Eric Codere</p>
+<hr noshade="1" size="1"/><em>Generated by <a class="normal" target="_new" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8.3</a> on 2004-11-18 20:11:10</em>
+</body></html>

@@ -12,14 +12,16 @@
 <a name="@Description"></a><h2>Description</h2>
 Date and time utility routines<p>This unit is quite similar to the unit dateutils provided
     with Delphi 6 and Delphi 7. Only a subset of the API found
-    in those units is implemented in this unit.</p><p>There are subtle differences with the Delphi implementation:
+    in those units is implemented in this unit, furthermore it
+    contains a new set of extended API's included in the 
+    dateexth.inc file.</p><p>There are subtle differences with the Delphi implementation:
     1. All string related parameters and function results use ISO 8601
     formatted date and time strings. 
     2. The internal format of TDatetime is not the same as on the Delphi
-    compilers.
+    compilers (Internally TDateTime is stored as a Julian date)
     3. The milliseconds field is only an approximation, and should not
     be considered as accurate.</p><p>All dates are assumed to be in Gregorian calendar date
-    format (proleptic).</p>
+    format (This is a proleptic Gregorian calendar unit).</p>
 <a name="@FuncsProcs"></a><h2>Functions and Procedures</h2>
 <h3>Overview</h3>
 <table cellspacing="2" cellpadding="4" width="100%">
@@ -103,6 +105,12 @@ Date and time utility routines<p>This unit is quite similar to the unit dateutil
 </tr>
 <tr class="list2" valign="top"><td><code>function <a class="normal" href="#YearOf"><b>YearOf</b></a>(const AValue: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>): Word;</code></td>
 </tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#TryStrToDateTimeExt"><b>TryStrToDateTimeExt</b></a>(const S: string; var Value: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>; var UTC: boolean) : Boolean;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#TryEncodeDateAndTimeToStr"><b>TryEncodeDateAndTimeToStr</b></a>(const Year, Month, Day, Hour, Minute, Second, MilliSecond: word; UTC: boolean; var AValue: string):boolean;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#DateTimeToStrExt"><b>DateTimeToStrExt</b></a>(DateTime: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>; utc: boolean): string;</code></td>
+</tr>
 </table>
 <h3>Description</h3>
 <table cellspacing="2" cellpadding="4" width="100%">
@@ -129,6 +137,11 @@ Date and time utility routines<p>This unit is quite similar to the unit dateutil
 </table>
 <p><p>Converts a TDateTime value to a string in standard ISO 8601 format.</p>
 </p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="DateTimeToStrExt"></a><code>function <b>DateTimeToStrExt</b>(DateTime: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>; utc: boolean): string;</code></td>
+</tr>
+</table>
+<p>&nbsp;</p>
 <table cellspacing="2" cellpadding="4" width="100%">
 <tr class="list" valign="top"><td width="100%"><a name="DateToStr"></a><code>function <b>DateToStr</b>(date: <a class="normal" href="dateutil.html#TDatetime">TDatetime</a>): string;</code></td>
 </tr>
@@ -310,6 +323,17 @@ Date and time utility routines<p>This unit is quite similar to the unit dateutil
 <p><p>Returns a TDateTime value that represents a specified Year, Month, and Day.</p>
 </p>
 <table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="TryEncodeDateAndTimeToStr"></a><code>function <b>TryEncodeDateAndTimeToStr</b>(const Year, Month, Day, Hour, Minute, Second, MilliSecond: word; UTC: boolean; var AValue: string):boolean;</code></td>
+</tr>
+</table>
+<p><p>This routine encodes a complete date and time to its string
+    representation. The encoded string conforms to the ISO 8601
+    complete representation extended format (YYYY-MM-DDTHH:MM:SS[Z]).</p><p>The year value is required, while all other fields are optional.
+    The other fields can be set to EMPTY_DATETIME_FIELD to indicate that 
+    they are empty. It also adds the UTC marker if required and if it
+    is set and time information is present.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
 <tr class="list" valign="top"><td width="100%"><a name="TryEncodeDateTime"></a><code>function <b>TryEncodeDateTime</b>(const AYear, AMonth, ADay, AHour, AMinute, ASecond, AMilliSecond: Word; var AValue: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>): Boolean;</code></td>
 </tr>
 </table>
@@ -325,25 +349,55 @@ Date and time utility routines<p>This unit is quite similar to the unit dateutil
 <tr class="list" valign="top"><td width="100%"><a name="TryStrToDate"></a><code>function <b>TryStrToDate</b>(const S: string; var Value: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>): Boolean;</code></td>
 </tr>
 </table>
-<p><p>Converts a string to a TDateTime value, with a Boolean success code.</p>
+<p><p>Converts a string to a TDateTime value, with a Boolean success code.</p><p>In the case where the date does not contain the full representation
+    of a date (for examples, YYYY or YYYY-MM), then the missing values
+    will be set to 1 to be legal.</p>
 </p>
 <table cellspacing="2" cellpadding="4" width="100%">
 <tr class="list" valign="top"><td width="100%"><a name="TryStrToDateTime"></a><code>function <b>TryStrToDateTime</b>(const S: string; var Value: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>): Boolean;</code></td>
 </tr>
 </table>
-<p><p>Converts a string to a TDateTime value with a Boolean success code.</p><p>The string should conform to the format of Complete Representation
-    for calendar dates (as specified in ISO 8601), which should include
-    the Time designator character.</p><p>The string can also use Timezone offsets, as specified
-    in ISO 8601, the returned value will be according to UTC
-    if timezone information is specified.</p>
+<p><p>Converts a string to a TDateTime value with a Boolean success code.</p><p>Supported formats:
+    1) Format of Complete Representation for calendar dates
+    (as specified in ISO 8601), which should include the Time
+    designator character.
+    2) Format: 'YYYY-MM-DD HH:mm:ss [GMT|UTC|UT]'
+    3) Openoffice 1.1.x HTML date format: 'YYYYMMDD;HHmmssuu'
+    4) Adobe PDF 'D:YYYYMMDDHHMMSSOHH'mm'' format</p><p>The returned value will be according to UTC if timezone
+    information is uncluded, otherwise, it will be left as is.
+    To determine if the value was actually converted to UTC,
+    use TryStrToDateTimeExt.</p><p>In the case where the date does not contain the full representation
+    of a date (for examples, YYYY or YYYY-MM), then the missing values
+    will be set to 1 to be legal.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="TryStrToDateTimeExt"></a><code>function <b>TryStrToDateTimeExt</b>(const S: string; var Value: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>; var UTC: boolean) : Boolean;</code></td>
+</tr>
+</table>
+<p><p>Converts a string to a TDateTime value with a Boolean success code.
+    This routine also gives information if the value was successfully
+    converted to UTC time or not (if no timezone information was
+    available in the string then the utc value will be false).</p><p>Supported formats:
+    1) Format of Complete Representation for calendar dates
+    (as specified in ISO 8601), which should include the Time
+    designator character.
+    3) Format: 'YYYY-MM-DD HH:mm:ss [GMT|UTC|UT]'
+    4) Openoffice 1.1.x HTML date format: 'YYYYMMDD;HHmmssuu'
+    5) Adobe PDF 'D:YYYYMMDDHHMMSSOHH'mm'' format</p><p>The returned value will be according to UTC if timezone
+    information is specified.</p><p>In the case where the date does not contain the full representation
+    of a date (for examples, YYYY or YYYY-MM), then the missing values
+    will be set to 1 to be legal.</p>
 </p>
 <table cellspacing="2" cellpadding="4" width="100%">
 <tr class="list" valign="top"><td width="100%"><a name="TryStrToTime"></a><code>function <b>TryStrToTime</b>(const S: string; var Value: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>): Boolean;</code></td>
 </tr>
 </table>
-<p><p>Converts a string to a TDateTime value with an error default,
-    The string can also use Timezone offsets, as specified
-    in ISO 8601, the returned value will be according to UTC
+<p><p>Converts a string to a TDateTime value with an error default,</p><p>Supported formats:
+    1) ISO 8601 time format (complete representation) with
+       optional timezone designators.
+    2) Format: 'HH:mm:ss [GMT|UTC|UT]'
+    3) Openoffice 1.1.x HTML time format: 'HHmmssuu'
+    4) Adobe PDF 'D:YYYYMMDDHHMMSSOHH'mm'' format</p><p>The returned value will be according to UTC
     if timezone information is specified. The Date field is
     truncated and is equal to zero upon return.</p>
 </p>
@@ -355,11 +409,11 @@ Date and time utility routines<p>This unit is quite similar to the unit dateutil
 </p>
 <a name="@Types"></a><h2>Types</h2>
 <table class="itemlist" cellspacing="2" cellpadding="4" width="100%"><tr class="listheader"><th class="listheader" nowrap="nowrap">Name</th><th class="listheader" width="100%">Description</th></tr>
-<tr class="list2" valign="top"><td><a name="TDatetime"></a>TDatetime<code> = extended;</code></td>
+<tr class="list2" valign="top"><td><a name="TDatetime"></a>TDatetime<code> = real;</code></td>
 <td><p>This is the Julian Day number</p>
 </td>
 </tr>
-<tr class="list" valign="top"><td><a name="float"></a>float<code> = extended;</code></td>
+<tr class="list" valign="top"><td><a name="float"></a>float<code> = real;</code></td>
 <td>&nbsp;</td>
 </tr>
 </table><a name="@Constants"></a><h2>Constants</h2>
@@ -387,5 +441,5 @@ Date and time utility routines<p>This unit is quite similar to the unit dateutil
 </tr>
 </table><a name="@Variables"></a><h2>Author</h2>
 <p>Carl Eric Codere</p>
-<hr noshade="1" size="1"/><em>Generated by <a class="normal" target="_new" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8.3</a> on 2004-09-28 21:09:23</em>
+<hr noshade="1" size="1"/><em>Generated by <a class="normal" target="_new" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8.3</a> on 2004-11-18 20:11:10</em>
 </body></html>

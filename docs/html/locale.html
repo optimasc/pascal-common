@@ -29,13 +29,17 @@ Localisation unit<p>This unit is used to convert different
 <table cellspacing="2" cellpadding="4" width="100%">
 <tr class="list" valign="top"><td width="100%"><code>function <a class="normal" href="#GetISODateString"><b>GetISODateString</b></a>(Year, Month, Day: Word): shortstring;</code></td>
 </tr>
-<tr class="list2" valign="top"><td><code>function <a class="normal" href="#IsValidISODateString"><b>IsValidISODateString</b></a>(datestr: shortstring): boolean;</code></td>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#GetISODateStringBasic"><b>GetISODateStringBasic</b></a>(Year, Month, Day: Word): shortstring;</code></td>
 </tr>
-<tr class="list" valign="top"><td><code>function <a class="normal" href="#IsValidISOTimeString"><b>IsValidISOTimeString</b></a>(timestr: shortstring): boolean;</code></td>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#IsValidISODateString"><b>IsValidISODateString</b></a>(datestr: shortstring): boolean;</code></td>
 </tr>
-<tr class="list2" valign="top"><td><code>function <a class="normal" href="#IsValidISODateTimeString"><b>IsValidISODateTimeString</b></a>(str: shortstring): boolean;</code></td>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#IsValidISOTimeString"><b>IsValidISOTimeString</b></a>(timestr: shortstring): boolean;</code></td>
 </tr>
-<tr class="list" valign="top"><td><code>function <a class="normal" href="#GetISOTimeString"><b>GetISOTimeString</b></a>(Hour, Minute, Second: Word; UTC: Boolean): shortstring;</code></td>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#IsValidISODateTimeString"><b>IsValidISODateTimeString</b></a>(str: shortstring): boolean;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#GetISOTimeString"><b>GetISOTimeString</b></a>(Hour, Minute, Second: Word; UTC: Boolean): shortstring;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#GetISOTimeStringBasic"><b>GetISOTimeStringBasic</b></a>(Hour, Minute, Second: Word; UTC: Boolean): shortstring;</code></td>
 </tr>
 <tr class="list2" valign="top"><td><code>function <a class="normal" href="#GetISODateTimeString"><b>GetISODateTimeString</b></a>(Year, Month, Day, Hour, Minute, Second: Word; UTC: Boolean): shortstring;</code></td>
 </tr>
@@ -58,8 +62,32 @@ Localisation unit<p>This unit is used to convert different
 <tr class="list" valign="top"><td width="100%"><a name="GetISODateString"></a><code>function <b>GetISODateString</b>(Year, Month, Day: Word): shortstring;</code></td>
 </tr>
 </table>
-<p><p>Returns the preferred date string as recommended
-    by ISO 8601 (Gregorian Calendar). </p><p>Returns an empty string if there is an error.</p>
+<p><p>Returns the extended format representation of a date as recommended
+    by ISO 8601 (Gregorian Calendar).</p><p>Returns an empty string if there is an error. The extended
+    representation separates each member (year,month,day) with a dash
+    character (-).</p>
+</p>
+<h6>parameters</h6>
+<dl class="parameters">
+<dt class="parameters">
+year</dt>
+<dd class="parameters">
+Year of the date - valid values are from 0000 to 9999</dd>
+<dt class="parameters">
+month</dt>
+<dd class="parameters">
+Month of the date - valid values are from 0 to 12</dd>
+<dt class="parameters">
+day</dt>
+<dd class="parameters">
+Day of the month - valid values are from 1 to 31</dd>
+</dl>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="GetISODateStringBasic"></a><code>function <b>GetISODateStringBasic</b>(Year, Month, Day: Word): shortstring;</code></td>
+</tr>
+</table>
+<p><p>Returns the basic format representation of a date as recommended
+    by ISO 8601 (Gregorian Calendar).</p><p>Returns an empty string if there is an error.</p>
 </p>
 <h6>parameters</h6>
 <dl class="parameters">
@@ -85,11 +113,21 @@ Day of the month - valid values are from 1 to 31</dd>
 <tr class="list" valign="top"><td width="100%"><a name="GetISOTimeString"></a><code>function <b>GetISOTimeString</b>(Hour, Minute, Second: Word; UTC: Boolean): shortstring;</code></td>
 </tr>
 </table>
-<p><p>Returns the preferred time string as recommended
-    by ISO 8601 (Gregorian Calendar). </p><p>.</p>
+<p><p>Returns the extended format representation of a time as recommended
+    by ISO 8601 (Gregorian Calendar).</p><p>Returns an empty string if there is an error. The extended
+    representation separates each member (hour,minute,second) with a colon
+    (:).</p>
 </p>
-<h6>returns</h6>
-<p class="return">Empty string if there is an error</p><table cellspacing="2" cellpadding="4" width="100%">
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="GetISOTimeStringBasic"></a><code>function <b>GetISOTimeStringBasic</b>(Hour, Minute, Second: Word; UTC: Boolean): shortstring;</code></td>
+</tr>
+</table>
+<p><p>Returns the basic format representation of a time as recommended
+    by ISO 8601 (Gregorian Calendar).</p><p>Returns an empty string if there is an error. The extended
+    representation separates each member (hour,minute,second) with a colon
+    (:).</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
 <tr class="list" valign="top"><td width="100%"><a name="IsValidISODateString"></a><code>function <b>IsValidISODateString</b>(datestr: shortstring): boolean;</code></td>
 </tr>
 </table>
@@ -108,7 +146,8 @@ Date string in valid ISO 8601 format</dd>
 </table>
 <p>Verifies if the date and time is in a valid ISO 8601 format<p>Currently does not support the fractional second parameters,
     and only the format recommended by W3C when used with the
-    time zone designator.</p>
+    time zone designator. Also validates an entry if it only
+    contains the date component (it is automatically detected).</p>
 </p>
 <h6>parameters</h6>
 <dl class="parameters">
@@ -138,7 +177,7 @@ Time string in valid ISO 8601 format</dd>
 <tr class="list" valign="top"><td width="100%"><a name="UNIXToDateTime"></a><code>procedure <b>UNIXToDateTime</b>(epoch: longword; var year, month, day, hour, minute, second: Word);</code></td>
 </tr>
 </table>
-<p><p>Converts a UNIX styled time (the number of seconds since 1970) 
+<p><p>Converts a UNIX styled time (the number of seconds since 1970)
     to a standard date and time representation.</p>
 </p>
 <a name="@Types"></a><a name="@Constants"></a><h2>Constants</h2>
@@ -172,5 +211,5 @@ Time string in valid ISO 8601 format</dd>
 </tr>
 </table><a name="@Variables"></a><h2>Author</h2>
 <p>Carl Eric Codere</p>
-<hr noshade="1" size="1"/><em>Generated by <a class="normal" target="_new" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8.3</a> on 2004-09-28 21:09:23</em>
+<hr noshade="1" size="1"/><em>Generated by <a class="normal" target="_new" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8.3</a> on 2004-11-18 20:11:10</em>
 </body></html>

@@ -7,7 +7,19 @@ History of major changes in the releases:
      date/time string representations (PDF,Openoffice,others).
    * several bugfixes, again with conversion of unicode
      strings.
-   + ucs4strnewucs4
+   + ucs4strnewucs4/ucs4strtrim/ucs4strpastoutf8
+   + IETF RFC 1766 language code parsing routines   
+   * ISO 639: Now alternate names are recognized, and only
+     the first alternate name is returned.
+   + ISO 639: getlangcode_en and getlangcode_fr added; returns
+     the 2 character language code, according on a language name.
+   + Added FileIO unit, it is a standard file I/O API, similar
+     to those of system, the main difference is that when it is
+     compiled with the $DEBUG option, it indicates which files
+     were not closed.
+   + Adapted Delphi objects unit to use fileio routines.  
+   - removed dpautils,tpautils,vpautils and fpautils from
+     documentation, as they are self-explaining.
 
 1.1.0
    + add dateutil unit (clone of delphi dateutils)
