@@ -10,7 +10,7 @@ Program Testit;
 {$H-}
 {$endif}
 {$X+}
-{$T-}
+{$T+}
 uses dpautils,
      vpautils,
      fpautils,
@@ -335,32 +335,51 @@ uses dpautils,
   const
    utf32null: array[0..5] of utf32 =
    (ord('H'),ord('e'),Ord('l'),Ord('l'),Ord('o'),0);
+   strnull:pchar = 'Hello';
+   utf8null: pchar =
+   'récéption donnée pour mon reçu.'#0;
   var
    utf32s: utf32string;
    utf32buffer: array[0..1023] of utf32;
    p: pchar;
+   putf: putf32char;
+   s: string;
   begin
     if utf32strlen(nil) <> 0 then
        RunError(255);
-    if utf32strlen(@utf32null) <> ((sizeof(utf32null) div sizeof(utf32)) - 1) then
+    if utf32strlen(putf32char(@utf32null)) <> ((sizeof(utf32null) div sizeof(utf32)) - 1) then
        RunError(255);
     utf32strpas(nil,utf32s);
     if utf32_length(utf32s) <> 0 then
        RunError(255);
-    utf32strpas(@utf32null,utf32s);
+    utf32strpas(putf32char(@utf32null),utf32s);
     if not utf32_equalascii(utf32s,'Hello') then
        RunError(255);
     if utf32strpasToISO8859_1(nil) <> '' then
        RunError(255);
-    if utf32strpasToISO8859_1(@utf32null) <> 'Hello' then
+    if utf32strpasToISO8859_1(putf32char(@utf32null)) <> 'Hello' then
        RunError(255);
     if UTF32StrPCopy(nil, utf32s) <> nil then
        RunError(255);
-    if UTF32StrPCopyASCII(nil, 'Hello') <> nil then
+    if UTF32StrPCopyISO8859_1(nil, 'Hello') <> nil then
        RunError(255);
-    p:=UTF8StrNew(@utf32null);
+    p:=UTF8StrNew(putf32char(@utf32null));
     if strcomp(p,'Hello') <> 0 then
       RunError(255);
+    putf:=utf32strnew(strnull,'CP850');
+    if assigned(putf) then
+       RunError(255);
+    putf:=utf32strnew(strnull,'cp850');
+    putf:=utf32strdispose(putf);
+    if assigned(putf) then
+       RunError(255);
+    putf:=utf32strnew(nil,'cp850');
+    if assigned(putf) then
+       RunError(255);
+    putf:=utf32strdispose(putf);
+    putf:=utf32strnew(utf8null,'UTF-8');
+    s:=utf32strpastoiso8859_1(putf);
+    putf:=utf32strdispose(putf);
   end;
   
 
@@ -405,6 +424,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.6  2004/07/05 02:29:26  carl
+    + add testsuit for UTF null terminated strings
+
   Revision 1.5  2004/06/20 18:46:02  carl
     + updated for GPC support
 
