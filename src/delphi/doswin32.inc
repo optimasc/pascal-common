@@ -1,5 +1,5 @@
 {
-    $Id: doswin32.inc,v 1.1 2004-12-26 23:34:07 carl Exp $
+    $Id: doswin32.inc,v 1.2 2005-03-06 20:14:47 carl Exp $
     Copyright (c) 2001 by members of the Free Pascal
     development team
 
@@ -487,48 +487,66 @@ end;
    function GetFileAttributes(lpFileName : pchar) : longint;
      external 'kernel32.dll' name 'GetFileAttributesA';
 
-procedure fsplit(path : pathstr;var dir : dirstr;var name : namestr;var ext : extstr);
+const 
+  ExtensionSeparator = '.';
+  
+Procedure FSplit (Path: PathStr; var Dir: DirStr; var Name: NameStr; var Ext: ExtStr);
 var
-   dotpos,p1,i : longint;
+  DirEnd, ExtStart: Longint;
+const
+ DirectorySeparator = '\';
+ DriveSeparator = ':';
+ LFNSupport = true;  
 begin
-   { allow slash as backslash }
-   for i:=1 to length(path) do
-    if path[i]='/' then path[i]:='\';
-   { get drive name }
-   p1:=pos(':',path);
-   if p1>0 then
-     begin
-        dir:=path[1]+':';
-        delete(path,1,p1);
-     end
-   else
-     dir:='';
-   { split the path and the name, there are no more path informtions }
-   { if path contains no backslashes                                 }
-   while true do
-     begin
-        p1:=pos('\',path);
-        if p1=0 then
-          break;
-        dir:=dir+copy(path,1,p1);
-        delete(path,1,p1);
-     end;
-   { try to find out a extension }
-   Ext:='';
-   i:=Length(Path);
-   DotPos:=256;
-   While (i>0) Do
-     Begin
-        If (Path[i]='.') Then
-          begin
-             DotPos:=i;
-             break;
-          end;
-        Dec(i);
-     end;
-   Ext:=Copy(Path,DotPos,255);
-   Name:=Copy(Path,1,DotPos - 1);
+  if DirectorySeparator = '/' then
+  { allow backslash as slash }
+    for DirEnd := 1 to Length (Path) do
+      begin
+        if Path [DirEnd] = '\' then Path [DirEnd] := DirectorySeparator
+      end
+  else
+    if DirectorySeparator = '\' then
+    { allow slash as backslash }
+      for DirEnd := 1 to Length (Path) do
+        if Path [DirEnd] = '/' then Path [DirEnd] := DirectorySeparator;
+
+{ Find the first DirectorySeparator or DriveSeparator from the end. }
+  DirEnd := Length (Path);
+{ Avoid problems with platforms having DriveSeparator = DirectorySeparator. }
+  if DirectorySeparator = DriveSeparator then
+   while (DirEnd > 0) and (Path [DirEnd] <> DirectorySeparator) do
+    Dec (DirEnd)
+  else
+   while (DirEnd > 0) and
+                 (Path [DirEnd] <> DirectorySeparator) and
+                                           (Path [DirEnd] <> DriveSeparator) do
+    Dec (DirEnd);
+
+{ The first "extension" should be returned if LFN }
+{ support not available, the last one otherwise.  }
+  if LFNSupport then
+    begin
+      ExtStart := Length (Path);
+      while (ExtStart > DirEnd) and (Path [ExtStart] <> ExtensionSeparator) do
+        Dec (ExtStart);
+      if ExtStart = 0 then
+        ExtStart := Length (Path) + 1
+      else
+        if Path [ExtStart] <> ExtensionSeparator then
+          ExtStart := Length (Path) + 1;
+    end
+  else
+    begin
+      ExtStart := DirEnd + 1;
+      while (ExtStart <= Length (Path)) and (Path [ExtStart] <> ExtensionSeparator) do
+        Inc (ExtStart);
+    end;
+
+  Dir := Copy (Path, 1, DirEnd);
+  Name := Copy (Path, DirEnd + 1, ExtStart - DirEnd - 1);
+  Ext := Copy (Path, ExtStart, Length (Path) - ExtStart + 1);
 end;
+
 
 { <immobilizer> }
 
@@ -880,4 +898,7 @@ function GetProcAddress(hModule : THandle;lpProcName : pchar) : pointer;
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.1  2004/12/26 23:34:07  carl
+    + support for Kylix
+
 }
