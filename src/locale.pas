@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: locale.pas,v 1.5 2004-07-05 02:26:39 carl Exp $
+    $Id: locale.pas,v 1.6 2004-08-19 00:18:52 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Localization and date/time unit
@@ -23,10 +23,6 @@
     http://www.cl.cam.ac.uk/~mgk25/iso-time.html
 }
 unit locale;
-
-{$IFNDEF TP}
-{$H-}
-{$ENDIF}
 
 
 interface
@@ -617,6 +613,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.5  2004/07/05 02:26:39  carl
+    - remove some compiler warnings
+
   Revision 1.4  2004/06/20 18:49:39  carl
     + added  GPC support
 
