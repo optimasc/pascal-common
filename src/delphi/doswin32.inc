@@ -1,5 +1,5 @@
 {
-    $Id: doswin32.inc,v 1.2 2005-03-06 20:14:47 carl Exp $
+    $Id: doswin32.inc,v 1.3 2005-03-21 00:22:55 carl Exp $
     Copyright (c) 2001 by members of the Free Pascal
     development team
 
@@ -11,6 +11,7 @@
 
  **********************************************************************}
 
+{$H-}
 uses strings;
 
 type
@@ -184,19 +185,6 @@ End;
                                --- Exec ---
 ******************************************************************************}
 
-   function CreateProcess(lpApplicationName: PChar; lpCommandLine: PChar;
-               lpProcessAttributes, lpThreadAttributes: PSecurityAttributes;
-               bInheritHandles: BOOL; dwCreationFlags: DWORD; lpEnvironment: Pointer;
-               lpCurrentDirectory: PChar; const lpStartupInfo: TStartupInfo;
-               var lpProcessInformation: TProcessInformation): longbool;
-     external 'kernel32.dll' name 'CreateProcessA';
-   function getExitCodeProcess(h:THandle;var code:longint):longbool;
-     external 'kernel32.dll' name 'GetExitCodeProcess';
-   function WaitForSingleObject(hHandle: THandle; dwMilliseconds: DWORD): DWORD;
-     external 'kernel32.dll' name 'WaitForSingleObject';
-   function CloseHandle(h : THandle) : longint;
-     external 'kernel32.dll' name 'CloseHandle';
-
 var
   lastdosexitcode : longint;
 
@@ -204,14 +192,16 @@ procedure exec(const path : pathstr;const comline : comstr);
 var
   SI: TStartupInfo;
   PI: TProcessInformation;
-  Proc : THandle;
   l    : Longint;
-  CommandLine : array[0..511] of char;
+  CommandLine : array[0..1023] of char;
   AppParam : array[0..255] of char;
   pathlocal : string;
+  Proc: THandle;
+  lw: longword;
 begin
   DosError := 0;
   FillChar(SI, SizeOf(SI), 0);
+  FillChar(PI, SizeOf(PI), 0);
   SI.cb:=SizeOf(SI);
   SI.wShowWindow:=1;
   { always surroound the name of the application by quotes
@@ -231,20 +221,21 @@ begin
   AppParam[Length(ComLine)+2]:=#0;
   { concatenate both pathnames }
   Move(Appparam[0],CommandLine[length(Pathlocal)],strlen(Appparam)+1);
-  if not CreateProcess(nil, PChar(@CommandLine),
-           Nil, Nil, ExecInheritsHandles,$20, Nil, Nil, SI, PI) then
+  if not CreateProcessA(nil, pchar(@CommandLine),
+           Nil, Nil, ExecInheritsHandles,
+           NORMAL_PRIORITY_CLASS,
+           Nil, Nil, SI, PI) then
    begin
      DosError:=Last2DosError(GetLastError);
      exit;
    end;
-  Proc:=PI.hProcess;
-  CloseHandle(PI.hThread);
-  if WaitForSingleObject(Proc, dword(Infinite)) <> $ffffffff then
-    GetExitCodeProcess(Proc,l)
+  if WaitForSingleObject(PI.hProcess, dword(Infinite)) <> WAIT_FAILED then
+    GetExitCodeProcess(PI.hProcess,lw)
   else
-    l:=-1;
-  CloseHandle(Proc);
-  LastDosExitCode:=l;
+    lw:=longword(-1);
+  CloseHandle(PI.HProcess);
+  CloseHandle(PI.hThread);
+  LastDosExitCode:=longint(lw);
 end;
 
 
@@ -284,21 +275,22 @@ end;
                                --- Disk ---
 ******************************************************************************}
 
-   function GetDiskFreeSpace(drive:pchar;var sector_cluster,bytes_sector,
-                             freeclusters,totalclusters:longint):longbool;
+   function GetDiskFreeSpaceA(drive:pchar;var sector_cluster,bytes_sector,
+                             freeclusters,totalclusters:longword):BOOL;
      external 'kernel32.dll' name 'GetDiskFreeSpaceA';
 type
-   TGetDiskFreeSpaceEx = function(drive:pchar;var availableforcaller,
-                             total,free):longbool;stdcall;
+   TGetDiskFreeSpaceExA = function (lpDirectoryName: PAnsiChar;
+  var lpFreeBytesAvailableToCaller, lpTotalNumberOfBytes, lpTotalNumberOfFreeBytes): BOOL; stdcall;
+
 
 var
-   GetDiskFreeSpaceEx : TGetDiskFreeSpaceEx;
+   GetDiskFreeSpaceExA : TGetDiskFreeSpaceExA;
 
 function diskfree(drive : byte) : int64;
 var
   disk : array[1..4] of char;
   secs,bytes,
-  free,total : longint;
+  free,total : longword;
   qwtotal,qwfree,qwcaller : int64;
 
 
@@ -315,9 +307,9 @@ begin
      disk[3]:='\';
      disk[4]:=#0;
    end;
-  if assigned(GetDiskFreeSpaceEx) then
+  if assigned(GetDiskFreeSpaceExA) then
     begin
-       if GetDiskFreeSpaceEx(@disk,qwcaller,qwtotal,qwfree) then
+       if GetDiskFreeSpaceExA(@disk,qwcaller,qwtotal,qwfree) then
          diskfree:=qwfree
        else
          diskfree:=-1;
@@ -334,34 +326,35 @@ end;
 
 function disksize(drive : byte) : int64;
 var
-  disk : array[1..4] of char;
+  disk : array[0..3] of char;
+  p: pchar;
   secs,bytes,
-  free,total : longint;
-  qwtotal,qwfree,qwcaller : int64;
+  free,total : longword;
+  qwtotal,qwfree,qwcaller : TLargeInteger;
 
 begin
   if drive=0 then
    begin
-     disk[1]:='\';
-     disk[2]:=#0;
+     p:=nil;
    end
   else
    begin
-     disk[1]:=chr(drive+64);
-     disk[2]:=':';
-     disk[3]:='\';
-     disk[4]:=#0;
+     disk[0]:=chr(drive+64);
+     disk[1]:=':';
+     disk[2]:='\';
+     disk[3]:=#0;
+     p:=disk;
    end;
-  if assigned(GetDiskFreeSpaceEx) then
+  if assigned(GetDiskFreeSpaceExA) then
     begin
-       if GetDiskFreeSpaceEx(@disk,qwcaller,qwtotal,qwfree) then
+       if GetDiskFreeSpaceExA(p,qwcaller,qwtotal,qwfree) then
          disksize:=qwtotal
        else
          disksize:=-1;
     end
   else
     begin
-       if GetDiskFreeSpace(@disk,secs,bytes,free,total) then
+       if GetDiskFreeSpaceA(p,secs,bytes,free,total) then
          disksize:=int64(total)*secs*bytes
        else
          disksize:=-1;
@@ -780,15 +773,6 @@ end;
                              --- Environment ---
 ******************************************************************************}
 
-{
-  The environment is a block of zero terminated strings
-  terminated by a #0
-}
-
-   function GetEnvironmentStrings : pchar;
-     external 'kernel32.dll' name 'GetEnvironmentStringsA';
-   function FreeEnvironmentStrings(p : pchar) : longbool;
-     external 'kernel32.dll' name 'FreeEnvironmentStringsA';
 
 function envcount : longint;
 var
@@ -887,17 +871,37 @@ Begin
 End;
 
 
-function FreeLibrary(hLibModule : THANDLE) : longbool;
-  external 'kernel32.dll' name 'FreeLibrary';
-function GetVersionEx(var VersionInformation:OSVERSIONINFO) : longbool;
-  external 'kernel32.dll' name 'GetVersionExA';
-function LoadLibrary(lpLibFileName : pchar):THandle;
-  external 'kernel32.dll' name 'LoadLibraryA';
-function GetProcAddress(hModule : THandle;lpProcName : pchar) : pointer;
-  external 'kernel32.dll' name 'GetProcAddress';
+var
+ Kernel32Handle: HMODULE;
+
+
+procedure DosInit;
+var
+ p: pointer;
+begin
+  Kernel32Handle:=LoadLibrary('kernel32.dll');
+  GetDiskFreeSpaceExA:=nil;
+  if assigned(pointer(Kernel32Handle)) then
+    begin
+       p:=(GetProcAddress(Kernel32Handle,'GetDiskFreeSpaceExA'));
+       if assigned(p) then
+         begin
+          GetDiskFreeSpaceExA:=TGetDiskFreeSpaceExA(p);
+         end;
+    end;
+end;
+
+procedure DosDone;
+begin
+  if assigned(pointer(Kernel32Handle)) then
+    FreeLibrary(Kernel32Handle);
+end;
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.2  2005/03/06 20:14:47  carl
+    * bugfix of Fexpand with path in double quotes
+
   Revision 1.1  2004/12/26 23:34:07  carl
     + support for Kylix
 

@@ -1,5 +1,5 @@
 {
-    $Id: doslinux.inc,v 1.1 2004-12-26 23:34:05 carl Exp $
+    $Id: doslinux.inc,v 1.2 2005-03-21 00:22:54 carl Exp $
     Copyright (c) 2001 by members of the Free Pascal
     development team
 
@@ -1009,6 +1009,17 @@ Begin
   {! No POSIX equivalent !}
 End;
 
+procedure DosInit;
+begin
+end;
+
+procedure DosDone;
+begin
+end;
+
 {
   $Log: not supported by cvs2svn $
+  Revision 1.1  2004/12/26 23:34:05  carl
+    + support for Kylix
+
 }

@@ -177,9 +177,17 @@ implementation
 {$endif}
 
 
+initialization
+  DosInit;
+
+finalization
+  DosDone;
 end.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.7  2004/12/26 23:33:45  carl
+    + support for Kylix
+
   Revision 1.6  2004/09/29 00:58:18  carl
     * GetDate() crash bugfix. now uses API from windows unit
 
