@@ -120,7 +120,99 @@ uses dpautils,
       RunError(255); 
    WriteLn(s);
   end;
+
+
+  {
+  procedure utf32_delete(var s: utf32string; index: integer; count: integer);
+}
   
+  procedure testutf32;
+  var
+   s1ascii: string;
+   s2ascii: string;
+   s1utf: utf32string;
+   s2utf: utf32string;
+   resultstr: utf32string;
+   s3ascii: string;
+   utfchar: utf32;
+   utfstr: utf32string;
+   idx: integer;
+  begin
+   s1ascii:='Hello';
+   s2ascii:='This is a small Hello';
+   ConvertToUTF32(s1ascii,s1utf,'ASCII');
+   if utf32_length(s1utf) <> length(s1ascii) then
+     RunError(255);
+   ConvertToUTF32(s2ascii,s2utf,'ASCII');
+   if utf32_length(s2utf) <> length(s2ascii) then
+     RunError(255);
+
+   utf32_copy(resultstr,s2utf,6,200);
+   ConvertFromUTF32(resultstr,s3ascii,'ASCII');
+   if s3ascii <> 'is a small Hello' then
+     RunError(255);
+   if utf32_pos(s1utf,s2utf) <> pos(s1ascii,s2ascii) then
+     RunError(255);
+   utf32_copy(resultstr,s2utf,utf32_pos(s1utf,s2utf),utf32_length(s2utf));
+   ConvertFromUTF32(resultstr,s3ascii,'ASCII');
+   WriteLn(s3ascii);
+   if s3ascii <> s1ascii then
+     RunError(255);
+   utfchar:=ord('!');
+   utf32_setlength(resultstr,0);
+   utf32_copy(resultstr,s1utf,1,utf32_length(s1utf));
+   utf32_concat(resultstr,s1utf,utfchar);
+   if utf32_length(resultstr) <> (length(s1ascii)+1) then
+     Runerror(255);
+   ConvertFromUTF32(resultstr,s3ascii,'ASCII');
+   if s3ascii <> 'Hello!' then
+     RunError(255);
+   utf32_setlength(resultstr,0);
+   utf32_concat(resultstr,s1utf,s2utf);
+   if utf32_length(resultstr) <> (length(s1ascii)+length(s2ascii)) then
+     Runerror(255);
+   ConvertFromUTF32(resultstr,s3ascii,'ASCII');
+   if s3ascii <> (s1ascii+s2ascii) then
+     RunError(255);
+   utf32_setlength(resultstr,0);
+   utf32_concat(resultstr,resultstr,s2utf);
+   if utf32_length(resultstr) <> (length(s2ascii)) then
+     Runerror(255);
+   ConvertFromUTF32(resultstr,s3ascii,'ASCII');
+   if s3ascii <> (s2ascii) then
+     RunError(255);
+   { delete testing }
+
+   utf32_copy(resultstr,s2utf,1,255);
+   utf32_delete(resultstr,1,utf32_length(resultstr));
+   if utf32_length(resultstr) <> 0 then
+     Runerror(255);
+
+
+   utf32_copy(resultstr,s1utf,1,255);
+   utf32_setlength(utfstr,0);
+   utfchar:=ord('o');
+   utf32_concat(utfstr,utfstr,utfchar);
+   idx:=utf32_pos(utfstr,resultstr);
+   utf32_delete(resultstr,idx,utf32_length(resultstr));
+   if utf32_length(resultstr) <> length('Hell') then
+     Runerror(255);
+   ConvertFromUTF32(resultstr,s3ascii,'ASCII');
+   if s3ascii <> 'Hell' then
+     RunError(255);
+
+   utf32_copy(resultstr,s1utf,1,255);
+   utf32_setlength(utfstr,0);
+   utfchar:=ord('l');
+   utf32_concat(utfstr,utfstr,utfchar);
+   idx:=utf32_pos(utfstr,resultstr);
+   utf32_delete(resultstr,idx,2);
+   ConvertFromUTF32(resultstr,s3ascii,'ASCII');
+   if s3ascii <> 'Heo' then
+     RunError(255);
+
+  end;
+
   procedure testisvalidisodatestring;
   begin
    if not IsValidIsoDateString('1998') then
@@ -211,6 +303,27 @@ uses dpautils,
       RunError(255);
   end;
 
+  procedure testcharencoding;
+  var
+   name: shortstring;
+  begin
+    if GetCharEncoding('',name)<>CHAR_ENCODING_UNKNOWN then
+      RunError(255);
+    if name <> '' then
+      RunError(255);
+    if GetCharEncoding('ASCII',name)<>CHAR_ENCODING_BYTE then
+      RunError(255);
+    if name<>'US-ASCII' then
+      RunError(255);
+    GetCharEncoding('ISO-IR-84',name);
+    if name <> 'PT2' then
+      RunError(255);
+    if GetCharEncoding('UTF-8',name)<>CHAR_ENCODING_UTF8 then
+       RunError(255);
+    if name <> 'UTF-8' then
+      RunError(255);
+  end;
+
 
 var
   s: string;
@@ -245,10 +358,16 @@ Begin
   testisvalidisodatetimestring;
   testurn;
   testmime;
+  testutf32;
+  testcharencoding;
 end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.3  2004/05/13 23:05:19  carl
+    + add tests for ietf unit
+    + more tests for ISO Date/time conversion
+
   Revision 1.2  2004/05/06 15:29:55  carl
     + tests for unicode conversion
 
