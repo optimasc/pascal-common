@@ -15,8 +15,8 @@ unicode support unit<p>This unit contains routines to convert
     schemes.</p><p>All UNICODE/ISO 10646 pascal styled strings are limited to
     MAX_STRING_LENGTH characters. Null terminated unicode strings are
     limited by the compiler and integer type size.</p><p>Since all these encoding are variable length,
-    except the UCS-4 (which is equivalent to UTF-32 according to 
-    ISO 10646:2003) and UCS-2 encoding, to parse through characters, 
+    except the UCS-4 (which is equivalent to UTF-32 according to
+    ISO 10646:2003) and UCS-2 encoding, to parse through characters,
     every string should be converted to UCS-4 or UCS-2 before being used.</p><p>The principal encoding scheme for this unit is UCS-4.</p>
 <a name="@FuncsProcs"></a><h2>Functions and Procedures</h2>
 <h3>Overview</h3>
@@ -57,61 +57,65 @@ unicode support unit<p>This unit contains routines to convert
 </tr>
 <tr class="list2" valign="top"><td><code>function <a class="normal" href="#ucs4_issupported"><b>ucs4_issupported</b></a>(s: string): boolean;</code></td>
 </tr>
-<tr class="list" valign="top"><td><code>function <a class="normal" href="#ucs4strlen"><b>ucs4strlen</b></a>(str: <a class="normal" href="unicode.html#pucs4char">pucs4char</a>): integer;</code></td>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#ucs4_converttoiso8859_1"><b>ucs4_converttoiso8859_1</b></a>(s: <a class="normal" href="unicode.html#ucs4string">ucs4string</a>): string;</code></td>
 </tr>
-<tr class="list2" valign="top"><td><code>procedure <a class="normal" href="#ucs4strpas"><b>ucs4strpas</b></a>(str: <a class="normal" href="unicode.html#pucs4char">pucs4char</a>; var res:<a class="normal" href="unicode.html#ucs4string">ucs4string</a>);</code></td>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#ucs4strlen"><b>ucs4strlen</b></a>(str: <a class="normal" href="unicode.html#pucs4char">pucs4char</a>): integer;</code></td>
 </tr>
-<tr class="list" valign="top"><td><code>function <a class="normal" href="#ucs4strpastoISO8859_1"><b>ucs4strpastoISO8859_1</b></a>(str: <a class="normal" href="unicode.html#pucs4char">pucs4char</a>): string;</code></td>
+<tr class="list" valign="top"><td><code>procedure <a class="normal" href="#ucs4strpas"><b>ucs4strpas</b></a>(str: <a class="normal" href="unicode.html#pucs4char">pucs4char</a>; var res:<a class="normal" href="unicode.html#ucs4string">ucs4string</a>);</code></td>
 </tr>
-<tr class="list2" valign="top"><td><code>function <a class="normal" href="#ucs4strpastoASCII"><b>ucs4strpastoASCII</b></a>(str: <a class="normal" href="unicode.html#pucs4char">pucs4char</a>): string;</code></td>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#ucs4strpastoISO8859_1"><b>ucs4strpastoISO8859_1</b></a>(str: <a class="normal" href="unicode.html#pucs4char">pucs4char</a>): string;</code></td>
 </tr>
-<tr class="list" valign="top"><td><code>function <a class="normal" href="#ucs4strpastoUTF8"><b>ucs4strpastoUTF8</b></a>(str: <a class="normal" href="unicode.html#pucs4char">pucs4char</a>): <a class="normal" href="unicode.html#utf8string">utf8string</a>;</code></td>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#ucs4strpastoASCII"><b>ucs4strpastoASCII</b></a>(str: <a class="normal" href="unicode.html#pucs4char">pucs4char</a>): string;</code></td>
 </tr>
-<tr class="list2" valign="top"><td><code>function <a class="normal" href="#ucs4strpcopy"><b>ucs4strpcopy</b></a>(dest: <a class="normal" href="unicode.html#pucs4char">pucs4char</a>; source: <a class="normal" href="unicode.html#ucs4string">ucs4string</a>):<a class="normal" href="unicode.html#pucs4char">pucs4char</a>;</code></td>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#ucs4strpastoUTF8"><b>ucs4strpastoUTF8</b></a>(str: <a class="normal" href="unicode.html#pucs4char">pucs4char</a>): <a class="normal" href="unicode.html#utf8string">utf8string</a>;</code></td>
 </tr>
-<tr class="list" valign="top"><td><code>function <a class="normal" href="#ucs4strnewstr"><b>ucs4strnewstr</b></a>(str: string; srctype: string): <a class="normal" href="unicode.html#pucs4char">pucs4char</a>;</code></td>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#ucs4strpcopy"><b>ucs4strpcopy</b></a>(dest: <a class="normal" href="unicode.html#pucs4char">pucs4char</a>; source: <a class="normal" href="unicode.html#ucs4string">ucs4string</a>):<a class="normal" href="unicode.html#pucs4char">pucs4char</a>;</code></td>
 </tr>
-<tr class="list2" valign="top"><td><code>function <a class="normal" href="#ucs4strnew"><b>ucs4strnew</b></a>(str: pchar; srctype: string): <a class="normal" href="unicode.html#pucs4char">pucs4char</a>;</code></td>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#ucs4strnewstr"><b>ucs4strnewstr</b></a>(str: string; srctype: string): <a class="normal" href="unicode.html#pucs4char">pucs4char</a>;</code></td>
 </tr>
-<tr class="list" valign="top"><td><code>function <a class="normal" href="#ucs4strnewucs4"><b>ucs4strnewucs4</b></a>(src: <a class="normal" href="unicode.html#pucs4char">pucs4char</a>): <a class="normal" href="unicode.html#pucs4char">pucs4char</a>;</code></td>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#ucs4strnew"><b>ucs4strnew</b></a>(str: pchar; srctype: string): <a class="normal" href="unicode.html#pucs4char">pucs4char</a>;</code></td>
 </tr>
-<tr class="list2" valign="top"><td><code>function <a class="normal" href="#ucs4strnewucs2"><b>ucs4strnewucs2</b></a>(str: <a class="normal" href="unicode.html#pucs2char">pucs2char</a>): <a class="normal" href="unicode.html#pucs4char">pucs4char</a>;</code></td>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#ucs4strnewucs4"><b>ucs4strnewucs4</b></a>(src: <a class="normal" href="unicode.html#pucs4char">pucs4char</a>): <a class="normal" href="unicode.html#pucs4char">pucs4char</a>;</code></td>
 </tr>
-<tr class="list" valign="top"><td><code>function <a class="normal" href="#ucs4strdispose"><b>ucs4strdispose</b></a>(str: <a class="normal" href="unicode.html#pucs4char">pucs4char</a>): <a class="normal" href="unicode.html#pucs4char">pucs4char</a>;</code></td>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#ucs4strnewucs2"><b>ucs4strnewucs2</b></a>(str: <a class="normal" href="unicode.html#pucs2char">pucs2char</a>): <a class="normal" href="unicode.html#pucs4char">pucs4char</a>;</code></td>
 </tr>
-<tr class="list2" valign="top"><td><code>function <a class="normal" href="#ucs4StrPosISO8859_1"><b>ucs4StrPosISO8859_1</b></a>(S: <a class="normal" href="unicode.html#pucs4char">pucs4char</a>; Str2: PChar): <a class="normal" href="unicode.html#pucs4char">pucs4char</a>;</code></td>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#ucs4strdispose"><b>ucs4strdispose</b></a>(str: <a class="normal" href="unicode.html#pucs4char">pucs4char</a>): <a class="normal" href="unicode.html#pucs4char">pucs4char</a>;</code></td>
 </tr>
-<tr class="list" valign="top"><td><code>function <a class="normal" href="#ucs4strtrim"><b>ucs4strtrim</b></a>(const p: <a class="normal" href="unicode.html#pucs4char">pucs4char</a>): <a class="normal" href="unicode.html#pucs4char">pucs4char</a>;</code></td>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#ucs4StrPosISO8859_1"><b>ucs4StrPosISO8859_1</b></a>(S: <a class="normal" href="unicode.html#pucs4char">pucs4char</a>; Str2: PChar): <a class="normal" href="unicode.html#pucs4char">pucs4char</a>;</code></td>
 </tr>
-<tr class="list2" valign="top"><td><code>function <a class="normal" href="#ucs4strfill"><b>ucs4strfill</b></a>(var p: <a class="normal" href="unicode.html#pucs4char">pucs4char</a>; count: integer; value: <a class="normal" href="unicode.html#ucs4char">ucs4char</a>): <a class="normal" href="unicode.html#pucs4char">pucs4char</a>;</code></td>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#ucs4strtrim"><b>ucs4strtrim</b></a>(const p: <a class="normal" href="unicode.html#pucs4char">pucs4char</a>): <a class="normal" href="unicode.html#pucs4char">pucs4char</a>;</code></td>
 </tr>
-<tr class="list" valign="top"><td><code>procedure <a class="normal" href="#ucs4strcheck"><b>ucs4strcheck</b></a>(p: <a class="normal" href="unicode.html#pucs4char">pucs4char</a>; maxcount: integer; value: <a class="normal" href="unicode.html#ucs4char">ucs4char</a>);</code></td>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#ucs4strfill"><b>ucs4strfill</b></a>(var p: <a class="normal" href="unicode.html#pucs4char">pucs4char</a>; count: integer; value: <a class="normal" href="unicode.html#ucs4char">ucs4char</a>): <a class="normal" href="unicode.html#pucs4char">pucs4char</a>;</code></td>
 </tr>
-<tr class="list2" valign="top"><td><code>function <a class="normal" href="#ucs2_length"><b>ucs2_length</b></a>(const s: array of <a class="normal" href="unicode.html#ucs2char">ucs2char</a>): integer;</code></td>
+<tr class="list2" valign="top"><td><code>procedure <a class="normal" href="#ucs4strcheck"><b>ucs4strcheck</b></a>(p: <a class="normal" href="unicode.html#pucs4char">pucs4char</a>; maxcount: integer; value: <a class="normal" href="unicode.html#ucs4char">ucs4char</a>);</code></td>
 </tr>
-<tr class="list" valign="top"><td><code>procedure <a class="normal" href="#ucs2_setlength"><b>ucs2_setlength</b></a>(var s: array of <a class="normal" href="unicode.html#ucs2char">ucs2char</a>; l: integer);</code></td>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#ucs2_length"><b>ucs2_length</b></a>(const s: array of <a class="normal" href="unicode.html#ucs2char">ucs2char</a>): integer;</code></td>
 </tr>
-<tr class="list2" valign="top"><td><code>function <a class="normal" href="#ucs2_isvalid"><b>ucs2_isvalid</b></a>(ch: <a class="normal" href="unicode.html#ucs2char">ucs2char</a>): boolean;</code></td>
+<tr class="list2" valign="top"><td><code>procedure <a class="normal" href="#ucs2_setlength"><b>ucs2_setlength</b></a>(var s: array of <a class="normal" href="unicode.html#ucs2char">ucs2char</a>; l: integer);</code></td>
 </tr>
-<tr class="list" valign="top"><td><code>function <a class="normal" href="#ucs2strlcopyucs4"><b>ucs2strlcopyucs4</b></a>(src: <a class="normal" href="unicode.html#pucs2char">pucs2char</a>; dst: <a class="normal" href="unicode.html#pucs4char">pucs4char</a>; maxlen: integer): <a class="normal" href="unicode.html#pucs4char">pucs4char</a>;</code></td>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#ucs2_isvalid"><b>ucs2_isvalid</b></a>(ch: <a class="normal" href="unicode.html#ucs2char">ucs2char</a>): boolean;</code></td>
 </tr>
-<tr class="list2" valign="top"><td><code>function <a class="normal" href="#ucs2strlen"><b>ucs2strlen</b></a>(str: <a class="normal" href="unicode.html#pucs2char">pucs2char</a>): integer;</code></td>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#ucs2strlcopyucs4"><b>ucs2strlcopyucs4</b></a>(src: <a class="normal" href="unicode.html#pucs2char">pucs2char</a>; dst: <a class="normal" href="unicode.html#pucs4char">pucs4char</a>; maxlen: integer): <a class="normal" href="unicode.html#pucs4char">pucs4char</a>;</code></td>
 </tr>
-<tr class="list" valign="top"><td><code>function <a class="normal" href="#ucs2strnew"><b>ucs2strnew</b></a>(src: <a class="normal" href="unicode.html#pucs4char">pucs4char</a>): <a class="normal" href="unicode.html#pucs2char">pucs2char</a>;</code></td>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#ucs2strlen"><b>ucs2strlen</b></a>(str: <a class="normal" href="unicode.html#pucs2char">pucs2char</a>): integer;</code></td>
 </tr>
-<tr class="list2" valign="top"><td><code>function <a class="normal" href="#ucs2strdispose"><b>ucs2strdispose</b></a>(str: <a class="normal" href="unicode.html#pucs2char">pucs2char</a>): <a class="normal" href="unicode.html#pucs2char">pucs2char</a>;</code></td>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#ucs2strnew"><b>ucs2strnew</b></a>(src: <a class="normal" href="unicode.html#pucs4char">pucs4char</a>): <a class="normal" href="unicode.html#pucs2char">pucs2char</a>;</code></td>
 </tr>
-<tr class="list" valign="top"><td><code>function <a class="normal" href="#utf8strnew"><b>utf8strnew</b></a>(src: <a class="normal" href="unicode.html#pucs4char">pucs4char</a>): pchar;</code></td>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#ucs2strdispose"><b>ucs2strdispose</b></a>(str: <a class="normal" href="unicode.html#pucs2char">pucs2char</a>): <a class="normal" href="unicode.html#pucs2char">pucs2char</a>;</code></td>
 </tr>
-<tr class="list2" valign="top"><td><code>function <a class="normal" href="#utf8strnewutf8"><b>utf8strnewutf8</b></a>(src: pchar): pchar;</code></td>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#utf8strnew"><b>utf8strnew</b></a>(src: <a class="normal" href="unicode.html#pucs4char">pucs4char</a>): pchar;</code></td>
 </tr>
-<tr class="list" valign="top"><td><code>function <a class="normal" href="#utf8strdispose"><b>utf8strdispose</b></a>(p: pchar): pchar;</code></td>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#utf8strnewutf8"><b>utf8strnewutf8</b></a>(src: pchar): pchar;</code></td>
 </tr>
-<tr class="list2" valign="top"><td><code>function <a class="normal" href="#utf8strlcopyucs4"><b>utf8strlcopyucs4</b></a>(src: pchar; dst: <a class="normal" href="unicode.html#pucs4char">pucs4char</a>; maxlen: integer): <a class="normal" href="unicode.html#pucs4char">pucs4char</a>;</code></td>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#utf8strdispose"><b>utf8strdispose</b></a>(p: pchar): pchar;</code></td>
 </tr>
-<tr class="list" valign="top"><td><code>function <a class="normal" href="#utf8strpastoISO8859_1"><b>utf8strpastoISO8859_1</b></a>(src: pchar): string;</code></td>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#utf8strlcopyucs4"><b>utf8strlcopyucs4</b></a>(src: pchar; dst: <a class="normal" href="unicode.html#pucs4char">pucs4char</a>; maxlen: integer): <a class="normal" href="unicode.html#pucs4char">pucs4char</a>;</code></td>
 </tr>
-<tr class="list2" valign="top"><td><code>function <a class="normal" href="#utf8strpastoASCII"><b>utf8strpastoASCII</b></a>(src: pchar): string;</code></td>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#utf8strpastoISO8859_1"><b>utf8strpastoISO8859_1</b></a>(src: pchar): string;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#utf8strpastoASCII"><b>utf8strpastoASCII</b></a>(src: pchar): string;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#utf8strpastostring"><b>utf8strpastostring</b></a>(src: pchar; desttype: string): string;</code></td>
 </tr>
 <tr class="list" valign="top"><td><code>function <a class="normal" href="#utf8strpas"><b>utf8strpas</b></a>(src: pchar): string;</code></td>
 </tr>
@@ -515,6 +519,20 @@ The string to convert, UCS-2 encoded</dd>
 <p>Concatenates an UCS-4 string with an ASCII string, and gives
       a resulting UCS-4 string</p>
 <table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="ucs4_converttoiso8859_1"></a><code>function <b>ucs4_converttoiso8859_1</b>(s: <a class="normal" href="unicode.html#ucs4string">ucs4string</a>): string;</code></td>
+</tr>
+</table>
+<p>Converts an UCS-4 string to an ISO-8859-1 string</p>
+<h6>parameters</h6>
+<dl class="parameters">
+<dt class="parameters">
+s</dt>
+<dd class="parameters">
+The UCS-4 string to convert</dd>
+</dl>
+<h6>returns</h6>
+<p class="return">The converted string with possible escape characters
+        if a character could not be converted</p><table cellspacing="2" cellpadding="4" width="100%">
 <tr class="list" valign="top"><td width="100%"><a name="ucs4_copy"></a><code>procedure <b>ucs4_copy</b>(var resultstr: <a class="normal" href="unicode.html#ucs4string">ucs4string</a>; const s: array of <a class="normal" href="unicode.html#ucs4char">ucs4char</a>; index: integer; count: integer);</code></td>
 </tr>
 </table>
@@ -699,6 +717,29 @@ This is an alias for a character set, as defined by IANA</dd>
       the hex representation of the character.</p>
 </p>
 <table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="utf8strpastostring"></a><code>function <b>utf8strpastostring</b>(src: pchar; desttype: string): string;</code></td>
+</tr>
+</table>
+<p>Converts an UTF-8 null terminated string to a string 
+      encoded to a different code page<p>Characters that cannot be converted are converted to
+      escape sequences of the form : \uxxxxxxxx where xxxxxxxx is
+      the hex representation of the character.</p><p>If the null character string does not fit in the
+      resulting string, it is truncated.</p><p>.</p>
+</p>
+<h6>parameters</h6>
+<dl class="parameters">
+<dt class="parameters">
+src</dt>
+<dd class="parameters">
+Null terminated UTF-8 encoded string</dd>
+<dt class="parameters">
+desttype</dt>
+<dd class="parameters">
+Encoding type for resulting string</dd>
+</dl>
+<h6>returns</h6>
+<p class="return">an empty string on error, or a correctly encoded
+         string</p><table cellspacing="2" cellpadding="4" width="100%">
 <tr class="list" valign="top"><td width="100%"><a name="utf8_islegal"></a><code>function <b>utf8_islegal</b>(const s: <a class="normal" href="unicode.html#utf8string">utf8string</a>): boolean;</code></td>
 </tr>
 </table>
@@ -761,9 +802,10 @@ This is an alias for a character set, as defined by IANA</dd>
       of the string in characters.</p>
 </td>
 </tr>
-<tr class="list" valign="top"><td><a name="utf8string"></a>utf8string<code> = shortstring;</code></td>
-<td><p>UTF-8 string declaration. Index 0 contains the active length
-      of the string in BYTES</p>
+<tr class="list" valign="top"><td><a name="utf8string"></a>utf8string<code> = string;</code></td>
+<td><p>UTF-8 string declaration. This can either map to 
+      a short string or an ansi string depending on
+      the compilation options.</p>
 </td>
 </tr>
 <tr class="list2" valign="top"><td><a name="utf16string"></a>utf16string<code> = array[0..<a class="normal" href="unicode.html#MAX_STRING_LENGTH">MAX_STRING_LENGTH</a>] of <a class="normal" href="unicode.html#utf16char">utf16char</a>;</code></td>
@@ -785,7 +827,7 @@ This is an alias for a character set, as defined by IANA</dd>
 </tr>
 </table><a name="@Constants"></a><h2>Constants</h2>
 <table class="itemlist" cellspacing="2" cellpadding="4" width="100%"><tr class="listheader"><th class="listheader" nowrap="nowrap">Name</th><th class="listheader" width="100%">Description</th></tr>
-<tr class="list" valign="top"><td><a name="MAX_STRING_LENGTH"></a>MAX_STRING_LENGTH<code> = 255;</code></td>
+<tr class="list" valign="top"><td><a name="MAX_STRING_LENGTH"></a>MAX_STRING_LENGTH<code> = 512;</code></td>
 <td><p>Gives the number of characters that can be contained in a string</p>
 </td>
 </tr>
@@ -837,5 +879,5 @@ This is an alias for a character set, as defined by IANA</dd>
 </tr>
 </table><a name="@Variables"></a><h2>Author</h2>
 <p>Carl Eric Codère</p>
-<hr noshade="1" size="1"/><em>Generated by <a class="normal" target="_new" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8.3</a> on 2005-01-08 16:01:02</em>
+<hr noshade="1" size="1"/><em>Generated by <a class="normal" target="_new" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8.3</a> on 2005-03-20 19:03:40</em>
 </body></html>
