@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.1 Strict//EN" "http://www.w3.org/TR/REC-html4/strict.dtd">
 <html>
 <head>
-<meta name="GENERATOR" content="PasDoc 0.8.8-pre7"/>
+<meta name="GENERATOR" content="PasDoc 0.8.8"/>
 <title>Common pascal units documentation: utils</title>
 <link rel="StyleSheet" href="pasdoc.css"/>
 </head>
@@ -29,35 +29,58 @@ General utilities common to all platforms.<a name="@FuncsProcs"></a><h2>Function
 </tr>
 <tr class="list2" valign="top"><td><code>function <a class="normal" href="#hexstr"><b>hexstr</b></a>(val : longint;cnt : byte) : string;</code></td>
 </tr>
-<tr class="list" valign="top"><td><code>function <a class="normal" href="#Printf"><b>Printf</b></a>(const s : string; var Buf; size : word): string;</code></td>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#decstr"><b>decstr</b></a>(val : longint;cnt : byte) : string;</code></td>
 </tr>
-<tr class="list2" valign="top"><td><code>function <a class="normal" href="#FillTo"><b>FillTo</b></a>(s : string; tolength: integer): string;</code></td>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#boolstr"><b>boolstr</b></a>(val: boolean; cnt: byte): string;</code></td>
 </tr>
-<tr class="list" valign="top"><td><code>function <a class="normal" href="#stringdup"><b>stringdup</b></a>(const s : string) : <a class="normal" href="utils.html#PshortString">pShortstring</a>;</code></td>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#CompareByte"><b>CompareByte</b></a>(buf1,buf2: pchar;len:longint):integer;</code></td>
 </tr>
-<tr class="list2" valign="top"><td><code>procedure <a class="normal" href="#stringdispose"><b>stringdispose</b></a>(var p : <a class="normal" href="utils.html#PshortString">pShortstring</a>);</code></td>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#Printf"><b>Printf</b></a>(const s : string; var Buf; size : word): string;</code></td>
 </tr>
-<tr class="list" valign="top"><td><code>function <a class="normal" href="#EscapeToPascal"><b>EscapeToPascal</b></a>(const s:string; var code: integer): string;</code></td>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#FillTo"><b>FillTo</b></a>(s : string; tolength: integer): string;</code></td>
 </tr>
-<tr class="list2" valign="top"><td><code>function <a class="normal" href="#ValDecimal"><b>ValDecimal</b></a>(const S:String; var code: integer):longint;</code></td>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#stringdup"><b>stringdup</b></a>(const s : string) : <a class="normal" href="utils.html#PshortString">pShortstring</a>;</code></td>
 </tr>
-<tr class="list" valign="top"><td><code>function <a class="normal" href="#ValOctal"><b>ValOctal</b></a>(const S:String;var code: integer):longint;</code></td>
+<tr class="list" valign="top"><td><code>procedure <a class="normal" href="#stringdispose"><b>stringdispose</b></a>(var p : <a class="normal" href="utils.html#PshortString">pShortstring</a>);</code></td>
 </tr>
-<tr class="list2" valign="top"><td><code>function <a class="normal" href="#ValBinary"><b>ValBinary</b></a>(const S:String; var code: integer):longint;</code></td>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#EscapeToPascal"><b>EscapeToPascal</b></a>(const s:string; var code: integer): string;</code></td>
 </tr>
-<tr class="list" valign="top"><td><code>function <a class="normal" href="#ValHexadecimal"><b>ValHexadecimal</b></a>(const S:String; var code: integer):longint;</code></td>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#ValDecimal"><b>ValDecimal</b></a>(const S:String; var code: integer):longint;</code></td>
 </tr>
-<tr class="list2" valign="top"><td><code>function <a class="normal" href="#uppercase"><b>uppercase</b></a>(s: string):string;</code></td>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#ValOctal"><b>ValOctal</b></a>(const S:String;var code: integer):longint;</code></td>
 </tr>
-<tr class="list" valign="top"><td><code>function <a class="normal" href="#ChangeFileExt"><b>ChangeFileExt</b></a>(const FileName, Extension: string): string;</code></td>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#ValBinary"><b>ValBinary</b></a>(const S:String; var code: integer):longint;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#ValHexadecimal"><b>ValHexadecimal</b></a>(const S:String; var code: integer):longint;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#uppercase"><b>uppercase</b></a>(s: string):string;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#ChangeFileExt"><b>ChangeFileExt</b></a>(const FileName, Extension: string): string;</code></td>
 </tr>
 </table>
 <h3>Description</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="boolstr"></a><code>function <b>boolstr</b>(val: boolean; cnt: byte): string;</code></td>
+</tr>
+</table>
+<p>Convert a boolean value to an ASCII representation<p>To avoid left padding with spaces, set <code>cnt</code> to zero.</p>
+</p>
 <table cellspacing="2" cellpadding="4" width="100%">
 <tr class="list" valign="top"><td width="100%"><a name="ChangeFileExt"></a><code>function <b>ChangeFileExt</b>(const FileName, Extension: string): string;</code></td>
 </tr>
 </table>
 <p>&nbsp;</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="CompareByte"></a><code>function <b>CompareByte</b>(buf1,buf2: pchar;len:longint):integer;</code></td>
+</tr>
+</table>
+<p>&nbsp;</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="decstr"></a><code>function <b>decstr</b>(val : longint;cnt : byte) : string;</code></td>
+</tr>
+</table>
+<p>Convert a value to an ASCII decimal representation<p>To avoid left padding with zeros, set <code>cnt</code> to zero.</p>
+</p>
 <table cellspacing="2" cellpadding="4" width="100%">
 <tr class="list" valign="top"><td width="100%"><a name="EscapeToPascal"></a><code>function <b>EscapeToPascal</b>(const s:string; var code: integer): string;</code></td>
 </tr>
@@ -197,5 +220,5 @@ code</dt>
 </tr>
 </table><a name="@Variables"></a><h2>Author</h2>
 <p>Carl Eric Codere</p>
-<hr noshade="1" size="1"/><em>Generated by <a class="normal" target="_new" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8-pre7</a> on 2004-05-06 11:05:13</em>
+<hr noshade="1" size="1"/><em>Generated by <a class="normal" target="_new" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8</a> on 2004-06-20 11:06:16</em>
 </body></html>

@@ -1,6 +1,6 @@
 History of major changes in the releases:
 
-----
+0.97:
    + Add validation routines for ISO Date/Time strings
    * Bugfix when passing one single character to the unicode
      conversion routine (less change of a crash now)
@@ -8,6 +8,7 @@ History of major changes in the releases:
    + Add routine to determine the size of a character encoding
      for UTF-8 and UTF-16 characters
    + utf32_trimleft and utf32_trimright
+   + Delphi DOS unit bugfix (would crash!)
 
 0.96:
    + add support for ISO8859, ASCII, CP850, CP1252 to UTF-32 conversion

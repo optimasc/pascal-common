@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.1 Strict//EN" "http://www.w3.org/TR/REC-html4/strict.dtd">
 <html>
 <head>
-<meta name="GENERATOR" content="PasDoc 0.8.8-pre7"/>
+<meta name="GENERATOR" content="PasDoc 0.8.8"/>
 <title>Common pascal units documentation: unicode</title>
 <link rel="StyleSheet" href="pasdoc.css"/>
 </head>
@@ -10,35 +10,71 @@
 <table class="sections"><tr>
 <td><a class="section" href="#@Description">Description</a></td><td>uses</td><td>Classes, Interfaces and Objects</td><td><a class="section" href="#@FuncsProcs">Functions and Procedures</a></td><td><a class="section" href="#@Types">Types</a></td><td><a class="section" href="#@Constants">Constants</a></td><td>Variables</td></tr></table>
 <a name="@Description"></a><h2>Description</h2>
-unicode support unit<p>This unit contains routines to convert      between the different unicode encoding      schemes.             All unicode strings are limited to      255 characters.             Since all these encoding are variable length,      except the UTF-32 and UCS-2 encoding, to parse through      characters, every string should be converted to      UTF-32 or UCS-2 before being used.            UCS-2 is encoded in network byte order (big-endian).</p>
+unicode support unit<p>This unit contains routines to convert      between the different unicode encoding      schemes.            All UNICODE/ISO 10646 strings are limited to      255 characters.            Since all these encoding are variable length,      except the UTF-32 (which is equivalent to UCS-4 according to       ISO 10646:2003) and UCS-2 encoding, to parse through characters,       every string should be converted to UTF-32 or UCS-2 before being used.</p>
 <a name="@FuncsProcs"></a><h2>Functions and Procedures</h2>
 <h3>Overview</h3>
 <table cellspacing="2" cellpadding="4" width="100%">
-<tr class="list" valign="top"><td width="100%"><code>function <a class="normal" href="#lengthUTF16"><b>lengthUTF16</b></a>(s: array of <a class="normal" href="unicode.html#utf16">utf16</a>): integer;</code></td>
+<tr class="list" valign="top"><td width="100%"><code>function <a class="normal" href="#utf32_length"><b>utf32_length</b></a>(s: array of <a class="normal" href="unicode.html#utf32">utf32</a>): integer;</code></td>
 </tr>
-<tr class="list2" valign="top"><td><code>function <a class="normal" href="#lengthutf8"><b>lengthutf8</b></a>(s: array of <a class="normal" href="unicode.html#utf8">utf8</a>): integer;</code></td>
+<tr class="list2" valign="top"><td><code>procedure <a class="normal" href="#utf32_setlength"><b>utf32_setlength</b></a>(var s: array of <a class="normal" href="unicode.html#utf32">utf32</a>; l: integer);</code></td>
 </tr>
-<tr class="list" valign="top"><td><code>function <a class="normal" href="#lengthutf32"><b>lengthutf32</b></a>(s: array of <a class="normal" href="unicode.html#utf32">utf32</a>): integer;</code></td>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#utf32_iswhitespace"><b>utf32_iswhitespace</b></a>(c: <a class="normal" href="unicode.html#utf32">utf32</a>): boolean;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>procedure <a class="normal" href="#utf32_trimleft"><b>utf32_trimleft</b></a>(var s: <a class="normal" href="unicode.html#utf32string">utf32string</a>);</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>procedure <a class="normal" href="#utf32_trimright"><b>utf32_trimright</b></a>(var s: <a class="normal" href="unicode.html#utf32string">utf32string</a>);</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>procedure <a class="normal" href="#utf32_copy"><b>utf32_copy</b></a>(var resultstr: <a class="normal" href="unicode.html#utf32string">utf32string</a>; s: array of <a class="normal" href="unicode.html#utf32">utf32</a>; index: integer; count: integer);</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>procedure <a class="normal" href="#utf32_delete"><b>utf32_delete</b></a>(var s: <a class="normal" href="unicode.html#utf32string">utf32string</a>; index: integer; count: integer);</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>procedure <a class="normal" href="#utf32_concat"><b>utf32_concat</b></a>(var resultstr: <a class="normal" href="unicode.html#utf32string">utf32string</a>;s1: <a class="normal" href="unicode.html#utf32string">utf32string</a>; s2: array of <a class="normal" href="unicode.html#utf32">utf32</a>);</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>procedure <a class="normal" href="#utf32_concatascii"><b>utf32_concatascii</b></a>(var resultstr: <a class="normal" href="unicode.html#utf32string">utf32string</a>;s1: <a class="normal" href="unicode.html#utf32string">utf32string</a>; s2: shortstring);</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#utf32_posascii"><b>utf32_posascii</b></a>(substr: shortstring; s: <a class="normal" href="unicode.html#utf32string">utf32string</a>): integer;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#utf32_equalascii"><b>utf32_equalascii</b></a>(s1 : array of <a class="normal" href="unicode.html#utf32">utf32</a>; s2: shortstring): boolean;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#utf32_pos"><b>utf32_pos</b></a>(substr: <a class="normal" href="unicode.html#utf32string">utf32string</a>;s : <a class="normal" href="unicode.html#utf32string">utf32string</a>): integer;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#utf32_equal"><b>utf32_equal</b></a>(const s1,s2: <a class="normal" href="unicode.html#utf32string">utf32string</a>): boolean;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#utf32_isvalid"><b>utf32_isvalid</b></a>(c: <a class="normal" href="unicode.html#utf32">utf32</a>): boolean;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#utf32_issupported"><b>utf32_issupported</b></a>(s: string): boolean;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#ucs2_length"><b>ucs2_length</b></a>(s: array of <a class="normal" href="unicode.html#ucs2">ucs2</a>): integer;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>procedure <a class="normal" href="#ucs2_setlength"><b>ucs2_setlength</b></a>(var s: array of <a class="normal" href="unicode.html#ucs2">ucs2</a>; l: integer);</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#utf16_sizeencoding"><b>utf16_sizeencoding</b></a>(c: <a class="normal" href="unicode.html#utf16">utf16</a>): integer;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#utf8_sizeencoding"><b>utf8_sizeencoding</b></a>(c: <a class="normal" href="unicode.html#utf8">utf8</a>): integer;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#lengthUTF16"><b>lengthUTF16</b></a>(s: array of <a class="normal" href="unicode.html#utf16">utf16</a>): integer;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#lengthutf8"><b>lengthutf8</b></a>(s: array of <a class="normal" href="unicode.html#utf8">utf8</a>): integer;</code></td>
 </tr>
 <tr class="list2" valign="top"><td><code>procedure <a class="normal" href="#setlengthUTF8"><b>setlengthUTF8</b></a>(var s: array of <a class="normal" href="unicode.html#utf8">utf8</a>; l: integer);</code></td>
 </tr>
 <tr class="list" valign="top"><td><code>procedure <a class="normal" href="#setlengthUTF16"><b>setlengthUTF16</b></a>(var s: array of <a class="normal" href="unicode.html#utf16">utf16</a>; l: integer);</code></td>
 </tr>
-<tr class="list2" valign="top"><td><code>procedure <a class="normal" href="#setlengthutf32"><b>setlengthutf32</b></a>(var s: array of <a class="normal" href="unicode.html#utf32">utf32</a>; l: integer);</code></td>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#convertUTF32toUTF8"><b>convertUTF32toUTF8</b></a>(s: array of <a class="normal" href="unicode.html#utf32">utf32</a>; var outstr: <a class="normal" href="unicode.html#utf8string">utf8string</a>): integer;</code></td>
 </tr>
-<tr class="list" valign="top"><td><code>function <a class="normal" href="#convertUTF32toUTF8"><b>convertUTF32toUTF8</b></a>(s: array of <a class="normal" href="unicode.html#utf32">utf32</a>; var outstr: <a class="normal" href="unicode.html#utf8string">utf8string</a>): integer;</code></td>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#ConvertFromUTF32"><b>ConvertFromUTF32</b></a>(source: <a class="normal" href="unicode.html#utf32string">utf32string</a>; var dest: shortstring; desttype: string): integer;</code></td>
 </tr>
-<tr class="list2" valign="top"><td><code>function <a class="normal" href="#ConvertFromUTF32"><b>ConvertFromUTF32</b></a>(source: <a class="normal" href="unicode.html#utf32string">utf32string</a>; var dest: shortstring; desttype: string): integer;</code></td>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#ConvertToUTF32"><b>ConvertToUTF32</b></a>(source: shortstring; var dest: <a class="normal" href="unicode.html#utf32string">utf32string</a>; srctype: string): integer;</code></td>
 </tr>
-<tr class="list" valign="top"><td><code>function <a class="normal" href="#ConvertToUTF32"><b>ConvertToUTF32</b></a>(source: shortstring; var dest: <a class="normal" href="unicode.html#utf32string">utf32string</a>; srctype: string): integer;</code></td>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#ConvertUTF16ToUTF32"><b>ConvertUTF16ToUTF32</b></a>(src: <a class="normal" href="unicode.html#utf16string">utf16string</a>; var dst: <a class="normal" href="unicode.html#utf32string">utf32string</a>): integer;</code></td>
 </tr>
-<tr class="list2" valign="top"><td><code>function <a class="normal" href="#ConvertUTF16ToUTF32"><b>ConvertUTF16ToUTF32</b></a>(src: array of <a class="normal" href="unicode.html#utf16">utf16</a>; var dst: <a class="normal" href="unicode.html#utf32string">utf32string</a>): integer;</code></td>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#ConvertUTF32toUTF16"><b>ConvertUTF32toUTF16</b></a>(src: array of <a class="normal" href="unicode.html#utf32">utf32</a>; var dest: <a class="normal" href="unicode.html#utf16string">utf16string</a>): integer;</code></td>
 </tr>
-<tr class="list" valign="top"><td><code>function <a class="normal" href="#ConvertUTF32toUTF16"><b>ConvertUTF32toUTF16</b></a>(src: array of <a class="normal" href="unicode.html#utf32">utf32</a>; var dest: <a class="normal" href="unicode.html#utf16string">utf16string</a>): integer;</code></td>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#ConvertUTF8ToUTF32"><b>ConvertUTF8ToUTF32</b></a>(src: <a class="normal" href="unicode.html#utf8string">utf8string</a>; var dst: <a class="normal" href="unicode.html#utf32string">utf32string</a>): integer;</code></td>
 </tr>
-<tr class="list2" valign="top"><td><code>function <a class="normal" href="#ConvertUTF8ToUTF32"><b>ConvertUTF8ToUTF32</b></a>(src: array of <a class="normal" href="unicode.html#utf8">utf8</a>; var dst: <a class="normal" href="unicode.html#utf32string">utf32string</a>): integer;</code></td>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#ConvertUTF32ToUCS2"><b>ConvertUTF32ToUCS2</b></a>(src: array of <a class="normal" href="unicode.html#utf32">utf32</a>; var dst: <a class="normal" href="unicode.html#ucs2string">ucs2string</a>): integer;</code></td>
 </tr>
-<tr class="list" valign="top"><td><code>function <a class="normal" href="#ConvertUTF32ToUCS2"><b>ConvertUTF32ToUCS2</b></a>(src: array of <a class="normal" href="unicode.html#utf32">utf32</a>; var dst: <a class="normal" href="unicode.html#ucs2string">ucs2string</a>): integer;</code></td>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#ConvertUCS2ToUTF32"><b>ConvertUCS2ToUTF32</b></a>(src: array of <a class="normal" href="unicode.html#ucs2">ucs2</a>; var dst: <a class="normal" href="unicode.html#utf32string">utf32string</a>): integer;</code></td>
 </tr>
 </table>
 <h3>Description</h3>
@@ -71,7 +107,25 @@ srctype</dt>
 </dl>
 <h6>returns</h6>
 <p class="return"><a class="normal" href="unicode.html#UNICODE_ERR_OK">UNICODE_ERR_OK</a> if there was no error in the conversion</p><table cellspacing="2" cellpadding="4" width="100%">
-<tr class="list" valign="top"><td width="100%"><a name="ConvertUTF16ToUTF32"></a><code>function <b>ConvertUTF16ToUTF32</b>(src: array of <a class="normal" href="unicode.html#utf16">utf16</a>; var dst: <a class="normal" href="unicode.html#utf32string">utf32string</a>): integer;</code></td>
+<tr class="list" valign="top"><td width="100%"><a name="ConvertUCS2ToUTF32"></a><code>function <b>ConvertUCS2ToUTF32</b>(src: array of <a class="normal" href="unicode.html#ucs2">ucs2</a>; var dst: <a class="normal" href="unicode.html#utf32string">utf32string</a>): integer;</code></td>
+</tr>
+</table>
+<p>Convert an UCS-2 string to an UTF-32 string<p>This routine converts an UCS-2 string to an UTF-32 string that        is stored in native byte order (big-endian). If some characters        could not be converted an error will be reported.</p>
+</p>
+<h6>parameters</h6>
+<dl class="parameters">
+<dt class="parameters">
+src</dt>
+<dd class="parameters">
+ Either a single ucs-2 character or a complete ucs-2 string</dd>
+<dt class="parameters">
+dest</dt>
+<dd class="parameters">
+ Resulting UTF-32 coded string</dd>
+</dl>
+<h6>returns</h6>
+<p class="return"><a class="normal" href="unicode.html#UNICODE_ERR_OK">UNICODE_ERR_OK</a> if there was no error in the conversion</p><table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="ConvertUTF16ToUTF32"></a><code>function <b>ConvertUTF16ToUTF32</b>(src: <a class="normal" href="unicode.html#utf16string">utf16string</a>; var dst: <a class="normal" href="unicode.html#utf32string">utf32string</a>): integer;</code></td>
 </tr>
 </table>
 <p>Convert an UTF-16 string to an UTF-32 string<p>This routine converts an UTF-16 string to an UTF-32 string.        Both strings must be stored in native byte order (native endian).</p>
@@ -81,8 +135,19 @@ srctype</dt>
 <tr class="list" valign="top"><td width="100%"><a name="ConvertUTF32ToUCS2"></a><code>function <b>ConvertUTF32ToUCS2</b>(src: array of <a class="normal" href="unicode.html#utf32">utf32</a>; var dst: <a class="normal" href="unicode.html#ucs2string">ucs2string</a>): integer;</code></td>
 </tr>
 </table>
-<p>Convert an UTF-32 string to an UCS-2 string<p>This routine converts an UTF-32 string to an UCS-2 string that        is stored in network byte order (big-endian). If some characters        could not be converted an error will be reported.</p>
+<p>Convert an UTF-32 string to an UCS-2 string<p>This routine converts an UTF-32 string to an UCS-2 string that        is stored in native byte order. If some characters        could not be converted an error will be reported.</p>
 </p>
+<h6>parameters</h6>
+<dl class="parameters">
+<dt class="parameters">
+src</dt>
+<dd class="parameters">
+ Either a single utf-32 character or a complete utf-32 string</dd>
+<dt class="parameters">
+dest</dt>
+<dd class="parameters">
+ Resulting UCS-2 coded string</dd>
+</dl>
 <h6>returns</h6>
 <p class="return"><a class="normal" href="unicode.html#UNICODE_ERR_OK">UNICODE_ERR_OK</a> if there was no error in the conversion</p><table cellspacing="2" cellpadding="4" width="100%">
 <tr class="list" valign="top"><td width="100%"><a name="ConvertUTF32toUTF16"></a><code>function <b>ConvertUTF32toUTF16</b>(src: array of <a class="normal" href="unicode.html#utf32">utf32</a>; var dest: <a class="normal" href="unicode.html#utf16string">utf16string</a>): integer;</code></td>
@@ -90,14 +155,38 @@ srctype</dt>
 </table>
 <p>Convert an UTF-32 string to an UTF-16 string<p>This routine converts an UTF-32 string to an UTF-16 string.        Both strings must be stored in native byte order (native endian).</p>
 </p>
+<h6>parameters</h6>
+<dl class="parameters">
+<dt class="parameters">
+src</dt>
+<dd class="parameters">
+ Either a single utf-32 character or a complete utf-32 string</dd>
+<dt class="parameters">
+dest</dt>
+<dd class="parameters">
+ Resulting UTF-16 coded string</dd>
+</dl>
 <h6>returns</h6>
 <p class="return"><a class="normal" href="unicode.html#UNICODE_ERR_OK">UNICODE_ERR_OK</a> if there was no error in the conversion</p><table cellspacing="2" cellpadding="4" width="100%">
 <tr class="list" valign="top"><td width="100%"><a name="convertUTF32toUTF8"></a><code>function <b>convertUTF32toUTF8</b>(s: array of <a class="normal" href="unicode.html#utf32">utf32</a>; var outstr: <a class="normal" href="unicode.html#utf8string">utf8string</a>): integer;</code></td>
 </tr>
 </table>
-<p>Convert an UTF-32 string to an UTF-8 string</p>
-<table cellspacing="2" cellpadding="4" width="100%">
-<tr class="list" valign="top"><td width="100%"><a name="ConvertUTF8ToUTF32"></a><code>function <b>ConvertUTF8ToUTF32</b>(src: array of <a class="normal" href="unicode.html#utf8">utf8</a>; var dst: <a class="normal" href="unicode.html#utf32string">utf32string</a>): integer;</code></td>
+<p>Convert an UTF-32 string to an UTF-8 string<p>Converts an UTF-32 string or character         in native endian to an UTF-8 string.</p>
+</p>
+<h6>parameters</h6>
+<dl class="parameters">
+<dt class="parameters">
+s</dt>
+<dd class="parameters">
+ Either a single utf-32 character or a complete utf-32 string</dd>
+<dt class="parameters">
+outstr</dt>
+<dd class="parameters">
+ Resulting UTF-8 coded string</dd>
+</dl>
+<h6>returns</h6>
+<p class="return"><a class="normal" href="unicode.html#UNICODE_ERR_OK">UNICODE_ERR_OK</a> if there was no error in the conversion</p><table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="ConvertUTF8ToUTF32"></a><code>function <b>ConvertUTF8ToUTF32</b>(src: <a class="normal" href="unicode.html#utf8string">utf8string</a>; var dst: <a class="normal" href="unicode.html#utf32string">utf32string</a>): integer;</code></td>
 </tr>
 </table>
 <p>Convert an UTF-8 string to an UTF-32 string<p>This routine converts an UTF-8 string to an UTF-32 string that        is stored in native byte order.</p>
@@ -109,11 +198,6 @@ srctype</dt>
 </table>
 <p>Returns the current length of an UTF-16 string</p>
 <table cellspacing="2" cellpadding="4" width="100%">
-<tr class="list" valign="top"><td width="100%"><a name="lengthutf32"></a><code>function <b>lengthutf32</b>(s: array of <a class="normal" href="unicode.html#utf32">utf32</a>): integer;</code></td>
-</tr>
-</table>
-<p>Returns the current length of an UTF-32 string</p>
-<table cellspacing="2" cellpadding="4" width="100%">
 <tr class="list" valign="top"><td width="100%"><a name="lengthutf8"></a><code>function <b>lengthutf8</b>(s: array of <a class="normal" href="unicode.html#utf8">utf8</a>): integer;</code></td>
 </tr>
 </table>
@@ -124,15 +208,116 @@ srctype</dt>
 </table>
 <p>Set the length of an UTF-16 string</p>
 <table cellspacing="2" cellpadding="4" width="100%">
-<tr class="list" valign="top"><td width="100%"><a name="setlengthutf32"></a><code>procedure <b>setlengthutf32</b>(var s: array of <a class="normal" href="unicode.html#utf32">utf32</a>; l: integer);</code></td>
-</tr>
-</table>
-<p>&nbsp;</p>
-<table cellspacing="2" cellpadding="4" width="100%">
 <tr class="list" valign="top"><td width="100%"><a name="setlengthUTF8"></a><code>procedure <b>setlengthUTF8</b>(var s: array of <a class="normal" href="unicode.html#utf8">utf8</a>; l: integer);</code></td>
 </tr>
 </table>
 <p>Set the length of an UTF-8 string</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="ucs2_length"></a><code>function <b>ucs2_length</b>(s: array of <a class="normal" href="unicode.html#ucs2">ucs2</a>): integer;</code></td>
+</tr>
+</table>
+<p>&nbsp;</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="ucs2_setlength"></a><code>procedure <b>ucs2_setlength</b>(var s: array of <a class="normal" href="unicode.html#ucs2">ucs2</a>; l: integer);</code></td>
+</tr>
+</table>
+<p>&nbsp;</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="utf16_sizeencoding"></a><code>function <b>utf16_sizeencoding</b>(c: <a class="normal" href="unicode.html#utf16">utf16</a>): integer;</code></td>
+</tr>
+</table>
+<p>Returns the number of characters that are used to encode this        character<p>.          Actually checks if this is a high-surrogate value, if not returns 1,        indicating that the character is encoded a single <code>utf16</code> character,        otherwise returns 2, indicating that 1 one other <code>utf16</code> character        is required to encode this data.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="utf32_concat"></a><code>procedure <b>utf32_concat</b>(var resultstr: <a class="normal" href="unicode.html#utf32string">utf32string</a>;s1: <a class="normal" href="unicode.html#utf32string">utf32string</a>; s2: array of <a class="normal" href="unicode.html#utf32">utf32</a>);</code></td>
+</tr>
+</table>
+<p>Concatenates two UTF-32 strings, and gives a resulting UTF-32 string</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="utf32_concatascii"></a><code>procedure <b>utf32_concatascii</b>(var resultstr: <a class="normal" href="unicode.html#utf32string">utf32string</a>;s1: <a class="normal" href="unicode.html#utf32string">utf32string</a>; s2: shortstring);</code></td>
+</tr>
+</table>
+<p>Concatenates an UTF-32 string with an ASCII string, and gives        a resulting UTF-32 string</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="utf32_copy"></a><code>procedure <b>utf32_copy</b>(var resultstr: <a class="normal" href="unicode.html#utf32string">utf32string</a>; s: array of <a class="normal" href="unicode.html#utf32">utf32</a>; index: integer; count: integer);</code></td>
+</tr>
+</table>
+<p>Returns an utf-32 substring of an utf-32 string</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="utf32_delete"></a><code>procedure <b>utf32_delete</b>(var s: <a class="normal" href="unicode.html#utf32string">utf32string</a>; index: integer; count: integer);</code></td>
+</tr>
+</table>
+<p>Deletes a substring from a string</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="utf32_equal"></a><code>function <b>utf32_equal</b>(const s1,s2: <a class="normal" href="unicode.html#utf32string">utf32string</a>): boolean;</code></td>
+</tr>
+</table>
+<p>Checks if both UTF-32 strings are equal</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="utf32_equalascii"></a><code>function <b>utf32_equalascii</b>(s1 : array of <a class="normal" href="unicode.html#utf32">utf32</a>; s2: shortstring): boolean;</code></td>
+</tr>
+</table>
+<p>Checks if an ASCII string is equal to an UTF-32 string</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="utf32_issupported"></a><code>function <b>utf32_issupported</b>(s: string): boolean;</code></td>
+</tr>
+</table>
+<p>Checks if conversion from/to this character set format to/from UTF-32        is supported</p>
+<h6>parameters</h6>
+<dl class="parameters">
+<dt class="parameters">
+s</dt>
+<dd class="parameters">
+ This is an alias for a character set, as defined by IANA</dd>
+</dl>
+<h6>returns</h6>
+<p class="return">true if conversion to/from UTF-32 is supported with this          character set, otherwise FALSE</p><table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="utf32_isvalid"></a><code>function <b>utf32_isvalid</b>(c: <a class="normal" href="unicode.html#utf32">utf32</a>): boolean;</code></td>
+</tr>
+</table>
+<p>Checks if the UTF-32 character is valid<p>This routine verifies if the UTF-32 character is        within the valid ranges of UTF-32 characters, as        specified in the Unicode standard 4.0. BOM characters        are NOT valid with this routine.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="utf32_iswhitespace"></a><code>function <b>utf32_iswhitespace</b>(c: <a class="normal" href="unicode.html#utf32">utf32</a>): boolean;</code></td>
+</tr>
+</table>
+<p>Determines if the specified character is a whitespace character</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="utf32_length"></a><code>function <b>utf32_length</b>(s: array of <a class="normal" href="unicode.html#utf32">utf32</a>): integer;</code></td>
+</tr>
+</table>
+<p>Returns the current length of an UTF-32 string</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="utf32_pos"></a><code>function <b>utf32_pos</b>(substr: <a class="normal" href="unicode.html#utf32string">utf32string</a>;s : <a class="normal" href="unicode.html#utf32string">utf32string</a>): integer;</code></td>
+</tr>
+</table>
+<p>Searches for an UTF-32 substring in an UTF-32 string</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="utf32_posascii"></a><code>function <b>utf32_posascii</b>(substr: shortstring; s: <a class="normal" href="unicode.html#utf32string">utf32string</a>): integer;</code></td>
+</tr>
+</table>
+<p>Searches for an ASCII substring in an UTF-32 string</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="utf32_setlength"></a><code>procedure <b>utf32_setlength</b>(var s: array of <a class="normal" href="unicode.html#utf32">utf32</a>; l: integer);</code></td>
+</tr>
+</table>
+<p>Set the new dynamic length of an utf-32 string</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="utf32_trimleft"></a><code>procedure <b>utf32_trimleft</b>(var s: <a class="normal" href="unicode.html#utf32string">utf32string</a>);</code></td>
+</tr>
+</table>
+<p>Trims leading spaces and control characters from an UTF-32 string.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="utf32_trimright"></a><code>procedure <b>utf32_trimright</b>(var s: <a class="normal" href="unicode.html#utf32string">utf32string</a>);</code></td>
+</tr>
+</table>
+<p>Trims trailing spaces and control characters from an UTF-32 string.</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="utf8_sizeencoding"></a><code>function <b>utf8_sizeencoding</b>(c: <a class="normal" href="unicode.html#utf8">utf8</a>): integer;</code></td>
+</tr>
+</table>
+<p>Returns the number of characters that are used to encode this        character<p>.</p>
+</p>
 <a name="@Types"></a><h2>Types</h2>
 <table class="itemlist" cellspacing="2" cellpadding="4" width="100%"><tr class="listheader"><th class="listheader" nowrap="nowrap">Name</th><th class="listheader" width="100%">Description</th></tr>
 <tr class="list2" valign="top"><td class="itemname"><a name="utf8"></a>utf8<code> = char;</code></td>
@@ -189,7 +374,25 @@ srctype</dt>
 <td><p>Return status: The character set is not found</p>
 </td>
 </tr>
+<tr class="list" valign="top"><td class="itemname"><a name="BOM_UTF8"></a>BOM_UTF8<code>     = #$EF#$BB#$BF;</code></td>
+<td><p>Byte order mark: UTF-8 encoding signature</p>
+</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="BOM_UTF32_BE"></a>BOM_UTF32_BE<code> = #00#00#$FE#$FF;</code></td>
+<td><p>Byte order mark: UTF-32 big endian encoding signature</p>
+</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname"><a name="BOM_UTF32_LE"></a>BOM_UTF32_LE<code> = #$FF#$FE#00#00;</code></td>
+<td><p>Byte order mark: UTF-32 little endian encoding signature</p>
+</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="BOM_UTF16_BE"></a>BOM_UTF16_BE<code> = #$FE#$FF;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname"><a name="BOM_UTF16_LE"></a>BOM_UTF16_LE<code> = #$FF#$FE;</code></td>
+<td>&nbsp;</td>
+</tr>
 </table><a name="@Variables"></a><h2>Author</h2>
 <p>Carl Eric Codere</p>
-<hr noshade="1" size="1"/><em>Generated by <a class="normal" target="_new" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8-pre7</a> on 2004-05-06 11:05:13</em>
+<hr noshade="1" size="1"/><em>Generated by <a class="normal" target="_new" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8</a> on 2004-06-20 11:06:16</em>
 </body></html>

@@ -1,4 +1,5 @@
-
+You can get the latest version here: 
+http://www.optimasc.com/products/utilities/index.html
 
 1. Overview
 
@@ -46,6 +47,10 @@ old string[255] or string type of Turbo Pascal.
 
 big_integer_t: The biggest integer size available for the 
 compiler (usually equal to longint or int64)
+
+ptrint: This is an integer that has the same size as a 
+pointer and used to typecast a pointer to  and from 
+an integer value.
 
 The following defines the pre-defined types that have specific 
 sizes and which are available on all supported compilers 
