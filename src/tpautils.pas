@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: tpautils.pas,v 1.2 2004-07-05 02:26:08 carl Exp $
+    $Id: tpautils.pas,v 1.3 2004-07-15 01:02:45 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Turbo Pascal/Borland Pascal 7.0 compatibility unit
@@ -63,7 +63,7 @@ type
  }
  procedure ReallocMem(var P: Pointer; Size: Integer);
 
-
+ procedure Assert(b: boolean);
 
 {$endif}
 
@@ -80,6 +80,11 @@ implementation
   
  Procedure FindClose(Var f: SearchRec);
  begin
+ end;
+
+ procedure Assert(b: boolean);
+ begin
+   if not b then RunError(227);
  end;
  
  procedure ReallocMem(var P: Pointer; Size: Integer);
@@ -125,6 +130,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.2  2004/07/05 02:26:08  carl
+    + Reallocmem (mostly a hack)
+
   Revision 1.1  2004/05/05 16:28:21  carl
     Release 0.95 updates
 
