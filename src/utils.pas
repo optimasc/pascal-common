@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: utils.pas,v 1.1 2004-05-05 16:28:23 carl Exp $
+    $Id: utils.pas,v 1.2 2004-05-13 23:03:40 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Common utilities
@@ -80,6 +80,19 @@ CONST
   {** @abstract(Convert a value to an ASCII hexadecimal representation) }
   function hexstr(val : longint;cnt : byte) : string;
 
+  {** @abstract(Convert a value to an ASCII decimal representation) 
+  
+      To avoid left padding with zeros, set @code(cnt) to zero.
+  }      
+  function decstr(val : longint;cnt : byte) : string;
+  
+ {** @abstract(Convert a boolean value to an ASCII representation) 
+  
+      To avoid left padding with spaces, set @code(cnt) to zero.
+  }      
+  function boolstr(val: boolean; cnt: byte): string; 
+   
+  
   {** 
      @abstract(Format a string and print it out to the console)
      This routine formats the string specified in s to
@@ -421,6 +434,42 @@ begin
    end;
 end;
 
+function fillwithzero(s: string; newlength: integer): string;
+ begin
+   while length(s) < newlength do
+     s:='0'+s;
+   fillwithzero:=s;
+ end;
+
+
+function fillwithspace(s: string; newlength: integer): string;
+ begin
+   while length(s) < newlength do
+     s:=' '+s;
+   fillwithspace:=s;
+ end;
+
+function boolstr(val: boolean; cnt: byte): string; 
+const
+ vals:array[FALSE..TRUE] of string[16] =
+   ('FALSE','TRUE');
+var
+ s: string;
+begin
+  s:=vals[val];
+  boolstr:=fillwithspace(s,cnt);
+end;
+
+
+function decstr(val : longint;cnt : byte) : string;
+var
+  s: string;
+begin
+  str(val,s);
+  decstr:=fillwithzero(s,cnt);
+end;
+
+
 {   TrimLeft returns a copy of S with all blank characters on the left stripped off  }
 
 function TrimLeft(const S: string): string;
@@ -678,4 +727,7 @@ end;
 end.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.1  2004/05/05 16:28:23  carl
+    Release 0.95 updates
+
 }
