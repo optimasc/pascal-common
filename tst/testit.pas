@@ -132,7 +132,16 @@ uses dpautils,
   {
   procedure ucs4_delete(var s: ucs4string; index: integer; count: integer);
 }
-  
+
+  { 255 character string, to test the limits }
+  const
+   limitstr: string[255] =
+   ('012345678901234567890123456789012345678901234567890123456789'+
+    '012345678901234567890123456789012345678901234567890123456789'+
+    '012345678901234567890123456789012345678901234567890123456789'+
+    '012345678901234567890123456789012345678901234567890123456789'+
+    '012345678901234'
+  );
   procedure testutf32;
   var
    s1ascii: string;
@@ -217,7 +226,32 @@ uses dpautils,
    ConvertFromUCS4(resultstr,s3ascii,'ASCII');
    if s3ascii <> 'Heo' then
      RunError(255);
-
+   { UCS4_Concat limit values }
+   ucs4_setlength(s1utf,0);
+   idx:=length(limitstr);
+   if idx <> 255 then
+     RunError(255);
+   for idx:=1 to length(limitStr) do
+     begin
+       ucs4_concatascii(s1utf,s1utf,limitstr[idx]);
+     end;
+   ConvertFromUCS4(s1utf,s3ascii,'ASCII');
+   if s3ascii <> limitstr then
+     RunError(255);
+   { Try adding more! }
+   for idx:=1 to length(limitStr) do
+     begin
+       ucs4_concatascii(s1utf,s1utf,limitstr[idx]);
+     end;
+   if s3ascii <> limitstr then
+     RunError(255);
+   { Try adding more! }
+   for idx:=1 to length(limitStr) do
+     begin
+       ucs4_concatascii(s1utf,s1utf,'');
+     end;
+   if s3ascii <> limitstr then
+     RunError(255);
   end;
 
   procedure testisvalidisodatestring;
@@ -499,6 +533,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.9  2004/08/20 00:50:16  carl
+    + release 0.99
+
   Revision 1.8  2004/08/19 00:24:00  carl
     * more testing routines for unicode
     + iso639 testing
