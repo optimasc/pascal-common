@@ -46,8 +46,8 @@ var
   AdvApi32Handle: HMODULE;
   NetApi32Handle: HMODULE;
   ShlWApiHandle:  HMODULE;
-
-
+  Kernel32Handle: HMODULE;
+  UnicowsHandle: HMODULE;
   
 
 type
@@ -110,8 +110,8 @@ type
    tnetusergetinfo = function (servername: pwidechar;
      username: pwidechar; level: DWORD; var buffer: P_USER_INFO_2): DWORD; stdcall;
   
-  
-
+   TFindFirstFileW = function(lpFileName: PWideChar; var lpFindFileData: TWIN32FindDataW): THandle; stdcall;
+   TFindNextFileW = function(hFindFile: THandle; var lpFindFileData: TWIN32FindDataW): BOOL; stdcall;
      
      
    ASSOCF = DWORD;
@@ -141,7 +141,11 @@ WINSHLWAPI HRESULT WINAPI AssocQueryStringW(ASSOCF,ASSOCSTR,LPCWSTR,LPCWSTR,LPWS
      flasgd: ASSOCF;
      str: DWORD; pszAssoc: pucs2char; pszExtra: pucs2char;
      pszOut: pucs2char; var pcchout: DWORD):HRESULT; stdcall;        
-     
+   
+   
+var
+ PFindFirstFileW: TFindFirstFileW;
+ PFindNextFileW: TFindNextFileW;
      
 {**************************************************************************}
 
@@ -880,7 +884,7 @@ begin
   While
    ((F.W32FindData.dwFileAttributes and F.IncludeAttr)=0) and (not (attr_any in F.SearchAttr)) do
    begin
-     if not FindNextFileW (F.FindHandle,{$ifdef fpc}@{$endif}F.W32FindData) then
+     if not PFindNextFileW (F.FindHandle,{$ifdef fpc}@{$endif}F.W32FindData) then
       begin
         FindMatch:=GetLastError;
         exit;
@@ -972,7 +976,7 @@ begin
   { Convert the string to a UCS-2 character string }
   ucs4str:=ucs4strnew(path,'UTF-8');
   ucs2str:=ucs2strnew(ucs4str);
-  SearchRec.FindHandle:=FindFirstFileW ({$IFNDEF FPC}pwidechar{$ENDIF}(ucs2str),SearchRec.W32FindData);
+  SearchRec.FindHandle:=PFindFirstFileW ({$IFNDEF FPC}pwidechar{$ENDIF}(ucs2str),SearchRec.W32FindData);
   ucs2strdispose(ucs2str);
   ucs4strdispose(ucs4str);
   If longint(SearchRec.FindHandle)=longint(Invalid_Handle_value) then
@@ -981,14 +985,14 @@ begin
      exit;
    end;
 { Find file with correct attribute }
-  FindMatch(SearchRec);
+  FindFirstEx:=FindMatch(SearchRec);
 end;
 
 function findnextex(var SearchRec: TSearchRecExt): integer;
 begin
 { no error }
   findnextEx:=0;
-  if not FindNextFileW (SearchRec.FindHandle,{$ifdef fpc}@{$endif}SearchRec.W32FindData) then
+  if not PFindNextFileW (SearchRec.FindHandle,{$ifdef fpc}@{$endif}SearchRec.W32FindData) then
    begin
      FindNextEx:=GetLastError;
      exit;
@@ -1095,17 +1099,68 @@ begin
     FreeLibrary(NetApi32Handle);
   if assigned(pointer(ShlWApiHandle)) then
     FreeLibrary(ShlWApiHandle);
+  if assigned(pointer(Kernel32Handle)) then
+    FreeLibrary(Kernel32Handle);
+  if assigned(pointer(UnicowsHandle)) then
+    FreeLibrary(UnicowsHandle);
 end;
 
-
+var
+ p: pointer;
+ found: boolean;
+ version: DWORD;
 Begin
   ExitSave:= ExitProc;
   ExitProc := @CloseLibraries;
   AdvApi32Handle:=LoadLibrary('advapi32.dll');
   NetApi32Handle:=LoadLibrary('netapi32.dll');
   ShlWApiHandle:=LoadLibrary('shlwapi.dll');
+  { Get a pointer to the FindFirstFileW and FindNextFileW library,
+    if not found in kernel32.dll then use the ones provided by
+    the microsoft unicode layer }
+  Kernel32Handle:=LoadLibrary('kernel32.dll');
+  found:=false;
+  version:=GetVersion;
+  UnicowsHandle:=0;
+  { Now according to GetVersion(), if high bit set, these
+    are not unicode enabled operating systems, so try loading
+    unicows.dll
+  }
+  if (version and DWORD($80000000)) <> 0 then
+    begin
+       UnicowsHandle:=LoadLibrary('unicows.dll');
+       if assigned(pointer(UnicowsHandle)) then
+         begin
+           found:=true;
+           p:=(GetProcAddress(UnicowsHandle,'FindFirstFileW'));
+           if not assigned(p) then
+             found:=false;
+           PFindFirstFileW:=tfindfirstfilew(p);
+           p:=(GetProcAddress(UnicowsHandle,'FindNextFileW'));
+           if not assigned(p) then
+             found:=false;
+           PFindNextFileW:=tfindnextfilew(p);
+         end;
+    end
+  else
+  if assigned(pointer(Kernel32Handle)) then
+    begin
+       found:=true;
+       p:=(GetProcAddress(Kernel32Handle,'FindFirstFileW'));
+       if not assigned(p) then
+         found:=false;
+       PFindFirstFileW:=tfindfirstfilew(p);
+       p:=(GetProcAddress(Kernel32Handle,'FindNextFileW'));
+       if not assigned(p) then
+         found:=false;
+       PFindNextFileW:=tfindnextfilew(p);
+    end;
+  assert(found);  
 end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.1  2004/12/26 23:34:37  carl
+    + Win32 support for extdos unit
+
 }
