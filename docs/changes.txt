@@ -5,3 +5,4 @@ History of major changes in the releases:
    + added missing portability constants for VP and Delphi
    + automated build process
    + more documentation
+   + added dos, objects and strings unit for Delphi

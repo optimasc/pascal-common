@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.1 Strict//EN" "http://www.w3.org/TR/REC-html4/strict.dtd">
+<html>
+<head>
+<meta name="GENERATOR" content="PasDoc 0.8.8-pre7"/>
+<title>Common pascal units documentation: unicode</title>
+<link rel="StyleSheet" href="pasdoc.css"/>
+</head>
+<body bgcolor="#ffffff" text="#000000" link="#0000ff" vlink="#800080" alink="#FF0000">
+<h1>Unit unicode</h1>
+<table class="sections"><tr>
+<td><a class="section" href="#@Description">Description</a></td><td>uses</td><td>Classes, Interfaces and Objects</td><td><a class="section" href="#@FuncsProcs">Functions and Procedures</a></td><td><a class="section" href="#@Types">Types</a></td><td><a class="section" href="#@Constants">Constants</a></td><td>Variables</td></tr></table>
+<a name="@Description"></a><h2>Description</h2>
+unicode support unit<p>This unit contains routines to convert      between the different unicode encoding      schemes. The code was converted to Pascal      from the C code located at:      <a class="normal" target="_new" href="http://www.unicode.org/Public/PROGRAMS/CVTUTF/">http://www.unicode.org/Public/PROGRAMS/CVTUTF/</a></p>
+<a name="@FuncsProcs"></a><h2>Functions and Procedures</h2>
+<h3>Overview</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><code>function <a class="normal" href="#lengthUTF16"><b>lengthUTF16</b></a>(s: array of <a class="normal" href="unicode.html#utf16">utf16</a>): integer;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#lengthutf8"><b>lengthutf8</b></a>(s: array of <a class="normal" href="unicode.html#utf8">utf8</a>): integer;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>procedure <a class="normal" href="#setlengthUTF8"><b>setlengthUTF8</b></a>(var s: array of <a class="normal" href="unicode.html#utf8">utf8</a>; l: integer);</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>procedure <a class="normal" href="#setlengthUTF16"><b>setlengthUTF16</b></a>(var s: array of <a class="normal" href="unicode.html#utf16">utf16</a>; l: integer);</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#convertUTF16toUTF8"><b>convertUTF16toUTF8</b></a>(s: array of <a class="normal" href="unicode.html#utf16">utf16</a>; var outstr: <a class="normal" href="unicode.html#utf8string">utf8string</a>): integer;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#convertUTF8toASCII"><b>convertUTF8toASCII</b></a>(s: array of <a class="normal" href="unicode.html#utf8">utf8</a>): shortstring;</code></td>
+</tr>
+</table>
+<h3>Description</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="convertUTF16toUTF8"></a><code>function <b>convertUTF16toUTF8</b>(s: array of <a class="normal" href="unicode.html#utf16">utf16</a>; var outstr: <a class="normal" href="unicode.html#utf8string">utf8string</a>): integer;</code></td>
+</tr>
+</table>
+<p>Convert an UTF-16 string to an UTF-8 string</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="convertUTF8toASCII"></a><code>function <b>convertUTF8toASCII</b>(s: array of <a class="normal" href="unicode.html#utf8">utf8</a>): shortstring;</code></td>
+</tr>
+</table>
+<p>Convert an UTF-8 string to an ASCII string</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="lengthUTF16"></a><code>function <b>lengthUTF16</b>(s: array of <a class="normal" href="unicode.html#utf16">utf16</a>): integer;</code></td>
+</tr>
+</table>
+<p>Returns the current length of an UTF-16 string</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="lengthutf8"></a><code>function <b>lengthutf8</b>(s: array of <a class="normal" href="unicode.html#utf8">utf8</a>): integer;</code></td>
+</tr>
+</table>
+<p>Returns the current length of an UTF-8 string</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="setlengthUTF16"></a><code>procedure <b>setlengthUTF16</b>(var s: array of <a class="normal" href="unicode.html#utf16">utf16</a>; l: integer);</code></td>
+</tr>
+</table>
+<p>Set the length of an UTF-16 string</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="setlengthUTF8"></a><code>procedure <b>setlengthUTF8</b>(var s: array of <a class="normal" href="unicode.html#utf8">utf8</a>; l: integer);</code></td>
+</tr>
+</table>
+<p>Set the length of an UTF-8 string</p>
+<a name="@Types"></a><h2>Types</h2>
+<table class="itemlist" cellspacing="2" cellpadding="4" width="100%"><tr class="listheader"><th class="listheader" nowrap="nowrap">Name</th><th class="listheader" width="100%">Description</th></tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="utf8"></a>utf8<code> = char;</code></td>
+<td><p>UTF-8 base data type</p>
+</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname"><a name="utf16"></a>utf16<code> = word;</code></td>
+<td><p>UTF-16 base data type</p>
+</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="utf32"></a>utf32<code> = longword;</code></td>
+<td><p>UTF-32 base data type</p>
+</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname"><a name="utf8string"></a>utf8string<code> = array[0..1024] of <a class="normal" href="unicode.html#utf8">utf8</a>;</code></td>
+<td><p>UTF-8 string declaration</p>
+</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="utf32string"></a>utf32string<code> = array[0..255] of <a class="normal" href="unicode.html#utf32">utf32</a>;</code></td>
+<td><p>UTF-32 string declaration</p>
+</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname"><a name="utf16string"></a>utf16string<code> = array[0..255] of <a class="normal" href="unicode.html#utf16">utf16</a>;</code></td>
+<td><p>UTF-16 string declaration</p>
+</td>
+</tr>
+</table><a name="@Constants"></a><h2>Constants</h2>
+<table class="itemlist" cellspacing="2" cellpadding="4" width="100%"><tr class="listheader"><th class="listheader" nowrap="nowrap">Name</th><th class="listheader" width="100%">Description</th></tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="UNICODE_ERR_OK"></a>UNICODE_ERR_OK<code> =     0;</code></td>
+<td><p>Return status: conversion successful</p>
+</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname"><a name="UNICODE_ERR_SOURCEILLEGAL"></a>UNICODE_ERR_SOURCEILLEGAL<code> = -1;</code></td>
+<td><p>Return status: source sequence is illegal/malformed</p>
+</td>
+</tr>
+</table><a name="@Variables"></a><h2>Author</h2>
+<p>Carl Eric Codere</p>
+<hr noshade="1" size="1"/><em>Generated by <a class="normal" target="_new" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8-pre7</a> on 2004-05-05 12:05:51</em>
+</body></html>

@@ -1,0 +1,201 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.1 Strict//EN" "http://www.w3.org/TR/REC-html4/strict.dtd">
+<html>
+<head>
+<meta name="GENERATOR" content="PasDoc 0.8.8-pre7"/>
+<title>Common pascal units documentation: utils</title>
+<link rel="StyleSheet" href="pasdoc.css"/>
+</head>
+<body bgcolor="#ffffff" text="#000000" link="#0000ff" vlink="#800080" alink="#FF0000">
+<h1>Unit utils</h1>
+<table class="sections"><tr>
+<td><a class="section" href="#@Description">Description</a></td><td>uses</td><td>Classes, Interfaces and Objects</td><td><a class="section" href="#@FuncsProcs">Functions and Procedures</a></td><td><a class="section" href="#@Types">Types</a></td><td><a class="section" href="#@Constants">Constants</a></td><td>Variables</td></tr></table>
+<a name="@Description"></a><h2>Description</h2>
+General utilities common to all platforms.<a name="@FuncsProcs"></a><h2>Functions and Procedures</h2>
+<h3>Overview</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><code>Function <a class="normal" href="#FileExists"><b>FileExists</b></a>(FName : string): Boolean;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>Procedure <a class="normal" href="#SwapLong"><b>SwapLong</b></a>(var x : longword);</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>Procedure <a class="normal" href="#SwapWord"><b>SwapWord</b></a>(var x : word);</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#UpString"><b>UpString</b></a>(s : string): string;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>procedure <a class="normal" href="#StreamErrorProcedure"><b>StreamErrorProcedure</b></a>(Var S: TStream);</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#TrimLeft"><b>TrimLeft</b></a>(const S: string): string;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#TrimRight"><b>TrimRight</b></a>(const S: string): string;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#hexstr"><b>hexstr</b></a>(val : longint;cnt : byte) : string;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#Printf"><b>Printf</b></a>(const s : string; var Buf; size : word): string;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#FillTo"><b>FillTo</b></a>(s : string; tolength: integer): string;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#stringdup"><b>stringdup</b></a>(const s : string) : <a class="normal" href="utils.html#PshortString">pShortstring</a>;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>procedure <a class="normal" href="#stringdispose"><b>stringdispose</b></a>(var p : <a class="normal" href="utils.html#PshortString">pShortstring</a>);</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#EscapeToPascal"><b>EscapeToPascal</b></a>(const s:string; var code: integer): string;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#ValDecimal"><b>ValDecimal</b></a>(const S:String; var code: integer):longint;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#ValOctal"><b>ValOctal</b></a>(const S:String;var code: integer):longint;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#ValBinary"><b>ValBinary</b></a>(const S:String; var code: integer):longint;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#ValHexadecimal"><b>ValHexadecimal</b></a>(const S:String; var code: integer):longint;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#uppercase"><b>uppercase</b></a>(s: string):string;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#ChangeFileExt"><b>ChangeFileExt</b></a>(const FileName, Extension: string): string;</code></td>
+</tr>
+</table>
+<h3>Description</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="ChangeFileExt"></a><code>function <b>ChangeFileExt</b>(const FileName, Extension: string): string;</code></td>
+</tr>
+</table>
+<p>&nbsp;</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="EscapeToPascal"></a><code>function <b>EscapeToPascal</b>(const s:string; var code: integer): string;</code></td>
+</tr>
+</table>
+<p><p>Converts a C style string (containing escape characters), to        a pascal style string. Returns the converted string. If there        is no error in the conversion, <code>code</code> will be equal to        zero.</p>
+</p>
+<h6>parameters</h6>
+<dl class="parameters">
+<dt class="parameters">
+s</dt>
+<dd class="parameters">
+ String to convert</dd>
+<dt class="parameters">
+code</dt>
+<dd class="parameters">
+ Result of operation, 0 when there is no error</dd>
+</dl>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="FileExists"></a><code>Function <b>FileExists</b>(FName : string): Boolean;</code></td>
+</tr>
+</table>
+<p>Verifies the existence of a filename<p>This routine verifies if the file named can be       opened or if it actually exists.         
+ FName  Name of the file to check       
+ Returns  FALSE if the file cannot be opened or if it does not exist.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="FillTo"></a><code>function <b>FillTo</b>(s : string; tolength: integer): string;</code></td>
+</tr>
+</table>
+<p>&nbsp;</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="hexstr"></a><code>function <b>hexstr</b>(val : longint;cnt : byte) : string;</code></td>
+</tr>
+</table>
+<p>Convert a value to an ASCII hexadecimal representation</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="Printf"></a><code>function <b>Printf</b>(const s : string; var Buf; size : word): string;</code></td>
+</tr>
+</table>
+<p>Format a string and print it out to the console<p>This routine formats the string specified in s to       the format specified and returns the resulting       string.         The following specifiers are allowed:       %d : The buffer contents contains an integer       %s : The buffer contents contains a string, terminated             by a null character.       %bh : The buffer contents contains a byte coded in             BCD format, only the high byte will be kept.       %bl : The buffer contents contains a byte coded in             BCD format, only the low byte will be kept.           
+ s  The string to format, with format specifiers       
+ buf  The buffer containing the data       
+ size  The size of the data in the buffer       
+ Returns  The resulting formatted string</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="StreamErrorProcedure"></a><code>procedure <b>StreamErrorProcedure</b>(Var S: TStream);</code></td>
+</tr>
+</table>
+<p>Generic stream error procedure<p>Generic stream error procedure that        can be used to set <code>streamerror</code></p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="stringdispose"></a><code>procedure <b>stringdispose</b>(var p : <a class="normal" href="utils.html#PshortString">pShortstring</a>);</code></td>
+</tr>
+</table>
+<p>&nbsp;</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="stringdup"></a><code>function <b>stringdup</b>(const s : string) : <a class="normal" href="utils.html#PshortString">pShortstring</a>;</code></td>
+</tr>
+</table>
+<p>&nbsp;</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="SwapLong"></a><code>Procedure <b>SwapLong</b>(var x : longword);</code></td>
+</tr>
+</table>
+<p>Change the endian of a 32-bit value</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="SwapWord"></a><code>Procedure <b>SwapWord</b>(var x : word);</code></td>
+</tr>
+</table>
+<p>Change the endian of a 16-bit value</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="TrimLeft"></a><code>function <b>TrimLeft</b>(const S: string): string;</code></td>
+</tr>
+</table>
+<p>Remove all whitespace from the start of a string</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="TrimRight"></a><code>function <b>TrimRight</b>(const S: string): string;</code></td>
+</tr>
+</table>
+<p>Remove all whitespace from the end of a string</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="uppercase"></a><code>function <b>uppercase</b>(s: string):string;</code></td>
+</tr>
+</table>
+<p>&nbsp;</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="UpString"></a><code>function <b>UpString</b>(s : string): string;</code></td>
+</tr>
+</table>
+<p>Convert a string to uppercase ASCII</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="ValBinary"></a><code>function <b>ValBinary</b>(const S:String; var code: integer):longint;</code></td>
+</tr>
+</table>
+<p><p>Convert a binary value represented by a string to its        numerical value. If there is no error, <code>code</code> will be        equal to zero.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="ValDecimal"></a><code>function <b>ValDecimal</b>(const S:String; var code: integer):longint;</code></td>
+</tr>
+</table>
+<p><p>Convert a decimal value represented by a string to its        numerical value. If there is no error, <code>code</code> will be        equal to zero.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="ValHexadecimal"></a><code>function <b>ValHexadecimal</b>(const S:String; var code: integer):longint;</code></td>
+</tr>
+</table>
+<p><p>Convert an hexadecimal value represented by a string to its        numerical value. If there is no error, <code>code</code> will be        equal to zero.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="ValOctal"></a><code>function <b>ValOctal</b>(const S:String;var code: integer):longint;</code></td>
+</tr>
+</table>
+<p><p>Convert an octal value represented by a string to its        numerical value. If there is no error, <code>code</code> will be        equal to zero.</p>
+</p>
+<a name="@Types"></a><h2>Types</h2>
+<table class="itemlist" cellspacing="2" cellpadding="4" width="100%"><tr class="listheader"><th class="listheader" nowrap="nowrap">Name</th><th class="listheader" width="100%">Description</th></tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="PshortString"></a>PshortString<code> = ^ShortString;</code></td>
+<td>&nbsp;</td>
+</tr>
+</table><a name="@Constants"></a><h2>Constants</h2>
+<table class="itemlist" cellspacing="2" cellpadding="4" width="100%"><tr class="listheader"><th class="listheader" nowrap="nowrap">Name</th><th class="listheader" width="100%">Description</th></tr>
+<tr class="list" valign="top"><td class="itemname"><a name="READ_MODE"></a>READ_MODE<code> = 0;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="WRITE_MODE"></a>WRITE_MODE<code> = 1;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname"><a name="READ_WRITE_MODE"></a>READ_WRITE_MODE<code> = 2;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname"><a name="EXIT_DOSERROR"></a>EXIT_DOSERROR<code> = 2;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname"><a name="EXIT_ERROR"></a>EXIT_ERROR<code> = 1;</code></td>
+<td>&nbsp;</td>
+</tr>
+</table><a name="@Variables"></a><h2>Author</h2>
+<p>Carl Eric Codere</p>
+<hr noshade="1" size="1"/><em>Generated by <a class="normal" target="_new" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8-pre7</a> on 2004-05-05 12:05:51</em>
+</body></html>
