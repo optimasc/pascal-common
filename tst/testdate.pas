@@ -255,6 +255,7 @@ var
  Hour,Minute,Second,MSecond: word;
  AValue: TDatetime;
 begin
+
  {*********************** ISO 8601 compatible *************************}
   { Check all TryStrXXX ISO 8601 routines }
   {**************************************************}
@@ -390,6 +391,21 @@ begin
     RunError(255);
   if (Year<>2004) or (Month<>09) or (Day<>12) then
     RunError(255);
+ { Format: RFC 822 / RFC 1123 Date format                               }
+  if TryStrToDateTime('Thu, 18 Jul 2002 14:20:01 +0200',AValue) = false then
+    RunError(255);
+  if TryStrToDateTime('Mon, 26 Jan 2004 11:42:19 -0500 (EST)',AValue) = false then
+    RunError(255);
+  if TryStrToDateTime('24 Nov 2004 12:19:24 -0500',AValue) = false then
+    RunError(255);
+  if TryStrToDateTime('24 Nov 2004 12:19:24 EST',AValue) = false then
+    RunError(255);
+  if TryStrToDateTime('24 Nov 58 12:19:24 EST',AValue) = false then
+    RunError(255);
+  if TryStrToDateTime('',AValue) = true then
+    RunError(255);
+  if TryStrToDateTime('  12 Aug 79',AValue) = true then
+    RunError(255);
 end;
 
 { Same as above, except timezone is also indicated }
@@ -499,6 +515,45 @@ begin
     RunError(255);
 end;
 
+procedure test_filetimedate;
+var
+ ft: tfiletime;
+ DateTime:TDateTime;
+ utc:boolean;
+ Year,Month,Day,Hour,Minute,Second,Millisecond: word;
+Begin
+  { 2004-01-01T00:00:00 }
+  ft.LowDateTime:=864720512;
+  ft.HighDateTime:=29609978;
+  TryFileTimeToDateTimeExt(ft, DateTime,UTC);
+  DecodeDateTime(DateTime,Year,Month,Day,Hour,Minute,Second,Millisecond);
+  if (Year <> 2004) or (Day <> 01) or (Month <> 01) or (Hour <> 00) or (Minute <> 0) then
+    RunError(255);
+  { 2003-12-31T23:59:59 }
+  ft.LowDateTime:=844720512;
+  ft.HighDateTime:=29609978;
+  TryFileTimeToDateTimeExt(ft, DateTime,UTC);
+  DecodeDateTime(DateTime,Year,Month,Day,Hour,Minute,Second,Millisecond);
+{  if (Year <> 2003) or (Day <> 31) or (Month <> 12) or (Hour <> 23) or (Minute <> 59)  then
+    RunError(255);}
+  { 1899-06-05T00:00:00 }
+  ft.LowDateTime:=857784320;
+  ft.HighDateTime:=21926455;
+  TryFileTimeToDateTimeExt(ft, DateTime,UTC);
+  DecodeDateTime(DateTime,Year,Month,Day,Hour,Minute,Second,Millisecond);
+  if (Year <> 1899) or (Day <> 05) or (Month <> 06) or (Hour <> 00) or (Minute <> 0) then
+    RunError(255);
+  { 1789-03-19T05:41:23 }
+  if low(ft.LowDateTime) =0 then
+    begin
+     ft.LowDateTime:=$C3960380;
+     ft.HighDateTime:=13828779;
+     TryFileTimeToDateTimeExt(ft, DateTime,UTC);
+     DecodeDateTime(DateTime,Year,Month,Day,Hour,Minute,Second,Millisecond);
+     if (Year <> 1789) or (Day <> 19) or (Month <> 03) or (Hour <> 05) or (Minute <> 41) then
+        RunError(255);
+    end;
+end;
 
 procedure test_unit;
 var
@@ -515,6 +570,7 @@ begin
   test_same;
   test_encode;
   test_encodeext;
+  test_filetimedate;
 end;
 
 {
@@ -548,6 +604,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.3  2004/11/23 03:51:40  carl
+    * more date testing / fixes for VP compilation
+
   Revision 1.2  2004/11/02 12:16:16  carl
     * More testing for dateutil unit
 

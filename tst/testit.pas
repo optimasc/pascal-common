@@ -263,57 +263,57 @@ uses dpautils,
 
   procedure testisvalidisodatestring;
   begin
-   if not IsValidIsoDateString('1998') then
+   if not IsValidIsoDateString('1998',false) then
      Runerror(255);
-   if IsValidIsoDateString(' 998') then
+   if IsValidIsoDateString(' 998',false) then
      Runerror(255);
-   if IsValidIsoDateString('C') then
+   if IsValidIsoDateString('C',false) then
      Runerror(255);
-   if IsValidIsoDateString('20056') then
+   if IsValidIsoDateString('20056',false) then
      Runerror(255);
-   if IsValidIsoDateString('1998/06/12') then
+   if IsValidIsoDateString('1998/06/12',false) then
      Runerror(255);
-   if not IsValidIsoDateString('1998-02') then
+   if not IsValidIsoDateString('1998-02',false) then
      Runerror(255);
-   if IsValidIsoDateString('1998-2') then
+   if IsValidIsoDateString('1998-2',false) then
      Runerror(255);
-   if not IsValidIsoDateString('19980201') then
+   if not IsValidIsoDateString('19980201',false) then
      Runerror(255);
-   if not IsValidIsoDateString('1998-02-01') then
+   if not IsValidIsoDateString('1998-02-01',false) then
      Runerror(255);
   end;
   
   procedure testisvalidisotimestring;
   begin
-   if not IsValidIsoTimeString('00:59:59') then
+   if not IsValidIsoTimeString('00:59:59',false) then
      RunError(255);
-   if IsValidIsoTimeString('25:59:59') then
+   if IsValidIsoTimeString('25:59:59',false) then
      RunError(255);
-   if IsValidIsoTimeString('00Z59:59') then
+   if IsValidIsoTimeString('00Z59:59',false) then
      RunError(255);
-   if IsValidIsoTimeString('00:59Z59') then
+   if IsValidIsoTimeString('00:59Z59',false) then
      RunError(255);
-   if IsValidIsoTimeString('00:59:77') then
+   if IsValidIsoTimeString('00:59:77',false) then
      RunError(255);
-   if not IsValidIsoTimeString('00:59:59+00:30') then
+   if not IsValidIsoTimeString('00:59:59+00:30',false) then
      RunError(255);
-   if IsValidIsoTimeString('00:59:59+ZZ:30') then
+   if IsValidIsoTimeString('00:59:59+ZZ:30',false) then
      RunError(255);
-   if IsValidIsoTimeString('00:59:59W00:30') then
+   if IsValidIsoTimeString('00:59:59W00:30',false) then
      RunError(255);
-   if not IsValidIsoTimeString('00:59:59-01:00') then
+   if not IsValidIsoTimeString('00:59:59-01:00',false) then
      RunError(255);
-   if not IsValidIsoTimeString('00:59:59Z') then
+   if not IsValidIsoTimeString('00:59:59Z',false) then
      RunError(255);
-   if not IsValidIsoTimeString('005959') then
+   if not IsValidIsoTimeString('005959',false) then
      RunError(255);
-   if not IsValidIsoTimeString('005959') then
+   if not IsValidIsoTimeString('005959',false) then
      RunError(255);
-   if not IsValidIsoTimeString('005959Z') then
+   if not IsValidIsoTimeString('005959Z',false) then
      RunError(255);
-   if not IsValidIsoTimeString('00:59') then
+   if not IsValidIsoTimeString('00:59',false) then
      RunError(255);
-   if not IsValidIsoTimeString('0059') then
+   if not IsValidIsoTimeString('0059',false) then
      RunError(255);
 
   end;
@@ -321,7 +321,7 @@ uses dpautils,
 
   procedure testisvalidisodatetimestring;
   begin
-   if not IsValidIsoDateTimeString('1998-02-01T00:59:59') then
+   if not IsValidIsoDateTimeString('1998-02-01T00:59:59',false) then
      RunError(255);
   end;
 
@@ -348,6 +348,15 @@ uses dpautils,
     if mime_isvalidcontenttype('audio-x-test') then
       RunError(255);
     if mime_isvalidcontenttype('audio') then
+      RunError(255);
+  end;
+
+  procedure testcodepage;
+  var
+   s: string;
+  begin
+    s:=MicrosoftCodePageToMIMECharset(65001);
+    if s<> 'UTF-8' then
       RunError(255);
   end;
 
@@ -419,9 +428,6 @@ uses dpautils,
     if strcomp(p,'Hello') <> 0 then
       RunError(255);
     utf8strdispose(p);  
-    putf:=ucs4Strnew(strnull,'CP850');
-    if assigned(putf) then
-       RunError(255);
     putf:=ucs4Strnew(strnull,'cp850');
     putf:=ucs4Strdispose(putf);
     if assigned(putf) then
@@ -497,6 +503,7 @@ Begin
   s:=DirectorySeparator;
   s:=PathSeparator;
   b:=FileNameCaseSensitive;
+  testcodepage;
   testdate.test_unit;
   testsgml.test_unit;
   testietf.test_unit;
@@ -519,6 +526,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.16  2004/11/23 03:51:40  carl
+    * more date testing / fixes for VP compilation
+
   Revision 1.15  2004/11/18 04:23:09  carl
     * more routine testing
 
