@@ -1,5 +1,5 @@
 {
-    $Id: dateutil.pas,v 1.3 2004-10-27 01:57:45 carl Exp $
+    $Id: dateutil.pas,v 1.4 2004-10-31 19:52:50 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere (Optima SC Inc.)
 
     Date and time utility routines
@@ -13,7 +13,9 @@
 
     This unit is quite similar to the unit dateutils provided
     with Delphi 6 and Delphi 7. Only a subset of the API found
-    in those units is implemented in this unit.
+    in those units is implemented in this unit, furthermore it
+    contains a new set of extended API's included in the 
+    dateexth.inc file.
 
     There are subtle differences with the Delphi implementation:
     1. All string related parameters and function results use ISO 8601
@@ -24,7 +26,7 @@
     be considered as accurate.
 
     All dates are assumed to be in Gregorian calendar date
-    format (proleptic).
+    format (This is a proleptic Gregorian calendar unit).
 
 }
 unit dateutil;
@@ -168,24 +170,46 @@ function TryEncodeTime(Hour, Min, Sec, MSec: Word; var Time: TDateTime): Boolean
 function TryEncodeDateTime(const AYear, AMonth, ADay, AHour, AMinute, ASecond, AMilliSecond: Word;
    var AValue: TDateTime): Boolean;
 
-{** Converts a string to a TDateTime value, with a Boolean success code.}
+{** Converts a string to a TDateTime value, with a Boolean success code.
+
+    In the case where the date does not contain the full representation
+    of a date (for examples, YYYY or YYYY-MM), then the missing values
+    will be set to 1 to be legal.
+}
 function TryStrToDate(const S: string; var Value: TDateTime): Boolean;
 
 {** Converts a string to a TDateTime value with a Boolean success code.
 
-    The string should conform to the format of Complete Representation
-    for calendar dates (as specified in ISO 8601), which should include
-    the Time designator character.
+    Supported formats:
+    1) Format of Complete Representation for calendar dates
+    (as specified in ISO 8601), which should include the Time
+    designator character.
+    2) Format: 'YYYY-MM-DD HH:mm:ss [GMT|UTC|UT]'
+    3) Openoffice 1.1.x HTML date format: 'YYYYMMDD;HHmmssuu'
+    4) Adobe PDF 'D:YYYYMMDDHHMMSSOHH'mm'' format
 
-    The string can also use Timezone offsets, as specified
-    in ISO 8601, the returned value will be according to UTC
-    if timezone information is specified.
+    The returned value will be according to UTC if timezone
+    information is uncluded, otherwise, it will be left as is.
+    To determine if the value was actually converted to UTC,
+    use TryStrToDateTimeExt.
+
+    In the case where the date does not contain the full representation
+    of a date (for examples, YYYY or YYYY-MM), then the missing values
+    will be set to 1 to be legal.
+
 }
 function TryStrToDateTime(const S: string; var Value: TDateTime): Boolean;
 
 {** Converts a string to a TDateTime value with an error default,
-    The string can also use Timezone offsets, as specified
-    in ISO 8601, the returned value will be according to UTC
+
+    Supported formats:
+    1) ISO 8601 time format (complete representation) with
+       optional timezone designators.
+    2) Format: 'HH:mm:ss [GMT|UTC|UT]'
+    3) Openoffice 1.1.x HTML time format: 'HHmmssuu'
+    4) Adobe PDF 'D:YYYYMMDDHHMMSSOHH'mm'' format
+
+    The returned value will be according to UTC
     if timezone information is specified. The Date field is
     truncated and is equal to zero upon return.
 }
@@ -194,10 +218,11 @@ function TryStrToTime(const S: string; var Value: TDateTime): Boolean;
 {** Returns the year represented by a TDateTime value.}
 function YearOf(const AValue: TDateTime): Word;
 
+{$i dateexth.inc}
 
 implementation
 
-uses locale,dos;
+uses locale,dos,utils;
 
 {**************************************************************************}
 {                          Local  routines                                 }
@@ -372,9 +397,68 @@ begin
   end;
 end;*)
 
+{ Tries converting a time string to an ISO time string
+  returns converted string if conversion had success,
+  otherwise returns an unmodified string.
+}
+function converttoisotime(timestr: string): string;
+const
+  MAX_TIMEZONES = 3;
+  gmt_tz_str: array[1..MAX_TIMEZONES] of string[3] =
+  (
+   { Always use the biggest strings at the start }
+   'UTC',
+   'GMT',
+   'UT'
+  );
+  digits = ['0'..'9'];
+var
+ i,idx: integer;
+ outstr: string;
+ alldigits: boolean;
+begin
+  timestr:=upstring(trim(timestr));
+  outstr:=timestr;
+  for i:=1 to MAX_TIMEZONES do
+   begin
+     idx:=pos(gmt_tz_str[i],timestr);
+     if idx > 1 then
+       begin
+          { Don't copy the characters found, this should separate the time
+            from the timezone }
+          outstr:=copy(timestr,1,idx-1);
+          outstr:=trim(outstr);
+          outstr:=outstr+'Z';
+          converttoisotime:=outstr;
+          exit;
+       end;
+   end;
+  alldigits:=true;
+  { Is the string entirely composed of digits ? }
+  for i:=1 to length(outstr) do
+    begin
+      if not (outstr[i] in digits) then
+        begin
+          alldigits:=false;
+          break;
+        end;
+    end;
+  { If the string is entirely composed of digits,
+    remove the extra digits to have a HHmmss string
+  }
+  if alldigits then
+    begin
+      if length(outstr) > length('HHmmss') then
+       begin
+         delete(outstr,length('HHmmss')+1,length(outstr));
+       end;
+    end;
+  converttoisotime:=outstr;
+end;
+
 { Parse an ISO 8601 time string }
-function parsetime(const timestr: string; var hourval,minval, secval: word;
-  var offsethourval,offsetminval:integer): boolean;
+function parsetimeISO(timestr: string; var hourval,minval, secval: word;
+  var offsethourval,offsetminval:integer; var UTC: boolean): boolean;
 const
  TIME_SEPARATOR = ':';
 var
@@ -386,13 +470,15 @@ var
  code: integer;
  negative: boolean;
 begin
-  ParseTime:=false;
+  UTC:=false;
+  ParseTimeISO:=false;
   negative:=false;
   minstr:='';
   secstr:='';
   hourstr:='';
   offsethourstr:='00';
   offsetminstr:='00';
+  timestr:=trim(timestr);
   { search the possible cases }
   case length(timestr) of  
   { preferred format: hh:mm:ss }
@@ -409,7 +495,9 @@ begin
         if length(timestr) = 9 then
           begin
             if timestr[length(timestr)] <> 'Z' then
-              exit;
+              exit
+            else
+              UTC:=true;
           end
         else
         if length(timestr) = 14 then
@@ -446,7 +534,9 @@ begin
         if length(timestr) = 7 then
           begin
             if timestr[length(timestr)] <> 'Z' then
-              exit;
+              exit
+            else
+              UTC:=true;
           end
       end;
   { hour/min format: hh:mm }
@@ -527,11 +617,11 @@ begin
   { Now check the validity of the time value }
   if Not IsValidTime(hourval,minval,secval,0) then
      exit;
-  ParseTime:=true;
+  ParseTimeISO:=true;
 end;
 
 { Parse an ISO 8601 string date }
-function parsedate(const datestr:string; var yearval,
+function parsedateISO(datestr:string; var yearval,
  monthval,dayval: word): boolean;
 const
  DATE_SEPARATOR = '-';
@@ -541,10 +631,11 @@ var
  daystr: string[2];
  code: integer;
 begin
-  ParseDate:=false;
+  ParseDateISO:=false;
   monthstr:='';
   yearstr:='';
   daystr:='';
+  datestr:=trim(datestr);
   { search the possible cases }
   case length(datestr) of
   { preferred format: YYYY-MM-DD }
@@ -616,11 +707,127 @@ begin
   if not IsValidDate(YearVal,MonthVal,DayVal) then
     { nope, exit }
     exit;
-  ParseDate:=true;
+  ParseDateISO:=true;
 end;
+
+  { This converts and cleans up a date format
+    to the ISO 8601 format.
+  }
+  function AdobeDateToISODate(s: string): string;
+  const
+   ADOBE_DATE_FORMAT_ID = 'D:';
+  var
+   s1: string;
+   timezonestr: string;
+   index: integer;
+   finalstr: string;
+  begin
+    s1:='';
+    s:=Upstring(s);
+    s:=TrimLeft(s);
+    s:=TrimRight(s);
+    { Now verify if the D: delimiter is present }
+    if pos(ADOBE_DATE_FORMAT_ID,s)=1 then
+      begin
+        delete(s,1,length(ADOBE_DATE_FORMAT_ID));
+        case length(s) of
+        { YYYY }
+        4: begin
+             { add MMDDHHMMSS }
+             s:=s+'0101000000';
+           end;
+        { YYYYMM }
+        6: begin
+             s:=s+'01000000';
+           end;
+        { YYYYMMDD }
+        8: begin
+             s:=s+'000000';
+           end;
+        { YYYYMMDDHH }
+        10: begin
+             s:=s+'0000';
+            end;
+        { YYYYMMDDHHMM }
+        12: begin
+            end;
+        { YYYYMMDD HHMMSS }
+        14: begin
+            end;
+        { YYYYMMDDHHMMSSZ }
+        15: begin
+            end;
+        { YYYYMMDDHHMMSS+HH }
+        17: begin
+            end;
+        { YYYYMMDDHHSS+HH'MM' }
+        21: begin
+            end;
+        end;
+        { Now try copying only the YYYYMMDDHHMMSS parts }
+        index:=pos('-',s);
+        timezonestr:='';
+        s1:=s;
+        finalstr:=s1;
+        if index <> 0 then
+        begin
+          s1:=copy(s,1,index-1);
+          timezonestr:=copy(s,index,length(s));
+        end;
+        index:=pos('+',s);
+        if index <> 0 then
+        begin
+          s1:=copy(s,1,index-1);
+          timezonestr:=copy(s,index,length(s));
+        end;
+        index:=pos('Z',s);
+        if index <> 0 then
+        begin
+          s1:=copy(s,1,index-1);
+          timezonestr:=copy(s,index,length(s));
+        end;
+        { Now convert the timezone information  }
+        if length(timezonestr) > 0 then
+          begin
+            index:=pos('''',timezonestr);
+            { minutes! }
+            if index > 0 then
+              begin
+                timezonestr:=copy(timezonestr,1,index-1)+':'+
+                   copy(timezonestr,index+1,length(timezonestr));
+                { delete end minute marker }
+                index:=pos('''',timezonestr);
+                if index > 0 then
+                   delete(timezonestr,index,1);
+              end;
+          end;
+
+        { Separate Time from Date, only if there are any time components }
+        if length(s1) >= length('YYYYMMDD') then
+          begin                  { HH }             { MM }
+            finalstr:=copy(s1,1,8);
+            s:=copy(s1,9,2);
+            if length(s) > 0 then
+              finalstr:=finalstr+'T'+s;
+            s:=copy(s1,11,2);
+            if length(s) > 0 then
+              finalstr:=finalstr+':'+s;
+            s:=copy(s1,13,2);
+            if length(s) > 0 then
+              finalstr:=finalstr+':'+s;
+            finalstr:=finalstr+timezonestr;
+          end;
+      end;
+    AdobeDateToISODate:=finalSTR;
+  end;
+
 
 
 {**************************************************************************}
+
+{$i dateext.inc}
+
+
 function CurrentYear: word;
 var
  Year,Month,Day,DayOfWeek: word;
@@ -919,7 +1126,10 @@ var
   yearval,monthval,dayval: word;
 begin
   TryStrToDate:=false;
-  if not parsedate(s,yearval,monthval,dayval) then
+  yearval:=0;
+  monthval:=1;
+  dayval:=1;
+  if not parsedateISO(s,yearval,monthval,dayval) then
     exit;
   { Now convert to a Julian Day }
   Value:=datetojd(Yearval,Monthval,Dayval,0,0,0,0);
@@ -929,35 +1139,12 @@ end;
 
 
 
-
-
 function TryStrToDateTime(const S: string; var Value: TDateTime): Boolean;
-var
- idx: integer;
- minval,
- secval,
- hourval:word;
- offsetminval,
- offsethourval: integer;
- datestring,timestring: string;
- yearval,monthval,dayval: word;
- MSecVal: word;
-begin
-  TryStrToDateTime:=false;
-  MSecVal:=0;
-  idx:=pos('T',s);
-  datestring:=copy(s,1,idx-1);
-  timestring:=copy(s,idx+1,length(s));
-  if not parsetime(timestring,hourval,minval,secval,offsethourval,offsetminval) then
-    exit;
-  if not parsedate(datestring,yearval,monthval,dayval) then
-    exit;
-  Value:=datetojd(Yearval,Monthval,Dayval,HourVal,MinVal,SecVal,MSecval);
-  { Convert to UTC }
-  Value:=IncHour(Value,offsethourval);
-  Value:=IncMinute(Value,offsetminval);
-  TryStrToDatetime:=true;
-end;
+  var
+   utc: boolean;
+  begin
+    TryStrToDateTime:=TryStrToDateTimeExt(s,Value,utc);
+  end;
 
 
 function TryStrToTime(const S: string; var Value: TDateTime): Boolean;
@@ -968,10 +1155,13 @@ var
     msecval:word;
     offsetminval,
     offsethourval: integer;
+    timestr: string;
+    utc: boolean;
 begin
   TryStrToTime:=false;
   MSecVal:=0;
-  if not ParseTime(s,hourval,minval,secval,offsethourval,offsetminval) then
+  timestr:=converttoisotime(s);
+  if not ParseTimeISO(timestr,hourval,minval,secval,offsethourval,offsetminval,utc) then
     exit;
   { Now convert it }
   Value:=datetojd(0,0,0,HourVal,MinVal,SecVal,MSecVal);
@@ -996,6 +1186,9 @@ end;
 end.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.3  2004/10/27 01:57:45  carl
+   - avoid range check error warning
+
   Revision 1.2  2004/10/13 23:23:50  carl
     * change TDatetime type from extended to real.
 
