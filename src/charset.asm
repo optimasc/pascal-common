@@ -1,0 +1,11380 @@
+.MODEL LARGE, PASCAL
+.CODE
+charsetsproc PROC FAR
+	PUBLIC charsetsproc
+;-------------------------------------------------------
+; rec[00].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 017h,041h,044h,04Fh,042h,045h,02Dh,053h,054h,041h,04Eh,044h,041h,052h,044h,02Dh
+ DB 045h,04Eh,043h,04Fh,044h,049h,04Eh,047h,000h
+; rec[00].value:word 
+ DB 000h,000h
+; rec[00].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 010h,043h,053h,041h,044h,04Fh,042h,045h,053h,054h,041h,04Eh,044h,041h,052h,044h
+ DB 045h
+; rec[00].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[00].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[00].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[00].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[00].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[00].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[00].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[00].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[00].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[01].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 015h,041h,044h,04Fh,042h,045h,02Dh,053h,059h,04Dh,042h,04Fh,04Ch,02Dh,045h,04Eh
+ DB 043h,04Fh,044h,049h,04Eh,047h,000h,000h,000h
+; rec[01].value:word 
+ DB 000h,000h
+; rec[01].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,043h,053h,048h,050h,050h,053h,04Dh,041h,054h,048h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[01].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[01].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[01].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[01].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[01].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[01].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[01].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[01].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[01].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[02].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Ah,041h,04Dh,049h,047h,041h,02Dh,031h,032h,035h,031h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[02].value:word 
+ DB 000h,000h
+; rec[02].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 007h,041h,04Dh,049h,031h,032h,035h,031h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[02].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 009h,041h,04Dh,049h,047h,041h,031h,032h,035h,031h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[02].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 008h,041h,04Dh,049h,02Dh,031h,032h,035h,031h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[02].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[02].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[02].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[02].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[02].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[02].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[02].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[03].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 010h,041h,04Eh,053h,049h,05Fh,058h,033h,02Eh,031h,031h,030h,02Dh,031h,039h,038h
+ DB 033h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[03].value:word 
+ DB 000h,000h
+; rec[03].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 009h,049h,053h,04Fh,02Dh,049h,052h,02Dh,039h,039h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[03].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Dh,043h,053h,041h,05Fh,054h,035h,030h,030h,02Dh,031h,039h,038h,033h,000h,000h
+ DB 000h
+; rec[03].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 006h,04Eh,041h,050h,04Ch,050h,053h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[03].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Dh,043h,053h,049h,053h,04Fh,039h,039h,04Eh,041h,050h,04Ch,050h,053h,000h,000h
+ DB 000h
+; rec[03].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[03].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[03].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[03].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[03].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[03].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[04].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 008h,041h,053h,04Dh,04Fh,05Fh,034h,034h,039h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[04].value:word 
+ DB 000h,000h
+; rec[04].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 008h,049h,053h,04Fh,05Fh,039h,030h,033h,036h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[04].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 007h,041h,052h,041h,042h,049h,043h,037h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[04].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 009h,049h,053h,04Fh,02Dh,049h,052h,02Dh,038h,039h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[04].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Eh,043h,053h,049h,053h,04Fh,038h,039h,041h,053h,04Dh,04Fh,034h,034h,039h,000h
+ DB 000h
+; rec[04].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[04].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[04].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[04].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[04].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[04].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[05].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 004h,042h,049h,047h,035h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[05].value:word 
+ DB 000h,000h
+; rec[05].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 006h,043h,053h,042h,049h,047h,035h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[05].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[05].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[05].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[05].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[05].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[05].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[05].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[05].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[05].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[06].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Ah,042h,049h,047h,035h,02Dh,048h,04Bh,053h,043h,053h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[06].value:word 
+ DB 000h,000h
+; rec[06].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[06].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[06].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[06].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[06].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[06].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[06].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[06].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[06].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[06].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[07].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 006h,042h,04Fh,043h,055h,02Dh,031h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[07].value:word 
+ DB 000h,000h
+; rec[07].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 008h,043h,053h,042h,04Fh,043h,055h,02Dh,031h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[07].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[07].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[07].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[07].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[07].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[07].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[07].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[07].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[07].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[08].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 007h,042h,053h,05Fh,034h,037h,033h,030h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[08].value:word 
+ DB 000h,000h
+; rec[08].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 008h,049h,053h,04Fh,02Dh,049h,052h,02Dh,034h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[08].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 009h,049h,053h,04Fh,036h,034h,036h,02Dh,047h,042h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[08].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 002h,047h,042h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[08].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 002h,055h,04Bh,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[08].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 010h,043h,053h,049h,053h,04Fh,034h,055h,04Eh,049h,054h,045h,044h,04Bh,049h,04Eh
+ DB 047h
+; rec[08].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[08].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[08].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[08].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[08].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[09].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Bh,042h,053h,05Fh,056h,049h,045h,057h,044h,041h,054h,041h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[09].value:word 
+ DB 000h,000h
+; rec[09].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 009h,049h,053h,04Fh,02Dh,049h,052h,02Dh,034h,037h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[09].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 010h,043h,053h,049h,053h,04Fh,034h,037h,042h,053h,056h,049h,045h,057h,044h,041h
+ DB 054h
+; rec[09].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[09].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[09].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[09].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[09].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[09].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[09].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[09].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[10].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 006h,043h,045h,053h,055h,02Dh,038h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[10].value:word 
+ DB 000h,000h
+; rec[10].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 008h,043h,053h,043h,045h,053h,055h,02Dh,038h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[10].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[10].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[10].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[10].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[10].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[10].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[10].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[10].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[10].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[11].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 011h,043h,053h,041h,05Fh,05Ah,032h,034h,033h,02Eh,034h,02Dh,031h,039h,038h,035h
+ DB 02Dh,031h,000h,000h,000h,000h,000h,000h,000h
+; rec[11].value:word 
+ DB 000h,000h
+; rec[11].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,049h,053h,04Fh,02Dh,049h,052h,02Dh,031h,032h,031h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[11].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 009h,049h,053h,04Fh,036h,034h,036h,02Dh,043h,041h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[11].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 006h,043h,053h,041h,037h,02Dh,031h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[11].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 002h,043h,041h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[11].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 010h,043h,053h,049h,053h,04Fh,031h,032h,031h,043h,041h,04Eh,041h,044h,049h,041h
+ DB 04Eh
+; rec[11].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[11].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[11].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[11].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[11].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[12].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 011h,043h,053h,041h,05Fh,05Ah,032h,034h,033h,02Eh,034h,02Dh,031h,039h,038h,035h
+ DB 02Dh,032h,000h,000h,000h,000h,000h,000h,000h
+; rec[12].value:word 
+ DB 000h,000h
+; rec[12].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,049h,053h,04Fh,02Dh,049h,052h,02Dh,031h,032h,032h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[12].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,049h,053h,04Fh,036h,034h,036h,02Dh,043h,041h,032h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[12].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 006h,043h,053h,041h,037h,02Dh,032h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[12].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 010h,043h,053h,049h,053h,04Fh,031h,032h,032h,043h,041h,04Eh,041h,044h,049h,041h
+ DB 04Eh
+; rec[12].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[12].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[12].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[12].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[12].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[12].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[13].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 012h,043h,053h,041h,05Fh,05Ah,032h,034h,033h,02Eh,034h,02Dh,031h,039h,038h,035h
+ DB 02Dh,047h,052h,000h,000h,000h,000h,000h,000h
+; rec[13].value:word 
+ DB 000h,000h
+; rec[13].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,049h,053h,04Fh,02Dh,049h,052h,02Dh,031h,032h,033h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[13].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 010h,043h,053h,049h,053h,04Fh,031h,032h,033h,043h,053h,041h,05Ah,032h,034h,033h
+ DB 034h
+; rec[13].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[13].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[13].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[13].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[13].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[13].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[13].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[13].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[14].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Ah,043h,053h,04Eh,05Fh,033h,036h,039h,031h,030h,033h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[14].value:word 
+ DB 000h,000h
+; rec[14].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,049h,053h,04Fh,02Dh,049h,052h,02Dh,031h,033h,039h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[14].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 010h,043h,053h,049h,053h,04Fh,031h,033h,039h,043h,053h,04Eh,033h,036h,039h,031h
+ DB 030h
+; rec[14].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[14].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[14].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[14].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[14].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[14].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[14].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[14].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[15].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 007h,044h,045h,043h,02Dh,04Dh,043h,053h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[15].value:word 
+ DB 000h,000h
+; rec[15].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 003h,044h,045h,043h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[15].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 008h,043h,053h,044h,045h,043h,04Dh,043h,053h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[15].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[15].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[15].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[15].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[15].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[15].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[15].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[15].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[16].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 009h,044h,049h,04Eh,05Fh,036h,036h,030h,030h,033h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[16].value:word 
+ DB 000h,000h
+; rec[16].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 009h,049h,053h,04Fh,02Dh,049h,052h,02Dh,032h,031h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[16].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 002h,044h,045h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[16].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 009h,049h,053h,04Fh,036h,034h,036h,02Dh,044h,045h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[16].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Dh,043h,053h,049h,053h,04Fh,032h,031h,047h,045h,052h,04Dh,041h,04Eh,000h,000h
+ DB 000h
+; rec[16].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[16].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[16].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[16].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[16].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[16].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[17].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 007h,044h,053h,05Fh,032h,030h,038h,039h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[17].value:word 
+ DB 000h,000h
+; rec[17].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 006h,044h,053h,032h,030h,038h,039h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[17].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 009h,049h,053h,04Fh,036h,034h,036h,02Dh,044h,04Bh,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[17].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 002h,044h,04Bh,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[17].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Eh,043h,053h,049h,053h,04Fh,036h,034h,036h,044h,041h,04Eh,049h,053h,048h,000h
+ DB 000h
+; rec[17].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[17].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[17].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[17].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[17].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[17].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[18].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Ch,045h,042h,043h,044h,049h,043h,02Dh,041h,054h,02Dh,044h,045h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[18].value:word 
+ DB 000h,000h
+; rec[18].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Fh,043h,053h,049h,042h,04Dh,045h,042h,043h,044h,049h,043h,041h,054h,044h,045h
+ DB 000h
+; rec[18].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[18].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[18].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[18].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[18].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[18].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[18].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[18].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[18].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[19].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Eh,045h,042h,043h,044h,049h,043h,02Dh,041h,054h,02Dh,044h,045h,02Dh,041h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[19].value:word 
+ DB 000h,000h
+; rec[19].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Dh,043h,053h,045h,042h,043h,044h,049h,043h,041h,054h,044h,045h,041h,000h,000h
+ DB 000h
+; rec[19].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[19].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[19].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[19].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[19].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[19].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[19].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[19].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[19].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[20].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Ch,045h,042h,043h,044h,049h,043h,02Dh,043h,041h,02Dh,046h,052h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[20].value:word 
+ DB 000h,000h
+; rec[20].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ch,043h,053h,045h,042h,043h,044h,049h,043h,043h,041h,046h,052h,000h,000h,000h
+ DB 000h
+; rec[20].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[20].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[20].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[20].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[20].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[20].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[20].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[20].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[20].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[21].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Ch,045h,042h,043h,044h,049h,043h,02Dh,044h,04Bh,02Dh,04Eh,04Fh,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[21].value:word 
+ DB 000h,000h
+; rec[21].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ch,043h,053h,045h,042h,043h,044h,049h,043h,044h,04Bh,04Eh,04Fh,000h,000h,000h
+ DB 000h
+; rec[21].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[21].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[21].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[21].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[21].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[21].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[21].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[21].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[21].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[22].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Eh,045h,042h,043h,044h,049h,043h,02Dh,044h,04Bh,02Dh,04Eh,04Fh,02Dh,041h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[22].value:word 
+ DB 000h,000h
+; rec[22].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Dh,043h,053h,045h,042h,043h,044h,049h,043h,044h,04Bh,04Eh,04Fh,041h,000h,000h
+ DB 000h
+; rec[22].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[22].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[22].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[22].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[22].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[22].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[22].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[22].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[22].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[23].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 009h,045h,042h,043h,044h,049h,043h,02Dh,045h,053h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[23].value:word 
+ DB 000h,000h
+; rec[23].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,043h,053h,045h,042h,043h,044h,049h,043h,045h,053h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[23].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[23].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[23].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[23].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[23].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[23].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[23].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[23].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[23].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[24].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Bh,045h,042h,043h,044h,049h,043h,02Dh,045h,053h,02Dh,041h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[24].value:word 
+ DB 000h,000h
+; rec[24].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Bh,043h,053h,045h,042h,043h,044h,049h,043h,045h,053h,041h,000h,000h,000h,000h
+ DB 000h
+; rec[24].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[24].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[24].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[24].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[24].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[24].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[24].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[24].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[24].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[25].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Bh,045h,042h,043h,044h,049h,043h,02Dh,045h,053h,02Dh,053h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[25].value:word 
+ DB 000h,000h
+; rec[25].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Bh,043h,053h,045h,042h,043h,044h,049h,043h,045h,053h,053h,000h,000h,000h,000h
+ DB 000h
+; rec[25].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[25].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[25].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[25].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[25].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[25].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[25].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[25].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[25].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[26].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Ch,045h,042h,043h,044h,049h,043h,02Dh,046h,049h,02Dh,053h,045h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[26].value:word 
+ DB 000h,000h
+; rec[26].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ch,043h,053h,045h,042h,043h,044h,049h,043h,046h,049h,053h,045h,000h,000h,000h
+ DB 000h
+; rec[26].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[26].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[26].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[26].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[26].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[26].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[26].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[26].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[26].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[27].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Eh,045h,042h,043h,044h,049h,043h,02Dh,046h,049h,02Dh,053h,045h,02Dh,041h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[27].value:word 
+ DB 000h,000h
+; rec[27].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Dh,043h,053h,045h,042h,043h,044h,049h,043h,046h,049h,053h,045h,041h,000h,000h
+ DB 000h
+; rec[27].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[27].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[27].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[27].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[27].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[27].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[27].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[27].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[27].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[28].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 009h,045h,042h,043h,044h,049h,043h,02Dh,046h,052h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[28].value:word 
+ DB 000h,000h
+; rec[28].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,043h,053h,045h,042h,043h,044h,049h,043h,046h,052h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[28].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[28].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[28].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[28].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[28].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[28].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[28].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[28].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[28].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[29].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 009h,045h,042h,043h,044h,049h,043h,02Dh,049h,054h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[29].value:word 
+ DB 000h,000h
+; rec[29].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,043h,053h,045h,042h,043h,044h,049h,043h,049h,054h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[29].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[29].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[29].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[29].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[29].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[29].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[29].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[29].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[29].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[30].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 009h,045h,042h,043h,044h,049h,043h,02Dh,050h,054h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[30].value:word 
+ DB 000h,000h
+; rec[30].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,043h,053h,045h,042h,043h,044h,049h,043h,050h,054h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[30].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[30].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[30].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[30].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[30].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[30].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[30].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[30].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[30].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[31].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 009h,045h,042h,043h,044h,049h,043h,02Dh,055h,04Bh,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[31].value:word 
+ DB 000h,000h
+; rec[31].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,043h,053h,045h,042h,043h,044h,049h,043h,055h,04Bh,000h,000h,000h,000h,000h
+ DB 000h
+; rec[31].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[31].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[31].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[31].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[31].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[31].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[31].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[31].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[31].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[32].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 009h,045h,042h,043h,044h,049h,043h,02Dh,055h,053h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[32].value:word 
+ DB 000h,000h
+; rec[32].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,043h,053h,045h,042h,043h,044h,049h,043h,055h,053h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[32].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[32].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[32].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[32].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[32].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[32].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[32].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[32].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[32].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[33].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Dh,045h,043h,04Dh,041h,02Dh,043h,059h,052h,049h,04Ch,04Ch,049h,043h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[33].value:word 
+ DB 000h,000h
+; rec[33].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,049h,053h,04Fh,02Dh,049h,052h,02Dh,031h,031h,031h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[33].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 006h,04Bh,04Fh,049h,038h,02Dh,045h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[33].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 010h,043h,053h,049h,053h,04Fh,031h,031h,031h,045h,043h,04Dh,041h,043h,059h,052h
+ DB 049h
+; rec[33].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[33].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[33].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[33].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[33].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[33].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[33].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[34].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 002h,045h,053h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[34].value:word 
+ DB 000h,000h
+; rec[34].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 009h,049h,053h,04Fh,02Dh,049h,052h,02Dh,031h,037h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[34].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 009h,049h,053h,04Fh,036h,034h,036h,02Dh,045h,053h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[34].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Eh,043h,053h,049h,053h,04Fh,031h,037h,053h,050h,041h,04Eh,049h,053h,048h,000h
+ DB 000h
+; rec[34].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[34].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[34].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[34].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[34].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[34].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[34].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[35].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 003h,045h,053h,032h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[35].value:word 
+ DB 000h,000h
+; rec[35].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 009h,049h,053h,04Fh,02Dh,049h,052h,02Dh,038h,035h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[35].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,049h,053h,04Fh,036h,034h,036h,02Dh,045h,053h,032h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[35].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Fh,043h,053h,049h,053h,04Fh,038h,035h,053h,050h,041h,04Eh,049h,053h,048h,032h
+ DB 000h
+; rec[35].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[35].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[35].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[35].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[35].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[35].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[35].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[36].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 006h,045h,055h,043h,02Dh,04Ah,050h,045h,044h,05Fh,055h,04Eh,049h,058h,05Fh,043h
+ DB 04Fh,044h,045h,05Fh,050h,041h,043h,04Bh,000h
+; rec[36].value:word 
+ DB 000h,000h
+; rec[36].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 010h,043h,053h,045h,055h,043h,050h,04Bh,044h,046h,04Dh,054h,04Ah,041h,050h,041h
+ DB 04Eh
+; rec[36].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 010h,045h,058h,054h,045h,04Eh,044h,045h,044h,05Fh,055h,04Eh,049h,058h,05Fh,043h
+ DB 04Fh
+; rec[36].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[36].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[36].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[36].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[36].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[36].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[36].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[36].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[37].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 006h,045h,055h,043h,02Dh,04Bh,052h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[37].value:word 
+ DB 000h,000h
+; rec[37].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 007h,043h,053h,045h,055h,043h,04Bh,052h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[37].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[37].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[37].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[37].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[37].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[37].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[37].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[37].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[37].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[38].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 017h,045h,058h,054h,045h,04Eh,044h,045h,044h,05Fh,055h,04Eh,049h,058h,05Fh,043h
+ DB 04Fh,044h,045h,05Fh,046h,049h,058h,045h,000h
+; rec[38].value:word 
+ DB 000h,000h
+; rec[38].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 010h,043h,053h,045h,055h,043h,046h,049h,058h,057h,049h,044h,04Ah,041h,050h,041h
+ DB 04Eh
+; rec[38].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[38].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[38].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[38].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[38].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[38].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[38].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[38].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[38].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[39].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 007h,047h,042h,031h,038h,030h,033h,030h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[39].value:word 
+ DB 000h,000h
+; rec[39].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[39].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[39].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[39].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[39].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[39].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[39].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[39].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[39].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[39].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[40].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 006h,047h,042h,032h,033h,031h,032h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[40].value:word 
+ DB 000h,000h
+; rec[40].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 008h,043h,053h,047h,042h,032h,033h,031h,032h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[40].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[40].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[40].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[40].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[40].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[40].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[40].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[40].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[40].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[41].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 003h,047h,042h,04Bh,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[41].value:word 
+ DB 000h,000h
+; rec[41].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 005h,043h,050h,039h,033h,036h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[41].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 005h,04Dh,053h,039h,033h,036h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[41].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Bh,057h,049h,04Eh,044h,04Fh,057h,053h,02Dh,039h,033h,036h,000h,000h,000h,000h
+ DB 000h
+; rec[41].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[41].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[41].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[41].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[41].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[41].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[41].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[42].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Ah,047h,042h,05Fh,031h,039h,038h,038h,02Dh,038h,030h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[42].value:word 
+ DB 000h,000h
+; rec[42].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 009h,049h,053h,04Fh,02Dh,049h,052h,02Dh,035h,037h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[42].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 002h,043h,04Eh,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[42].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 009h,049h,053h,04Fh,036h,034h,036h,02Dh,043h,04Eh,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[42].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Dh,043h,053h,049h,053h,04Fh,035h,037h,047h,042h,031h,039h,038h,038h,000h,000h
+ DB 000h
+; rec[42].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[42].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[42].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[42].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[42].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[42].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[43].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Ah,047h,042h,05Fh,032h,033h,031h,032h,02Dh,038h,030h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[43].value:word 
+ DB 000h,000h
+; rec[43].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 009h,049h,053h,04Fh,02Dh,049h,052h,02Dh,035h,038h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[43].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 007h,043h,048h,049h,04Eh,045h,053h,045h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[43].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Fh,043h,053h,049h,053h,04Fh,035h,038h,047h,042h,032h,033h,031h,032h,038h,030h
+ DB 000h
+; rec[43].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[43].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[43].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[43].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[43].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[43].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[43].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[44].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Dh,047h,04Fh,053h,054h,05Fh,031h,039h,037h,036h,038h,02Dh,037h,034h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[44].value:word 
+ DB 000h,000h
+; rec[44].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Dh,053h,054h,05Fh,053h,045h,056h,05Fh,033h,035h,038h,02Dh,038h,038h,000h,000h
+ DB 000h
+; rec[44].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,049h,053h,04Fh,02Dh,049h,052h,02Dh,031h,035h,033h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[44].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 010h,043h,053h,049h,053h,04Fh,031h,035h,033h,047h,04Fh,053h,054h,031h,039h,037h
+ DB 036h
+; rec[44].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[44].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[44].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[44].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[44].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[44].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[44].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[45].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Bh,047h,052h,045h,045h,04Bh,02Dh,043h,043h,049h,054h,054h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[45].value:word 
+ DB 000h,000h
+; rec[45].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,049h,053h,04Fh,02Dh,049h,052h,02Dh,031h,035h,030h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[45].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 008h,043h,053h,049h,053h,04Fh,031h,035h,030h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[45].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 010h,043h,053h,049h,053h,04Fh,031h,035h,030h,047h,052h,045h,045h,04Bh,043h,043h
+ DB 049h
+; rec[45].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[45].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[45].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[45].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[45].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[45].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[45].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[46].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 006h,047h,052h,045h,045h,04Bh,037h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[46].value:word 
+ DB 000h,000h
+; rec[46].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 009h,049h,053h,04Fh,02Dh,049h,052h,02Dh,038h,038h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[46].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Dh,043h,053h,049h,053h,04Fh,038h,038h,047h,052h,045h,045h,04Bh,037h,000h,000h
+ DB 000h
+; rec[46].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[46].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[46].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[46].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[46].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[46].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[46].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[46].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[47].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Ah,047h,052h,045h,045h,04Bh,037h,02Dh,04Fh,04Ch,044h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[47].value:word 
+ DB 000h,000h
+; rec[47].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 009h,049h,053h,04Fh,02Dh,049h,052h,02Dh,031h,038h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[47].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 010h,043h,053h,049h,053h,04Fh,031h,038h,047h,052h,045h,045h,04Bh,037h,04Fh,04Ch
+ DB 044h
+; rec[47].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[47].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[47].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[47].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[47].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[47].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[47].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[47].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[48].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Ah,048h,050h,02Dh,044h,045h,053h,04Bh,054h,04Fh,050h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[48].value:word 
+ DB 000h,000h
+; rec[48].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Bh,043h,053h,048h,050h,044h,045h,053h,04Bh,054h,04Fh,050h,000h,000h,000h,000h
+ DB 000h
+; rec[48].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[48].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[48].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[48].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[48].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[48].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[48].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[48].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[48].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[49].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 008h,048h,050h,02Dh,04Ch,045h,047h,041h,04Ch,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[49].value:word 
+ DB 000h,000h
+; rec[49].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 009h,043h,053h,048h,050h,04Ch,045h,047h,041h,04Ch,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[49].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[49].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[49].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[49].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[49].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[49].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[49].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[49].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[49].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[50].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 008h,048h,050h,02Dh,04Dh,041h,054h,048h,038h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[50].value:word 
+ DB 000h,000h
+; rec[50].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 009h,043h,053h,048h,050h,04Dh,041h,054h,048h,038h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[50].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[50].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[50].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[50].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[50].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[50].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[50].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[50].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[50].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[51].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Ah,048h,050h,02Dh,050h,049h,02Dh,046h,04Fh,04Eh,054h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[51].value:word 
+ DB 000h,000h
+; rec[51].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,043h,053h,048h,050h,050h,049h,046h,04Fh,04Eh,054h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[51].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[51].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[51].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[51].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[51].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[51].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[51].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[51].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[51].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[52].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 009h,048h,050h,02Dh,052h,04Fh,04Dh,041h,04Eh,038h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[52].value:word 
+ DB 000h,000h
+; rec[52].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 006h,052h,04Fh,04Dh,041h,04Eh,038h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[52].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 002h,052h,038h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[52].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,043h,053h,048h,050h,052h,04Fh,04Dh,041h,04Eh,038h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[52].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[52].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[52].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[52].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[52].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[52].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[52].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[53].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Ah,048h,05Ah,02Dh,047h,042h,02Dh,032h,033h,031h,032h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[53].value:word 
+ DB 000h,000h
+; rec[53].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[53].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[53].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[53].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[53].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[53].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[53].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[53].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[53].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[53].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[54].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Bh,049h,042h,04Dh,02Dh,053h,059h,04Dh,042h,04Fh,04Ch,053h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[54].value:word 
+ DB 000h,000h
+; rec[54].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ch,043h,053h,049h,042h,04Dh,053h,059h,04Dh,042h,04Fh,04Ch,053h,000h,000h,000h
+ DB 000h
+; rec[54].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[54].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[54].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[54].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[54].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[54].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[54].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[54].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[54].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[55].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 008h,049h,042h,04Dh,02Dh,054h,048h,041h,049h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[55].value:word 
+ DB 000h,000h
+; rec[55].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 009h,043h,053h,049h,042h,04Dh,054h,048h,041h,049h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[55].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[55].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[55].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[55].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[55].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[55].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[55].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[55].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[55].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[56].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 008h,049h,042h,04Dh,030h,030h,038h,035h,038h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[56].value:word 
+ DB 000h,000h
+; rec[56].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,043h,043h,053h,049h,044h,030h,030h,038h,035h,038h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[56].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 007h,043h,050h,030h,030h,038h,035h,038h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[56].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 010h,050h,043h,02Dh,04Dh,055h,04Ch,054h,049h,04Ch,049h,04Eh,047h,055h,041h,04Ch
+ DB 02Dh
+; rec[56].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[56].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[56].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[56].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[56].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[56].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[56].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[57].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 008h,049h,042h,04Dh,030h,030h,039h,032h,034h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[57].value:word 
+ DB 000h,000h
+; rec[57].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,043h,043h,053h,049h,044h,030h,030h,039h,032h,034h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[57].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 007h,043h,050h,030h,030h,039h,032h,034h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[57].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 010h,045h,042h,043h,044h,049h,043h,02Dh,04Ch,041h,054h,049h,04Eh,039h,02Dh,02Dh
+ DB 045h
+; rec[57].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[57].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[57].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[57].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[57].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[57].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[57].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[58].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 008h,049h,042h,04Dh,030h,031h,031h,034h,030h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[58].value:word 
+ DB 000h,000h
+; rec[58].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,043h,043h,053h,049h,044h,030h,031h,031h,034h,030h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[58].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 007h,043h,050h,030h,031h,031h,034h,030h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[58].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 010h,045h,042h,043h,044h,049h,043h,02Dh,055h,053h,02Dh,033h,037h,02Bh,045h,055h
+ DB 052h
+; rec[58].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[58].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[58].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[58].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[58].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[58].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[58].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[59].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 008h,049h,042h,04Dh,030h,031h,031h,034h,031h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[59].value:word 
+ DB 000h,000h
+; rec[59].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,043h,043h,053h,049h,044h,030h,031h,031h,034h,031h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[59].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 007h,043h,050h,030h,031h,031h,034h,031h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[59].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 010h,045h,042h,043h,044h,049h,043h,02Dh,044h,045h,02Dh,032h,037h,033h,02Bh,045h
+ DB 055h
+; rec[59].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[59].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[59].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[59].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[59].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[59].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[59].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[60].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 008h,049h,042h,04Dh,030h,031h,031h,034h,032h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[60].value:word 
+ DB 000h,000h
+; rec[60].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,043h,043h,053h,049h,044h,030h,031h,031h,034h,032h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[60].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 007h,043h,050h,030h,031h,031h,034h,032h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[60].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 010h,045h,042h,043h,044h,049h,043h,02Dh,044h,04Bh,02Dh,032h,037h,037h,02Bh,045h
+ DB 055h
+; rec[60].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 010h,045h,042h,043h,044h,049h,043h,02Dh,04Eh,04Fh,02Dh,032h,037h,037h,02Bh,045h
+ DB 055h
+; rec[60].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[60].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[60].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[60].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[60].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[60].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[61].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 008h,049h,042h,04Dh,030h,031h,031h,034h,033h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[61].value:word 
+ DB 000h,000h
+; rec[61].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,043h,043h,053h,049h,044h,030h,031h,031h,034h,033h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[61].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 007h,043h,050h,030h,031h,031h,034h,033h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[61].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 010h,045h,042h,043h,044h,049h,043h,02Dh,046h,049h,02Dh,032h,037h,038h,02Bh,045h
+ DB 055h
+; rec[61].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 010h,045h,042h,043h,044h,049h,043h,02Dh,053h,045h,02Dh,032h,037h,038h,02Bh,045h
+ DB 055h
+; rec[61].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[61].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[61].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[61].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[61].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[61].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[62].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 008h,049h,042h,04Dh,030h,031h,031h,034h,034h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[62].value:word 
+ DB 000h,000h
+; rec[62].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,043h,043h,053h,049h,044h,030h,031h,031h,034h,034h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[62].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 007h,043h,050h,030h,031h,031h,034h,034h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[62].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 010h,045h,042h,043h,044h,049h,043h,02Dh,049h,054h,02Dh,032h,038h,030h,02Bh,045h
+ DB 055h
+; rec[62].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[62].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[62].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[62].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[62].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[62].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[62].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[63].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 008h,049h,042h,04Dh,030h,031h,031h,034h,035h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[63].value:word 
+ DB 000h,000h
+; rec[63].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,043h,043h,053h,049h,044h,030h,031h,031h,034h,035h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[63].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 007h,043h,050h,030h,031h,031h,034h,035h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[63].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 010h,045h,042h,043h,044h,049h,043h,02Dh,045h,053h,02Dh,032h,038h,034h,02Bh,045h
+ DB 055h
+; rec[63].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[63].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[63].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[63].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[63].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[63].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[63].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[64].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 008h,049h,042h,04Dh,030h,031h,031h,034h,036h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[64].value:word 
+ DB 000h,000h
+; rec[64].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,043h,043h,053h,049h,044h,030h,031h,031h,034h,036h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[64].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 007h,043h,050h,030h,031h,031h,034h,036h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[64].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 010h,045h,042h,043h,044h,049h,043h,02Dh,047h,042h,02Dh,032h,038h,035h,02Bh,045h
+ DB 055h
+; rec[64].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[64].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[64].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[64].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[64].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[64].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[64].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[65].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 008h,049h,042h,04Dh,030h,031h,031h,034h,037h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[65].value:word 
+ DB 000h,000h
+; rec[65].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,043h,043h,053h,049h,044h,030h,031h,031h,034h,037h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[65].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 007h,043h,050h,030h,031h,031h,034h,037h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[65].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 010h,045h,042h,043h,044h,049h,043h,02Dh,046h,052h,02Dh,032h,039h,037h,02Bh,045h
+ DB 055h
+; rec[65].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[65].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[65].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[65].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[65].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[65].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[65].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[66].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 008h,049h,042h,04Dh,030h,031h,031h,034h,038h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[66].value:word 
+ DB 000h,000h
+; rec[66].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,043h,043h,053h,049h,044h,030h,031h,031h,034h,038h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[66].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 007h,043h,050h,030h,031h,031h,034h,038h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[66].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Fh,045h,042h,043h,044h,049h,043h,02Dh,049h,04Eh,054h,045h,052h,04Eh,041h,054h
+ DB 000h
+; rec[66].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[66].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[66].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[66].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[66].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[66].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[66].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[67].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 008h,049h,042h,04Dh,030h,031h,031h,034h,039h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[67].value:word 
+ DB 000h,000h
+; rec[67].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,043h,043h,053h,049h,044h,030h,031h,031h,034h,039h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[67].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 007h,043h,050h,030h,031h,031h,034h,039h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[67].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 010h,045h,042h,043h,044h,049h,043h,02Dh,049h,053h,02Dh,038h,037h,031h,02Bh,045h
+ DB 055h
+; rec[67].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[67].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[67].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[67].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[67].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[67].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[67].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[68].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 006h,049h,042h,04Dh,030h,033h,037h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[68].value:word 
+ DB 000h,000h
+; rec[68].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 005h,043h,050h,030h,033h,037h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[68].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ch,045h,042h,043h,044h,049h,043h,02Dh,043h,050h,02Dh,055h,053h,000h,000h,000h
+ DB 000h
+; rec[68].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ch,045h,042h,043h,044h,049h,043h,02Dh,043h,050h,02Dh,043h,041h,000h,000h,000h
+ DB 000h
+; rec[68].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ch,045h,042h,043h,044h,049h,043h,02Dh,043h,050h,02Dh,057h,054h,000h,000h,000h
+ DB 000h
+; rec[68].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ch,045h,042h,043h,044h,049h,043h,02Dh,043h,050h,02Dh,04Eh,04Ch,000h,000h,000h
+ DB 000h
+; rec[68].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 008h,043h,053h,049h,042h,04Dh,030h,033h,037h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[68].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[68].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[68].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[68].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[69].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 006h,049h,042h,04Dh,030h,033h,038h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[69].value:word 
+ DB 000h,000h
+; rec[69].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,045h,042h,043h,044h,049h,043h,02Dh,049h,04Eh,054h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[69].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 005h,043h,050h,030h,033h,038h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[69].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 008h,043h,053h,049h,042h,04Dh,030h,033h,038h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[69].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[69].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[69].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[69].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[69].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[69].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[69].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[70].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 007h,049h,042h,04Dh,031h,030h,032h,036h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[70].value:word 
+ DB 000h,000h
+; rec[70].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 006h,043h,050h,031h,030h,032h,036h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[70].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 009h,043h,053h,049h,042h,04Dh,031h,030h,032h,036h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[70].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[70].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[70].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[70].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[70].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[70].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[70].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[70].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[71].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 007h,049h,042h,04Dh,031h,030h,034h,037h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[71].value:word 
+ DB 000h,000h
+; rec[71].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 008h,049h,042h,04Dh,02Dh,031h,030h,034h,037h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[71].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[71].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[71].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[71].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[71].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[71].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[71].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[71].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[71].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[72].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 006h,049h,042h,04Dh,032h,037h,033h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[72].value:word 
+ DB 000h,000h
+; rec[72].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 005h,043h,050h,032h,037h,033h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[72].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 008h,043h,053h,049h,042h,04Dh,032h,037h,033h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[72].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[72].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[72].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[72].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[72].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[72].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[72].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[72].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[73].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 006h,049h,042h,04Dh,032h,037h,034h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[73].value:word 
+ DB 000h,000h
+; rec[73].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 009h,045h,042h,043h,044h,049h,043h,02Dh,042h,045h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[73].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 005h,043h,050h,032h,037h,034h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[73].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 008h,043h,053h,049h,042h,04Dh,032h,037h,034h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[73].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[73].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[73].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[73].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[73].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[73].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[73].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[74].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 006h,049h,042h,04Dh,032h,037h,035h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[74].value:word 
+ DB 000h,000h
+; rec[74].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 009h,045h,042h,043h,044h,049h,043h,02Dh,042h,052h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[74].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 005h,043h,050h,032h,037h,035h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[74].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 008h,043h,053h,049h,042h,04Dh,032h,037h,035h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[74].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[74].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[74].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[74].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[74].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[74].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[74].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[75].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 006h,049h,042h,04Dh,032h,037h,037h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[75].value:word 
+ DB 000h,000h
+; rec[75].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ch,045h,042h,043h,044h,049h,043h,02Dh,043h,050h,02Dh,044h,04Bh,000h,000h,000h
+ DB 000h
+; rec[75].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ch,045h,042h,043h,044h,049h,043h,02Dh,043h,050h,02Dh,04Eh,04Fh,000h,000h,000h
+ DB 000h
+; rec[75].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 008h,043h,053h,049h,042h,04Dh,032h,037h,037h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[75].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[75].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[75].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[75].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[75].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[75].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[75].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[76].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 006h,049h,042h,04Dh,032h,037h,038h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[76].value:word 
+ DB 000h,000h
+; rec[76].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 005h,043h,050h,032h,037h,038h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[76].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ch,045h,042h,043h,044h,049h,043h,02Dh,043h,050h,02Dh,046h,049h,000h,000h,000h
+ DB 000h
+; rec[76].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ch,045h,042h,043h,044h,049h,043h,02Dh,043h,050h,02Dh,053h,045h,000h,000h,000h
+ DB 000h
+; rec[76].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 008h,043h,053h,049h,042h,04Dh,032h,037h,038h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[76].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[76].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[76].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[76].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[76].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[76].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[77].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 006h,049h,042h,04Dh,032h,038h,030h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[77].value:word 
+ DB 000h,000h
+; rec[77].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 005h,043h,050h,032h,038h,030h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[77].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ch,045h,042h,043h,044h,049h,043h,02Dh,043h,050h,02Dh,049h,054h,000h,000h,000h
+ DB 000h
+; rec[77].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 008h,043h,053h,049h,042h,04Dh,032h,038h,030h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[77].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[77].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[77].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[77].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[77].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[77].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[77].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[78].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 006h,049h,042h,04Dh,032h,038h,031h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[78].value:word 
+ DB 000h,000h
+; rec[78].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Bh,045h,042h,043h,044h,049h,043h,02Dh,04Ah,050h,02Dh,045h,000h,000h,000h,000h
+ DB 000h
+; rec[78].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 005h,043h,050h,032h,038h,031h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[78].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 008h,043h,053h,049h,042h,04Dh,032h,038h,031h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[78].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[78].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[78].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[78].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[78].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[78].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[78].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[79].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 006h,049h,042h,04Dh,032h,038h,034h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[79].value:word 
+ DB 000h,000h
+; rec[79].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 005h,043h,050h,032h,038h,034h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[79].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ch,045h,042h,043h,044h,049h,043h,02Dh,043h,050h,02Dh,045h,053h,000h,000h,000h
+ DB 000h
+; rec[79].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 008h,043h,053h,049h,042h,04Dh,032h,038h,034h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[79].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[79].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[79].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[79].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[79].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[79].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[79].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[80].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 006h,049h,042h,04Dh,032h,038h,035h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[80].value:word 
+ DB 000h,000h
+; rec[80].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 005h,043h,050h,032h,038h,035h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[80].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ch,045h,042h,043h,044h,049h,043h,02Dh,043h,050h,02Dh,047h,042h,000h,000h,000h
+ DB 000h
+; rec[80].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 008h,043h,053h,049h,042h,04Dh,032h,038h,035h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[80].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[80].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[80].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[80].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[80].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[80].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[80].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[81].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 006h,049h,042h,04Dh,032h,039h,030h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[81].value:word 
+ DB 000h,000h
+; rec[81].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 005h,043h,050h,032h,039h,030h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[81].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Eh,045h,042h,043h,044h,049h,043h,02Dh,04Ah,050h,02Dh,04Bh,041h,04Eh,041h,000h
+ DB 000h
+; rec[81].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 008h,043h,053h,049h,042h,04Dh,032h,039h,030h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[81].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[81].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[81].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[81].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[81].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[81].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[81].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[82].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 006h,049h,042h,04Dh,032h,039h,037h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[82].value:word 
+ DB 000h,000h
+; rec[82].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 005h,043h,050h,032h,039h,037h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[82].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ch,045h,042h,043h,044h,049h,043h,02Dh,043h,050h,02Dh,046h,052h,000h,000h,000h
+ DB 000h
+; rec[82].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 008h,043h,053h,049h,042h,04Dh,032h,039h,037h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[82].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[82].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[82].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[82].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[82].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[82].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[82].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[83].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 006h,049h,042h,04Dh,034h,032h,030h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[83].value:word 
+ DB 000h,000h
+; rec[83].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 005h,043h,050h,034h,032h,030h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[83].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Dh,045h,042h,043h,044h,049h,043h,02Dh,043h,050h,02Dh,041h,052h,031h,000h,000h
+ DB 000h
+; rec[83].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 008h,043h,053h,049h,042h,04Dh,034h,032h,030h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[83].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[83].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[83].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[83].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[83].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[83].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[83].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[84].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 006h,049h,042h,04Dh,034h,032h,033h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[84].value:word 
+ DB 000h,000h
+; rec[84].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 005h,043h,050h,034h,032h,033h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[84].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ch,045h,042h,043h,044h,049h,043h,02Dh,043h,050h,02Dh,047h,052h,000h,000h,000h
+ DB 000h
+; rec[84].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 008h,043h,053h,049h,042h,04Dh,034h,032h,033h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[84].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[84].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[84].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[84].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[84].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[84].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[84].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[85].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 006h,049h,042h,04Dh,034h,032h,034h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[85].value:word 
+ DB 000h,000h
+; rec[85].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 005h,043h,050h,034h,032h,034h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[85].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ch,045h,042h,043h,044h,049h,043h,02Dh,043h,050h,02Dh,048h,045h,000h,000h,000h
+ DB 000h
+; rec[85].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 008h,043h,053h,049h,042h,04Dh,034h,032h,034h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[85].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[85].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[85].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[85].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[85].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[85].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[85].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[86].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 006h,049h,042h,04Dh,034h,033h,037h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[86].value:word 
+ DB 000h,000h
+; rec[86].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 005h,043h,050h,034h,033h,037h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[86].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 003h,034h,033h,037h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[86].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 010h,043h,053h,050h,043h,038h,043h,04Fh,044h,045h,050h,041h,047h,045h,034h,033h
+ DB 037h
+; rec[86].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[86].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[86].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[86].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[86].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[86].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[86].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[87].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 006h,049h,042h,04Dh,035h,030h,030h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[87].value:word 
+ DB 000h,000h
+; rec[87].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 005h,043h,050h,035h,030h,030h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[87].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ch,045h,042h,043h,044h,049h,043h,02Dh,043h,050h,02Dh,042h,045h,000h,000h,000h
+ DB 000h
+; rec[87].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ch,045h,042h,043h,044h,049h,043h,02Dh,043h,050h,02Dh,043h,048h,000h,000h,000h
+ DB 000h
+; rec[87].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 008h,043h,053h,049h,042h,04Dh,035h,030h,030h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[87].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[87].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[87].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[87].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[87].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[87].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[88].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 006h,049h,042h,04Dh,037h,037h,035h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[88].value:word 
+ DB 000h,000h
+; rec[88].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 005h,043h,050h,037h,037h,035h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[88].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Dh,043h,053h,050h,043h,037h,037h,035h,042h,041h,04Ch,054h,049h,043h,000h,000h
+ DB 000h
+; rec[88].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[88].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[88].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[88].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[88].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[88].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[88].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[88].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[89].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 006h,049h,042h,04Dh,038h,035h,030h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[89].value:word 
+ DB 000h,000h
+; rec[89].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 005h,043h,050h,038h,035h,030h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[89].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 003h,038h,035h,030h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[89].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 010h,043h,053h,050h,043h,038h,035h,030h,04Dh,055h,04Ch,054h,049h,04Ch,049h,04Eh
+ DB 047h
+; rec[89].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[89].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[89].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[89].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[89].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[89].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[89].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[90].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 006h,049h,042h,04Dh,038h,035h,031h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[90].value:word 
+ DB 000h,000h
+; rec[90].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 005h,043h,050h,038h,035h,031h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[90].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 003h,038h,035h,031h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[90].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 008h,043h,053h,049h,042h,04Dh,038h,035h,031h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[90].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[90].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[90].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[90].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[90].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[90].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[90].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[91].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 006h,049h,042h,04Dh,038h,035h,032h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[91].value:word 
+ DB 000h,000h
+; rec[91].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 005h,043h,050h,038h,035h,032h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[91].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 003h,038h,035h,032h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[91].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 008h,043h,053h,050h,043h,050h,038h,035h,032h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[91].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[91].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[91].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[91].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[91].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[91].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[91].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[92].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 006h,049h,042h,04Dh,038h,035h,035h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[92].value:word 
+ DB 000h,000h
+; rec[92].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 005h,043h,050h,038h,035h,035h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[92].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 003h,038h,035h,035h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[92].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 008h,043h,053h,049h,042h,04Dh,038h,035h,035h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[92].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[92].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[92].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[92].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[92].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[92].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[92].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[93].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 006h,049h,042h,04Dh,038h,035h,037h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[93].value:word 
+ DB 000h,000h
+; rec[93].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 005h,043h,050h,038h,035h,037h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[93].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 003h,038h,035h,037h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[93].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 008h,043h,053h,049h,042h,04Dh,038h,035h,037h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[93].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[93].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[93].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[93].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[93].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[93].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[93].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[94].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 006h,049h,042h,04Dh,038h,036h,030h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[94].value:word 
+ DB 000h,000h
+; rec[94].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 005h,043h,050h,038h,036h,030h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[94].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 003h,038h,036h,030h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[94].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 008h,043h,053h,049h,042h,04Dh,038h,036h,030h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[94].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[94].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[94].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[94].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[94].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[94].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[94].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[95].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 006h,049h,042h,04Dh,038h,036h,031h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[95].value:word 
+ DB 000h,000h
+; rec[95].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 005h,043h,050h,038h,036h,031h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[95].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 003h,038h,036h,031h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[95].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 005h,043h,050h,02Dh,049h,053h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[95].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 008h,043h,053h,049h,042h,04Dh,038h,036h,031h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[95].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[95].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[95].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[95].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[95].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[95].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[96].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 006h,049h,042h,04Dh,038h,036h,032h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[96].value:word 
+ DB 000h,000h
+; rec[96].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 005h,043h,050h,038h,036h,032h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[96].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 003h,038h,036h,032h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[96].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 010h,043h,053h,050h,043h,038h,036h,032h,04Ch,041h,054h,049h,04Eh,048h,045h,042h
+ DB 052h
+; rec[96].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[96].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[96].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[96].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[96].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[96].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[96].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[97].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 006h,049h,042h,04Dh,038h,036h,033h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[97].value:word 
+ DB 000h,000h
+; rec[97].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 005h,043h,050h,038h,036h,033h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[97].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 003h,038h,036h,033h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[97].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 008h,043h,053h,049h,042h,04Dh,038h,036h,033h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[97].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[97].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[97].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[97].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[97].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[97].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[97].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[98].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 006h,049h,042h,04Dh,038h,036h,034h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[98].value:word 
+ DB 000h,000h
+; rec[98].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 005h,043h,050h,038h,036h,034h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[98].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 008h,043h,053h,049h,042h,04Dh,038h,036h,034h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[98].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[98].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[98].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[98].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[98].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[98].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[98].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[98].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[99].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 006h,049h,042h,04Dh,038h,036h,035h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[99].value:word 
+ DB 000h,000h
+; rec[99].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 005h,043h,050h,038h,036h,035h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[99].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 003h,038h,036h,035h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[99].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 008h,043h,053h,049h,042h,04Dh,038h,036h,035h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[99].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[99].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[99].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[99].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[99].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[99].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[99].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[100].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 006h,049h,042h,04Dh,038h,036h,036h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[100].value:word 
+ DB 000h,000h
+; rec[100].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 005h,043h,050h,038h,036h,036h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[100].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 003h,038h,036h,036h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[100].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 008h,043h,053h,049h,042h,04Dh,038h,036h,036h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[100].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[100].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[100].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[100].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[100].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[100].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[100].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[101].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 006h,049h,042h,04Dh,038h,036h,038h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[101].value:word 
+ DB 000h,000h
+; rec[101].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 005h,043h,050h,038h,036h,038h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[101].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 005h,043h,050h,02Dh,041h,052h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[101].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 008h,043h,053h,049h,042h,04Dh,038h,036h,038h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[101].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[101].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[101].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[101].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[101].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[101].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[101].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[102].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 006h,049h,042h,04Dh,038h,036h,039h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[102].value:word 
+ DB 000h,000h
+; rec[102].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 005h,043h,050h,038h,036h,039h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[102].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 003h,038h,036h,039h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[102].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 005h,043h,050h,02Dh,047h,052h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[102].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 008h,043h,053h,049h,042h,04Dh,038h,036h,039h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[102].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[102].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[102].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[102].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[102].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[102].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[103].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 006h,049h,042h,04Dh,038h,037h,030h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[103].value:word 
+ DB 000h,000h
+; rec[103].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 005h,043h,050h,038h,037h,030h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[103].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Fh,045h,042h,043h,044h,049h,043h,02Dh,043h,050h,02Dh,052h,04Fh,045h,043h,045h
+ DB 000h
+; rec[103].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ch,045h,042h,043h,044h,049h,043h,02Dh,043h,050h,02Dh,059h,055h,000h,000h,000h
+ DB 000h
+; rec[103].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 008h,043h,053h,049h,042h,04Dh,038h,037h,030h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[103].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[103].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[103].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[103].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[103].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[103].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[104].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 006h,049h,042h,04Dh,038h,037h,031h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[104].value:word 
+ DB 000h,000h
+; rec[104].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 005h,043h,050h,038h,037h,031h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[104].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ch,045h,042h,043h,044h,049h,043h,02Dh,043h,050h,02Dh,049h,053h,000h,000h,000h
+ DB 000h
+; rec[104].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 008h,043h,053h,049h,042h,04Dh,038h,037h,031h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[104].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[104].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[104].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[104].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[104].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[104].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[104].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[105].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 006h,049h,042h,04Dh,038h,038h,030h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[105].value:word 
+ DB 000h,000h
+; rec[105].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 005h,043h,050h,038h,038h,030h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[105].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Fh,045h,042h,043h,044h,049h,043h,02Dh,043h,059h,052h,049h,04Ch,04Ch,049h,043h
+ DB 000h
+; rec[105].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 008h,043h,053h,049h,042h,04Dh,038h,038h,030h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[105].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[105].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[105].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[105].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[105].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[105].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[105].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[106].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 006h,049h,042h,04Dh,038h,039h,031h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[106].value:word 
+ DB 000h,000h
+; rec[106].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 005h,043h,050h,038h,039h,031h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[106].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 008h,043h,053h,049h,042h,04Dh,038h,039h,031h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[106].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[106].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[106].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[106].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[106].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[106].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[106].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[106].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[107].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 006h,049h,042h,04Dh,039h,030h,033h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[107].value:word 
+ DB 000h,000h
+; rec[107].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 005h,043h,050h,039h,030h,033h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[107].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 008h,043h,053h,049h,042h,04Dh,039h,030h,033h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[107].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[107].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[107].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[107].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[107].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[107].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[107].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[107].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[108].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 006h,049h,042h,04Dh,039h,030h,034h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[108].value:word 
+ DB 000h,000h
+; rec[108].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 005h,043h,050h,039h,030h,034h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[108].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 003h,039h,030h,034h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[108].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 009h,043h,053h,049h,042h,042h,04Dh,039h,030h,034h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[108].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[108].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[108].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[108].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[108].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[108].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[108].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[109].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 006h,049h,042h,04Dh,039h,030h,035h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[109].value:word 
+ DB 000h,000h
+; rec[109].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 005h,043h,050h,039h,030h,035h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[109].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ch,045h,042h,043h,044h,049h,043h,02Dh,043h,050h,02Dh,054h,052h,000h,000h,000h
+ DB 000h
+; rec[109].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 008h,043h,053h,049h,042h,04Dh,039h,030h,035h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[109].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[109].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[109].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[109].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[109].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[109].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[109].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[110].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 006h,049h,042h,04Dh,039h,031h,038h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[110].value:word 
+ DB 000h,000h
+; rec[110].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 005h,043h,050h,039h,031h,038h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[110].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Dh,045h,042h,043h,044h,049h,043h,02Dh,043h,050h,02Dh,041h,052h,032h,000h,000h
+ DB 000h
+; rec[110].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 008h,043h,053h,049h,042h,04Dh,039h,031h,038h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[110].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[110].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[110].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[110].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[110].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[110].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[110].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[111].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 009h,049h,045h,043h,05Fh,050h,032h,037h,02Dh,031h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[111].value:word 
+ DB 000h,000h
+; rec[111].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,049h,053h,04Fh,02Dh,049h,052h,02Dh,031h,034h,033h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[111].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Fh,043h,053h,049h,053h,04Fh,031h,034h,033h,049h,045h,043h,050h,032h,037h,031h
+ DB 000h
+; rec[111].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[111].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[111].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[111].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[111].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[111].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[111].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[111].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[112].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 004h,049h,04Eh,049h,053h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[112].value:word 
+ DB 000h,000h
+; rec[112].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 009h,049h,053h,04Fh,02Dh,049h,052h,02Dh,034h,039h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[112].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Bh,043h,053h,049h,053h,04Fh,034h,039h,049h,04Eh,049h,053h,000h,000h,000h,000h
+ DB 000h
+; rec[112].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[112].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[112].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[112].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[112].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[112].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[112].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[112].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[113].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 006h,049h,04Eh,049h,053h,02Dh,038h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[113].value:word 
+ DB 000h,000h
+; rec[113].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 009h,049h,053h,04Fh,02Dh,049h,052h,02Dh,035h,030h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[113].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ch,043h,053h,049h,053h,04Fh,035h,030h,049h,04Eh,049h,053h,038h,000h,000h,000h
+ DB 000h
+; rec[113].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[113].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[113].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[113].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[113].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[113].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[113].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[113].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[114].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Dh,049h,04Eh,049h,053h,02Dh,043h,059h,052h,049h,04Ch,04Ch,049h,043h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[114].value:word 
+ DB 000h,000h
+; rec[114].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 009h,049h,053h,04Fh,02Dh,049h,052h,02Dh,035h,031h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[114].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 010h,043h,053h,049h,053h,04Fh,035h,031h,049h,04Eh,049h,053h,043h,059h,052h,049h
+ DB 04Ch
+; rec[114].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[114].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[114].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[114].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[114].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[114].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[114].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[114].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[115].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 009h,049h,04Eh,056h,041h,052h,049h,041h,04Eh,054h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[115].value:word 
+ DB 000h,000h
+; rec[115].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 008h,049h,053h,04Fh,02Dh,049h,052h,02Dh,032h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[115].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 003h,049h,052h,056h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[115].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 010h,043h,053h,049h,053h,04Fh,032h,049h,04Eh,054h,04Ch,052h,045h,046h,056h,045h
+ DB 052h
+; rec[115].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[115].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[115].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[115].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[115].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[115].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[115].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[116].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Dh,049h,053h,04Fh,02Dh,031h,030h,036h,034h,036h,02Dh,04Ah,02Dh,031h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[116].value:word 
+ DB 000h,000h
+; rec[116].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 010h,043h,053h,055h,04Eh,049h,043h,04Fh,044h,045h,049h,042h,04Dh,031h,032h,036h
+ DB 031h
+; rec[116].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[116].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[116].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[116].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[116].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[116].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[116].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[116].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[116].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[117].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Fh,049h,053h,04Fh,02Dh,031h,030h,036h,034h,036h,02Dh,055h,043h,053h,02Dh,034h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[117].value:word 
+ DB 000h,000h
+; rec[117].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 006h,043h,053h,055h,043h,053h,034h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[117].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[117].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[117].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[117].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[117].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[117].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[117].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[117].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[117].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[118].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 013h,049h,053h,04Fh,02Dh,031h,030h,036h,034h,036h,02Dh,055h,043h,053h,02Dh,042h
+ DB 041h,053h,049h,043h,000h,000h,000h,000h,000h
+; rec[118].value:word 
+ DB 000h,000h
+; rec[118].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Eh,043h,053h,055h,04Eh,049h,043h,04Fh,044h,045h,041h,053h,043h,049h,049h,000h
+ DB 000h
+; rec[118].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[118].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[118].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[118].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[118].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[118].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[118].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[118].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[118].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[119].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 018h,049h,053h,04Fh,02Dh,031h,030h,036h,034h,036h,02Dh,055h,04Eh,049h,043h,04Fh
+ DB 044h,045h,02Dh,04Ch,041h,054h,049h,04Eh,031h
+; rec[119].value:word 
+ DB 000h,000h
+; rec[119].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Fh,043h,053h,055h,04Eh,049h,043h,04Fh,044h,045h,04Ch,041h,054h,049h,04Eh,031h
+ DB 000h
+; rec[119].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 009h,049h,053h,04Fh,02Dh,031h,030h,036h,034h,036h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[119].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[119].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[119].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[119].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[119].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[119].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[119].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[119].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[120].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Fh,049h,053h,04Fh,02Dh,031h,030h,036h,034h,036h,02Dh,055h,054h,046h,02Dh,031h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[120].value:word 
+ DB 000h,000h
+; rec[120].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Eh,043h,053h,049h,053h,04Fh,031h,030h,036h,034h,036h,055h,054h,046h,031h,000h
+ DB 000h
+; rec[120].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[120].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[120].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[120].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[120].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[120].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[120].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[120].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[120].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[121].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Bh,049h,053h,04Fh,02Dh,032h,030h,032h,032h,02Dh,043h,04Eh,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[121].value:word 
+ DB 000h,000h
+; rec[121].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Eh,04Ah,049h,053h,05Fh,043h,036h,032h,032h,030h,02Dh,031h,039h,036h,039h,000h
+ DB 000h
+; rec[121].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 009h,049h,053h,04Fh,02Dh,049h,052h,02Dh,031h,033h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[121].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 008h,04Bh,041h,054h,041h,04Bh,041h,04Eh,041h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[121].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 007h,058h,030h,032h,030h,031h,02Dh,037h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[121].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 010h,043h,053h,049h,053h,04Fh,031h,033h,04Ah,049h,053h,043h,036h,032h,032h,030h
+ DB 04Ah
+; rec[121].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[121].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[121].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[121].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[121].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[122].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Bh,049h,053h,04Fh,02Dh,032h,030h,032h,032h,02Dh,04Ah,050h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[122].value:word 
+ DB 000h,000h
+; rec[122].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Bh,043h,053h,049h,053h,04Fh,032h,030h,032h,032h,04Ah,050h,000h,000h,000h,000h
+ DB 000h
+; rec[122].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[122].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[122].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[122].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[122].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[122].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[122].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[122].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[122].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[123].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Dh,049h,053h,04Fh,02Dh,032h,030h,032h,032h,02Dh,04Ah,050h,02Dh,032h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[123].value:word 
+ DB 000h,000h
+; rec[123].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ch,043h,053h,049h,053h,04Fh,032h,030h,032h,032h,04Ah,050h,032h,000h,000h,000h
+ DB 000h
+; rec[123].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[123].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[123].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[123].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[123].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[123].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[123].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[123].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[123].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[124].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Bh,049h,053h,04Fh,02Dh,032h,030h,032h,032h,02Dh,04Bh,052h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[124].value:word 
+ DB 000h,000h
+; rec[124].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Bh,043h,053h,049h,053h,04Fh,032h,030h,032h,032h,04Bh,052h,000h,000h,000h,000h
+ DB 000h
+; rec[124].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[124].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[124].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[124].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[124].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[124].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[124].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[124].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[124].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[125].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Ah,049h,053h,04Fh,02Dh,038h,038h,035h,039h,02Dh,031h,03Ah,031h,039h,038h,037h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[125].value:word 
+ DB 000h,000h
+; rec[125].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,049h,053h,04Fh,02Dh,049h,052h,02Dh,031h,030h,030h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[125].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,049h,053h,04Fh,05Fh,038h,038h,035h,039h,02Dh,031h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[125].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 006h,04Ch,041h,054h,049h,04Eh,031h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[125].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 002h,04Ch,031h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[125].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 006h,049h,042h,04Dh,038h,031h,039h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[125].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 005h,043h,050h,038h,031h,039h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[125].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Bh,043h,053h,049h,053h,04Fh,04Ch,041h,054h,049h,04Eh,031h,000h,000h,000h,000h
+ DB 000h
+; rec[125].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Fh,049h,053h,04Fh,05Fh,038h,038h,035h,039h,02Dh,031h,03Ah,031h,039h,038h,037h
+ DB 000h
+; rec[125].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[125].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[126].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 017h,049h,053h,04Fh,02Dh,038h,038h,035h,039h,02Dh,031h,02Dh,057h,049h,04Eh,044h
+ DB 04Fh,057h,053h,02Dh,033h,02Eh,030h,02Dh,000h
+; rec[126].value:word 
+ DB 000h,000h
+; rec[126].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 010h,043h,053h,057h,049h,04Eh,044h,04Fh,057h,053h,033h,030h,04Ch,041h,054h,049h
+ DB 04Eh
+; rec[126].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[126].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[126].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[126].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[126].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[126].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[126].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[126].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[126].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[127].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 017h,049h,053h,04Fh,02Dh,038h,038h,035h,039h,02Dh,031h,02Dh,057h,049h,04Eh,044h
+ DB 04Fh,057h,053h,02Dh,033h,02Eh,031h,02Dh,000h
+; rec[127].value:word 
+ DB 000h,000h
+; rec[127].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 010h,043h,053h,057h,049h,04Eh,044h,04Fh,057h,053h,033h,031h,04Ch,041h,054h,049h
+ DB 04Eh
+; rec[127].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[127].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[127].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[127].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[127].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[127].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[127].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[127].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[127].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[128].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Bh,049h,053h,04Fh,02Dh,038h,038h,035h,039h,02Dh,031h,030h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[128].value:word 
+ DB 000h,000h
+; rec[128].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,049h,053h,04Fh,02Dh,049h,052h,02Dh,031h,035h,037h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[128].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 002h,04Ch,036h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[128].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 010h,049h,053h,04Fh,05Fh,038h,038h,035h,039h,02Dh,031h,030h,03Ah,031h,039h,039h
+ DB 032h
+; rec[128].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Bh,043h,053h,049h,053h,04Fh,04Ch,041h,054h,049h,04Eh,036h,000h,000h,000h,000h
+ DB 000h
+; rec[128].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 006h,04Ch,041h,054h,049h,04Eh,036h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[128].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[128].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[128].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[128].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[128].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[129].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Bh,049h,053h,04Fh,02Dh,038h,038h,035h,039h,02Dh,031h,033h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[129].value:word 
+ DB 000h,000h
+; rec[129].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[129].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[129].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[129].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[129].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[129].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[129].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[129].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[129].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[129].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[130].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Bh,049h,053h,04Fh,02Dh,038h,038h,035h,039h,02Dh,031h,034h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[130].value:word 
+ DB 000h,000h
+; rec[130].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,049h,053h,04Fh,02Dh,049h,052h,02Dh,031h,039h,039h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[130].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 010h,049h,053h,04Fh,05Fh,038h,038h,035h,039h,02Dh,031h,034h,03Ah,031h,039h,039h
+ DB 038h
+; rec[130].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Bh,049h,053h,04Fh,05Fh,038h,038h,035h,039h,02Dh,031h,034h,000h,000h,000h,000h
+ DB 000h
+; rec[130].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 006h,04Ch,041h,054h,049h,04Eh,038h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[130].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,049h,053h,04Fh,02Dh,043h,045h,04Ch,054h,049h,043h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[130].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 002h,04Ch,038h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[130].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[130].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[130].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[130].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[131].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Bh,049h,053h,04Fh,02Dh,038h,038h,035h,039h,02Dh,031h,035h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[131].value:word 
+ DB 000h,000h
+; rec[131].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Bh,049h,053h,04Fh,05Fh,038h,038h,035h,039h,02Dh,031h,035h,000h,000h,000h,000h
+ DB 000h
+; rec[131].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 007h,04Ch,041h,054h,049h,04Eh,02Dh,039h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[131].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[131].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[131].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[131].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[131].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[131].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[131].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[131].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[132].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Bh,049h,053h,04Fh,02Dh,038h,038h,035h,039h,02Dh,031h,036h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[132].value:word 
+ DB 000h,000h
+; rec[132].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,049h,053h,04Fh,02Dh,049h,052h,02Dh,032h,032h,036h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[132].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 010h,049h,053h,04Fh,05Fh,038h,038h,035h,039h,02Dh,031h,036h,03Ah,032h,030h,030h
+ DB 031h
+; rec[132].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Bh,049h,053h,04Fh,05Fh,038h,038h,035h,039h,02Dh,031h,036h,000h,000h,000h,000h
+ DB 000h
+; rec[132].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 007h,04Ch,041h,054h,049h,04Eh,031h,030h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[132].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 003h,04Ch,031h,030h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[132].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[132].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[132].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[132].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[132].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[133].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Ah,049h,053h,04Fh,02Dh,038h,038h,035h,039h,02Dh,032h,03Ah,031h,039h,038h,037h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[133].value:word 
+ DB 000h,000h
+; rec[133].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,049h,053h,04Fh,02Dh,049h,052h,02Dh,031h,030h,031h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[133].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,049h,053h,04Fh,05Fh,038h,038h,035h,039h,02Dh,032h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[133].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 006h,04Ch,041h,054h,049h,04Eh,032h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[133].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 002h,04Ch,032h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[133].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Bh,043h,053h,049h,053h,04Fh,04Ch,041h,054h,049h,04Eh,032h,000h,000h,000h,000h
+ DB 000h
+; rec[133].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Fh,049h,053h,04Fh,05Fh,038h,038h,035h,039h,02Dh,032h,03Ah,031h,039h,038h,037h
+ DB 000h
+; rec[133].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[133].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[133].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[133].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[134].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 017h,049h,053h,04Fh,02Dh,038h,038h,035h,039h,02Dh,032h,02Dh,057h,049h,04Eh,044h
+ DB 04Fh,057h,053h,02Dh,04Ch,041h,054h,049h,000h
+; rec[134].value:word 
+ DB 000h,000h
+; rec[134].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 010h,043h,053h,057h,049h,04Eh,044h,04Fh,057h,053h,033h,031h,04Ch,041h,054h,049h
+ DB 04Eh
+; rec[134].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[134].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[134].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[134].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[134].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[134].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[134].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[134].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[134].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[135].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Ah,049h,053h,04Fh,02Dh,038h,038h,035h,039h,02Dh,033h,03Ah,031h,039h,038h,038h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[135].value:word 
+ DB 000h,000h
+; rec[135].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,049h,053h,04Fh,02Dh,049h,052h,02Dh,031h,030h,039h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[135].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,049h,053h,04Fh,05Fh,038h,038h,035h,039h,02Dh,033h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[135].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 006h,04Ch,041h,054h,049h,04Eh,033h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[135].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 002h,04Ch,033h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[135].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Bh,043h,053h,049h,053h,04Fh,04Ch,041h,054h,049h,04Eh,033h,000h,000h,000h,000h
+ DB 000h
+; rec[135].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Fh,049h,053h,04Fh,05Fh,038h,038h,035h,039h,02Dh,033h,03Ah,031h,039h,038h,038h
+ DB 000h
+; rec[135].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[135].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[135].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[135].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[136].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Ah,049h,053h,04Fh,02Dh,038h,038h,035h,039h,02Dh,034h,03Ah,031h,039h,038h,038h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[136].value:word 
+ DB 000h,000h
+; rec[136].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,049h,053h,04Fh,02Dh,049h,052h,02Dh,031h,031h,030h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[136].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,049h,053h,04Fh,05Fh,038h,038h,035h,039h,02Dh,034h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[136].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 006h,04Ch,041h,054h,049h,04Eh,034h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[136].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 002h,04Ch,034h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[136].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Bh,043h,053h,049h,053h,04Fh,04Ch,041h,054h,049h,04Eh,034h,000h,000h,000h,000h
+ DB 000h
+; rec[136].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Fh,049h,053h,04Fh,05Fh,038h,038h,035h,039h,02Dh,034h,03Ah,031h,039h,038h,038h
+ DB 000h
+; rec[136].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[136].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[136].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[136].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[137].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Ah,049h,053h,04Fh,02Dh,038h,038h,035h,039h,02Dh,035h,03Ah,031h,039h,038h,038h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[137].value:word 
+ DB 000h,000h
+; rec[137].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,049h,053h,04Fh,02Dh,049h,052h,02Dh,031h,034h,034h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[137].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,049h,053h,04Fh,05Fh,038h,038h,035h,039h,02Dh,035h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[137].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 008h,043h,059h,052h,049h,04Ch,04Ch,049h,043h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[137].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 010h,043h,053h,049h,053h,04Fh,04Ch,041h,054h,049h,04Eh,043h,059h,052h,049h,04Ch
+ DB 04Ch
+; rec[137].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Fh,049h,053h,04Fh,05Fh,038h,038h,035h,039h,02Dh,035h,03Ah,031h,039h,038h,038h
+ DB 000h
+; rec[137].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[137].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[137].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[137].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[137].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[138].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Ah,049h,053h,04Fh,02Dh,038h,038h,035h,039h,02Dh,036h,03Ah,031h,039h,038h,037h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[138].value:word 
+ DB 000h,000h
+; rec[138].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,049h,053h,04Fh,02Dh,049h,052h,02Dh,031h,032h,037h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[138].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,049h,053h,04Fh,05Fh,038h,038h,035h,039h,02Dh,036h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[138].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 008h,045h,043h,04Dh,041h,02Dh,031h,031h,034h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[138].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 008h,041h,053h,04Dh,04Fh,02Dh,037h,030h,038h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[138].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 006h,041h,052h,041h,042h,049h,043h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[138].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 010h,043h,053h,049h,053h,04Fh,04Ch,041h,054h,049h,04Eh,041h,052h,041h,042h,049h
+ DB 043h
+; rec[138].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Fh,049h,053h,04Fh,05Fh,038h,038h,035h,039h,02Dh,036h,03Ah,031h,039h,038h,037h
+ DB 000h
+; rec[138].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[138].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[138].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[139].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Ch,049h,053h,04Fh,02Dh,038h,038h,035h,039h,02Dh,036h,02Dh,045h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[139].value:word 
+ DB 000h,000h
+; rec[139].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Bh,043h,053h,049h,053h,04Fh,038h,038h,035h,039h,036h,045h,000h,000h,000h,000h
+ DB 000h
+; rec[139].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ch,049h,053h,04Fh,05Fh,038h,038h,035h,039h,02Dh,036h,02Dh,045h,000h,000h,000h
+ DB 000h
+; rec[139].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[139].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[139].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[139].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[139].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[139].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[139].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[139].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[140].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Ch,049h,053h,04Fh,02Dh,038h,038h,035h,039h,02Dh,036h,02Dh,049h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[140].value:word 
+ DB 000h,000h
+; rec[140].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Bh,043h,053h,049h,053h,04Fh,038h,038h,035h,039h,036h,049h,000h,000h,000h,000h
+ DB 000h
+; rec[140].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ch,049h,053h,04Fh,05Fh,038h,038h,035h,039h,02Dh,036h,02Dh,049h,000h,000h,000h
+ DB 000h
+; rec[140].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[140].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[140].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[140].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[140].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[140].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[140].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[140].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[141].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Ah,049h,053h,04Fh,02Dh,038h,038h,035h,039h,02Dh,037h,03Ah,031h,039h,038h,037h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[141].value:word 
+ DB 000h,000h
+; rec[141].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,049h,053h,04Fh,02Dh,049h,052h,02Dh,031h,032h,036h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[141].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,049h,053h,04Fh,05Fh,038h,038h,035h,039h,02Dh,037h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[141].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 008h,045h,04Ch,04Fh,054h,05Fh,039h,032h,038h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[141].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 008h,045h,043h,04Dh,041h,02Dh,031h,031h,038h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[141].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 005h,047h,052h,045h,045h,04Bh,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[141].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 006h,047h,052h,045h,045h,04Bh,038h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[141].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Fh,043h,053h,049h,053h,04Fh,04Ch,041h,054h,049h,04Eh,047h,052h,045h,045h,04Bh
+ DB 000h
+; rec[141].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Fh,049h,053h,04Fh,05Fh,038h,038h,035h,039h,02Dh,037h,03Ah,031h,039h,038h,037h
+ DB 000h
+; rec[141].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[141].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[142].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Ah,049h,053h,04Fh,02Dh,038h,038h,035h,039h,02Dh,038h,03Ah,031h,039h,038h,038h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[142].value:word 
+ DB 000h,000h
+; rec[142].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,049h,053h,04Fh,02Dh,049h,052h,02Dh,031h,033h,038h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[142].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,049h,053h,04Fh,05Fh,038h,038h,035h,039h,02Dh,038h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[142].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 006h,048h,045h,042h,052h,045h,057h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[142].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 010h,043h,053h,049h,053h,04Fh,04Ch,041h,054h,049h,04Eh,048h,045h,042h,052h,045h
+ DB 057h
+; rec[142].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Fh,049h,053h,04Fh,05Fh,038h,038h,035h,039h,02Dh,038h,03Ah,031h,039h,038h,038h
+ DB 000h
+; rec[142].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[142].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[142].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[142].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[142].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[143].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Ch,049h,053h,04Fh,02Dh,038h,038h,035h,039h,02Dh,038h,02Dh,045h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[143].value:word 
+ DB 000h,000h
+; rec[143].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Bh,043h,053h,049h,053h,04Fh,038h,038h,035h,039h,038h,045h,000h,000h,000h,000h
+ DB 000h
+; rec[143].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ch,049h,053h,04Fh,05Fh,038h,038h,035h,039h,02Dh,038h,02Dh,045h,000h,000h,000h
+ DB 000h
+; rec[143].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[143].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[143].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[143].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[143].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[143].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[143].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[143].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[144].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Ch,049h,053h,04Fh,02Dh,038h,038h,035h,039h,02Dh,038h,02Dh,049h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[144].value:word 
+ DB 000h,000h
+; rec[144].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Bh,043h,053h,049h,053h,04Fh,038h,038h,035h,039h,038h,049h,000h,000h,000h,000h
+ DB 000h
+; rec[144].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ch,049h,053h,04Fh,05Fh,038h,038h,035h,039h,02Dh,038h,02Dh,049h,000h,000h,000h
+ DB 000h
+; rec[144].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[144].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[144].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[144].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[144].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[144].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[144].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[144].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[145].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Ah,049h,053h,04Fh,02Dh,038h,038h,035h,039h,02Dh,039h,03Ah,031h,039h,038h,039h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[145].value:word 
+ DB 000h,000h
+; rec[145].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,049h,053h,04Fh,02Dh,049h,052h,02Dh,031h,034h,038h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[145].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,049h,053h,04Fh,05Fh,038h,038h,035h,039h,02Dh,039h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[145].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 006h,04Ch,041h,054h,049h,04Eh,035h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[145].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 002h,04Ch,035h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[145].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Bh,043h,053h,049h,053h,04Fh,04Ch,041h,054h,049h,04Eh,035h,000h,000h,000h,000h
+ DB 000h
+; rec[145].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Fh,049h,053h,04Fh,05Fh,038h,038h,035h,039h,02Dh,039h,03Ah,031h,039h,038h,039h
+ DB 000h
+; rec[145].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[145].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[145].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[145].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[146].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 017h,049h,053h,04Fh,02Dh,038h,038h,035h,039h,02Dh,039h,02Dh,057h,049h,04Eh,044h
+ DB 04Fh,057h,053h,02Dh,04Ch,041h,054h,049h,000h
+; rec[146].value:word 
+ DB 000h,000h
+; rec[146].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 010h,043h,053h,057h,049h,04Eh,044h,04Fh,057h,053h,033h,031h,04Ch,041h,054h,049h
+ DB 04Eh
+; rec[146].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[146].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[146].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[146].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[146].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[146].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[146].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[146].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[146].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[147].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 009h,049h,053h,04Fh,02Dh,049h,052h,02Dh,039h,030h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[147].value:word 
+ DB 000h,000h
+; rec[147].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 007h,043h,053h,049h,053h,04Fh,039h,030h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[147].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[147].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[147].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[147].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[147].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[147].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[147].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[147].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[147].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[148].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 014h,049h,053h,04Fh,02Dh,055h,04Eh,049h,043h,04Fh,044h,045h,02Dh,049h,042h,04Dh
+ DB 02Dh,031h,032h,036h,034h,000h,000h,000h,000h
+; rec[148].value:word 
+ DB 000h,000h
+; rec[148].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 010h,043h,053h,055h,04Eh,049h,043h,04Fh,044h,045h,049h,042h,04Dh,031h,032h,036h
+ DB 034h
+; rec[148].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[148].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[148].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[148].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[148].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[148].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[148].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[148].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[148].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[149].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 014h,049h,053h,04Fh,02Dh,055h,04Eh,049h,043h,04Fh,044h,045h,02Dh,049h,042h,04Dh
+ DB 02Dh,031h,032h,036h,035h,000h,000h,000h,000h
+; rec[149].value:word 
+ DB 000h,000h
+; rec[149].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 010h,043h,053h,055h,04Eh,049h,043h,04Fh,044h,045h,049h,042h,04Dh,031h,032h,036h
+ DB 035h
+; rec[149].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[149].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[149].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[149].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[149].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[149].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[149].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[149].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[149].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[150].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 014h,049h,053h,04Fh,02Dh,055h,04Eh,049h,043h,04Fh,044h,045h,02Dh,049h,042h,04Dh
+ DB 02Dh,031h,032h,036h,038h,000h,000h,000h,000h
+; rec[150].value:word 
+ DB 000h,000h
+; rec[150].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 010h,043h,053h,055h,04Eh,049h,043h,04Fh,044h,045h,049h,042h,04Dh,031h,032h,036h
+ DB 038h
+; rec[150].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[150].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[150].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[150].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[150].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[150].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[150].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[150].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[150].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[151].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 014h,049h,053h,04Fh,02Dh,055h,04Eh,049h,043h,04Fh,044h,045h,02Dh,049h,042h,04Dh
+ DB 02Dh,031h,032h,037h,036h,000h,000h,000h,000h
+; rec[151].value:word 
+ DB 000h,000h
+; rec[151].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 010h,043h,053h,055h,04Eh,049h,043h,04Fh,044h,045h,049h,042h,04Dh,031h,032h,037h
+ DB 036h
+; rec[151].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[151].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[151].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[151].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[151].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[151].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[151].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[151].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[151].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[152].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Dh,049h,053h,04Fh,05Fh,031h,030h,033h,036h,037h,02Dh,042h,04Fh,058h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[152].value:word 
+ DB 000h,000h
+; rec[152].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,049h,053h,04Fh,02Dh,049h,052h,02Dh,031h,035h,035h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[152].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Dh,043h,053h,049h,053h,04Fh,031h,030h,033h,036h,037h,042h,04Fh,058h,000h,000h
+ DB 000h
+; rec[152].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[152].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[152].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[152].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[152].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[152].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[152].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[152].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[153].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Dh,049h,053h,04Fh,05Fh,032h,030h,033h,033h,02Dh,031h,039h,038h,033h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[153].value:word 
+ DB 000h,000h
+; rec[153].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 009h,049h,053h,04Fh,02Dh,049h,052h,02Dh,039h,038h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[153].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 004h,045h,031h,033h,042h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[153].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 009h,043h,053h,049h,053h,04Fh,032h,030h,033h,033h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[153].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[153].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[153].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[153].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[153].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[153].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[153].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[154].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 008h,049h,053h,04Fh,05Fh,035h,034h,032h,037h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[154].value:word 
+ DB 000h,000h
+; rec[154].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 009h,049h,053h,04Fh,02Dh,049h,052h,02Dh,033h,037h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[154].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 010h,043h,053h,049h,053h,04Fh,035h,034h,032h,037h,043h,059h,052h,049h,04Ch,04Ch
+ DB 049h
+; rec[154].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[154].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[154].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[154].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[154].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[154].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[154].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[154].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[155].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Dh,049h,053h,04Fh,05Fh,035h,034h,032h,037h,03Ah,031h,039h,038h,031h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[155].value:word 
+ DB 000h,000h
+; rec[155].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 009h,049h,053h,04Fh,02Dh,049h,052h,02Dh,035h,034h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[155].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 010h,049h,053h,04Fh,035h,034h,032h,037h,043h,059h,052h,049h,04Ch,04Ch,049h,043h
+ DB 031h
+; rec[155].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[155].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[155].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[155].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[155].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[155].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[155].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[155].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[156].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Dh,049h,053h,04Fh,05Fh,035h,034h,032h,038h,03Ah,031h,039h,038h,030h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[156].value:word 
+ DB 000h,000h
+; rec[156].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 009h,049h,053h,04Fh,02Dh,049h,052h,02Dh,035h,035h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[156].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Eh,043h,053h,049h,053h,04Fh,035h,034h,032h,038h,047h,052h,045h,045h,04Bh,000h
+ DB 000h
+; rec[156].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[156].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[156].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[156].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[156].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[156].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[156].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[156].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[157].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 012h,049h,053h,04Fh,05Fh,036h,034h,036h,02Eh,042h,041h,053h,049h,043h,03Ah,031h
+ DB 039h,038h,033h,000h,000h,000h,000h,000h,000h
+; rec[157].value:word 
+ DB 000h,000h
+; rec[157].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 003h,052h,045h,046h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[157].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 010h,043h,053h,049h,053h,04Fh,036h,034h,036h,042h,041h,053h,049h,043h,031h,039h
+ DB 038h
+; rec[157].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[157].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[157].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[157].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[157].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[157].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[157].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[157].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[158].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Dh,049h,053h,04Fh,05Fh,036h,039h,033h,037h,02Dh,032h,02Dh,032h,035h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[158].value:word 
+ DB 000h,000h
+; rec[158].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,049h,053h,04Fh,02Dh,049h,052h,02Dh,031h,035h,032h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[158].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ch,043h,053h,049h,053h,04Fh,036h,039h,033h,037h,041h,044h,044h,000h,000h,000h
+ DB 000h
+; rec[158].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[158].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[158].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[158].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[158].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[158].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[158].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[158].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[159].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Eh,049h,053h,04Fh,05Fh,036h,039h,033h,037h,02Dh,032h,02Dh,041h,044h,044h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[159].value:word 
+ DB 000h,000h
+; rec[159].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,049h,053h,04Fh,02Dh,049h,052h,02Dh,031h,034h,032h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[159].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Dh,043h,053h,049h,053h,04Fh,054h,045h,058h,054h,043h,04Fh,04Dh,04Dh,000h,000h
+ DB 000h
+; rec[159].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[159].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[159].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[159].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[159].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[159].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[159].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[159].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[160].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Dh,049h,053h,04Fh,05Fh,038h,038h,035h,039h,02Dh,053h,055h,050h,050h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[160].value:word 
+ DB 000h,000h
+; rec[160].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,049h,053h,04Fh,02Dh,049h,052h,02Dh,031h,035h,034h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[160].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,04Ch,041h,054h,049h,04Eh,031h,02Dh,032h,02Dh,035h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[160].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Dh,043h,053h,049h,053h,04Fh,038h,038h,035h,039h,053h,055h,050h,050h,000h,000h
+ DB 000h
+; rec[160].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[160].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[160].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[160].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[160].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[160].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[160].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[161].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 002h,049h,054h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[161].value:word 
+ DB 000h,000h
+; rec[161].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 009h,049h,053h,04Fh,02Dh,049h,052h,02Dh,031h,035h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[161].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 009h,049h,053h,04Fh,036h,034h,036h,02Dh,049h,054h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[161].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Eh,043h,053h,049h,053h,04Fh,031h,035h,049h,054h,041h,04Ch,049h,041h,04Eh,000h
+ DB 000h
+; rec[161].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[161].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[161].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[161].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[161].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[161].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[161].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[162].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 011h,04Ah,049h,053h,05Fh,043h,036h,032h,032h,030h,02Dh,031h,039h,036h,039h,02Dh
+ DB 052h,04Fh,000h,000h,000h,000h,000h,000h,000h
+; rec[162].value:word 
+ DB 000h,000h
+; rec[162].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 009h,049h,053h,04Fh,02Dh,049h,052h,02Dh,031h,034h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[162].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 002h,04Ah,050h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[162].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 009h,049h,053h,04Fh,036h,034h,036h,02Dh,04Ah,050h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[162].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 010h,043h,053h,049h,053h,04Fh,031h,034h,04Ah,049h,053h,043h,036h,032h,032h,030h
+ DB 052h
+; rec[162].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[162].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[162].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[162].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[162].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[162].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[163].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Eh,04Ah,049h,053h,05Fh,043h,036h,032h,032h,036h,02Dh,031h,039h,037h,038h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[163].value:word 
+ DB 000h,000h
+; rec[163].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 009h,049h,053h,04Fh,02Dh,049h,052h,02Dh,034h,032h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[163].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 010h,043h,053h,049h,053h,04Fh,034h,032h,04Ah,049h,053h,043h,036h,032h,032h,036h
+ DB 031h
+; rec[163].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[163].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[163].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[163].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[163].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[163].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[163].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[163].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[164].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Eh,04Ah,049h,053h,05Fh,043h,036h,032h,032h,036h,02Dh,031h,039h,038h,033h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[164].value:word 
+ DB 000h,000h
+; rec[164].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 009h,049h,053h,04Fh,02Dh,049h,052h,02Dh,038h,037h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[164].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 005h,058h,030h,032h,030h,038h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[164].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Eh,04Ah,049h,053h,05Fh,058h,030h,032h,030h,038h,02Dh,031h,039h,038h,033h,000h
+ DB 000h
+; rec[164].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Fh,043h,053h,049h,053h,04Fh,038h,037h,04Ah,049h,053h,058h,030h,032h,030h,038h
+ DB 000h
+; rec[164].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[164].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[164].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[164].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[164].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[164].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[165].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 010h,04Ah,049h,053h,05Fh,043h,036h,032h,032h,039h,02Dh,031h,039h,038h,034h,02Dh
+ DB 041h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[165].value:word 
+ DB 000h,000h
+; rec[165].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 009h,049h,053h,04Fh,02Dh,049h,052h,02Dh,039h,031h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[165].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 008h,04Ah,050h,02Dh,04Fh,043h,052h,02Dh,041h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[165].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 010h,043h,053h,049h,053h,04Fh,039h,031h,04Ah,049h,053h,043h,036h,032h,032h,039h
+ DB 031h
+; rec[165].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[165].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[165].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[165].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[165].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[165].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[165].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[166].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 010h,04Ah,049h,053h,05Fh,043h,036h,032h,032h,039h,02Dh,031h,039h,038h,034h,02Dh
+ DB 042h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[166].value:word 
+ DB 000h,000h
+; rec[166].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 009h,049h,053h,04Fh,02Dh,049h,052h,02Dh,039h,032h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[166].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Fh,049h,053h,04Fh,036h,034h,036h,02Dh,04Ah,050h,02Dh,04Fh,043h,052h,02Dh,042h
+ DB 000h
+; rec[166].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 008h,04Ah,050h,02Dh,04Fh,043h,052h,02Dh,042h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[166].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 010h,043h,053h,049h,053h,04Fh,039h,032h,04Ah,049h,053h,043h,036h,032h,039h,039h
+ DB 031h
+; rec[166].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[166].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[166].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[166].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[166].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[166].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[167].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 014h,04Ah,049h,053h,05Fh,043h,036h,032h,032h,039h,02Dh,031h,039h,038h,034h,02Dh
+ DB 042h,02Dh,041h,044h,044h,000h,000h,000h,000h
+; rec[167].value:word 
+ DB 000h,000h
+; rec[167].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 009h,049h,053h,04Fh,02Dh,049h,052h,02Dh,039h,033h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[167].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ch,04Ah,050h,02Dh,04Fh,043h,052h,02Dh,042h,02Dh,041h,044h,044h,000h,000h,000h
+ DB 000h
+; rec[167].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 010h,043h,053h,049h,053h,04Fh,039h,033h,04Ah,049h,053h,036h,032h,032h,039h,031h
+ DB 039h
+; rec[167].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[167].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[167].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[167].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[167].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[167].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[167].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[168].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 013h,04Ah,049h,053h,05Fh,043h,036h,032h,032h,039h,02Dh,031h,039h,038h,034h,02Dh
+ DB 048h,041h,04Eh,044h,000h,000h,000h,000h,000h
+; rec[168].value:word 
+ DB 000h,000h
+; rec[168].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 009h,049h,053h,04Fh,02Dh,049h,052h,02Dh,039h,034h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[168].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Bh,04Ah,050h,02Dh,04Fh,043h,052h,02Dh,048h,041h,04Eh,044h,000h,000h,000h,000h
+ DB 000h
+; rec[168].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 010h,043h,053h,049h,053h,04Fh,039h,034h,04Ah,049h,053h,036h,032h,032h,039h,031h
+ DB 039h
+; rec[168].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[168].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[168].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[168].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[168].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[168].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[168].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[169].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 017h,04Ah,049h,053h,05Fh,043h,036h,032h,032h,039h,02Dh,031h,039h,038h,034h,02Dh
+ DB 048h,041h,04Eh,044h,02Dh,041h,044h,044h,000h
+; rec[169].value:word 
+ DB 000h,000h
+; rec[169].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 009h,049h,053h,04Fh,02Dh,049h,052h,02Dh,039h,035h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[169].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Fh,04Ah,050h,02Dh,04Fh,043h,052h,02Dh,048h,041h,04Eh,044h,02Dh,041h,044h,044h
+ DB 000h
+; rec[169].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Fh,043h,053h,049h,053h,04Fh,039h,035h,04Ah,049h,053h,036h,032h,032h,039h,031h
+ DB 000h
+; rec[169].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[169].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[169].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[169].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[169].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[169].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[169].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[170].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 013h,04Ah,049h,053h,05Fh,043h,036h,032h,032h,039h,02Dh,031h,039h,038h,034h,02Dh
+ DB 04Bh,041h,04Eh,041h,000h,000h,000h,000h,000h
+; rec[170].value:word 
+ DB 000h,000h
+; rec[170].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 009h,049h,053h,04Fh,02Dh,049h,052h,02Dh,039h,036h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[170].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 010h,043h,053h,049h,053h,04Fh,039h,036h,04Ah,049h,053h,043h,036h,032h,032h,039h
+ DB 031h
+; rec[170].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[170].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[170].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[170].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[170].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[170].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[170].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[170].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[171].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Ch,04Ah,049h,053h,05Fh,045h,04Eh,043h,04Fh,044h,049h,04Eh,047h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[171].value:word 
+ DB 000h,000h
+; rec[171].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Dh,043h,053h,04Ah,049h,053h,045h,04Eh,043h,04Fh,044h,049h,04Eh,047h,000h,000h
+ DB 000h
+; rec[171].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[171].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[171].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[171].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[171].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[171].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[171].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[171].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[171].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[172].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Eh,04Ah,049h,053h,05Fh,058h,030h,032h,031h,032h,02Dh,031h,039h,039h,030h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[172].value:word 
+ DB 000h,000h
+; rec[172].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 005h,058h,030h,032h,031h,032h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[172].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,049h,053h,04Fh,02Dh,049h,052h,02Dh,031h,035h,039h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[172].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 010h,043h,053h,049h,053h,04Fh,031h,035h,039h,04Ah,049h,053h,058h,030h,032h,031h
+ DB 032h
+; rec[172].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[172].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[172].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[172].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[172].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[172].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[172].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[173].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Ch,04Ah,055h,053h,05Fh,049h,02Eh,042h,031h,02Eh,030h,030h,032h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[173].value:word 
+ DB 000h,000h
+; rec[173].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,049h,053h,04Fh,02Dh,049h,052h,02Dh,031h,034h,031h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[173].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 009h,049h,053h,04Fh,036h,034h,036h,02Dh,059h,055h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[173].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 002h,04Ah,053h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[173].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 002h,059h,055h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[173].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 010h,043h,053h,049h,053h,04Fh,031h,034h,031h,04Ah,055h,053h,049h,042h,031h,030h
+ DB 030h
+; rec[173].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[173].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[173].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[173].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[173].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[174].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 010h,04Ah,055h,053h,05Fh,049h,02Eh,042h,031h,02Eh,030h,030h,033h,02Dh,04Dh,041h
+ DB 043h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[174].value:word 
+ DB 000h,000h
+; rec[174].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,04Dh,041h,043h,045h,044h,04Fh,04Eh,049h,041h,04Eh,000h,000h,000h,000h,000h
+ DB 000h
+; rec[174].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,049h,053h,04Fh,02Dh,049h,052h,02Dh,031h,034h,037h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[174].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 010h,043h,053h,049h,053h,04Fh,031h,034h,037h,04Dh,041h,043h,045h,044h,04Fh,04Eh
+ DB 049h
+; rec[174].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[174].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[174].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[174].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[174].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[174].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[174].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[175].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 011h,04Ah,055h,053h,05Fh,049h,02Eh,042h,031h,02Eh,030h,030h,033h,02Dh,053h,045h
+ DB 052h,042h,000h,000h,000h,000h,000h,000h,000h
+; rec[175].value:word 
+ DB 000h,000h
+; rec[175].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,049h,053h,04Fh,02Dh,049h,052h,02Dh,031h,034h,036h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[175].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 007h,053h,045h,052h,042h,049h,041h,04Eh,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[175].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Fh,043h,053h,049h,053h,04Fh,031h,034h,036h,053h,045h,052h,042h,049h,041h,04Eh
+ DB 000h
+; rec[175].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[175].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[175].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[175].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[175].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[175].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[175].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[176].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Dh,04Bh,04Fh,049h,037h,02Dh,053h,057h,049h,054h,043h,048h,045h,044h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[176].value:word 
+ DB 000h,000h
+; rec[176].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 004h,04Eh,04Fh,04Eh,045h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[176].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[176].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[176].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[176].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[176].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[176].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[176].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[176].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[176].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[177].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 006h,04Bh,04Fh,049h,038h,02Dh,052h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[177].value:word 
+ DB 000h,000h
+; rec[177].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 007h,043h,053h,04Bh,04Fh,049h,038h,052h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[177].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[177].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[177].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[177].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[177].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[177].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[177].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[177].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[177].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[178].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 006h,04Bh,04Fh,049h,038h,02Dh,055h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[178].value:word 
+ DB 000h,000h
+; rec[178].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[178].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[178].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[178].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[178].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[178].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[178].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[178].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[178].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[178].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[179].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 007h,04Bh,053h,043h,035h,036h,033h,036h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[179].value:word 
+ DB 000h,000h
+; rec[179].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 009h,043h,053h,055h,04Eh,049h,043h,04Fh,044h,045h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[179].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[179].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[179].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[179].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[179].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[179].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[179].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[179].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[179].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[180].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Eh,04Bh,053h,05Fh,043h,05Fh,035h,036h,030h,031h,02Dh,031h,039h,038h,037h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[180].value:word 
+ DB 000h,000h
+; rec[180].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,049h,053h,04Fh,02Dh,049h,052h,02Dh,031h,034h,039h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[180].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Eh,04Bh,053h,05Fh,043h,05Fh,035h,036h,030h,031h,02Dh,031h,039h,038h,039h,000h
+ DB 000h
+; rec[180].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 008h,04Bh,053h,043h,05Fh,035h,036h,030h,031h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[180].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 006h,04Bh,04Fh,052h,045h,041h,04Eh,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[180].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Dh,043h,053h,04Bh,053h,043h,035h,036h,030h,031h,031h,039h,038h,037h,000h,000h
+ DB 000h
+; rec[180].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[180].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[180].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[180].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[180].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[181].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Bh,04Ch,041h,054h,049h,04Eh,02Dh,047h,052h,045h,045h,04Bh,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[181].value:word 
+ DB 000h,000h
+; rec[181].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 009h,049h,053h,04Fh,02Dh,049h,052h,02Dh,031h,039h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[181].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 010h,043h,053h,049h,053h,04Fh,031h,039h,04Ch,041h,054h,049h,04Eh,047h,052h,045h
+ DB 045h
+; rec[181].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[181].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[181].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[181].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[181].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[181].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[181].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[181].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[182].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Dh,04Ch,041h,054h,049h,04Eh,02Dh,047h,052h,045h,045h,04Bh,02Dh,031h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[182].value:word 
+ DB 000h,000h
+; rec[182].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 009h,049h,053h,04Fh,02Dh,049h,052h,02Dh,032h,037h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[182].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 010h,043h,053h,049h,053h,04Fh,032h,037h,04Ch,041h,054h,049h,04Eh,047h,052h,045h
+ DB 045h
+; rec[182].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[182].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[182].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[182].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[182].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[182].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[182].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[182].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[183].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 009h,04Ch,041h,054h,049h,04Eh,02Dh,04Ch,041h,050h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[183].value:word 
+ DB 000h,000h
+; rec[183].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 003h,04Ch,041h,050h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[183].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,049h,053h,04Fh,02Dh,049h,052h,02Dh,031h,035h,038h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[183].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Bh,043h,053h,049h,053h,04Fh,031h,035h,038h,04Ch,041h,050h,000h,000h,000h,000h
+ DB 000h
+; rec[183].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[183].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[183].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[183].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[183].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[183].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[183].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[184].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 009h,04Dh,041h,043h,049h,04Eh,054h,04Fh,053h,048h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[184].value:word 
+ DB 000h,000h
+; rec[184].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 003h,04Dh,041h,043h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[184].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Bh,043h,053h,04Dh,041h,043h,049h,04Eh,054h,04Fh,053h,048h,000h,000h,000h,000h
+ DB 000h
+; rec[184].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[184].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[184].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[184].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[184].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[184].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[184].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[184].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[185].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 014h,04Dh,049h,043h,052h,04Fh,053h,04Fh,046h,054h,02Dh,050h,055h,042h,04Ch,049h
+ DB 053h,048h,049h,04Eh,047h,000h,000h,000h,000h
+; rec[185].value:word 
+ DB 000h,000h
+; rec[185].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 010h,043h,053h,04Dh,049h,043h,052h,04Fh,053h,04Fh,046h,054h,050h,055h,042h,04Ch
+ DB 049h
+; rec[185].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[185].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[185].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[185].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[185].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[185].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[185].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[185].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[185].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[186].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 004h,04Dh,04Eh,045h,04Dh,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[186].value:word 
+ DB 000h,000h
+; rec[186].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 006h,043h,053h,04Dh,04Eh,045h,04Dh,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[186].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[186].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[186].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[186].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[186].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[186].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[186].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[186].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[186].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[187].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Ah,04Dh,053h,05Ah,05Fh,037h,037h,039h,035h,02Eh,033h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[187].value:word 
+ DB 000h,000h
+; rec[187].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 009h,049h,053h,04Fh,02Dh,049h,052h,02Dh,038h,036h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[187].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 009h,049h,053h,04Fh,036h,034h,036h,02Dh,048h,055h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[187].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 002h,048h,055h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[187].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 010h,043h,053h,049h,053h,04Fh,038h,036h,048h,055h,04Eh,047h,041h,052h,049h,041h
+ DB 04Eh
+; rec[187].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[187].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[187].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[187].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[187].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[187].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[188].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 009h,04Eh,041h,054h,053h,02Dh,044h,041h,04Eh,04Fh,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[188].value:word 
+ DB 000h,000h
+; rec[188].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,049h,053h,04Fh,02Dh,049h,052h,02Dh,039h,02Dh,031h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[188].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,043h,053h,04Eh,041h,054h,053h,044h,041h,04Eh,04Fh,000h,000h,000h,000h,000h
+ DB 000h
+; rec[188].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[188].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[188].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[188].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[188].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[188].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[188].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[188].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[189].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Dh,04Eh,041h,054h,053h,02Dh,044h,041h,04Eh,04Fh,02Dh,041h,044h,044h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[189].value:word 
+ DB 000h,000h
+; rec[189].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,049h,053h,04Fh,02Dh,049h,052h,02Dh,039h,02Dh,032h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[189].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Dh,043h,053h,04Eh,041h,054h,053h,044h,041h,04Eh,04Fh,041h,044h,044h,000h,000h
+ DB 000h
+; rec[189].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[189].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[189].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[189].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[189].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[189].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[189].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[189].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[190].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 009h,04Eh,041h,054h,053h,02Dh,053h,045h,046h,049h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[190].value:word 
+ DB 000h,000h
+; rec[190].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,049h,053h,04Fh,02Dh,049h,052h,02Dh,038h,02Dh,031h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[190].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,043h,053h,04Eh,041h,054h,053h,053h,045h,046h,049h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[190].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[190].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[190].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[190].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[190].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[190].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[190].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[190].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[191].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Dh,04Eh,041h,054h,053h,02Dh,053h,045h,046h,049h,02Dh,041h,044h,044h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[191].value:word 
+ DB 000h,000h
+; rec[191].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,049h,053h,04Fh,02Dh,049h,052h,02Dh,038h,02Dh,032h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[191].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Dh,043h,053h,04Eh,041h,054h,053h,053h,045h,046h,049h,041h,044h,044h,000h,000h
+ DB 000h
+; rec[191].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[191].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[191].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[191].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[191].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[191].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[191].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[191].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[192].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Dh,04Eh,043h,05Fh,04Eh,043h,030h,030h,02Dh,031h,030h,03Ah,038h,031h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[192].value:word 
+ DB 000h,000h
+; rec[192].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 004h,043h,055h,042h,041h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[192].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,049h,053h,04Fh,02Dh,049h,052h,02Dh,031h,035h,031h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[192].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 009h,049h,053h,04Fh,036h,034h,036h,02Dh,043h,055h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[192].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ch,043h,053h,049h,053h,04Fh,031h,035h,031h,043h,055h,042h,041h,000h,000h,000h
+ DB 000h
+; rec[192].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[192].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[192].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[192].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[192].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[192].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[193].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Bh,04Eh,046h,05Fh,05Ah,05Fh,036h,032h,02Dh,030h,031h,030h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[193].value:word 
+ DB 000h,000h
+; rec[193].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 009h,049h,053h,04Fh,02Dh,049h,052h,02Dh,036h,039h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[193].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 009h,049h,053h,04Fh,036h,034h,036h,02Dh,046h,052h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[193].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 002h,046h,052h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[193].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Dh,043h,053h,049h,053h,04Fh,036h,039h,046h,052h,045h,04Eh,043h,048h,000h,000h
+ DB 000h
+; rec[193].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[193].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[193].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[193].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[193].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[193].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[194].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 012h,04Eh,046h,05Fh,05Ah,05Fh,036h,032h,02Dh,030h,031h,030h,05Fh,028h,031h,039h
+ DB 037h,033h,029h,000h,000h,000h,000h,000h,000h
+; rec[194].value:word 
+ DB 000h,000h
+; rec[194].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 009h,049h,053h,04Fh,02Dh,049h,052h,02Dh,032h,035h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[194].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,049h,053h,04Fh,036h,034h,036h,02Dh,046h,052h,031h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[194].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Dh,043h,053h,049h,053h,04Fh,032h,035h,046h,052h,045h,04Eh,043h,048h,000h,000h
+ DB 000h
+; rec[194].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[194].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[194].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[194].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[194].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[194].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[194].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[195].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 009h,04Eh,053h,05Fh,034h,035h,035h,031h,02Dh,031h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[195].value:word 
+ DB 000h,000h
+; rec[195].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 009h,049h,053h,04Fh,02Dh,049h,052h,02Dh,036h,030h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[195].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 009h,049h,053h,04Fh,036h,034h,036h,02Dh,04Eh,04Fh,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[195].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 002h,04Eh,04Fh,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[195].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 010h,043h,053h,049h,053h,04Fh,036h,030h,044h,041h,04Eh,049h,053h,048h,04Eh,04Fh
+ DB 052h
+; rec[195].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 010h,043h,053h,049h,053h,04Fh,036h,030h,04Eh,04Fh,052h,057h,045h,047h,049h,041h
+ DB 04Eh
+; rec[195].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[195].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[195].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[195].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[195].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[196].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 009h,04Eh,053h,05Fh,034h,035h,035h,031h,02Dh,032h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[196].value:word 
+ DB 000h,000h
+; rec[196].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,049h,053h,04Fh,036h,034h,036h,02Dh,04Eh,04Fh,032h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[196].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 009h,049h,053h,04Fh,02Dh,049h,052h,02Dh,036h,031h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[196].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 003h,04Eh,04Fh,032h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[196].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 010h,043h,053h,049h,053h,04Fh,036h,031h,04Eh,04Fh,052h,057h,045h,047h,049h,041h
+ DB 04Eh
+; rec[196].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[196].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[196].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[196].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[196].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[196].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[197].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 013h,04Fh,053h,044h,05Fh,045h,042h,043h,044h,049h,043h,05Fh,044h,046h,030h,033h
+ DB 05Fh,049h,052h,056h,000h,000h,000h,000h,000h
+; rec[197].value:word 
+ DB 000h,000h
+; rec[197].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 004h,04Eh,04Fh,04Eh,045h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[197].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[197].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[197].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[197].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[197].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[197].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[197].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[197].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[197].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[198].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 011h,04Fh,053h,044h,05Fh,045h,042h,043h,044h,049h,043h,05Fh,044h,046h,030h,034h
+ DB 05Fh,031h,000h,000h,000h,000h,000h,000h,000h
+; rec[198].value:word 
+ DB 000h,000h
+; rec[198].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 004h,04Eh,04Fh,04Eh,045h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[198].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[198].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[198].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[198].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[198].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[198].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[198].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[198].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[198].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[199].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 012h,04Fh,053h,044h,05Fh,045h,042h,043h,044h,049h,043h,05Fh,044h,046h,030h,034h
+ DB 05Fh,031h,035h,000h,000h,000h,000h,000h,000h
+; rec[199].value:word 
+ DB 000h,000h
+; rec[199].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 004h,04Eh,04Fh,04Eh,045h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[199].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[199].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[199].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[199].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[199].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[199].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[199].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[199].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[199].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[200].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 014h,050h,043h,038h,02Dh,044h,041h,04Eh,049h,053h,048h,02Dh,04Eh,04Fh,052h,057h
+ DB 045h,047h,049h,041h,04Eh,000h,000h,000h,000h
+; rec[200].value:word 
+ DB 000h,000h
+; rec[200].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 010h,043h,053h,050h,043h,038h,044h,041h,04Eh,049h,053h,048h,04Eh,04Fh,052h,057h
+ DB 045h
+; rec[200].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[200].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[200].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[200].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[200].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[200].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[200].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[200].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[200].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[201].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Bh,050h,043h,038h,02Dh,054h,055h,052h,04Bh,049h,053h,048h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[201].value:word 
+ DB 000h,000h
+; rec[201].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ch,043h,053h,050h,043h,038h,054h,055h,052h,04Bh,049h,053h,048h,000h,000h,000h
+ DB 000h
+; rec[201].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[201].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[201].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[201].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[201].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[201].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[201].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[201].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[201].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[202].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 002h,050h,054h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[202].value:word 
+ DB 000h,000h
+; rec[202].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 009h,049h,053h,04Fh,02Dh,049h,052h,02Dh,031h,036h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[202].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 009h,049h,053h,04Fh,036h,034h,036h,02Dh,050h,054h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[202].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 010h,043h,053h,049h,053h,04Fh,031h,036h,050h,04Fh,052h,054h,055h,047h,055h,045h
+ DB 053h
+; rec[202].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[202].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[202].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[202].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[202].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[202].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[202].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[203].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 003h,050h,054h,032h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[203].value:word 
+ DB 000h,000h
+; rec[203].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 009h,049h,053h,04Fh,02Dh,049h,052h,02Dh,038h,034h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[203].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,049h,053h,04Fh,036h,034h,036h,02Dh,050h,054h,032h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[203].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 010h,043h,053h,049h,053h,04Fh,038h,034h,050h,04Fh,052h,054h,055h,047h,055h,045h
+ DB 053h
+; rec[203].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[203].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[203].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[203].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[203].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[203].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[203].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[204].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 007h,050h,054h,043h,050h,031h,035h,034h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[204].value:word 
+ DB 000h,000h
+; rec[204].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 009h,043h,053h,050h,054h,043h,050h,031h,035h,034h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[204].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 005h,050h,054h,031h,035h,034h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[204].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 005h,043h,050h,031h,035h,034h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[204].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Eh,043h,059h,052h,049h,04Ch,04Ch,049h,043h,02Dh,041h,053h,049h,041h,04Eh,000h
+ DB 000h
+; rec[204].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[204].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[204].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[204].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[204].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[204].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[205].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 004h,053h,043h,053h,055h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[205].value:word 
+ DB 000h,000h
+; rec[205].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 004h,04Eh,04Fh,04Eh,045h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[205].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[205].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[205].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[205].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[205].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[205].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[205].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[205].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[205].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[206].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Ch,053h,045h,04Eh,05Fh,038h,035h,030h,032h,030h,030h,05Fh,042h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[206].value:word 
+ DB 000h,000h
+; rec[206].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 009h,049h,053h,04Fh,02Dh,049h,052h,02Dh,031h,030h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[206].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 002h,046h,049h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[206].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 009h,049h,053h,04Fh,036h,034h,036h,02Dh,046h,049h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[206].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 009h,049h,053h,04Fh,036h,034h,036h,02Dh,053h,045h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[206].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 002h,053h,045h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[206].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Eh,043h,053h,049h,053h,04Fh,031h,030h,053h,057h,045h,044h,049h,053h,048h,000h
+ DB 000h
+; rec[206].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[206].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[206].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[206].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[207].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Ch,053h,045h,04Eh,05Fh,038h,035h,030h,032h,030h,030h,05Fh,043h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[207].value:word 
+ DB 000h,000h
+; rec[207].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 009h,049h,053h,04Fh,02Dh,049h,052h,02Dh,031h,031h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[207].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,049h,053h,04Fh,036h,034h,036h,02Dh,053h,045h,032h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[207].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 003h,053h,045h,032h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[207].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 010h,043h,053h,049h,053h,04Fh,031h,031h,053h,057h,045h,044h,049h,053h,048h,046h
+ DB 04Fh
+; rec[207].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[207].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[207].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[207].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[207].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[207].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[208].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 009h,053h,048h,049h,046h,054h,05Fh,04Ah,049h,053h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[208].value:word 
+ DB 000h,000h
+; rec[208].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 008h,04Dh,053h,05Fh,04Bh,041h,04Eh,04Ah,049h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[208].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,043h,053h,053h,048h,049h,046h,054h,04Ah,049h,053h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[208].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[208].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[208].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[208].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[208].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[208].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[208].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[208].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[209].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 008h,054h,02Eh,031h,030h,031h,02Dh,047h,032h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[209].value:word 
+ DB 000h,000h
+; rec[209].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,049h,053h,04Fh,02Dh,049h,052h,02Dh,031h,032h,038h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[209].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Eh,043h,053h,049h,053h,04Fh,031h,032h,038h,054h,031h,030h,031h,047h,032h,000h
+ DB 000h
+; rec[209].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[209].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[209].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[209].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[209].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[209].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[209].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[209].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[210].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 009h,054h,02Eh,036h,031h,02Dh,037h,042h,049h,054h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[210].value:word 
+ DB 000h,000h
+; rec[210].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,049h,053h,04Fh,02Dh,049h,052h,02Dh,031h,030h,032h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[210].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Fh,043h,053h,049h,053h,04Fh,031h,030h,032h,054h,036h,031h,037h,042h,049h,054h
+ DB 000h
+; rec[210].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[210].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[210].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[210].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[210].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[210].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[210].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[210].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[211].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 009h,054h,02Eh,036h,031h,02Dh,038h,042h,049h,054h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[211].value:word 
+ DB 000h,000h
+; rec[211].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,049h,053h,04Fh,02Dh,049h,052h,02Dh,031h,030h,033h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[211].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Fh,043h,053h,049h,053h,04Fh,031h,030h,033h,054h,036h,031h,038h,042h,049h,054h
+ DB 000h
+; rec[211].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[211].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[211].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[211].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[211].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[211].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[211].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[211].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[212].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 007h,054h,049h,053h,02Dh,036h,032h,030h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[212].value:word 
+ DB 000h,000h
+; rec[212].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[212].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[212].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[212].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[212].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[212].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[212].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[212].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[212].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[212].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[213].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Bh,055h,04Eh,049h,043h,04Fh,044h,045h,02Dh,031h,02Dh,031h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[213].value:word 
+ DB 000h,000h
+; rec[213].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Bh,043h,053h,055h,04Eh,049h,043h,04Fh,044h,045h,031h,031h,000h,000h,000h,000h
+ DB 000h
+; rec[213].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[213].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[213].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[213].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[213].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[213].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[213].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[213].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[213].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[214].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 011h,055h,04Eh,049h,043h,04Fh,044h,045h,02Dh,031h,02Dh,031h,02Dh,055h,054h,046h
+ DB 02Dh,037h,000h,000h,000h,000h,000h,000h,000h
+; rec[214].value:word 
+ DB 000h,000h
+; rec[214].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Fh,043h,053h,055h,04Eh,049h,043h,04Fh,044h,045h,031h,031h,055h,054h,046h,037h
+ DB 000h
+; rec[214].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[214].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[214].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[214].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[214].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[214].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[214].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[214].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[214].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[215].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Ch,055h,04Eh,04Bh,04Eh,04Fh,057h,04Eh,02Dh,038h,042h,049h,054h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[215].value:word 
+ DB 000h,000h
+; rec[215].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ah,043h,053h,04Dh,04Eh,045h,04Dh,04Fh,04Eh,049h,043h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[215].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[215].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[215].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[215].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[215].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[215].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[215].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[215].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[215].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[216].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 008h,055h,053h,02Dh,041h,053h,043h,049h,049h,034h,02Dh,031h,039h,036h,038h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[216].value:word 
+ DB 000h,000h
+; rec[216].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 008h,049h,053h,04Fh,02Dh,049h,052h,02Dh,036h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[216].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Eh,041h,04Eh,053h,049h,05Fh,058h,033h,02Eh,034h,02Dh,031h,039h,038h,036h,000h
+ DB 000h
+; rec[216].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 010h,049h,053h,04Fh,05Fh,036h,034h,036h,02Eh,049h,052h,056h,03Ah,031h,039h,039h
+ DB 031h
+; rec[216].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 005h,041h,053h,043h,049h,049h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[216].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 009h,049h,053h,04Fh,036h,034h,036h,02Dh,055h,053h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[216].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 002h,055h,053h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[216].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 006h,049h,042h,04Dh,033h,036h,037h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[216].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 005h,043h,050h,033h,036h,037h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[216].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 007h,043h,053h,041h,053h,043h,049h,049h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[216].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Eh,041h,04Eh,053h,049h,05Fh,058h,033h,02Eh,034h,02Dh,031h,039h,036h,038h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[217].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 005h,055h,053h,02Dh,044h,04Bh,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[217].value:word 
+ DB 000h,000h
+; rec[217].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 005h,058h,030h,032h,030h,031h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[217].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 010h,043h,053h,048h,041h,04Ch,046h,057h,049h,044h,054h,048h,04Bh,041h,054h,041h
+ DB 04Bh
+; rec[217].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[217].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[217].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[217].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[217].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[217].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[217].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[217].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[218].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 006h,055h,054h,046h,02Dh,031h,036h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[218].value:word 
+ DB 000h,000h
+; rec[218].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[218].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[218].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[218].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[218].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[218].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[218].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[218].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[218].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[218].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[219].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 008h,055h,054h,046h,02Dh,031h,036h,042h,045h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[219].value:word 
+ DB 000h,000h
+; rec[219].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[219].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[219].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[219].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[219].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[219].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[219].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[219].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[219].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[219].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[220].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 008h,055h,054h,046h,02Dh,031h,036h,04Ch,045h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[220].value:word 
+ DB 000h,000h
+; rec[220].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[220].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[220].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[220].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[220].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[220].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[220].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[220].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[220].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[220].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[221].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 006h,055h,054h,046h,02Dh,033h,032h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[221].value:word 
+ DB 000h,000h
+; rec[221].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[221].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[221].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[221].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[221].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[221].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[221].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[221].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[221].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[221].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[222].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 008h,055h,054h,046h,02Dh,033h,032h,042h,045h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[222].value:word 
+ DB 000h,000h
+; rec[222].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[222].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[222].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[222].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[222].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[222].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[222].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[222].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[222].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[222].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[223].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 008h,055h,054h,046h,02Dh,033h,032h,04Ch,045h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[223].value:word 
+ DB 000h,000h
+; rec[223].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[223].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[223].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[223].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[223].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[223].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[223].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[223].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[223].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[223].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[224].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 005h,055h,054h,046h,02Dh,037h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[224].value:word 
+ DB 000h,000h
+; rec[224].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[224].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[224].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[224].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[224].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[224].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[224].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[224].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[224].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[224].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[225].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 005h,055h,054h,046h,02Dh,038h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[225].value:word 
+ DB 000h,000h
+; rec[225].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 004h,04Eh,04Fh,04Eh,045h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[225].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[225].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[225].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[225].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[225].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[225].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[225].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[225].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[225].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[226].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 015h,056h,045h,04Eh,054h,055h,052h,041h,02Dh,049h,04Eh,054h,045h,052h,04Eh,041h
+ DB 054h,049h,04Fh,04Eh,041h,04Ch,000h,000h,000h
+; rec[226].value:word 
+ DB 000h,000h
+; rec[226].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 010h,043h,053h,056h,045h,04Eh,054h,055h,052h,041h,049h,04Eh,054h,045h,052h,04Eh
+ DB 041h
+; rec[226].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[226].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[226].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[226].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[226].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[226].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[226].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[226].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[226].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[227].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Ch,056h,045h,04Eh,054h,055h,052h,041h,02Dh,04Dh,041h,054h,048h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[227].value:word 
+ DB 000h,000h
+; rec[227].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Dh,043h,053h,056h,045h,04Eh,054h,055h,052h,041h,04Dh,041h,054h,048h,000h,000h
+ DB 000h
+; rec[227].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[227].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[227].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[227].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[227].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[227].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[227].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[227].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[227].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[228].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Ah,056h,045h,04Eh,054h,055h,052h,041h,02Dh,055h,053h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[228].value:word 
+ DB 000h,000h
+; rec[228].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Bh,043h,053h,056h,045h,04Eh,054h,055h,052h,041h,055h,053h,000h,000h,000h,000h
+ DB 000h
+; rec[228].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[228].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[228].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[228].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[228].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[228].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[228].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[228].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[228].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[229].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Eh,056h,049h,044h,045h,04Fh,054h,045h,058h,02Dh,053h,055h,050h,050h,04Ch,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[229].value:word 
+ DB 000h,000h
+; rec[229].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 009h,049h,053h,04Fh,02Dh,049h,052h,02Dh,037h,030h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[229].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 010h,043h,053h,049h,053h,04Fh,037h,030h,056h,049h,044h,045h,04Fh,054h,045h,058h
+ DB 053h
+; rec[229].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[229].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[229].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[229].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[229].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[229].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[229].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[229].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[230].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 004h,056h,049h,051h,052h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[230].value:word 
+ DB 000h,000h
+; rec[230].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 006h,043h,053h,056h,049h,051h,052h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[230].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[230].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[230].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[230].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[230].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[230].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[230].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[230].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[230].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[231].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 006h,056h,049h,053h,043h,049h,049h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[231].value:word 
+ DB 000h,000h
+; rec[231].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 008h,043h,053h,056h,049h,053h,043h,049h,049h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[231].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[231].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[231].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[231].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[231].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[231].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[231].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[231].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[231].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[232].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Ch,057h,049h,04Eh,044h,04Fh,057h,053h,02Dh,031h,032h,035h,030h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[232].value:word 
+ DB 000h,000h
+; rec[232].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[232].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[232].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[232].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[232].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[232].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[232].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[232].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[232].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[232].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[233].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Ch,057h,049h,04Eh,044h,04Fh,057h,053h,02Dh,031h,032h,035h,031h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[233].value:word 
+ DB 000h,000h
+; rec[233].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[233].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[233].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[233].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[233].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[233].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[233].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[233].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[233].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[233].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[234].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Ch,057h,049h,04Eh,044h,04Fh,057h,053h,02Dh,031h,032h,035h,032h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[234].value:word 
+ DB 000h,000h
+; rec[234].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[234].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[234].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[234].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[234].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[234].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[234].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[234].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[234].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[234].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[235].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Ch,057h,049h,04Eh,044h,04Fh,057h,053h,02Dh,031h,032h,035h,033h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[235].value:word 
+ DB 000h,000h
+; rec[235].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[235].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[235].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[235].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[235].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[235].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[235].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[235].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[235].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[235].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[236].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Ch,057h,049h,04Eh,044h,04Fh,057h,053h,02Dh,031h,032h,035h,034h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[236].value:word 
+ DB 000h,000h
+; rec[236].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[236].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[236].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[236].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[236].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[236].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[236].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[236].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[236].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[236].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[237].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Ch,057h,049h,04Eh,044h,04Fh,057h,053h,02Dh,031h,032h,035h,035h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[237].value:word 
+ DB 000h,000h
+; rec[237].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[237].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[237].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[237].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[237].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[237].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[237].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[237].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[237].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[237].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[238].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Ch,057h,049h,04Eh,044h,04Fh,057h,053h,02Dh,031h,032h,035h,036h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[238].value:word 
+ DB 000h,000h
+; rec[238].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 004h,04Eh,04Fh,04Eh,045h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[238].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[238].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[238].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[238].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[238].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[238].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[238].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[238].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[238].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[239].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Ch,057h,049h,04Eh,044h,04Fh,057h,053h,02Dh,031h,032h,035h,037h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[239].value:word 
+ DB 000h,000h
+; rec[239].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[239].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[239].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[239].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[239].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[239].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[239].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[239].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[239].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[239].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[240].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Ch,057h,049h,04Eh,044h,04Fh,057h,053h,02Dh,031h,032h,035h,038h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[240].value:word 
+ DB 000h,000h
+; rec[240].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[240].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[240].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[240].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[240].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[240].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[240].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[240].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[240].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[240].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+;-------------------------------------------------------
+; rec[241].name:string[CHARSET_LENGTH_NAME] 
+
+ DB 00Bh,057h,049h,04Eh,044h,04Fh,057h,053h,02Dh,033h,031h,04Ah,000h,000h,000h,000h
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h
+; rec[241].value:word 
+ DB 000h,000h
+; rec[241].aliases[01]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 00Ch,043h,053h,057h,049h,04Eh,044h,04Fh,057h,053h,033h,031h,04Ah,000h,000h,000h
+ DB 000h
+; rec[241].aliases[02]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[241].aliases[03]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[241].aliases[04]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[241].aliases[05]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[241].aliases[06]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[241].aliases[07]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[241].aliases[08]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[241].aliases[09]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+; rec[241].aliases[10]:string[CHARSET_LENGTH_ALIAS] 
+
+ DB 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
+ DB 000h
+charsetsproc ENDP
+END
