@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: iso639.pas,v 1.2 2004-11-15 03:34:03 carl Exp $
+    $Id: iso639.pas,v 1.3 2004-11-21 19:54:25 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Language code unit
@@ -246,6 +246,7 @@ var
  s: string;
  index: integer;
 begin
+  name:=upstring(name);
   getlangcode_en:='';
   for i:=1 to MAX_ENTRIES do
     begin
@@ -265,7 +266,7 @@ begin
            character.
          }
          { Check the 2-digit code }
-         if upstring(trim(s)) = upstring(name) then
+         if upstring(trim(s)) = name then
          begin
             getlangcode_en:=Lang_Info^[i].code;
             exit;
@@ -282,6 +283,7 @@ var
  index: integer;
 begin
   getlangcode_fr:='';
+  name:=upstring(name);
   for i:=1 to MAX_ENTRIES do
     begin
       name_fr:=CleanName(Lang_Info^[i].name_fr);
@@ -300,7 +302,7 @@ begin
            character.
          }
          { Check the 2-digit code }
-         if upstring(trim(s)) = upstring(name) then
+         if upstring(trim(s)) = name then
          begin
             getlangcode_fr:=Lang_Info^[i].code;
             exit;
@@ -333,6 +335,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.2  2004/11/15 03:34:03  carl
+    * alternate names are now individually parsed
+
   Revision 1.1  2004/08/19 00:21:16  carl
     + Language code unit
 

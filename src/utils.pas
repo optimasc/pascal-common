@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: utils.pas,v 1.14 2004-11-09 03:50:23 carl Exp $
+    $Id: utils.pas,v 1.15 2004-11-21 19:54:26 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Common utilities
@@ -58,7 +58,7 @@ CONST
      @param FName Name of the file to check
      @returns FALSE if the file cannot be opened or if it does not exist.
   }
-  Function FileExists(FName : string): Boolean;
+  Function FileExists(const FName : string): Boolean;
   
   {** 
      @abstract(Verifies the existence of a directory)
@@ -68,7 +68,7 @@ CONST
      @param DName Name of the directory to check
      @returns FALSE if the directory cannot be opened or if it does not exist.
   }
-  Function DirectoryExists(DName : string): Boolean;
+  Function DirectoryExists(const DName : string): Boolean;
   
 
   {** @abstract(Change the endian of a 32-bit value) }
@@ -195,7 +195,7 @@ function fillwithzero(s: string; newlength: integer): string;
 
   {** Remove all null characters from a string.
   }
-function removenulls(s: string): string;  
+function removenulls(const s: string): string;  
 
 Const WhiteSpace = [' ',#10,#13,#9];
 
@@ -402,7 +402,7 @@ uses dos;
      Printf := LeftStr;
    End;
    
-    Function DirectoryExists(DName : string): Boolean;
+    Function DirectoryExists(const DName : string): Boolean;
     var
        ResourceInfo: SearchRec;
     begin
@@ -415,7 +415,7 @@ uses dos;
     end;
 
 
-    Function FileExists(FName: String) : Boolean;
+    Function FileExists(const FName: String) : Boolean;
      Var
       F: File;
       OldMode : Byte;
@@ -446,7 +446,7 @@ uses dos;
 {$ENDIF}
      end;
      
- function removenulls(s: string): string;  
+ function removenulls(const s: string): string;  
  var
   outstr: string;
   i,j: integer;
@@ -871,6 +871,9 @@ end;
 end.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.14  2004/11/09 03:50:23  carl
+    + added lowstring routine
+
   Revision 1.13  2004/10/27 02:01:11  carl
     + trim added
 
