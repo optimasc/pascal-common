@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: tpautils.pas,v 1.5 2004-10-13 23:25:05 carl Exp $
+    $Id: tpautils.pas,v 1.6 2004-11-23 03:45:24 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Turbo Pascal/Borland Pascal 7.0 compatibility unit
@@ -46,6 +46,7 @@ const
     fmShareExclusive = $0010;
     fmShareDenyWrite = $0020;
     fmShareDenyNone  = $0040;
+    
 
 
 type
@@ -76,6 +77,10 @@ type
  procedure ReallocMem(var P: Pointer; Size: Integer);
 
  procedure Assert(b: boolean);
+
+ var
+    ErrOutput:Text;
+ 
 
 {$endif}
 
@@ -112,7 +117,7 @@ implementation
       GetMem(p,size);
       exit;
     end;
-   { If P is not nil and Size is zero, ReallocMem disposes the block 
+   { If P is not nil and Size is zero, ReallocMem disposes the block
      referenced by P and sets P to nil. This corresponds to a call to 
      FreeMem, except that FreeMem doesn't clear the pointer. }
    If assigned(p) and (size = 0) then
@@ -130,18 +135,23 @@ implementation
     are undefined. If the block cannot be reallocated in place, it is moved 
     to a new location in the heap, and P is updated accordingly.        
   }
-   
+
  end;
- 
-  
 
 
+
+Begin
+  Move(Output,ErrOutput,sizeof(Output));
 {$endif}
+
 
 end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.5  2004/10/13 23:25:05  carl
+    * replace RunError by assert
+
   Revision 1.4  2004/08/27 02:11:07  carl
     + added filemodes, as defined in sysutils
 

@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: vpautils.pas,v 1.4 2004-09-29 00:57:47 carl Exp $
+    $Id: vpautils.pas,v 1.5 2004-11-23 03:45:25 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Virtual pascal 2.1 or higher compatibility unit (Win32 or OS/2 targets)
@@ -41,6 +41,7 @@ Error Unsupported target
     longword = longint;
     { An integer which has the size of a pointer }
     ptrint = longint;
+    word = smallword;
     
 const
  LineEnding : string = #13#10;
@@ -71,6 +72,10 @@ const
     fmShareDenyWrite = $0020;
     fmShareDenyNone  = $0040;
 {$ENDIF}    
+
+ var
+    ErrOutput:Text;
+
  
   procedure Assert(b: boolean);
 
@@ -79,17 +84,26 @@ const
 
 implementation
 
+{$IFDEF VPASCAL}
+
  procedure Assert(b: boolean);
  begin
    if not b then RunError(227);
  end;
 
 
+Begin
+  Move(Output,ErrOutput,sizeof(Output));
+{$ENDIF}
 
 end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.4  2004/09/29 00:57:47  carl
+    + added dateutil unit
+    + added more support for parsing different ISO time/date strings
+
   Revision 1.3  2004/08/27 02:11:08  carl
     + added filemodes, as defined in sysutils
 

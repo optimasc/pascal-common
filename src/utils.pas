@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: utils.pas,v 1.15 2004-11-21 19:54:26 carl Exp $
+    $Id: utils.pas,v 1.16 2004-11-23 03:45:25 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Common utilities
@@ -405,11 +405,13 @@ uses dos;
     Function DirectoryExists(const DName : string): Boolean;
     var
        ResourceInfo: SearchRec;
+       status: integer;
     begin
       DirectoryExists:=false;
       findfirst(dname,Directory,ResourceInfo);
+      status:=DosError;
       findclose(ResourceInfo);
-      if DosError <> 0 then
+      if status <> 0 then
         exit;
       DirectoryExists:=true;  
     end;
@@ -871,6 +873,9 @@ end;
 end.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.15  2004/11/21 19:54:26  carl
+    * 10-25% speed optimizations (change some parameter types to const, code folding)
+
   Revision 1.14  2004/11/09 03:50:23  carl
     + added lowstring routine
 

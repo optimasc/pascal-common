@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: fpautils.pas,v 1.2 2004-08-27 02:11:07 carl Exp $
+    $Id: fpautils.pas,v 1.3 2004-11-23 03:45:24 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Free Pascal version 1.0.6 and higher compatibility unit
@@ -45,16 +45,25 @@ const
  fmShareExclusive = Sysutils.fmShareExclusive;
  fmShareDenyWrite = Sysutils.fmShareDenyWrite;
  fmShareDenyNone  = Sysutils.fmShareDenyNone;
+ 
+var 
+ ErrOutput: Text;
 
 {$ENDIF}
 
 implementation
 
-
+{$IFDEF FPC}
+begin
+ move(StdErr,ErrOutput, sizeof(StdErr));
+{$ENDIF}
 end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.2  2004/08/27 02:11:07  carl
+    + added filemodes, as defined in sysutils
+
   Revision 1.1  2004/05/05 16:28:19  carl
     Release 0.95 updates
 
