@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: unicode.pas,v 1.19 2004-10-27 01:58:50 carl Exp $
+    $Id: unicode.pas,v 1.20 2004-10-31 19:54:06 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Unicode related routines
@@ -261,19 +261,39 @@ type
    The memory for the buffer is allocated. Use @link(ucs4strdispose) to dispose 
    of the allocated string. The string is null terminated. If str is nil, then
    this routine returns nil and does not allocate anything.
-   
+
    @param(str The string to convert, single character coded, or UTF-8 coded)
    @param(srctype The encoding of the string, UTF-8 is also valid)
   }
  function ucs4strnew(str: pchar; srctype: string): pucs4char;
  
-  {** @abstract(Disposes of an UCS-4 null terminated string on the heap) 
-  
-      Disposes of a string that was previously allocated with
-      @code(ucs4strnew), and sets the pointer to nil. 
+  {** @abstract(Allocates and copies an UCS-4 null terminated string) 
    
+   The memory for the buffer is allocated. Use @link(ucs4strdispose) to dispose 
+   of the allocated string. The string is copied from src and is null terminated.
+   If the parameter is nil, this routine returns nil and does not allocate
+   anything.
+  }
+  function ucs4strnewucs4(src: pucs4char): pucs4char;
+ 
+ 
+ 
+
+  {** @abstract(Disposes of an UCS-4 null terminated string on the heap)
+
+      Disposes of a string that was previously allocated with
+      @code(ucs4strnew), and sets the pointer to nil.
+
   }
  function ucs4strdispose(str: pucs4char): pucs4char;
+
+ {** Returns a pointer to the first occurence of an ISO-8859-1
+     encoded null terminated string in a UCS-4 encoded
+     null terminated string.
+
+ }
+ function ucs4StrPosISO8859_1(S: pucs4char; Str2: PChar): pucs4char;
+
 
 {---------------------------------------------------------------------------
                            UCS-2 string handling
@@ -1139,10 +1159,17 @@ const
    i: integer;
    l: longint;
    p: pchararray;
+   currentindex: integer;
   begin
     ConvertToUCS4:=UNICODE_ERR_OK;
     source:=removenulls(source);
     p:=nil;
+    { Check if we have a null length, then set the length and exit }
+    if length(source) = 0 then
+      begin
+        ucs4_setlength(dest,0);
+        exit;
+      end;
     { Search the alias type }
     for i:=1 to MAX_ALIAS do
       begin
@@ -1156,6 +1183,7 @@ const
         ConvertToUCS4:=UNICODE_ERR_NOTFOUND;  
         exit;
       end;
+    currentindex:=1;  
     for i:=1 to length(source) do
       begin
         l:=p^[source[i]];
@@ -1164,9 +1192,11 @@ const
             ConvertToUCS4:=UNICODE_ERR_INCOMPLETE_CONVERSION;
             continue;
           end;
-        dest[i]:=ucs4char(l);  
+        dest[currentindex]:=ucs4char(l);  
+        inc(currentindex);
       end;
-    UCS4_setlength(dest,length(source));
+    { The count is always one more }  
+    UCS4_setlength(dest,currentindex-1);
   end;
 
 
@@ -1814,7 +1844,7 @@ end;
    ucs4strpasToASCII:= lstr;
  end;
  
- 
+
 
  procedure ucs4strpas(Str: pucs4char; var res:ucs4string);
   var
@@ -1836,7 +1866,83 @@ end;
    res := lstr;
  end;
  
- 
+
+  function ucs4StrPosISO8859_1(S: pucs4char; Str2: PChar): pucs4char;
+ var
+  count: Longint;
+  oldindex: Longint;
+  found: boolean;
+  Str1Length: Longint;
+  Str2Length: Longint;
+  ll: Longint;
+  str1: pucs4strarray;
+ Begin
+   ucs4strposISO8859_1:=nil;
+   if not assigned(s) then
+     exit;
+   if not assigned(str2) then
+     exit;
+   str1 := pointer(s);
+   Str1Length := UCS4StrLen(s);
+   Str2Length := StrLen(Str2);
+   found := true;
+   oldindex := 0;
+
+   { If the search string is greater than the string to be searched }
+   { it is certain that we will not find it.                        }
+   { Furthermore looking for a null will simply give out a pointer, }
+   { to the null character of str1 as in Borland Pascal.            }
+   if (Str2Length > Str1Length) or (Str2[0] = #0) then
+   begin
+     UCS4StrPosISO8859_1 := nil;
+     exit;
+   end;
+
+   Repeat
+     { Find first matching character of Str2 in Str1 }
+     { put index of this character in oldindex       }
+     for count:= oldindex to Str1Length-1 do
+     begin
+        if ucs4char(Str2[0]) = Str1^[count] then
+        begin
+           oldindex := count;
+           break;
+        end;
+        { nothing found - exit routine }
+        if count = Str1Length-1 then
+        begin
+           UCS4StrPosISO8859_1 := nil;
+           exit;
+        end;
+     end;
+
+     found := true;
+     { Compare the character strings }
+     { and check if they match.      }
+     for ll := 0 to Str2Length-1 do
+     begin
+       { no match, stop iteration }
+        if (ucs4char(Str2[ll]) <> Str1^[ll+oldindex]) then
+        begin
+           found := false;
+           break;
+        end;
+     end;
+     { Not found, the index will no point at next character }
+     if not found then
+       Inc(oldindex);
+     { There was a match }
+     if found then
+     begin
+        UCS4StrPosISO8859_1 := @(Str1^[oldindex]);
+        exit;
+     end;
+   { If we have gone through the whole string to search }
+   { then exit routine.                                 }
+   Until (Str1Length-oldindex) <= 0;
+   UCS4StrPosISO8859_1 := nil;
+ end;
+
  function ucs4strnewstr(str: string; srctype: string): pucs4char;
   var
    i: integer;
@@ -1854,6 +1960,15 @@ end;
     ucs4strnewstr:=nil;
     dest:=nil;
     p:=nil;
+    { Check if we have an empty string }
+    if length(str) = 0 then
+      begin
+        { Just set a size for the null character }
+        Getmem(dest,sizeof(ucs4char));
+        dest^[0]:=0;
+        ucs4strnewstr:=pucs4char(dest);
+        exit;
+      end;
     { Special case: UTF-8 encoding }
     if srctype = 'UTF-8' then
       begin
@@ -1937,8 +2052,6 @@ end;
       end
     else
       begin
-        { The size to allocate is the same to allocate }
-        Getmem(destpchar,length(str)*sizeof(ucs4char)+sizeof(ucs4char));
         dest:=pucs4strarray(destpchar);
         { Search the alias type }
         for i:=1 to MAX_ALIAS do
@@ -1950,6 +2063,21 @@ end;
           end;
         if not assigned(p) then
             exit;
+        { Count the number of characters to allocate }    
+        totalsize:=0;
+        for i:=0 to length(str)-1 do
+          begin
+            l:=p^[str[i+1]];
+            { invalid character }
+            if l = -1 then
+              continue
+            else
+              inc(totalsize);
+          end;
+        { The size to allocate is the same to allocate }
+        Getmem(dest,totalsize*sizeof(ucs4char)+sizeof(ucs4char));        
+        CurrentIndex:=0;
+        { Now actually copy the data }  
         for i:=0 to length(str)-1 do
           begin
             l:=p^[str[i+1]];
@@ -1958,14 +2086,30 @@ end;
               continue
             else
               ch:=ucs4char(l);
-            dest^[i]:=ucs4char(ch);
+            dest^[currentindex]:=ucs4char(ch);
+            inc(currentindex);
           end;
         { add null character }
-        dest^[length(str)]:=0;
+        dest^[currentindex]:=0;
         ucs4strnewstr:=pucs4char(dest);
       end;
   end;
- 
+  
+  function ucs4strnewucs4(src: pucs4char): pucs4char;
+  var
+   lengthtoalloc: integer;
+   dst: pucs4char;
+  begin
+    ucs4strnewucs4:=nil;
+    if not assigned(src) then 
+      exit;
+    lengthtoalloc:=ucs4strlen(src)*sizeof(ucs4char)+sizeof(ucs4char);
+    { also copy the null character }
+    Getmem(dst,lengthtoalloc);
+    move(src^,dst^,lengthtoalloc);
+    ucs4strnewucs4:=dst;
+  end;
+  
  
  procedure ucs4removenulls(s: ucs4string; var dest: ucs4string);
  var
@@ -2003,6 +2147,15 @@ end;
     dest:=nil;
     p:=nil;
     if not assigned(str) then exit;
+    { Just a simple null character to add }
+    if strlen(str) = 0 then
+      begin
+        { Just set a size for the null character }
+        Getmem(dest,sizeof(ucs4char));
+        dest^[0]:=0;
+        ucs4strnew:=pucs4char(dest);
+        exit;
+      end;
     { Special case: UTF-8 encoding }
     if srctype = 'UTF-8' then
       begin
@@ -2087,8 +2240,6 @@ end;
       end
     else
       begin
-        { The size to allocate is the same to allocate }
-        Getmem(dest,strlen(str)*sizeof(ucs4char)+sizeof(ucs4char));        
         { Search the alias type }
         for i:=1 to MAX_ALIAS do
           begin
@@ -2099,18 +2250,37 @@ end;
           end;
         if not assigned(p) then
             exit;
-        for i:=0 to strlen(str)-1 do
+        { Count the number of characters to allocate }    
+        totalsize:=0;
+        count:=strlen(str)-1;
+        for i:=0 to count do
           begin
             l:=p^[str[i]];
             { invalid character }
             if l = -1 then
               continue
             else
+              inc(totalsize);
+          end;
+        { The size to allocate is the same to allocate }
+        Getmem(dest,totalsize*sizeof(ucs4char)+sizeof(ucs4char));        
+        CurrentIndex:=0;
+        { Now actually copy the data }  
+        for i:=0 to strlen(str)-1 do
+          begin
+            l:=p^[str[i]];
+            { invalid character }
+            if l = -1 then
+              begin
+                continue
+              end
+            else
               ch:=ucs4char(l);
-            dest^[i]:=ucs4char(ch);
+            dest^[CurrentIndex]:=ucs4char(ch);
+            inc(currentIndex);
           end;
         { add null character }
-        dest^[strlen(str)]:=0;
+        dest^[CurrentIndex]:=0;
         ucs4strnew:=pucs4char(dest);
       end;
   end;
@@ -2728,6 +2898,10 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.19  2004/10/27 01:58:50  carl
+   * strnew returns nil if the value passed is nil
+   + clarification of some comments
+
   Revision 1.18  2004/10/13 23:25:43  carl
     - remove unused variables
     * bugfix of range check errors
