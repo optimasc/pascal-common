@@ -93,11 +93,7 @@ CONST
 {---------------------------------------------------------------------------}
 {                            MAXIUM DATA SIZES                              }
 {---------------------------------------------------------------------------}
-{$IFDEF FPC}
    MaxBytes = 128*1024*128;                               { Maximum data size }
-{$ELSE}
-   MaxBytes = 16384;
-{$ENDIF}
    MaxWords = MaxBytes DIV SizeOf(Word);              { Max word data size }
    MaxPtrs = MaxBytes DIV SizeOf(Pointer);            { Max ptr data size }
    MaxCollectionSize = MaxBytes DIV SizeOf(Pointer);  { Max collection size }
@@ -2757,6 +2753,9 @@ END;
 END.
 {
    $Log: not supported by cvs2svn $
+   Revision 1.3  2004/09/06 19:46:42  carl
+     * File sharing modes are now allowed
+
    Revision 1.2  2004/07/05 02:25:08  carl
      + fix some compiler option targets
 
