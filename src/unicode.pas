@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: unicode.pas,v 1.27 2005-01-08 21:37:32 carl Exp $
+    $Id: unicode.pas,v 1.28 2005-01-30 20:07:11 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Unicode related routines
@@ -209,6 +209,15 @@ type
         character set, otherwise FALSE)
   }
   function ucs4_issupported(s: string): boolean;
+  
+  {** @abstract(Converts an UCS-4 string to an ISO-8859-1 string)
+
+      @param(s The UCS-4 string to convert)
+      @returns(The converted string with possible escape characters
+        if a character could not be converted)
+  }
+    function ucs4_converttoiso8859_1(s: ucs4string): string;
+  
 
 {---------------------------------------------------------------------------
                   UCS-4 null terminated string handling
@@ -484,6 +493,24 @@ type
       the hex representation of the character.
   }
  function utf8strpastoASCII(src: pchar): string;
+ 
+  {** @abstract(Converts an UTF-8 null terminated string to a string 
+      encoded to a different code page)
+
+      Characters that cannot be converted are converted to
+      escape sequences of the form : \uxxxxxxxx where xxxxxxxx is
+      the hex representation of the character.
+      
+      If the null character string does not fit in the
+      resulting string, it is truncated.
+      
+      @param(src Null terminated UTF-8 encoded string)
+      @param(desttype Encoding type for resulting string)
+      @returns(an empty string on error, or a correctly encoded
+         string).
+  }
+ function utf8strpastostring(src: pchar; desttype: string): string;
+ 
 
   {** @abstract(Converts a null-terminated UTF-8 string to a Pascal-style
        UTF-8 encoded string.)
@@ -1233,7 +1260,7 @@ const
                 end;
               if not found then
                 begin
-                  dest:=dest+'\u'+hexstr(source[i],8);
+                  dest:=dest+'\u'+hexstr(longint(source[i]),8);
                   ConvertFromUCS4:=UNICODE_ERR_INCOMPLETE_CONVERSION;
                 end;
             end;
@@ -1802,6 +1829,29 @@ end;
       end;
     end;
   end;
+  
+  function ucs4_converttoiso8859_1(s: ucs4string): string;
+  var
+   resultstr: string;
+   i: integer;
+   maxlength: integer;
+  begin
+   resultstr:='';
+   maxlength:=ucs4_length(s);
+   for i:=1 to maxlength do
+     begin
+       if s[i] <= 255 then
+         begin
+           resultstr:=resultstr+chr(s[i]);
+         end
+       else
+         begin
+           resultstr:=resultstr+'\u'+hexstr(longint(s[i]),8);
+         end;
+     end;
+   ucs4_converttoiso8859_1:=resultstr;  
+  end;
+  
   
   function ucs4_isvalid(c: ucs4char): boolean;
   begin
@@ -2882,7 +2932,113 @@ end;
       stringarray^[outindex] := 0;
       utf8strlcopyucs4:=dst;
   end;
-  
+
+
+  function utf8strpastostring(src: pchar; desttype: string): string;
+  var
+   ch: ucs4char;
+   s: string;
+   i: integer;
+   StringLength: integer;
+   ExtraBytesToRead: integer;
+   CurrentIndex: integer;
+   p: pchararray;
+   j: char;
+   found: boolean;
+  begin
+    setlength(s,0);
+    utf8strpastostring:='';
+    if not assigned(src) then
+       exit;
+    p:=nil;
+    desttype:=upstring(desttype);
+    { If the desitnation type if UTF-8, simple, directly convert and exit }
+    if desttype = 'UTF-8' then
+      begin
+         utf8strpastostring:=strpas(src);
+         exit;
+      end;
+    for i:=1 to MAX_ALIAS do
+     begin
+      if aliaslist[i].aliasname = desttype then
+        begin
+          p:=aliaslist[i].table;
+        end;
+     end;
+    i:=0;
+    { Could not be found, then exit without doing nothing... }
+    if not assigned(p) then
+       exit;
+    stringlength := strlen(src);
+    while i < stringlength do
+      begin
+        ch := 0;
+        extrabytestoread:= trailingBytesForUTF8[ord(src[i])];
+        if (stringlength + extraBytesToRead) >= high(ucs4string) then
+          begin
+            exit;
+          end;
+        CurrentIndex := ExtraBytesToRead;
+        if CurrentIndex = 5 then
+        begin
+          ch:=ch + ucs4char(src[i]);
+          inc(i);
+          ch:=ch shl 6;
+          dec(CurrentIndex);
+        end;
+        if CurrentIndex = 4 then
+        begin
+          ch:=ch + ucs4char(src[i]);
+          inc(i);
+          ch:=ch shl 6;
+          dec(CurrentIndex);
+        end;
+        if CurrentIndex = 3 then
+        begin
+          ch:=ch + ucs4char(src[i]);
+          inc(i);
+          ch:=ch shl 6;
+          dec(CurrentIndex);
+        end;
+        if CurrentIndex = 2 then
+        begin
+          ch:=ch + ucs4char(src[i]);
+          inc(i);
+          ch:=ch shl 6;
+          dec(CurrentIndex);
+        end;
+        if CurrentIndex = 1 then
+        begin
+          ch:=ch + ucs4char(src[i]);
+          inc(i);
+          ch:=ch shl 6;
+          dec(CurrentIndex);
+        end;
+        if CurrentIndex = 0 then
+        begin
+          ch:=ch + ucs4char(src[i]);
+          inc(i);
+        end;
+        ch := ch - offsetsFromUTF8[extraBytesToRead];
+        { search the table for the character by reverse lookup }
+        found:=false;
+        for j:=#0 to high(char) do 
+          begin     
+            if ucs4char(ch) = ucs4char(p^[j]) then
+              begin
+                s:=s+j;
+                found:=true;
+                break;
+              end;
+          end;
+        if not found then
+          begin
+            s:=s+'\u'+hexstr(longint(ch),8);
+          end;
+      end;
+     utf8strpastostring:=s;
+  end;
+
   
   function utf8strpastoISO8859_1(src: pchar): string;
   var
@@ -3061,6 +3217,11 @@ end;
   
   function utf8strpas(src: pchar): string;
   begin
+    if src = nil then
+      begin
+        utf8strpas:='';
+        exit;
+      end;
     utf8strpas:=strpas(src);
   end;
    
@@ -3254,6 +3415,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.27  2005/01/08 21:37:32  carl
+    + added utf8strnewstr
+
   Revision 1.26  2005/01/06 03:26:38  carl
      * ucs4strnewstr fix with UTF-8, length was wrong for conversion.
 
