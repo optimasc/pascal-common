@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: unicode.pas,v 1.25 2004-12-26 23:32:39 carl Exp $
+    $Id: unicode.pas,v 1.26 2005-01-06 03:26:38 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Unicode related routines
@@ -2087,7 +2087,7 @@ end;
       begin
         { Calculate the length to store the decoded length }
         i:=1;
-        totalsize:=1;
+        totalsize:=0;
         while (i <= length(str)) do
           begin
             count:=utf8_sizeencoding(str[i]);
@@ -3228,6 +3228,11 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.25  2004/12/26 23:32:39  carl
+    + ucs4strnewucs2
+    * some return value was never initialized when converting to UTF-8
+    * bugfix of crashes when index is 0 in loops
+
   Revision 1.24  2004/12/08 04:25:38  carl
     * ucs4strpastoutf8 would not work on extended characters (would leave out some characters in the final string)
 
