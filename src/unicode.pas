@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: unicode.pas,v 1.26 2005-01-06 03:26:38 carl Exp $
+    $Id: unicode.pas,v 1.27 2005-01-08 21:37:32 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Unicode related routines
@@ -490,6 +490,18 @@ type
 
   }
  function utf8strpas(src: pchar): string;
+ 
+ 
+  {** @abstract(Converts an UTF-8 string to a null terminated UTF-8 string.)
+  
+      The memory for the storage of the string is allocated by
+      the routine, and the ending null character is also added.
+      
+      @returns(The newly allocated UTF-8 null terminated string)
+
+  }
+ function utf8strnewstr(str: utf8string): putf8char;
+ 
 
 
 {---------------------------------------------------------------------------
@@ -3052,6 +3064,20 @@ end;
     utf8strpas:=strpas(src);
   end;
    
+ function utf8strnewstr(str: utf8string): putf8char;
+ var
+  p: putf8char;
+ begin
+   utf8strnewstr:=nil;
+   p:=nil;
+   if utf8_length(str) > 0 then
+     begin
+        getmem(p,utf8_length(str)+sizeof(utf8char));
+        strpcopy(p,str);
+        utf8strnewstr:=p;
+     end;
+ end;
+ 
 
 
   
@@ -3228,6 +3254,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.26  2005/01/06 03:26:38  carl
+     * ucs4strnewstr fix with UTF-8, length was wrong for conversion.
+
   Revision 1.25  2004/12/26 23:32:39  carl
     + ucs4strnewucs2
     * some return value was never initialized when converting to UTF-8
