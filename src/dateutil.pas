@@ -1,5 +1,5 @@
 {
-    $Id: dateutil.pas,v 1.2 2004-10-13 23:23:50 carl Exp $
+    $Id: dateutil.pas,v 1.3 2004-10-27 01:57:45 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere (Optima SC Inc.)
 
     Date and time utility routines
@@ -280,7 +280,7 @@ minute in the returned time.
 A test value : JD 2450450.0000 = 1997 Jan 01 12:00 UT }
 var
  Z,F,A,B,D,I,RJ,RH: float;
- C,T: longint;
+ C,T: big_integer_t;
  Y: integer;
 begin
    Z := trunc(JDay+0.5);
@@ -996,6 +996,9 @@ end;
 end.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.2  2004/10/13 23:23:50  carl
+    * change TDatetime type from extended to real.
+
   Revision 1.1  2004/09/29 00:57:46  carl
     + added dateutil unit
     + added more support for parsing different ISO time/date strings
