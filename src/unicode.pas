@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: unicode.pas,v 1.7 2004-07-05 02:27:32 carl Exp $
+    $Id: unicode.pas,v 1.8 2004-07-05 02:38:15 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Unicode related routines
@@ -194,7 +194,7 @@ const
 
       The destination buffer must have room for at least Length(Source)+1 characters.
   }
- Function UTF32StrPCopy(Dest: Putf32char; Source: UTF32String):PUTF32Char;
+ Function utf32strpcopy(Dest: Putf32char; Source: UTF32String):PUTF32Char;
 
   {** @abstract(Copies a Pascal-style string to a null-terminated UTF-32 string.)
 
@@ -202,7 +202,7 @@ const
 
       The destination buffer must have room for at least Length(Source)+1 characters.
   }
- Function UTF32StrPCopyASCII(Dest: Putf32char; Source: string):PUTF32Char;
+ Function utf32strpcopyascii(Dest: Putf32char; Source: string):PUTF32Char;
 
 {---------------------------------------------------------------------------
                            UCS-2 string handling
@@ -224,7 +224,7 @@ const
    The memory for the buffer is allocated. Use strlen to dispose of the
    allocated string. The string is null terminated.
   }
-  function UTF8StrNew(src: putf32char): pchar;
+  function utf8strnew(src: putf32char): pchar;
   
   
   
@@ -1733,6 +1733,11 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.7  2004/07/05 02:27:32  carl
+    - remove some compiler warnings
+    + UTF-32 null character string handling routines
+    + UTF-8 null character string handling routines
+
   Revision 1.6  2004/07/01 22:27:15  carl
     * Added support for Null terminated utf32 character string
     + renamed utf32 to utf32char
