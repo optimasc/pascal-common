@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: ctypes.pas,v 1.1 2004-08-01 05:33:23 carl Exp $
+    $Id: ctypes.pas,v 1.2 2004-08-19 00:19:34 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     C99 Type definitions
@@ -39,8 +39,8 @@ type
  bool = boolean;
  float = double;
  size_t = longword;
- wchar_t = putf32char;
- wint_t = utf32;
+ wchar_t = pucs4char;
+ wint_t = ucs4char;
 
 
 implementation
@@ -50,4 +50,7 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.1  2004/08/01 05:33:23  carl
+    + C99 compatiibility unit
+
 }
