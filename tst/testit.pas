@@ -21,7 +21,9 @@ uses dpautils,
      iso639,
      utils,
      testdate,
-     testsgml
+     testsgml,
+     testietf,
+     tiso639
      ;
 
   var
@@ -433,50 +435,6 @@ uses dpautils,
     putf:=ucs4Strdispose(putf);
   end;
 
-  procedure testiso639;
-  var
-   b: boolean;
-   s: string;
-  begin
-    b:=isvalidlangcode('');
-    if b = TRUE then
-       RunError(255);
-    b:=isvalidlangcode('fr');
-    if not b then
-       RunError(255);
-    b:=isvalidlangcode('xal');
-    if not b then
-       RunError(255);
-    b:=isvalidlangcode('francais');
-    if b then
-       RunError(255);
-    { Verify French decoding }
-    s:=getlangname_fr('');
-    if s <> '' then
-        RunError(255);
-    s:=getlangname_fr('en');
-    if upstring(s) <> 'ANGLAIS' then
-        RunError(255);
-    s:=getlangname_fr('english');
-    if upstring(s) <> '' then
-        RunError(255);
-    s:=getlangname_fr('xal');
-    if upstring(s) <> 'KALMOUK' then
-        RunError(255);
-    { Verify english decoding }
-    s:=getlangname_en('');
-    if s <> '' then
-        RunError(255);
-    s:=getlangname_en('fr');
-    if upstring(s) <> 'FRENCH' then
-        RunError(255);
-    s:=getlangname_en('xal');
-    if upstring(s) <> 'KALMYK' then
-        RunError(255);
-    s:=getlangname_en('english');
-    if upstring(s) <> '' then
-        RunError(255);
-  end;
 
   procedure testremovenulls;
   var
@@ -495,6 +453,23 @@ uses dpautils,
    if s1 <> '' then
      RunError(255);
   end;
+
+procedure testucs4strtrim;
+  const
+   utf32null: array[0..5] of ucs4char =
+   (ord(#10),ord('e'),Ord('l'),Ord('l'),Ord('o'),0);
+   utf32null1: array[0..0] of ucs4char =
+   (ord(#0));
+   utf32null2: array[0..2] of ucs4char =
+   (ord(#10),ord(#13),0);
+   utf32null3: array[0..7] of ucs4char =
+   (ord(#10),ord('e'),Ord('l'),Ord('l'),Ord('o'),10,9,0);
+begin
+  ucs4strtrim(pucs4char(@utf32null));
+  ucs4strtrim(pucs4char(@utf32null1));
+  ucs4strtrim(pucs4char(@utf32null2));
+  ucs4strtrim(pucs4char(@utf32null3));
+end;
 
 
 var
@@ -524,6 +499,8 @@ Begin
   b:=FileNameCaseSensitive;
   testdate.test_unit;
   testsgml.test_unit;
+  testietf.test_unit;
+  tiso639.test_unit;
   testreadutf8;
   testreadutf16le;
   testreadcp850;
@@ -535,12 +512,15 @@ Begin
   testutf32;
   testcharencoding;
   testutfnull;
-  testiso639;
   testremovenulls;
+  testucs4strtrim;
 end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.14  2004/11/02 12:16:18  carl
+    * More testing for dateutil unit
+
   Revision 1.13  2004/10/13 23:40:52  carl
     + added sgml unit testing
 
