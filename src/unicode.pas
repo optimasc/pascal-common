@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: unicode.pas,v 1.2 2004-05-06 15:27:05 carl Exp $
+    $Id: unicode.pas,v 1.3 2004-05-06 15:47:27 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Unicode related routines
@@ -620,7 +620,6 @@ const
       begin
         dec(OutIndex);
         outstr[outindex] := utf8((byte(ch) or byte(FirstbyteMark[BytesToWrite])));
-        dec(CurrentIndex);
       end;  
       inc(OutStringLength);
       Inc(OutIndex,BytesToWrite);
@@ -667,40 +666,6 @@ const
   end;
 
 
-  function convertUTF8toASCII(s: array of utf8; var outstr: shortstring):integer;
-  var
-   i: integer;
-  begin
-    outstr:='';
-    convertUTF8ToASCII:=UNICODE_ERR_OK;
-    for i:=1 to lengthUTF8(s) do
-    begin
-      if s[i] in [#01..#127] then
-      begin
-        outstr:=outstr + s[i];
-      end
-     else 
-     if (s[i] > #127) then
-       convertUTF8ToASCII:=UNICODE_ERR_INCOMPLETE_CONVERSION;
-    end;
-  end;
-  
-  
-  
-  
-function convertAtariSTToUTF32(s: string; var outstr: utf32string):integer;
-  var
-   i: integer;
-  begin
-    for i:=1 to length(s) do
-      begin
-        outstr[i]:=utf32(AtariSTToUTF32[s[i]]);  
-      end;
-    setlengthUtf32(outstr,length(s));  
-    ConvertAtariStToUTF32:=UNICODE_ERR_OK;  
-  end;
-    
-  
   
   function ConvertFromUTF32(source: utf32string; var dest: shortstring; desttype: string): integer;
   var
@@ -873,7 +838,6 @@ function ConvertUTF8ToUTF32(src: array of utf8; var dst: utf32string): integer;
         begin
           ch:=ch + utf32(src[i]);
           inc(i);
-          dec(CurrentIndex);
         end;
         ch := ch - offsetsFromUTF8[extraBytesToRead];
         if (ch <= UNI_MAX_UTF32) then
@@ -970,6 +934,13 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.2  2004/05/06 15:27:05  carl
+     + add support for ISO8859, ASCII, CP850, CP1252 to UTF-32 conversion
+       (and vice-versa)
+     + add support for UTF-32 to UCS-2 conversion
+     * bugfixes in conversion routines for UTF-32
+     + updated documentation
+
   Revision 1.1  2004/05/05 16:28:22  carl
     Release 0.95 updates
 
