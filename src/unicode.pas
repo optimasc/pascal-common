@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: unicode.pas,v 1.12 2004-08-19 01:07:38 carl Exp $
+    $Id: unicode.pas,v 1.13 2004-08-22 20:42:16 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Unicode related routines
@@ -1516,9 +1516,10 @@ end;
         idx:=1;
       end;
     s1l:=ucs4_length(s1);
-    if s2l+s1l>255 then
+    if (s2l+s1l)>255 then
       s2l:=255-s1l;
-    move(s2[idx],s1[ucs4_length(s1)+1],s2l*sizeof(ucs4char));
+    if s2l <> 0 then
+      move(s2[idx],s1[ucs4_length(s1)+1],s2l*sizeof(ucs4char));
     move(s1[1],resultstr[1],(s2l+s1l)*sizeof(ucs4char));
     ucs4_setlength(resultstr, s2l+s1l);
   end;
@@ -2029,9 +2030,6 @@ end;
   end;
  
  function ucs4strdispose(str: pucs4char): pucs4char;
- var
-  i: integer;
-  c: char;
  begin
     ucs4strdispose := nil;
     if not assigned(str) then 
@@ -2598,6 +2596,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.12  2004/08/19 01:07:38  carl
+    * other bugfix with memory corruption when copying the data
+
   Revision 1.11  2004/08/19 00:17:12  carl
     + renamed all basic types to use the UCS-4 type name instead.
     + Unicode case conversion of characters
