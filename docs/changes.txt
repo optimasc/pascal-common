@@ -1,5 +1,12 @@
 History of major changes in the releases:
 
+0.96:
+   + add support for ISO8859, ASCII, CP850, CP1252 to UTF-32 conversion
+     (and vice-versa)
+   + add support for UTF-32 to UCS-2 conversion
+   * bugfixes in conversion routines for UTF-32
+   + updated documentation   
+
 0.95:
    + added support for ptrint (portability for 64-bit freepascal)
    + added missing portability constants for VP and Delphi
