@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: unicode.pas,v 1.15 2004-09-06 19:50:01 carl Exp $
+    $Id: unicode.pas,v 1.16 2004-09-06 20:35:33 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Unicode related routines
@@ -74,7 +74,7 @@ type
   {** UTF-8 string declaration. Index 0 contains the active length
       of the string in BYTES
   }
-  utf8string = string;
+  utf8string = shortstring;
   {** UTF-16 string declaration. Index 0 contains the active length
       of the string in BYTES
   }
@@ -2709,6 +2709,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.15  2004/09/06 19:50:01  carl
+    + Updated documentation
+
   Revision 1.14  2004/09/06 19:41:42  carl
     * Bugfix of UTF-8 encoded values with 4 and 5 characters (the original C code of unicode is wrong!)
     + utf8_islegal implemented to verify the validity of UTF-8 strings.
