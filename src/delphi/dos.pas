@@ -588,7 +588,7 @@ begin
   strpcopy(pFileName,path);
 { FindFirstFile is a Win32 Call }
   F.FindHandle:=FindFirstFile (pFileName,F.W32FindData);
-  If longint(F.FindHandle)=Invalid_Handle_value then
+  If longint(F.FindHandle)=longint(Invalid_Handle_value) then
    begin
      DosError:=Last2DosError(GetLastError);
      if DosError=2 then
@@ -624,7 +624,7 @@ end;
 Procedure FindClose(Var f: SearchRec);
 begin
   DosError:=0;
-  If longint(F.FindHandle)<>Invalid_Handle_value then
+  If longint(F.FindHandle)<>longint(Invalid_Handle_value) then
    begin
      if not Windows.FindClose(F.FindHandle) then
       begin
@@ -1040,6 +1040,9 @@ function GetProcAddress(hModule : THandle;lpProcName : pchar) : pointer;
 end.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.3  2004/07/01 22:26:26  carl
+    * Bugfix with FindFirst and FindNext
+
   Revision 1.2  2004/06/17 11:40:31  carl
     * bugfix with textrec
 
