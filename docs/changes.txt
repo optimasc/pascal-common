@@ -1,6 +1,6 @@
 History of major changes in the releases:
 
-1.10
+1.1.0
    + add dateutil unit (clone of delphi dateutils)
    * some more bugfixes in the Delphi dos unit (GetDate)
    
