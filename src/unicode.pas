@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: unicode.pas,v 1.13 2004-08-22 20:42:16 carl Exp $
+    $Id: unicode.pas,v 1.14 2004-09-06 19:41:42 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Unicode related routines
@@ -33,6 +33,7 @@
 }
 {$T-}
 {$X+}
+{$Q-}
 unit unicode;
 
 interface
@@ -73,7 +74,7 @@ type
   {** UTF-8 string declaration. Index 0 contains the active length
       of the string in BYTES
   }
-  utf8string = array[0..1024] of utf8char;
+  utf8string = string;
   {** UTF-16 string declaration. Index 0 contains the active length
       of the string in BYTES
   }
@@ -415,17 +416,19 @@ type
   function utf8_sizeencoding(c: utf8char): integer;
   
   {** @abstract(Returns the current length of an UTF-16 string) }
-  function lengthUTF16(s: array of utf16char): integer;
+  function utf16_length(s: array of utf16char): integer;
 
   {** @abstract(Returns the current length of an UTF-8 string) }
-  function lengthutf8(s: array of utf8char): integer;
-
+  function utf8_length(s: utf8string): integer;
+  
+  {** @abstract(Returns if the specified UTF-8 string is legal or not) }
+  function utf8_islegal(s: utf8string): boolean;
   
   {** @abstract(Set the length of an UTF-8 string) }
-  procedure setlengthUTF8(var s: array of utf8char; l: integer);
+  procedure utf8_setlength(var s: utf8string; l: integer);
 
   {** @abstract(Set the length of an UTF-16 string) }
-  procedure setlengthUTF16(var s: array of utf16char; l: integer);
+  procedure utf16_setlength(var s: array of utf16char; l: integer);
 
 
 {---------------------------------------------------------------------------
@@ -930,7 +933,7 @@ const
     OutIndex := 1;
     bytestoWrite:=0; 
     OutStringLength := 0;
-    SetLengthUTF8(outstr,0);
+    utf8_setlength(outstr,0);
     { Check if only one character is passed as src, in that case
       this is not an UTF string, but a simple character (in other
       words, there is not a length byte.
@@ -980,11 +983,11 @@ const
           bytesToWrite:=2;
         end;
       Inc(outindex,BytesToWrite);  
-      if Outindex > High(utf8string) then
+{      if Outindex > High(utf8string) then
         begin
           convertUCS4ToUTF8:=UNICODE_ERR_LENGTH_EXCEED;
           exit;
-        end;
+        end;}
         
         CurrentIndex := BytesToWrite;
         if CurrentIndex = 4 then
@@ -1016,39 +1019,59 @@ const
         inc(OutStringLength);
         Inc(OutIndex,BytesToWrite);
       end;      
-      setlengthutf8(outstr,OutStringLength);
+      utf8_setlength(outstr,OutStringLength);
   end;
   
-  function lengthUTF16(s: array of utf16char): integer;
+  function utf16_length(s: array of utf16char): integer;
   begin
-   LengthUTF16:=integer(s[0]);
+   utf16_length:=integer(s[0]);
   end;
 
-  function lengthutf8(s: array of utf8char): integer;
+  function utf8_length(s: utf8string): integer;
   begin
-   LengthUTF8:=integer(s[0]);
+   utf8_length:=length(s);
   end;
   
 
   
 
-  procedure setlengthutf8(var s: array of utf8char; l: integer);
+  procedure utf8_setlength(var s: utf8string; l: integer);
   begin
-    s[0]:=utf8char(l);
+    setlength(s,l);
   end;
 
-  procedure setlengthutf16(var s: array of utf16char; l: integer);
+  procedure utf16_setlength(var s: array of utf16char; l: integer);
   begin
    s[0]:=utf16char(l);
   end;
   
   
 
-  function isLegalUTF8(src: array of utf8char; _length: integer): boolean;
+  function utf8_islegal(s: utf8string): boolean;
+  var morebytes: integer;
+      i,j: integer;
   begin
-    isLegalUTF8:=true;
+    utf8_islegal:=false;
+    i:=1;
+    while i <= utf8_length(s) do
+    begin
+        morebytes:=trailingBytesForUTF8[ord(s[i])];
+        inc(i);
+        if morebytes <> 0 then
+        begin
+           for j:=i to (i+morebytes-1) do
+             begin
+              if j > length(s) then exit;
+              if ((ord(s[j]) and $C0) <> $80) then
+                 exit;
+             end;
+        end;
+        inc(i,morebytes);
+    end;
+    utf8_islegal:=true;
   end;
-
+    
+  
 
   
   function ConvertFromUCS4(source: ucs4string; var dest: string; desttype: string): integer;
@@ -1140,11 +1163,11 @@ const
     i:=1;
     Outindex := 1;
     ConvertUTF16ToUCS4:=UNICODE_ERR_OK;
-    while i <= lengthutf16(src) do
+    while i <= utf16_length(src) do
       begin
         ch:=ucs4char(src[i]);
         inc(i);
-        if (ch >= UNI_SUR_HIGH_START) and (ch <= UNI_SUR_HIGH_END) and (i < lengthutf16(src)) then
+        if (ch >= UNI_SUR_HIGH_START) and (ch <= UNI_SUR_HIGH_END) and (i < utf16_length(src)) then
           begin
               ch2:=src[i];
               if (ch2 >= UNI_SUR_LOW_START) and (ch2 <= UNI_SUR_LOW_END) then
@@ -1183,7 +1206,7 @@ function ConvertUTF8ToUCS4(src: utf8string; var dst: ucs4string): integer;
     stringlength := 0;
     OutIndex := 1;
     ConvertUTF8ToUCS4:=UNICODE_ERR_OK;
-    while i <= lengthutf8(src) do
+    while i <= utf8_length(src) do
       begin
         ch := 0;
         extrabytestoread:= trailingBytesForUTF8[ord(src[i])];
@@ -1192,12 +1215,26 @@ function ConvertUTF8ToUCS4(src: utf8string; var dst: ucs4string): integer;
             ConvertUTF8ToUCS4:=UNICODE_ERR_LENGTH_EXCEED;
             exit;
           end;
-        if not isLegalUTF8(src, extraBytesToRead+1) then
+{        if not isLegalUTF8(src, extraBytesToRead+1) then
           begin
             ConvertUTF8ToUCS4:=UNICODE_ERR_SOURCEILLEGAL;
             exit;
-          end;
+          end;}
         CurrentIndex := ExtraBytesToRead;
+        if CurrentIndex = 5 then
+        begin
+          ch:=ch + ucs4char(src[i]);
+          inc(i);
+          ch:=ch shl 6;
+          dec(CurrentIndex);
+        end;
+        if CurrentIndex = 4 then
+        begin
+          ch:=ch + ucs4char(src[i]);
+          inc(i);
+          ch:=ch shl 6;
+          dec(CurrentIndex);
+        end;
         if CurrentIndex = 3 then
         begin
           ch:=ch + ucs4char(src[i]);
@@ -1303,7 +1340,7 @@ begin
             inc(OutIndex);
           end;
       end;
-    setlengthutf16(dest, OutIndex);  
+    utf16_setlength(dest, OutIndex);  
 end;
 
 
@@ -1826,6 +1863,20 @@ end;
                 exit;
               end;}
             CurrentIndex := ExtraBytesToRead;
+            if CurrentIndex = 5 then
+            begin
+              ch:=ch + ucs4char(str[i]);
+              inc(i);
+              ch:=ch shl 6;
+              dec(CurrentIndex);
+            end;
+            if CurrentIndex = 4 then
+            begin
+              ch:=ch + ucs4char(str[i]);
+              inc(i);
+              ch:=ch shl 6;
+              dec(CurrentIndex);
+            end;
             if CurrentIndex = 3 then
             begin
               ch:=ch + ucs4char(str[i]);
@@ -1959,6 +2010,20 @@ end;
                 exit;
               end;}
             CurrentIndex := ExtraBytesToRead;
+            if CurrentIndex = 5 then
+            begin
+              ch:=ch + ucs4char(str[i]);
+              inc(i);
+              ch:=ch shl 6;
+              dec(CurrentIndex);
+            end;
+            if CurrentIndex = 4 then
+            begin
+              ch:=ch + ucs4char(str[i]);
+              inc(i);
+              ch:=ch shl 6;
+              dec(CurrentIndex);
+            end;
             if CurrentIndex = 3 then
             begin
               ch:=ch + ucs4char(str[i]);
@@ -2228,6 +2293,20 @@ end;
             exit;
           end;}
         CurrentIndex := ExtraBytesToRead;
+        if CurrentIndex = 5 then
+        begin
+          ch:=ch + ucs4char(src[i]);
+          inc(i);
+          ch:=ch shl 6;
+          dec(CurrentIndex);
+        end;
+        if CurrentIndex = 4 then
+        begin
+          ch:=ch + ucs4char(src[i]);
+          inc(i);
+          ch:=ch shl 6;
+          dec(CurrentIndex);
+        end;
         if CurrentIndex = 3 then
         begin
           ch:=ch + ucs4char(src[i]);
@@ -2297,6 +2376,20 @@ end;
             exit;
           end;
         CurrentIndex := ExtraBytesToRead;
+        if CurrentIndex = 5 then
+        begin
+          ch:=ch + ucs4char(src[i]);
+          inc(i);
+          ch:=ch shl 6;
+          dec(CurrentIndex);
+        end;
+        if CurrentIndex = 4 then
+        begin
+          ch:=ch + ucs4char(src[i]);
+          inc(i);
+          ch:=ch shl 6;
+          dec(CurrentIndex);
+        end;
         if CurrentIndex = 3 then
         begin
           ch:=ch + ucs4char(src[i]);
@@ -2375,6 +2468,20 @@ end;
             exit;
           end;
         CurrentIndex := ExtraBytesToRead;
+        if CurrentIndex = 5 then
+        begin
+          ch:=ch + ucs4char(src[i]);
+          inc(i);
+          ch:=ch shl 6;
+          dec(CurrentIndex);
+        end;
+        if CurrentIndex = 4 then
+        begin
+          ch:=ch + ucs4char(src[i]);
+          inc(i);
+          ch:=ch shl 6;
+          dec(CurrentIndex);
+        end;
         if CurrentIndex = 3 then
         begin
           ch:=ch + ucs4char(src[i]);
@@ -2596,6 +2703,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.13  2004/08/22 20:42:16  carl
+    * range check error fix (memory read past end of buffer)
+
   Revision 1.12  2004/08/19 01:07:38  carl
     * other bugfix with memory corruption when copying the data
 
