@@ -43,9 +43,7 @@ UNIT Objects;
 {$E+} { Emulation is on }
 {$X+} { Extended syntax is ok }
 {$R-} { Disable range checking }
-{$ifndef Unix}
-  {$S-} { Disable Stack Checking }
-{$endif}
+{$J+} { Typed constant assignments }
 {$I-} { Disable IO Checking }
 {$Q-} { Disable Overflow Checking }
 {$V-} { Turn off strict VAR strings }
@@ -1476,7 +1474,7 @@ END;
 {  Write -> Platforms DOS/DPMI/WIN/OS2 - Checked 17May96 LdB                }
 {---------------------------------------------------------------------------}
 PROCEDURE TBufStream.Write (Var Buf; Count: Sw_Word);
-VAR Success: Integer; W: Sw_Word; P: PByteArray;
+VAR W: Sw_Word; P: PByteArray;
     DosStreamError : Word;
 BEGIN
    if Status <> StOK then exit;                       { Exit if error     }
@@ -1624,7 +1622,6 @@ END;
 {---------------------------------------------------------------------------}
 FUNCTION TMemoryStream.ChangeListSize (ALimit: Sw_Word): Boolean;
 VAR I, W: Word; Li: LongInt; P: PPointerArray;
-    OldVal : Boolean;
 BEGIN
    If (ALimit <> BlkCount) Then Begin                 { Change is needed }
      ChangeListSize := False;                         { Preset failure }
@@ -2759,4 +2756,7 @@ END;
 END.
 {
    $Log: not supported by cvs2svn $
+   Revision 1.1  2004/05/05 16:28:25  carl
+     Release 0.95 updates
+
 }
