@@ -30,7 +30,7 @@
 {    Free Vision project coordinator Balazs Scheidler      }
 {    bazsi@tas.vein.hu                                     }
 {                                                          }
-UNIT Objects;
+UNIT objects;
 
 {<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>}
                                   INTERFACE
@@ -2746,6 +2746,9 @@ END;
 END.
 {
    $Log: not supported by cvs2svn $
+   Revision 1.5  2004/11/17 04:02:36  carl
+     * Now based on fileio routines
+
    Revision 1.4  2004/10/31 19:54:58  carl
      +  max buffer size changed.
 
