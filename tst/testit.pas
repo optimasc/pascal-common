@@ -6,9 +6,6 @@
 Program Testit;
 
 {$I+}
-{$ifndef tp}
-{$H-}
-{$endif}
 {$X+}
 {$T+}
 uses dpautils,
@@ -111,12 +108,15 @@ uses dpautils,
    utf32str: ucs4string;
    i: integer;
    s: string;
+   c: char;
   begin
    Assign(F,infilepath+'t-cp850.txt');
    Reset(F,1);
    i:=1;
+   setLength(utfstr,0);
    Repeat
-     BlockRead(F, utfstr[i],sizeof(utfstr[i]));
+     BlockRead(F, c,sizeof(c));
+     utfstr:=utfstr+c;
      inc(i);
    Until Eof(F);
    SetLength(utfstr,i-1);
@@ -312,7 +312,7 @@ uses dpautils,
 
   procedure testcharencoding;
   var
-   _name: shortstring;
+   _name: string;
   begin
     if GetCharEncoding('',_name)<>CHAR_ENCODING_UNKNOWN then
       RunError(255);
@@ -338,7 +338,7 @@ uses dpautils,
    utf32null: array[0..5] of ucs4char =
    (ord('H'),ord('e'),Ord('l'),Ord('l'),Ord('o'),0);
    utf32string: array[0..8] of ucs4char =
-   (9,ord('H'),ord('e'),Ord('l'),Ord('l'),Ord('o'),0,0,ord('J'));
+   (8,ord('H'),ord('e'),Ord('l'),Ord('l'),Ord('o'),0,0,ord('J'));
    strnull:pchar = 'Hello';
    utf8null: pchar =
    'récéption donnée pour mon reçu.'#0;
@@ -369,8 +369,8 @@ uses dpautils,
       first create an UTF-32 string.
     }
     move(utf32string,utf32s,sizeof(utf32string));
-    putf:=ucs4StrPCopy(putf,utf32s);
-    s:=ucs4strpastoiso8859_1(putf);
+    ucs4StrPCopy(pucs4char(@utf32buffer),utf32s);
+    s:=ucs4strpastoiso8859_1(pucs4char(@utf32buffer));
     if s <> 'HelloJ' then
       RunError(255);
 
@@ -499,6 +499,10 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.8  2004/08/19 00:24:00  carl
+    * more testing routines for unicode
+    + iso639 testing
+
   Revision 1.7  2004/07/15 01:02:23  carl
     + more testing of unicode
 

@@ -1,16 +1,20 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.1 Strict//EN" "http://www.w3.org/TR/REC-html4/strict.dtd">
 <html>
 <head>
-<meta name="GENERATOR" content="PasDoc 0.8.8"/>
+<meta name="GENERATOR" content="PasDoc 0.8.8.3"/>
 <title>Common pascal units documentation: locale</title>
 <link rel="StyleSheet" href="pasdoc.css"/>
 </head>
 <body bgcolor="#ffffff" text="#000000" link="#0000ff" vlink="#800080" alink="#FF0000">
 <h1>Unit locale</h1>
 <table class="sections"><tr>
-<td><a class="section" href="#@Description">Description</a></td><td>uses</td><td>Classes, Interfaces and Objects</td><td><a class="section" href="#@FuncsProcs">Functions and Procedures</a></td><td>Types</td><td><a class="section" href="#@Constants">Constants</a></td><td>Variables</td></tr></table>
+<td><a class="normal" href="#@Description">Description</a></td><td>uses</td><td>Classes, Interfaces and Objects</td><td><a class="normal" href="#@FuncsProcs">Functions and Procedures</a></td><td>Types</td><td><a class="normal" href="#@Constants">Constants</a></td><td>Variables</td></tr></table>
 <a name="@Description"></a><h2>Description</h2>
-Localisation unit<p>This unit is used to convert different       locale information. ISO Standards are      used where appropriate.            Credits where credits are due, information      on the ISO and date formats where taken from      <a class="normal" target="_new" href="http://www.cl.cam.ac.uk/~mgk25/iso-time.html">http://www.cl.cam.ac.uk/~mgk25/iso-time.html</a></p>
+Localisation unit<p>This unit is used to convert different 
+    locale information. ISO Standards are
+    used where appropriate.</p><p>Credits where credits are due, information
+    on the ISO and date formats where taken from
+    <a class="normal" target="_new" href="http://www.cl.cam.ac.uk/~mgk25/iso-time.html">http://www.cl.cam.ac.uk/~mgk25/iso-time.html</a></p>
 <a name="@FuncsProcs"></a><h2>Functions and Procedures</h2>
 <h3>Overview</h3>
 <table cellspacing="2" cellpadding="4" width="100%">
@@ -36,28 +40,32 @@ Localisation unit<p>This unit is used to convert different       locale informat
 <tr class="list" valign="top"><td width="100%"><a name="GetCharEncoding"></a><code>function <b>GetCharEncoding</b>(alias: string; var _name: string): integer;</code></td>
 </tr>
 </table>
-<p><p>Using a registered ALIAS name for a specific character encoding,      return the common or MIME name associated with this character set,       and indicate the type of stream format used. The type of stream       format used can be one of the <code>CHAR_ENCODING_XXXX</code> constants.</p>
+<p><p>Using a registered ALIAS name for a specific character encoding,
+    return the common or MIME name associated with this character set, 
+    and indicate the type of stream format used. The type of stream 
+    format used can be one of the <code>CHAR_ENCODING_XXXX</code> constants.</p>
 </p>
 <table cellspacing="2" cellpadding="4" width="100%">
 <tr class="list" valign="top"><td width="100%"><a name="GetISODateString"></a><code>function <b>GetISODateString</b>(Year, Month, Day: Word): shortstring;</code></td>
 </tr>
 </table>
-<p><p>Returns the preferred date string as recommended      by ISO 8601 (Gregorian Calendar).             Returns an empty string if there is an error.</p>
+<p><p>Returns the preferred date string as recommended
+    by ISO 8601 (Gregorian Calendar). </p><p>Returns an empty string if there is an error.</p>
 </p>
 <h6>parameters</h6>
 <dl class="parameters">
 <dt class="parameters">
 year</dt>
 <dd class="parameters">
- Year of the date - valid values are from 0000 to 9999</dd>
+Year of the date - valid values are from 0000 to 9999</dd>
 <dt class="parameters">
 month</dt>
 <dd class="parameters">
- Month of the date - valid values are from 0 to 12</dd>
+Month of the date - valid values are from 0 to 12</dd>
 <dt class="parameters">
 day</dt>
 <dd class="parameters">
- Day of the month - valid values are from 1 to 31</dd>
+Day of the month - valid values are from 1 to 31</dd>
 </dl>
 <table cellspacing="2" cellpadding="4" width="100%">
 <tr class="list" valign="top"><td width="100%"><a name="GetISODateTimeString"></a><code>function <b>GetISODateTimeString</b>(Year, Month, Day, Hour, Minute, Second: Word; UTC: Boolean): shortstring;</code></td>
@@ -68,7 +76,8 @@ day</dt>
 <tr class="list" valign="top"><td width="100%"><a name="GetISOTimeString"></a><code>function <b>GetISOTimeString</b>(Hour, Minute, Second: Word; UTC: Boolean): shortstring;</code></td>
 </tr>
 </table>
-<p><p>Returns the preferred time string as recommended      by ISO 8601 (Gregorian Calendar).             .</p>
+<p><p>Returns the preferred time string as recommended
+    by ISO 8601 (Gregorian Calendar). </p><p>.</p>
 </p>
 <h6>returns</h6>
 <p class="return">Empty string if there is an error</p><table cellspacing="2" cellpadding="4" width="100%">
@@ -81,73 +90,78 @@ day</dt>
 <dt class="parameters">
 datestr</dt>
 <dd class="parameters">
- Date string in valid ISO 8601 format</dd>
+Date string in valid ISO 8601 format</dd>
 </dl>
 <h6>returns</h6>
 <p class="return">TRUE if the date string is valid otherwise false</p><table cellspacing="2" cellpadding="4" width="100%">
 <tr class="list" valign="top"><td width="100%"><a name="IsValidISODateTimeString"></a><code>function <b>IsValidISODateTimeString</b>(str: shortstring): boolean;</code></td>
 </tr>
 </table>
-<p>Verifies if the date and time is in a valid ISO 8601 format<p>Currently does not support the fractional second parameters,      and only the format recommended by W3C when used with the      time zone designator.</p>
+<p>Verifies if the date and time is in a valid ISO 8601 format<p>Currently does not support the fractional second parameters,
+    and only the format recommended by W3C when used with the
+    time zone designator.</p>
 </p>
 <h6>parameters</h6>
 <dl class="parameters">
 <dt class="parameters">
 str</dt>
 <dd class="parameters">
- Date-Time string in valid ISO 8601 format</dd>
+Date-Time string in valid ISO 8601 format</dd>
 </dl>
 <h6>returns</h6>
 <p class="return">TRUE if the date-time string is valid otherwise false</p><table cellspacing="2" cellpadding="4" width="100%">
 <tr class="list" valign="top"><td width="100%"><a name="IsValidISOTimeString"></a><code>function <b>IsValidISOTimeString</b>(timestr: shortstring): boolean;</code></td>
 </tr>
 </table>
-<p>Verifies if the time is in a valid ISO 8601 format<p>Currently does not support the fractional second parameters,      and only the format recommended by W3C when used with the      time zone designator.</p>
+<p>Verifies if the time is in a valid ISO 8601 format<p>Currently does not support the fractional second parameters,
+    and only the format recommended by W3C when used with the
+    time zone designator.</p>
 </p>
 <h6>parameters</h6>
 <dl class="parameters">
 <dt class="parameters">
 timestr</dt>
 <dd class="parameters">
- Time string in valid ISO 8601 format</dd>
+Time string in valid ISO 8601 format</dd>
 </dl>
 <h6>returns</h6>
 <p class="return">TRUE if the time string is valid otherwise false</p><table cellspacing="2" cellpadding="4" width="100%">
 <tr class="list" valign="top"><td width="100%"><a name="UNIXToDateTime"></a><code>procedure <b>UNIXToDateTime</b>(epoch: longword; var year, month, day, hour, minute, second: Word);</code></td>
 </tr>
 </table>
-<p><p>Converts a UNIX styled time (the number of seconds since 1970)       to a standard date and time representation.</p>
+<p><p>Converts a UNIX styled time (the number of seconds since 1970) 
+    to a standard date and time representation.</p>
 </p>
 <a name="@Types"></a><a name="@Constants"></a><h2>Constants</h2>
 <table class="itemlist" cellspacing="2" cellpadding="4" width="100%"><tr class="listheader"><th class="listheader" nowrap="nowrap">Name</th><th class="listheader" width="100%">Description</th></tr>
-<tr class="list2" valign="top"><td class="itemname"><a name="CHAR_ENCODING_UTF8"></a>CHAR_ENCODING_UTF8<code> = 0;</code></td>
+<tr class="list2" valign="top"><td><a name="CHAR_ENCODING_UTF8"></a>CHAR_ENCODING_UTF8<code> = 0;</code></td>
 <td>Character encoding value: UTF-8 storage format</td>
 </tr>
-<tr class="list" valign="top"><td class="itemname"><a name="CHAR_ENCODING_UNKNOWN"></a>CHAR_ENCODING_UNKNOWN<code> = -1;</code></td>
+<tr class="list" valign="top"><td><a name="CHAR_ENCODING_UNKNOWN"></a>CHAR_ENCODING_UNKNOWN<code> = -1;</code></td>
 <td>Character encoding value: unknown format</td>
 </tr>
-<tr class="list2" valign="top"><td class="itemname"><a name="CHAR_ENCODING_UTF32BE"></a>CHAR_ENCODING_UTF32BE<code> = 1;</code></td>
+<tr class="list2" valign="top"><td><a name="CHAR_ENCODING_UTF32BE"></a>CHAR_ENCODING_UTF32BE<code> = 1;</code></td>
 <td>Character encoding value: UTF-32 Big endian</td>
 </tr>
-<tr class="list" valign="top"><td class="itemname"><a name="CHAR_ENCODING_UTF32LE"></a>CHAR_ENCODING_UTF32LE<code> = 2;</code></td>
+<tr class="list" valign="top"><td><a name="CHAR_ENCODING_UTF32LE"></a>CHAR_ENCODING_UTF32LE<code> = 2;</code></td>
 <td>Character encoding value: UTF-32 Little endian</td>
 </tr>
-<tr class="list2" valign="top"><td class="itemname"><a name="CHAR_ENCODING_UTF16LE"></a>CHAR_ENCODING_UTF16LE<code> = 3;</code></td>
+<tr class="list2" valign="top"><td><a name="CHAR_ENCODING_UTF16LE"></a>CHAR_ENCODING_UTF16LE<code> = 3;</code></td>
 <td>Character encoding value: UTF-16 Little endian</td>
 </tr>
-<tr class="list" valign="top"><td class="itemname"><a name="CHAR_ENCODING_UTF16BE"></a>CHAR_ENCODING_UTF16BE<code> = 4;</code></td>
+<tr class="list" valign="top"><td><a name="CHAR_ENCODING_UTF16BE"></a>CHAR_ENCODING_UTF16BE<code> = 4;</code></td>
 <td>Character encoding value: UTF-16 Big endian</td>
 </tr>
-<tr class="list2" valign="top"><td class="itemname"><a name="CHAR_ENCODING_BYTE"></a>CHAR_ENCODING_BYTE<code> = 5;</code></td>
+<tr class="list2" valign="top"><td><a name="CHAR_ENCODING_BYTE"></a>CHAR_ENCODING_BYTE<code> = 5;</code></td>
 <td>Character encoding value: One byte per character storage format</td>
 </tr>
-<tr class="list" valign="top"><td class="itemname"><a name="CHAR_ENCODING_UTF16"></a>CHAR_ENCODING_UTF16<code> = 6;</code></td>
+<tr class="list" valign="top"><td><a name="CHAR_ENCODING_UTF16"></a>CHAR_ENCODING_UTF16<code> = 6;</code></td>
 <td>Character encoding value: UTF-16 unknown endian (determined by BOM)</td>
 </tr>
-<tr class="list2" valign="top"><td class="itemname"><a name="CHAR_ENCODING_UTF32"></a>CHAR_ENCODING_UTF32<code> = 7;</code></td>
+<tr class="list2" valign="top"><td><a name="CHAR_ENCODING_UTF32"></a>CHAR_ENCODING_UTF32<code> = 7;</code></td>
 <td>Character encoding value: UTF-32 unknown endian (determined by BOM)</td>
 </tr>
 </table><a name="@Variables"></a><h2>Author</h2>
 <p>Carl Eric Codere</p>
-<hr noshade="1" size="1"/><em>Generated by <a class="normal" target="_new" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8</a> on 2004-07-04 22:07:56</em>
+<hr noshade="1" size="1"/><em>Generated by <a class="normal" target="_new" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8.3</a> on 2004-08-19 20:08:25</em>
 </body></html>

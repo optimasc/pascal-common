@@ -1,5 +1,18 @@
 History of major changes in the releases:
 
+0.99:
+   + unicode: UCS-2 null terminated string support
+   + unicode: More UTF-8 conversion routines
+   + iso3166: creation of country code unit
+   + rename utf32 to ucs4
+   + change name of basic unicode types
+   * unicode whitespace checking is now better and conforms to unicode 4.0
+   * unicode bugfixes with memory allocation when using strings that
+      contain null characters.
+   + unicde lower case and upper case routines
+   + ISO 3166 country code unit
+   + ISO 639 language code unit   
+
 0.98:
    + Add support for GPC (basic support only)
    + Add support for UTF-32 null terminated strings
