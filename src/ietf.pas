@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: ietf.pas,v 1.7 2005-01-06 03:25:51 carl Exp $
+    $Id: ietf.pas,v 1.8 2005-01-08 21:37:45 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Unicode related routines
@@ -53,11 +53,19 @@ const
   URI_SCHEME_SEPARATOR = ':';
   
 
- {** Given an URI complete specification string, extract
+ {** @abstract(Extract information from an URI string)
+ 
+
+     Given an URI complete specification string, extract
      and return the scheme, authority, path and query
-     components of the URI. }
- function uri_split(url: string; var scheme,
-   authority,path, query: string): boolean;
+     components of the URI. The exact definition of
+     these terms is specified in IETF RFC 2396.
+     
+     @param(url URI to check)
+     @returns(FALSE if the URI is not valid, otherwise
+       returns TRUE)
+ }
+ function uri_split(url: string; var scheme, authority,path, query: string): boolean;
 
 
 
@@ -595,6 +603,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.7  2005/01/06 03:25:51  carl
+    + uri validation and splitting routines, compatible with URL parsing
+
   Revision 1.6  2004/12/26 23:41:22  carl
     + added some separator constants
 
