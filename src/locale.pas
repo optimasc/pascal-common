@@ -1,13 +1,13 @@
 {
  ****************************************************************************
-    $Id: locale.pas,v 1.7 2004-09-29 00:57:46 carl Exp $
+    $Id: locale.pas,v 1.8 2004-10-13 23:24:35 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Localization and date/time unit
 
     See License.txt for more information on the licensing terms
     for this source code.
-    
+
  ****************************************************************************
 }
 
@@ -17,7 +17,7 @@
     This unit is used to convert different 
     locale information. ISO Standards are
     used where appropriate.
-    
+
     The exact representations that are supported
     are the following:
       Calendar Date: Complete Representation - basic
@@ -44,17 +44,31 @@ uses
   fpautils,
   gpautils,
   tpautils;
-  
-{** Returns the preferred date string as recommended
-    by ISO 8601 (Gregorian Calendar). 
-    
-    Returns an empty string if there is an error.
-    
+
+{** Returns the extended format representation of a date as recommended
+    by ISO 8601 (Gregorian Calendar).
+
+    Returns an empty string if there is an error. The extended
+    representation separates each member (year,month,day) with a dash
+    character (-).
+
     @param(year Year of the date - valid values are from 0000 to 9999)
     @param(month Month of the date - valid values are from 0 to 12)
     @param(day Day of the month - valid values are from 1 to 31)
 }
 function GetISODateString(Year, Month, Day: Word): shortstring;
+
+{** Returns the basic format representation of a date as recommended
+    by ISO 8601 (Gregorian Calendar).
+
+    Returns an empty string if there is an error.
+
+    @param(year Year of the date - valid values are from 0000 to 9999)
+    @param(month Month of the date - valid values are from 0 to 12)
+    @param(day Day of the month - valid values are from 1 to 31)
+}
+function GetISODateStringBasic(Year, Month, Day: Word): shortstring;
+
 
 {** @abstract(Verifies if the date is in a valid ISO 8601 format)
 
@@ -85,18 +99,31 @@ function IsValidISOTimeString(timestr: shortstring): boolean;
 }
 function IsValidISODateTimeString(str: shortstring): boolean;
 
-{** Returns the preferred time string as recommended
-    by ISO 8601 (Gregorian Calendar). 
-    
-    @Returns(Empty string if there is an error).
+{** Returns the extended format representation of a time as recommended
+    by ISO 8601 (Gregorian Calendar).
+
+    Returns an empty string if there is an error. The extended
+    representation separates each member (hour,minute,second) with a colon
+    (:).
 }
 function GetISOTimeString(Hour, Minute, Second: Word; UTC: Boolean):
   shortstring;
 
+{** Returns the basic format representation of a time as recommended
+    by ISO 8601 (Gregorian Calendar).
+
+    Returns an empty string if there is an error. The extended
+    representation separates each member (hour,minute,second) with a colon
+    (:).
+}
+function GetISOTimeStringBasic(Hour, Minute, Second: Word; UTC: Boolean):
+  shortstring;
+
+
 function GetISODateTimeString(Year, Month, Day, Hour, Minute, Second: Word; UTC:
   Boolean): shortstring;
 
-{** Converts a UNIX styled time (the number of seconds since 1970) 
+{** Converts a UNIX styled time (the number of seconds since 1970)
     to a standard date and time representation.
 }
 procedure UNIXToDateTime(epoch: longword; var year, month, day, hour, minute, second:
@@ -165,6 +192,22 @@ begin
     '-'+ fillwithzeros(daystr,2);
 end;
 
+function GetISODateStringBasic(Year,Month,Day:Word): shortstring;
+var
+  yearstr:string[4];
+  monthstr: string[2];
+  daystr: string[2];
+begin
+  GetISODateStringBasic := '';
+  if year > 9999 then exit;
+  if Month > 12 then exit;
+  if day > 31 then exit;
+  str(year,yearstr);
+  str(month,monthstr);
+  str(day,daystr);
+  GetIsoDateStringBasic := fillwithzeros(yearstr,4)+ fillwithzeros(monthstr,2)
+    + fillwithzeros(daystr,2);
+end;
 
 function GetISOTimeString(Hour,Minute,Second: Word; UTC: Boolean):
   shortstring;
@@ -186,6 +229,28 @@ begin
   if UTC then s:=s+'Z';
   GetISOTimeString := s;
 end;
+
+function GetISOTimeStringBasic(Hour,Minute,Second: Word; UTC: Boolean):
+  shortstring;
+var
+  hourstr: string[2];
+  minutestr: string[2];
+  secstr: string[2];
+  s: shortstring;
+begin
+  GetISOTimeStringBasic := '';
+  if Hour > 23 then exit;
+  if Minute > 59 then exit;
+  if Second > 59 then exit;
+  str(hour,hourstr);
+  str(minute,minutestr);
+  str(second,secstr);
+  s := fillwithzeros(HourStr,2)+ fillwithzeros(MinuteStr,2)+
+    fillwithzeros(SecStr,2);
+  if UTC then s:=s+'Z';
+  GetISOTimeStringBasic := s;
+end;
+
 
 function GetISODateTimeString(Year,Month,Day,Hour,Minute,Second: Word; UTC:
   Boolean): shortstring;
@@ -636,6 +701,10 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.7  2004/09/29 00:57:46  carl
+    + added dateutil unit
+    + added more support for parsing different ISO time/date strings
+
   Revision 1.6  2004/08/19 00:18:52  carl
     - no ansistring support in this unit
 
