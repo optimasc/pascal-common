@@ -19,6 +19,7 @@ endif
 # DOCFILES: Files that will go into the resulting docs directory
 # LIBFILES: Files that will go into the resulting lib directory
 # INCFILES: Files that will go into the resulting include directory
+# TSTFILES: Files that will go into the tst directory
 # OUTDIR : Base directory where libs, units, objects files will go
 # DATAFILES : Files to copy for the tests
 # FILESTODOCUMENT: Files to document
@@ -32,12 +33,11 @@ FILE:=./src/allunits.pas
 DOCFILES:=./docs/license.txt ./docs/changes.txt ./docs/copying ./docs/copying.fpc ./docs/readme.txt ./docs/$(PACKAGENAME).pdf ./docs/html
 #LIBFILES
 SRCFILES:=./src/*
-INCFILES:=./src/*
 DATAFILES:=./tst/*.txt
 FILESTODOCUMENT:=./src/crc.pas ./src/dpautils.pas ./src/fpautils.pas ./src/locale.pas \
 	./src/tpautils.pas ./src/unicode.pas ./src/utils.pas ./src/vpautils.pas ./src/ietf.pas \
 	./src/collects.pas ./src/iso639.pas ./src/iso3166.pas
-
+TSTFILES:=./tst/*
 
 
 PATHSEP:=\\
