@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: ietf.pas,v 1.2 2004-06-17 11:45:48 carl Exp $
+    $Id: ietf.pas,v 1.3 2004-06-20 18:49:38 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Unicode related routines
@@ -28,7 +28,9 @@ uses
  tpautils,
  vpautils,
  dpautils,
- fpautils;
+ fpautils,
+ gpautils
+ ;
 
 function mime_isvalidcontenttype(s: shortstring): boolean;
 
@@ -257,4 +259,7 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.2  2004/06/17 11:45:48  carl
+    + added documentation
+
 }

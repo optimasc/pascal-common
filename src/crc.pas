@@ -1,5 +1,5 @@
 {
-    $Id: crc.pas,v 1.1 2004-05-05 16:28:18 carl Exp $
+    $Id: crc.pas,v 1.2 2004-06-20 18:49:37 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     CRC routines
@@ -24,7 +24,8 @@ uses utils,
    tpautils,
    vpautils,
    fpautils,
-   dpautils
+   dpautils,
+   gpautils
    ;
 
 {** Routine to get the CRC-32 value.
@@ -133,5 +134,8 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.1  2004/05/05 16:28:18  carl
+    Release 0.95 updates
+
 
 }

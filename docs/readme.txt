@@ -91,7 +91,7 @@ a) The following defines should be defined, as
 required by the compiler :
 
 ENDIAN_LITTLE if the target is a little endian
-  machine and the compiler is vp,bp,tp,delphi or kylix.
+  machine.
 ENDIAN_BIG if the target is a big endian
   machine
 i386 if the target is a 80x86 cpu and the compiler

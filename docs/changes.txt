@@ -1,5 +1,8 @@
 History of major changes in the releases:
 
+----:
+   + Add support for GPC (basic support only)
+  
 0.97:
    + Add validation routines for ISO Date/Time strings
    * Bugfix when passing one single character to the unicode

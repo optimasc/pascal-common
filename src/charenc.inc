@@ -1,977 +1,977 @@
 type
 charencoderecord = record
-  name: string[CHARSET_LENGTH_NAME];
+  setname:string[CHARSET_LENGTH_NAME];
   encoding: smallint;
 end;
 
 const
 charencoding: array[1..CHARSET_RECORDS] of charencoderecord= (
 (
-  name: 'ADOBE-STANDARD-ENCODING';
+  setname:'ADOBE-STANDARD-ENCODING';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'ADOBE-SYMBOL-ENCODING';
+  setname:'ADOBE-SYMBOL-ENCODING';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'AMIGA-1251';
+  setname:'AMIGA-1251';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'ANSI_X3.110-1983';
+  setname:'ANSI_X3.110-1983';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'ASMO_449';
+  setname:'ASMO_449';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'BIG5';
+  setname:'BIG5';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'BIG5-HKSCS';
+  setname:'BIG5-HKSCS';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'BOCU-1';
+  setname:'BOCU-1';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'BS_4730';
+  setname:'BS_4730';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'BS_VIEWDATA';
+  setname:'BS_VIEWDATA';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'CESU-8';
+  setname:'CESU-8';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'CSA_Z243.4-1985-1';
+  setname:'CSA_Z243.4-1985-1';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'CSA_Z243.4-1985-2';
+  setname:'CSA_Z243.4-1985-2';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'CSA_Z243.4-1985-GR';
+  setname:'CSA_Z243.4-1985-GR';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'CSN_369103';
+  setname:'CSN_369103';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'DEC-MCS';
+  setname:'DEC-MCS';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'DIN_66003';
+  setname:'DIN_66003';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'DS_2089';
+  setname:'DS_2089';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'EBCDIC-AT-DE';
+  setname:'EBCDIC-AT-DE';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'EBCDIC-AT-DE-A';
+  setname:'EBCDIC-AT-DE-A';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'EBCDIC-CA-FR';
+  setname:'EBCDIC-CA-FR';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'EBCDIC-DK-NO';
+  setname:'EBCDIC-DK-NO';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'EBCDIC-DK-NO-A';
+  setname:'EBCDIC-DK-NO-A';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'EBCDIC-ES';
+  setname:'EBCDIC-ES';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'EBCDIC-ES-A';
+  setname:'EBCDIC-ES-A';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'EBCDIC-ES-S';
+  setname:'EBCDIC-ES-S';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'EBCDIC-FI-SE';
+  setname:'EBCDIC-FI-SE';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'EBCDIC-FI-SE-A';
+  setname:'EBCDIC-FI-SE-A';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'EBCDIC-FR';
+  setname:'EBCDIC-FR';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'EBCDIC-IT';
+  setname:'EBCDIC-IT';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'EBCDIC-PT';
+  setname:'EBCDIC-PT';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'EBCDIC-UK';
+  setname:'EBCDIC-UK';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'EBCDIC-US';
+  setname:'EBCDIC-US';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'ECMA-CYRILLIC';
+  setname:'ECMA-CYRILLIC';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'ES';
+  setname:'ES';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'ES2';
+  setname:'ES2';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'EUC-JP';
+  setname:'EUC-JP';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'EUC-KR';
+  setname:'EUC-KR';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'EXTENDED_UNIX_CODE_FIXE';
+  setname:'EXTENDED_UNIX_CODE_FIXE';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'GB18030';
+  setname:'GB18030';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'GB2312';
+  setname:'GB2312';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'GBK';
+  setname:'GBK';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'GB_1988-80';
+  setname:'GB_1988-80';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'GB_2312-80';
+  setname:'GB_2312-80';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'GOST_19768-74';
+  setname:'GOST_19768-74';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'GREEK-CCITT';
+  setname:'GREEK-CCITT';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'GREEK7';
+  setname:'GREEK7';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'GREEK7-OLD';
+  setname:'GREEK7-OLD';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'HP-DESKTOP';
+  setname:'HP-DESKTOP';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'HP-LEGAL';
+  setname:'HP-LEGAL';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'HP-MATH8';
+  setname:'HP-MATH8';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'HP-PI-FONT';
+  setname:'HP-PI-FONT';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'HP-ROMAN8';
+  setname:'HP-ROMAN8';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'HZ-GB-2312';
+  setname:'HZ-GB-2312';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'IBM-SYMBOLS';
+  setname:'IBM-SYMBOLS';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'IBM-THAI';
+  setname:'IBM-THAI';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'IBM00858';
+  setname:'IBM00858';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'IBM00924';
+  setname:'IBM00924';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'IBM01140';
+  setname:'IBM01140';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'IBM01141';
+  setname:'IBM01141';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'IBM01142';
+  setname:'IBM01142';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'IBM01143';
+  setname:'IBM01143';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'IBM01144';
+  setname:'IBM01144';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'IBM01145';
+  setname:'IBM01145';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'IBM01146';
+  setname:'IBM01146';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'IBM01147';
+  setname:'IBM01147';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'IBM01148';
+  setname:'IBM01148';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'IBM01149';
+  setname:'IBM01149';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'IBM037';
+  setname:'IBM037';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'IBM038';
+  setname:'IBM038';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'IBM1026';
+  setname:'IBM1026';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'IBM1047';
+  setname:'IBM1047';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'IBM273';
+  setname:'IBM273';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'IBM274';
+  setname:'IBM274';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'IBM275';
+  setname:'IBM275';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'IBM277';
+  setname:'IBM277';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'IBM278';
+  setname:'IBM278';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'IBM280';
+  setname:'IBM280';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'IBM281';
+  setname:'IBM281';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'IBM284';
+  setname:'IBM284';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'IBM285';
+  setname:'IBM285';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'IBM290';
+  setname:'IBM290';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'IBM297';
+  setname:'IBM297';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'IBM420';
+  setname:'IBM420';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'IBM423';
+  setname:'IBM423';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'IBM424';
+  setname:'IBM424';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'IBM437';
+  setname:'IBM437';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'IBM500';
+  setname:'IBM500';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'IBM775';
+  setname:'IBM775';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'IBM850';
+  setname:'IBM850';
   encoding: CHAR_ENCODING_BYTE
 ),
 (
-  name: 'IBM851';
+  setname:'IBM851';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'IBM852';
+  setname:'IBM852';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'IBM855';
+  setname:'IBM855';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'IBM857';
+  setname:'IBM857';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'IBM860';
+  setname:'IBM860';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'IBM861';
+  setname:'IBM861';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'IBM862';
+  setname:'IBM862';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'IBM863';
+  setname:'IBM863';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'IBM864';
+  setname:'IBM864';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'IBM865';
+  setname:'IBM865';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'IBM866';
+  setname:'IBM866';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'IBM868';
+  setname:'IBM868';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'IBM869';
+  setname:'IBM869';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'IBM870';
+  setname:'IBM870';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'IBM871';
+  setname:'IBM871';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'IBM880';
+  setname:'IBM880';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'IBM891';
+  setname:'IBM891';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'IBM903';
+  setname:'IBM903';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'IBM904';
+  setname:'IBM904';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'IBM905';
+  setname:'IBM905';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'IBM918';
+  setname:'IBM918';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'IEC_P27-1';
+  setname:'IEC_P27-1';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'INIS';
+  setname:'INIS';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'INIS-8';
+  setname:'INIS-8';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'INIS-CYRILLIC';
+  setname:'INIS-CYRILLIC';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'INVARIANT';
+  setname:'INVARIANT';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'ISO-10646-J-1';
+  setname:'ISO-10646-J-1';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'ISO-10646-UCS-4';
+  setname:'ISO-10646-UCS-4';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'ISO-10646-UCS-BASIC';
+  setname:'ISO-10646-UCS-BASIC';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'ISO-10646-UNICODE-LATIN1';
+  setname:'ISO-10646-UNICODE-LATIN1';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'ISO-10646-UTF-1';
+  setname:'ISO-10646-UTF-1';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'ISO-2022-CN';
+  setname:'ISO-2022-CN';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'ISO-2022-JP';
+  setname:'ISO-2022-JP';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'ISO-2022-JP-2';
+  setname:'ISO-2022-JP-2';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'ISO-2022-KR';
+  setname:'ISO-2022-KR';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'ISO-8859-1';
+  setname:'ISO-8859-1';
   encoding: CHAR_ENCODING_BYTE
 ),
 (
-  name: 'ISO-8859-1-WINDOWS-3.0-';
+  setname:'ISO-8859-1-WINDOWS-3.0-';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'ISO-8859-1-WINDOWS-3.1-';
+  setname:'ISO-8859-1-WINDOWS-3.1-';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'ISO-8859-10';
+  setname:'ISO-8859-10';
   encoding: CHAR_ENCODING_BYTE
 ),
 (
-  name: 'ISO-8859-13';
+  setname:'ISO-8859-13';
   encoding: CHAR_ENCODING_BYTE
 ),
 (
-  name: 'ISO-8859-14';
+  setname:'ISO-8859-14';
   encoding: CHAR_ENCODING_BYTE
 ),
 (
-  name: 'ISO-8859-15';
+  setname:'ISO-8859-15';
   encoding: CHAR_ENCODING_BYTE
 ),
 (
-  name: 'ISO-8859-16';
+  setname:'ISO-8859-16';
   encoding: CHAR_ENCODING_BYTE
 ),
 (
-  name: 'ISO-8859-2';
+  setname:'ISO-8859-2';
   encoding: CHAR_ENCODING_BYTE
 ),
 (
-  name: 'ISO-8859-2-WINDOWS-LATI';
+  setname:'ISO-8859-2-WINDOWS-LATI';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'ISO-8859-3';
+  setname:'ISO-8859-3';
   encoding: CHAR_ENCODING_BYTE
 ),
 (
-  name: 'ISO-8859-4';
+  setname:'ISO-8859-4';
   encoding: CHAR_ENCODING_BYTE
 ),
 (
-  name: 'ISO-8859-5';
+  setname:'ISO-8859-5';
   encoding: CHAR_ENCODING_BYTE
 ),
 (
-  name: 'ISO-8859-6';
+  setname:'ISO-8859-6';
   encoding: CHAR_ENCODING_BYTE
 ),
 (
-  name: 'ISO-8859-6-E';
+  setname:'ISO-8859-6-E';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'ISO-8859-6-I';
+  setname:'ISO-8859-6-I';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'ISO-8859-7';
+  setname:'ISO-8859-7';
   encoding: CHAR_ENCODING_BYTE
 ),
 (
-  name: 'ISO-8859-8';
+  setname:'ISO-8859-8';
   encoding: CHAR_ENCODING_BYTE
 ),
 (
-  name: 'ISO-8859-8-E';
+  setname:'ISO-8859-8-E';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'ISO-8859-8-I';
+  setname:'ISO-8859-8-I';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'ISO-8859-9';
+  setname:'ISO-8859-9';
   encoding: CHAR_ENCODING_BYTE
 ),
 (
-  name: 'ISO-8859-9-WINDOWS-LATI';
+  setname:'ISO-8859-9-WINDOWS-LATI';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'ISO-IR-90';
+  setname:'ISO-IR-90';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'ISO-UNICODE-IBM-1264';
+  setname:'ISO-UNICODE-IBM-1264';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'ISO-UNICODE-IBM-1265';
+  setname:'ISO-UNICODE-IBM-1265';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'ISO-UNICODE-IBM-1268';
+  setname:'ISO-UNICODE-IBM-1268';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'ISO-UNICODE-IBM-1276';
+  setname:'ISO-UNICODE-IBM-1276';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'ISO_10367-BOX';
+  setname:'ISO_10367-BOX';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'ISO_2033-1983';
+  setname:'ISO_2033-1983';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'ISO_5427';
+  setname:'ISO_5427';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'ISO_5427:1981';
+  setname:'ISO_5427:1981';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'ISO_5428:1980';
+  setname:'ISO_5428:1980';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'ISO_646.BASIC:1983';
+  setname:'ISO_646.BASIC:1983';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'ISO_6937-2-25';
+  setname:'ISO_6937-2-25';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'ISO_6937-2-ADD';
+  setname:'ISO_6937-2-ADD';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'ISO_8859-SUPP';
+  setname:'ISO_8859-SUPP';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'IT';
+  setname:'IT';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'JIS_C6220-1969-RO';
+  setname:'JIS_C6220-1969-RO';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'JIS_C6226-1978';
+  setname:'JIS_C6226-1978';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'JIS_C6226-1983';
+  setname:'JIS_C6226-1983';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'JIS_C6229-1984-A';
+  setname:'JIS_C6229-1984-A';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'JIS_C6229-1984-B';
+  setname:'JIS_C6229-1984-B';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'JIS_C6229-1984-B-ADD';
+  setname:'JIS_C6229-1984-B-ADD';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'JIS_C6229-1984-HAND';
+  setname:'JIS_C6229-1984-HAND';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'JIS_C6229-1984-HAND-ADD';
+  setname:'JIS_C6229-1984-HAND-ADD';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'JIS_C6229-1984-KANA';
+  setname:'JIS_C6229-1984-KANA';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'JIS_ENCODING';
+  setname:'JIS_ENCODING';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'JIS_X0212-1990';
+  setname:'JIS_X0212-1990';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'JUS_I.B1.002';
+  setname:'JUS_I.B1.002';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'JUS_I.B1.003-MAC';
+  setname:'JUS_I.B1.003-MAC';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'JUS_I.B1.003-SERB';
+  setname:'JUS_I.B1.003-SERB';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'KOI7-SWITCHED';
+  setname:'KOI7-SWITCHED';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'KOI8-R';
+  setname:'KOI8-R';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'KOI8-U';
+  setname:'KOI8-U';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'KSC5636';
+  setname:'KSC5636';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'KS_C_5601-1987';
+  setname:'KS_C_5601-1987';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'LATIN-GREEK';
+  setname:'LATIN-GREEK';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'LATIN-GREEK-1';
+  setname:'LATIN-GREEK-1';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'LATIN-LAP';
+  setname:'LATIN-LAP';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'MACINTOSH';
+  setname:'MACINTOSH';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'MICROSOFT-PUBLISHING';
+  setname:'MICROSOFT-PUBLISHING';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'MNEM';
+  setname:'MNEM';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'MSZ_7795.3';
+  setname:'MSZ_7795.3';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'NATS-DANO';
+  setname:'NATS-DANO';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'NATS-DANO-ADD';
+  setname:'NATS-DANO-ADD';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'NATS-SEFI';
+  setname:'NATS-SEFI';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'NATS-SEFI-ADD';
+  setname:'NATS-SEFI-ADD';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'NC_NC00-10:81';
+  setname:'NC_NC00-10:81';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'NF_Z_62-010';
+  setname:'NF_Z_62-010';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'NF_Z_62-010_(1973)';
+  setname:'NF_Z_62-010_(1973)';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'NS_4551-1';
+  setname:'NS_4551-1';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'NS_4551-2';
+  setname:'NS_4551-2';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'OSD_EBCDIC_DF03_IRV';
+  setname:'OSD_EBCDIC_DF03_IRV';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'OSD_EBCDIC_DF04_1';
+  setname:'OSD_EBCDIC_DF04_1';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'OSD_EBCDIC_DF04_15';
+  setname:'OSD_EBCDIC_DF04_15';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'PC8-DANISH-NORWEGIAN';
+  setname:'PC8-DANISH-NORWEGIAN';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'PC8-TURKISH';
+  setname:'PC8-TURKISH';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'PT';
+  setname:'PT';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'PT2';
+  setname:'PT2';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'PTCP154';
+  setname:'PTCP154';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'SCSU';
+  setname:'SCSU';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'SEN_850200_B';
+  setname:'SEN_850200_B';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'SEN_850200_C';
+  setname:'SEN_850200_C';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'SHIFT_JIS';
+  setname:'SHIFT_JIS';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'T.101-G2';
+  setname:'T.101-G2';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'T.61-7BIT';
+  setname:'T.61-7BIT';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'T.61-8BIT';
+  setname:'T.61-8BIT';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'TIS-620';
+  setname:'TIS-620';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'UNICODE-1-1';
+  setname:'UNICODE-1-1';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'UNICODE-1-1-UTF-7';
+  setname:'UNICODE-1-1-UTF-7';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'UNKNOWN-8BIT';
+  setname:'UNKNOWN-8BIT';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'US-ASCII';
+  setname:'US-ASCII';
   encoding: CHAR_ENCODING_BYTE
 ),
 (
-  name: 'US-DK';
+  setname:'US-DK';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'UTF-16';
+  setname:'UTF-16';
   encoding: CHAR_ENCODING_UTF16
 ),
 (
-  name: 'UTF-16BE';
+  setname:'UTF-16BE';
   encoding: CHAR_ENCODING_UTF16BE
 ),
 (
-  name: 'UTF-16LE';
+  setname:'UTF-16LE';
   encoding: CHAR_ENCODING_UTF16LE
 ),
 (
-  name: 'UTF-32';
+  setname:'UTF-32';
   encoding: CHAR_ENCODING_UTF32
 ),
 (
-  name: 'UTF-32BE';
+  setname:'UTF-32BE';
   encoding: CHAR_ENCODING_UTF32BE
 ),
 (
-  name: 'UTF-32LE';
+  setname:'UTF-32LE';
   encoding: CHAR_ENCODING_UTF32LE
 ),
 (
-  name: 'UTF-7';
+  setname:'UTF-7';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'UTF-8';
+  setname:'UTF-8';
   encoding: CHAR_ENCODING_UTF8
 ),
 (
-  name: 'VENTURA-INTERNATIONAL';
+  setname:'VENTURA-INTERNATIONAL';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'VENTURA-MATH';
+  setname:'VENTURA-MATH';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'VENTURA-US';
+  setname:'VENTURA-US';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'VIDEOTEX-SUPPL';
+  setname:'VIDEOTEX-SUPPL';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'VIQR';
+  setname:'VIQR';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'VISCII';
+  setname:'VISCII';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'WINDOWS-1250';
+  setname:'WINDOWS-1250';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'WINDOWS-1251';
+  setname:'WINDOWS-1251';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'WINDOWS-1252';
+  setname:'WINDOWS-1252';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'WINDOWS-1253';
+  setname:'WINDOWS-1253';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'WINDOWS-1254';
+  setname:'WINDOWS-1254';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'WINDOWS-1255';
+  setname:'WINDOWS-1255';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'WINDOWS-1256';
+  setname:'WINDOWS-1256';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'WINDOWS-1257';
+  setname:'WINDOWS-1257';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'WINDOWS-1258';
+  setname:'WINDOWS-1258';
   encoding: CHAR_ENCODING_UNKNOWN
 ),
 (
-  name: 'WINDOWS-31J';
+  setname:'WINDOWS-31J';
   encoding: CHAR_ENCODING_UNKNOWN
 )
 );

@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: utils.pas,v 1.3 2004-06-17 11:46:54 carl Exp $
+    $Id: utils.pas,v 1.4 2004-06-20 18:49:40 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Common utilities
@@ -23,6 +23,7 @@ uses
  vpautils,
  fpautils,
  dpautils,
+ gpautils,
  objects
  ;
 
@@ -431,13 +432,15 @@ const
   HexTbl : array[0..15] of char='0123456789ABCDEF';
 var
   i : longint;
+  s: string;
 begin
-  hexstr[0]:=char(cnt);
+  SetLength(s,cnt);
   for i:=cnt downto 1 do
    begin
-     hexstr[i]:=hextbl[val and $f];
+     s[i]:=hextbl[val and $f];
      val:=val shr 4;
    end;
+  hexstr:=s; 
 end;
 
 function fillwithzero(s: string; newlength: integer): string;
@@ -715,7 +718,7 @@ Begin
      inc(len);
      hs[len]:=c;
    end;
-  hs[0]:=chr(len);
+  SetLength(hs,len); 
   EscapeToPascal:=hs;
 end;
 
@@ -759,6 +762,9 @@ end;
 end.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.3  2004/06/17 11:46:54  carl
+    + CompareByte routine
+
   Revision 1.2  2004/05/13 23:03:40  carl
     + added decstr()
     + added boolstr()

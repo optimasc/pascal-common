@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: unicode.pas,v 1.4 2004-06-17 11:48:13 carl Exp $
+    $Id: unicode.pas,v 1.5 2004-06-20 18:49:39 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Unicode related routines
@@ -28,6 +28,8 @@
     every string should be converted to UTF-32 or UCS-2 before being used.
  
 }
+{$T-}
+{$X+}
 unit unicode;
 
 interface
@@ -36,6 +38,7 @@ uses
   tpautils,
   vpautils,
   dpautils,
+  gpautils,
   fpautils,
   utils;
 
@@ -310,7 +313,7 @@ type
   pchararray = ^tchararray;
   tchararray = array[#0..#255] of longint;
   taliasinfo = record
-    name: string[32];
+    aliasname: string[32];
     table: pchararray;
   end;   
 
@@ -588,34 +591,36 @@ const
 
 const
   MAX_ALIAS = 26;
+
+const  
   aliaslist: array[1..MAX_ALIAS] of taliasinfo =
   (
-    (name: 'ISO-8859-1';table: @i8859_1toUTF32),
-    (name: 'ISO_8859-1';table: @i8859_1toUTF32),
-    (name: 'latin1';    table: @i8859_1toUTF32),
-    (name: 'CP819';     table: @i8859_1toUTF32),
-    (name: 'IBM819';    table: @i8859_1toUTF32),
-    (name: 'ISO-8859-2';table: @i8859_2toUTF32),
-    (name: 'ISO_8859-2';table: @i8859_2toUTF32),
-    (name: 'latin2';    table: @i8859_2toUTF32),
-    (name: 'ISO-8859-5';table: @i8859_5toUTF32),
-    (name: 'ISO_8859-5';table: @i8859_5toUTF32),
-    (name: 'ISO-8859-16';table: @i8859_16toUTF32),
-    (name: 'ISO_8859-16';table: @i8859_16toUTF32),
-    (name: 'latin10';   table: @i8859_16toUTF32),
-    (name: 'windows-1252';table: @cp1252toUTF32),
-    (name: 'IBM437';table: @cp437toUTF32),
-    (name: 'cp437';table: @cp437toUTF32),
-    (name: 'IBM850';table: @cp850toUTF32),
-    (name: 'cp850';table: @cp850toUTF32),
-    (name: 'macintosh';table: @RomantoUTF32),
-    (name: 'MacRoman';table: @RomantoUTF32),
-    (name: 'atari';table: @AtariSTtoUTF32),
-    (name: 'ASCII';table: @ASCIItoUTF32),
-    (name: 'US-ASCII';table: @ASCIItoUTF32),
-    (name: 'IBM367';table: @ASCIItoUTF32),
-    (name: 'cp367';table: @ASCIItoUTF32),
-    (name: 'ISO646-US';table: @ASCIItoUTF32)
+    (aliasname: 'ISO-8859-1';table: @i8859_1toUTF32),
+    (aliasname: 'ISO_8859-1';table: @i8859_1toUTF32),
+    (aliasname: 'latin1';    table: @i8859_1toUTF32),
+    (aliasname: 'CP819';     table: @i8859_1toUTF32),
+    (aliasname: 'IBM819';    table: @i8859_1toUTF32),
+    (aliasname: 'ISO-8859-2';table: @i8859_2toUTF32),
+    (aliasname: 'ISO_8859-2';table: @i8859_2toUTF32),
+    (aliasname: 'latin2';    table: @i8859_2toUTF32),
+    (aliasname: 'ISO-8859-5';table: @i8859_5toUTF32),
+    (aliasname: 'ISO_8859-5';table: @i8859_5toUTF32),
+    (aliasname: 'ISO-8859-16';table: @i8859_16toUTF32),
+    (aliasname: 'ISO_8859-16';table: @i8859_16toUTF32),
+    (aliasname: 'latin10';   table: @i8859_16toUTF32),
+    (aliasname: 'windows-1252';table: @cp1252toUTF32),
+    (aliasname: 'IBM437';table: @cp437toUTF32),
+    (aliasname: 'cp437';table: @cp437toUTF32),
+    (aliasname: 'IBM850';table: @cp850toUTF32),
+    (aliasname: 'cp850';table: @cp850toUTF32),
+    (aliasname: 'macintosh';table: @RomantoUTF32),
+    (aliasname: 'MacRoman';table: @RomantoUTF32),
+    (aliasname: 'atari';table: @AtariSTtoUTF32),
+    (aliasname: 'ASCII';table: @ASCIItoUTF32),
+    (aliasname: 'US-ASCII';table: @ASCIItoUTF32),
+    (aliasname: 'IBM367';table: @ASCIItoUTF32),
+    (aliasname: 'cp367';table: @ASCIItoUTF32),
+    (aliasname: 'ISO646-US';table: @ASCIItoUTF32)
   );
 
 const
@@ -821,7 +826,7 @@ const
     p:=nil;
     for i:=1 to MAX_ALIAS do
       begin
-        if aliaslist[i].name = desttype then
+        if aliaslist[i].aliasname = desttype then
           begin
             p:=aliaslist[i].table;
           end;
@@ -864,7 +869,7 @@ const
     { Search the alias type }
     for i:=1 to MAX_ALIAS do
       begin
-        if aliaslist[i].name = srctype then
+        if aliaslist[i].aliasname = srctype then
           begin
             p:=aliaslist[i].table;
           end;
@@ -1314,7 +1319,7 @@ end;
      end;
     for i:=1 to MAX_ALIAS do
     begin
-      if upstring(aliaslist[i].name) = s then
+      if upstring(aliaslist[i].aliasname) = s then
       begin
          utf32_issupported := true;
          exit;
@@ -1394,11 +1399,71 @@ end;
    s[0]:=ucs2(l);
   end;
   
-     
+
+begin
+
+(*
+    aliaslist[1].aliasname:= 'ISO-8859-1';
+    aliaslist[1].table:= i8859_1toUTF32;
+    aliaslist[2].aliasname:= 'latin1';
+    aliaslist[2].table:= i8859_1toUTF32;
+    aliaslist[3].aliasname:= 'CP819';
+    aliaslist[3].table:= i8859_1toUTF32;
+    aliaslist[4].aliasname:= 'IBM819';
+    aliaslist[4].table:= i8859_1toUTF32;
+    aliaslist[5].aliasname:= 'ISO_8859-1';
+    aliaslist[5].table:= i8859_1toUTF32;
+
+    aliaslist[6].aliasname:= 'ISO-8859-2';
+    aliaslist[6].table:= i8859_2toUTF32;
+    aliaslist[7].aliasname:= 'ISO_8859-2';
+    aliaslist[7].table:= i8859_2toUTF32;
+    aliaslist[9].aliasname:= 'ISO-8859-1';
+    aliaslist[9].table:= i8859_1toUTF32;
+    aliaslist[10].aliasname:= 'ISO-8859-1';
+    aliaslist[10].table:= i8859_1toUTF32;
+    aliaslist[11].aliasname:= 'ISO-8859-1';
+    aliaslist[11].table:= i8859_1toUTF32;
+    
+    
+    (aliasname: 'ISO-8859-2';table: @i8859_2toUTF32),
+    (aliasname: 'ISO_8859-2';table: @i8859_2toUTF32),
+    (aliasname: 'latin2';    table: @i8859_2toUTF32),
+
+    (aliasname: 'ISO-8859-5';table: @i8859_5toUTF32),
+    (aliasname: 'ISO_8859-5';table: @i8859_5toUTF32),
+
+    (aliasname: 'ISO-8859-16';table: @i8859_16toUTF32),
+    (aliasname: 'ISO_8859-16';table: @i8859_16toUTF32),
+    (aliasname: 'latin10';   table: @i8859_16toUTF32),
+
+    (aliasname: 'windows-1252';table: @cp1252toUTF32),
+
+    (aliasname: 'IBM437';table: @cp437toUTF32),
+    (aliasname: 'cp437';table: @cp437toUTF32),
+
+    (aliasname: 'IBM850';table: @cp850toUTF32),
+    (aliasname: 'cp850';table: @cp850toUTF32),
+
+    (aliasname: 'macintosh';table: @RomantoUTF32),
+    (aliasname: 'MacRoman';table: @RomantoUTF32),
+
+    (aliasname: 'atari';table: @AtariSTtoUTF32),
+
+    (aliasname: 'ASCII';table: @ASCIItoUTF32),
+    (aliasname: 'US-ASCII';table: @ASCIItoUTF32),
+    (aliasname: 'IBM367';table: @ASCIItoUTF32),
+    (aliasname: 'cp367';table: @ASCIItoUTF32),
+    (aliasname: 'ISO646-US';table: @ASCIItoUTF32)
+{$endif}*)
 end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.4  2004/06/17 11:48:13  carl
+    + UTF32 complete support
+    + add UCS2 support
+
   Revision 1.3  2004/05/06 15:47:27  carl
     - remove some warnings
 

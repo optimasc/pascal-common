@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: locale.pas,v 1.3 2004-06-17 11:46:25 carl Exp $
+    $Id: locale.pas,v 1.4 2004-06-20 18:49:39 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Localization and date/time unit
@@ -35,6 +35,7 @@ uses
   dpautils,
   vpautils,
   fpautils,
+  gpautils,
   tpautils;
 
 
@@ -100,7 +101,7 @@ procedure UNIXToDateTime(epoch: longword; var year, month, day, hour, minute, se
     and indicate the type of stream format used. The type of stream 
     format used can be one of the @code(CHAR_ENCODING_XXXX) constants.
 }
-function GetCharEncoding(alias: string; var name: string): integer;
+function GetCharEncoding(alias: string; var _name: string): integer;
 
 const
   {** @abstract(Character encoding value: UTF-8 storage format)}
@@ -538,7 +539,7 @@ VAR I, J: integer; P1, P2: ^shortString;
      Else CompareString := 1;                               { String1 > String2 }
   END;
 
-function GetCharEncoding(alias: string; var name: string): integer;
+function GetCharEncoding(alias: string; var _name: string): integer;
   type
     tcharsets =  array[1..CHARSET_RECORDS] of charsetrecord;
     pcharsets = ^tcharsets;
@@ -549,7 +550,7 @@ function GetCharEncoding(alias: string; var name: string): integer;
     char_sets: pcharsets;
     p: pchar;
   begin
-    name:='';
+    _name:='';
     alias:=upstring(alias);
     { Search for the appropriate name }
     GetCharEncoding:=CHAR_ENCODING_UNKNOWN;
@@ -568,7 +569,7 @@ function GetCharEncoding(alias: string; var name: string): integer;
     While (L <= H) Do
       Begin
         I := (L + H) SHR 1;                            { Mid point }
-        C := CompareString(char_sets^[I].name, alias);   { Compare with key }
+        C := CompareString(char_sets^[I].setname, alias);   { Compare with key }
         If (C < 0) Then 
           L := I + 1 
         Else 
@@ -584,7 +585,7 @@ function GetCharEncoding(alias: string; var name: string): integer;
     { If the value has been found, then easy, nothing else to do }
     if Search then
       begin
-        name:=char_sets^[index].name;
+        _name:=char_sets^[index].setname;
         getcharencoding:=charencoding[index].encoding;
         dispose(char_sets);
         exit;
@@ -596,7 +597,7 @@ function GetCharEncoding(alias: string; var name: string): integer;
           begin
             if alias = char_sets^[i].aliases[j] then
               begin
-                name:=char_sets^[i].name;
+                _name:=char_sets^[i].setname;
                 getcharencoding:=charencoding[i].encoding;
                 dispose(char_sets);
                 exit;
@@ -615,6 +616,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.3  2004/06/17 11:46:25  carl
+    + GetCharEncoding
+
   Revision 1.2  2004/05/13 23:04:06  carl
     + routines to verify the validity of ISO date/time strings
 

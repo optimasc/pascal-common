@@ -1,6 +1,4 @@
-unit allunits;
-
-interface 
+program allunits;
 
 uses
   crc,
@@ -13,6 +11,5 @@ uses
   utils;
   
 
-implementation
-
+begin
 end.
