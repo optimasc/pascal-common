@@ -1,3 +1,25 @@
+{
+ ****************************************************************************
+    $Id: ietf.pas,v 1.2 2004-06-17 11:45:48 carl Exp $
+    Copyright (c) 2004 by Carl Eric Codere
+
+    Unicode related routines
+    Partially converted from: 
+    http://www.unicode.org/Public/PROGRAMS/CVTUTF/
+
+    See License.txt for more information on the licensing terms
+    for this source code.
+    
+ ****************************************************************************
+}
+{** @author(Carl Eric Codere)
+    @abstract(ietf/web related support unit)
+
+    This unit contains routines to validate
+    strings, and characters according to different
+    IETF standards (such as URL's, URI's and MIME types).
+    
+}
 unit ietf;
 
 interface
@@ -175,6 +197,8 @@ begin
    exit;
  nidstr:=copy(s,1,idx-1);
  delete(s,1,idx);
+ if length(nidstr) = 0 then
+   exit;
  if not (nidstr[1] in alphanumeric) then
    exit;
  if (length(nidstr) > 31) or (length(nidstr) < 1) then
@@ -230,3 +254,7 @@ end;
 
 
 end.
+
+{
+  $Log: not supported by cvs2svn $
+}
