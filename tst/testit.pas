@@ -31,6 +31,7 @@ uses dpautils,
    F: file;
    utfstr,outstr: utf8string;
    utf32str: ucs4string;
+   c: char;
    i: integer;
    s: string;
   begin
@@ -38,11 +39,13 @@ uses dpautils,
    Reset(F,1);
    i:=1;
    Seek(F,3);
+   utf8_setlength(utfstr,0);
    Repeat
-     BlockRead(F, utfstr[i],sizeof(utfstr[i]));
+     BlockRead(F, c,sizeof(c));
+     utfstr:=utfstr+c;
      inc(i);
    Until Eof(F);
-   utfstr[0]:=chr(i-1);
+   utf8_setlength(utfstr,i-1);
    Close(F);
    if (ConvertUTF8ToUCS4(utfstr,utf32str) <> 0) then
       RunError(255);
@@ -54,7 +57,7 @@ uses dpautils,
    }
    if (ConvertUCS4ToUTF8(utf32str,outstr) <> 0) then
       RunError(255);
-   for i:=1 to ord(utfstr[0]) do
+   for i:=1 to utf8_length(utfstr) do
        begin
          if outstr[i] <> utfstr[i] then
            RunError(255);
@@ -533,6 +536,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.10  2004/08/27 02:09:49  carl
+    + more unicode testing
+
   Revision 1.9  2004/08/20 00:50:16  carl
     + release 0.99
 
