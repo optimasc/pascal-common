@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: utils.pas,v 1.8 2004-08-19 00:25:10 carl Exp $
+    $Id: utils.pas,v 1.9 2004-08-20 04:08:01 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Common utilities
@@ -702,7 +702,7 @@ Function EscapeToPascal(const s:string; var code: integer): string;
 { characters to a pascal style string.               }
 var
   i,len : longint;
-  hs    : string;
+  hs    : shortstring;
   temp  : string;
   c     : char;
 Begin
@@ -750,23 +750,31 @@ Begin
              { check if actual octal or null character }
              { BUG in freepascal with octal values !!  }
              temp:=s[i];
-             if (s[i+1] in ['0'..'7']) then
-             Begin
-                temp:=temp+s[i+1];
-                inc(i);
-                if (s[i+1] in ['0'..'7']) then
-                 Begin
-                    temp:=temp+s[i+1];
-                    inc(i);
-                 End;
-             End;
-             c:=chr(ValOctal(temp,code));
+             if ((i+1) <= length(s)) then
+               begin
+                if  (s[i+1] in ['0'..'7'])  then
+                   Begin
+                      temp:=temp+s[i+1];
+                      inc(i);
+                      if (s[i+1] in ['0'..'7']) then
+                         Begin
+                          temp:=temp+s[i+1];
+                           inc(i);
+                         End;
+                   End;
+               end;
+                c:=chr(ValOctal(temp,code));
+
            end;
          'x':
            Begin
              temp:=s[i+1];
-             temp:=temp+s[i+2];
-             inc(i,2);
+             inc(i);
+             if ((i+1) <= length(s)) then
+             begin
+                temp:=temp+s[i+1];
+                inc(i);
+             end;
              c:=chr(ValHexaDecimal(temp,code));
            end;
          else
@@ -777,11 +785,9 @@ Begin
         end;
       end
      else
-      c:=s[i];
-     inc(len);
-     hs[len]:=c;
+     c:=s[i];
+     hs:=hs+c;
    end;
-  SetLength(hs,len); 
   EscapeToPascal:=hs;
 end;
 
@@ -815,6 +821,9 @@ end;
 end.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.8  2004/08/19 00:25:10  carl
+    + removenull routine
+
   Revision 1.7  2004/08/01 05:33:49  carl
    - remove uppercase routine (use upstring instead)
 
