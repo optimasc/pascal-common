@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: vpautils.pas,v 1.3 2004-08-27 02:11:08 carl Exp $
+    $Id: vpautils.pas,v 1.4 2004-09-29 00:57:47 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Virtual pascal 2.1 or higher compatibility unit (Win32 or OS/2 targets)
@@ -35,6 +35,9 @@ Error Unsupported target
     { The biggest integer type available to this compiler }
     big_integer_t = longint;
     Integer = longint;
+    { Cardinal is not a true unsigned 32-bit value, so we
+      need to map to longint for this target
+    }      
     longword = longint;
     { An integer which has the size of a pointer }
     ptrint = longint;
@@ -87,6 +90,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.3  2004/08/27 02:11:08  carl
+    + added filemodes, as defined in sysutils
+
   Revision 1.2  2004/08/19 00:18:21  carl
     + assert routine
 

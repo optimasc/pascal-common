@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: locale.pas,v 1.6 2004-08-19 00:18:52 carl Exp $
+    $Id: locale.pas,v 1.7 2004-09-29 00:57:46 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Localization and date/time unit
@@ -17,6 +17,17 @@
     This unit is used to convert different 
     locale information. ISO Standards are
     used where appropriate.
+    
+    The exact representations that are supported
+    are the following:
+      Calendar Date: Complete Representation - basic
+      Caldedar Date: Complete Representation - extended
+      Calendar Date: Representations with reduced precision
+      Time of the day: Local time of the day: Complete representation - basic
+      Time of the day: Local time of the day: Complete representation - extended
+      Time of the day: UTC Time : Complete representation - basic
+      Time of the day: UTC Time: Complete representation - extended
+      Time of the day: Local and UTC Time: extended format
     
     Credits where credits are due, information
     on the ISO and date formats where taken from
@@ -55,8 +66,8 @@ function IsValidISODateString(datestr: shortstring): boolean;
 {** @abstract(Verifies if the time is in a valid ISO 8601 format)
 
     Currently does not support the fractional second parameters,
-    and only the format recommended by W3C when used with the
-    time zone designator.
+    and only the extemded time format recommended by W3C when used
+    with the time zone designator.
 
     @param(timestr Time string in valid ISO 8601 format)
     @returns(TRUE if the time string is valid otherwise false)
@@ -97,6 +108,7 @@ procedure UNIXToDateTime(epoch: longword; var year, month, day, hour, minute, se
     format used can be one of the @code(CHAR_ENCODING_XXXX) constants.
 }
 function GetCharEncoding(alias: string; var _name: string): integer;
+
 
 const
   {** @abstract(Character encoding value: UTF-8 storage format)}
@@ -368,7 +380,7 @@ begin
   { search the possible cases }
   case length(timestr) of  
   { preferred format: hh:mm:ss }
-  8,9,14:
+  8,9,11,14:
       begin
         hourstr:=copy(timestr,1,2);
         minstr:=copy(timestr,4,2);
@@ -394,6 +406,17 @@ begin
             else
               exit;
           end;
+        if length(timestr) = 11 then
+          begin
+            if (timestr[9] in ['+','-']) and (timestr[12] = ':') then
+              begin
+                offsethourstr:=copy(timestr,10,2);
+                offsetminstr:='00';
+              end
+            else
+              exit;
+          end;
+
       end;
   { compact format: hhmmss     }
    6,7:
@@ -429,7 +452,7 @@ begin
   end;   
   if hourstr = '' then
     exit;
-  { verify the validity of the year }
+  { verify the validity of the time }
   if minstr <> '' then
     begin
       if not isdigits(minstr) then
@@ -468,24 +491,24 @@ begin
       if not isdigits(secstr) then
          exit;
       val(secstr,secval,code);
-      if code <> 0 then 
+      if code <> 0 then
         exit;
       if (secval < 0) or (secval > 59) then
         exit;
-    end;  
+    end;
   if hourstr <> '' then
     begin
       if not isdigits(hourstr) then
          exit;
       val(hourstr,hourval,code);
-      if code <> 0 then 
+      if code <> 0 then
         exit;
       if (hourval < 0) or (hourval > 23) then
         exit;
-    end;  
-    
+    end;
+
   IsValidIsoTimeString:=true;
-end;    
+end;
 
 function IsValidISODateTimeString(str: shortstring): boolean;
 var
@@ -613,6 +636,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.6  2004/08/19 00:18:52  carl
+    - no ansistring support in this unit
+
   Revision 1.5  2004/07/05 02:26:39  carl
     - remove some compiler warnings
 
