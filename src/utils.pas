@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: utils.pas,v 1.10 2004-08-27 02:11:07 carl Exp $
+    $Id: utils.pas,v 1.11 2004-09-06 19:40:24 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Common utilities
@@ -376,11 +376,13 @@ Const WhiteSpace = [' ',#10,#13,#9];
      Var
       F: File;
       OldMode : Byte;
+      value: integer;
      Begin
 {$IFOPT I+}
 {$DEFINE IO_ON}
 {$I-}
 {$ENDIF}
+       value:=IOResult;
        { Bug, would not detect read only files }
        { therefore try in read only mode       }
        OldMode := FileMode;
@@ -388,7 +390,8 @@ Const WhiteSpace = [' ',#10,#13,#9];
        Assign(F,FName);
        Reset(F,1);
        FileMode := OldMode;
-       If IOResult <> 0 then
+       value:=IOResult;
+       If value <> 0 then
          FileExists := FALSE
        else
        Begin
@@ -817,6 +820,9 @@ end;
 end.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.10  2004/08/27 02:11:07  carl
+    + added filemodes, as defined in sysutils
+
   Revision 1.9  2004/08/20 04:08:01  carl
     * range check error bugfixes in EscapeToPascal
 
