@@ -54,3 +54,7 @@ DATE := getdate.exe
 
 include ../makefile.cmn
 
+# This is called when a makexxxx is done. 
+# It is called for each target, and should do any pre-processing
+# as required.
+preprocess:
