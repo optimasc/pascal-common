@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: unicode.pas,v 1.23 2004-11-29 03:48:09 carl Exp $
+    $Id: unicode.pas,v 1.24 2004-12-08 04:25:38 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Unicode related routines
@@ -2606,7 +2606,7 @@ end;
           dec(OutIndex);
           outstr[outindex] := utf8char((byte(ch) or byte(FirstbyteMark[BytesToWrite])));
         end;  
-        inc(OutStringLength);
+        inc(OutStringLength,BytesToWrite);
         Inc(OutIndex,BytesToWrite);
       end;      
       utf8_setlength(outstr,OutStringLength);
@@ -3190,6 +3190,10 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.23  2004/11/29 03:48:09  carl
+    * ConvertUCS4ToUTF8 bugfix, was setting the wrong string length at the end.
+    + destination and source string type aliases are now case-insensitive.
+
   Revision 1.22  2004/11/21 19:53:59  carl
     * 10-25% speed optimizations (change some parameter types to const, code folding)
 
