@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: locale.pas,v 1.9 2004-10-31 19:51:33 carl Exp $
+    $Id: locale.pas,v 1.10 2004-11-09 03:52:47 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Localization and date/time unit
@@ -92,7 +92,8 @@ function IsValidISOTimeString(timestr: shortstring): boolean;
 
     Currently does not support the fractional second parameters,
     and only the format recommended by W3C when used with the
-    time zone designator.
+    time zone designator. Also validates an entry if it only
+    contains the date component (it is automatically detected).
 
     @param(str Date-Time string in valid ISO 8601 format)
     @returns(TRUE if the date-time string is valid otherwise false)
@@ -475,7 +476,7 @@ begin
           end;
         if length(timestr) = 11 then
           begin
-            if (timestr[9] in ['+','-']) and (timestr[12] = ':') then
+            if (timestr[9] in ['+','-']) then
               begin
                 offsethourstr:=copy(timestr,10,2);
                 offsetminstr:='00';
@@ -584,9 +585,16 @@ var
 begin
   IsValidISODateTimeString:=false;
   idx:=pos('T',str);
-  if IsValidISODateString(copy(str,1,idx-1)) then
-    if IsValidISOTimeString(copy(str,idx+1,length(str))) then
-     IsValidISODateTimeString:=true;
+  if idx <> 0 then
+    begin
+      if IsValidISODateString(copy(str,1,idx-1)) then
+         if IsValidISOTimeString(copy(str,idx+1,length(str))) then
+           IsValidISODateTimeString:=true;
+    end
+  else
+    begin
+      IsValidISODateTimeString:=IsValidISODateString(str);
+    end;
 end;
 
 
@@ -704,6 +712,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.9  2004/10/31 19:51:33  carl
+    * fix with leap seconds (leap seconds were not accepted)
+
   Revision 1.8  2004/10/13 23:24:35  carl
     + new routines for returning basic format dates and times
 
