@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: tpautils.pas,v 1.4 2004-08-27 02:11:07 carl Exp $
+    $Id: tpautils.pas,v 1.5 2004-10-13 23:25:05 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Turbo Pascal/Borland Pascal 7.0 compatibility unit
@@ -117,7 +117,7 @@ implementation
      FreeMem, except that FreeMem doesn't clear the pointer. }
    If assigned(p) and (size = 0) then
     begin
-      RunError(255);
+      Assert(False);
       { Hopw can we determine the size of the block? }
       FreeMem(p,size);
       p:=nil;
@@ -142,6 +142,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.4  2004/08/27 02:11:07  carl
+    + added filemodes, as defined in sysutils
+
   Revision 1.3  2004/07/15 01:02:45  carl
     + Added Assert routine
 
