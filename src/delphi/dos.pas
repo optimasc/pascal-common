@@ -63,36 +63,14 @@ Type
 const
   filerecnamelength = 255;
 type
-  FileRec = Packed Record
-    Handle,
-    Mode,
-    RecSize   : longint;
-    _private  : array[1..32] of byte;
-    UserData  : array[1..16] of byte;
-    name      : array[0..filerecnamelength] of char;
-  End;
+  FileRec = System.TFileRec;
   
 const
   TextRecNameLength = 256;
   TextRecBufSize    = 256;
 type
   TextBuf = array[0..TextRecBufSize-1] of char;
-  TextRec = Packed Record
-    Handle,
-    Mode,
-    bufsize,
-    _private,
-    bufpos,
-    bufend    : longint;
-    bufptr    : ^textbuf;
-    openfunc,
-    inoutfunc,
-    flushfunc,
-    closefunc : pointer;
-    UserData  : array[1..16] of byte;
-    name      : array[0..textrecnamelength-1] of char;
-    buffer    : textbuf;
-  End;
+  TextRec = System.TTextRec;
   
 
   DateTime = packed record
@@ -215,9 +193,6 @@ type
 
    LPOSVERSIONINFO = ^OSVERSIONINFO;
 
-var
-   _versioninfo : OSVERSIONINFO;
-   kernel32dll : THandle;
 
 {******************************************************************************
                            --- Conversion ---
@@ -694,8 +669,6 @@ end;
      external 'kernel32.dll' name 'GetFileTime';
    function SetFileTime(h : longint;creation,lastaccess,lastwrite : PFileTime) : longbool;
      external 'kernel32.dll' name 'SetFileTime';
-   function SetFileAttributes(lpFileName : pchar;dwFileAttributes : longint) : longbool;
-     external 'kernel32.dll' name 'SetFileAttributesA';
    function GetFileAttributes(lpFileName : pchar) : longint;
      external 'kernel32.dll' name 'GetFileAttributesA';
 
@@ -894,7 +867,7 @@ var
 begin
   doserror:=0;
   l:=GetFileAttributes(filerec(f).name);
-  if l=$ffffffff then
+  if l=-1 then
    begin
      DosError:=Last2DosError(GetLastError);
      attr:=0;
@@ -905,9 +878,12 @@ end;
 
 
 procedure setfattr(var f;attr : word);
+var
+ valattr: DWORD;
 begin
   doserror:=0;
-  if not(SetFileAttributes(filerec(f).name,attr)) then
+  valattr:=attr;
+  if not(SetFileAttributesA(filerec(f).name,valattr)) then
    DosError:=Last2DosError(GetLastError);
 end;
 
@@ -1090,5 +1066,8 @@ function GetProcAddress(hModule : THandle;lpProcName : pchar) : pointer;
 end.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.1  2004/05/05 16:28:24  carl
+    Release 0.95 updates
+
 
 }
