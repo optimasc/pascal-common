@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: ietf.pas,v 1.6 2004-12-26 23:41:22 carl Exp $
+    $Id: ietf.pas,v 1.7 2005-01-06 03:25:51 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Unicode related routines
@@ -49,8 +49,16 @@ const
   URI_START_DELIMITER_CHAR = '<';
   {** Suggested end delimiter character for an URI, c.f. RFC  2396 }
   URI_END_DELIMITER_CHAR = '>';
+  URI_SCHEME_NAME_EMAIL = 'mailto';
+  URI_SCHEME_SEPARATOR = ':';
+  
 
-  URI_SCHEME_NAME_EMAIL = 'mailto:';
+ {** Given an URI complete specification string, extract
+     and return the scheme, authority, path and query
+     components of the URI. }
+ function uri_split(url: string; var scheme,
+   authority,path, query: string): boolean;
+
 
 
 {----------------- URN related routines ----------------}
@@ -81,7 +89,7 @@ function urn_isvalidnid(nid: string): boolean;
 {** @abstract(Splits an URN string in its separate components)
 
     It is based on IETF RFC 2141.
-    
+
     @param(urn Complete URN string to separate)
     @param(urnidstr Signature URN:)
     @param(nidstr Namespace identifier NID
@@ -91,6 +99,17 @@ function urn_isvalidnid(nid: string): boolean;
 }
 function urn_split(urn:string; var urnidstr,nidstr,nssstr: string): boolean;
 
+{** Splits a path string returned by uri_split into its
+    individual components for URN. }
+ function urn_pathsplit(path: string; var namespace, nss: string): boolean;
+
+
+{** Splits a path string returned by uri_split into its
+    individual components for the http URI. }
+ function http_pathsplit(path: string; var directory, name: string): boolean;
+{** Splits a path string returned by uri_split into its
+    individual components for the file URI. }
+ function file_pathsplit(path: string; var directory, name: string): boolean;
 
 
 
@@ -134,6 +153,69 @@ const
  );
 
 
+const
+ URI_PATH_SEPARATOR = '/';
+ URI_QUERY_SEPARATOR = '?';
+ URI_MAX_SCHEMES = 50;
+
+ uri_schemes: array[1..URI_MAX_SCHEMES] of string[16] =
+ (
+  'ftp',
+  'http',
+  'gopher',
+  URI_SCHEME_NAME_EMAIL,
+  'news',
+  'nntp',
+  'telnet',
+  'wais',
+  'file',
+  'prospero',
+  'z39.50s',
+  'z39.50r',
+  'cid',
+  'mid',
+  'vemmi',
+  'service',
+  'imap',
+  'nfs',
+  'acap',
+  'rtsp',
+  'tip',
+  'pop',
+  'data',
+  'dav',
+  'opaquelocktoken',
+  'sip',
+  'sips',
+  'tel',
+  'fax',
+  'modem',
+  'ldap',
+  'https',
+  'soap.beep',
+  'soap.beeps',
+  'xmlrpc.beep',
+  'xmlrpc.beeps',
+  'urn',
+  'go',
+  'h323',
+  'ipp',
+  'tftp',
+  'mupdate',
+  'pres',
+  'im',
+  'mtqp',
+  'iris.beep',
+  'dict',
+  'afs',
+  'tn3270',
+  'mailserver'
+ );
+
+
+ uri_scheme_chars = ['a'..'z','0'..'9','+','-','.'];
+ uri_host_chars = ['a'..'z','0'..'9','.','-'];
+
 function mime_isvalidcontenttype(const s: shortstring): boolean;
 var
  idx: integer;
@@ -164,6 +246,10 @@ begin
  mime_isvalidcontenttype:=true;
 end;
 
+
+{***********************************************************************
+                            URM
+***********************************************************************}
 
 { NID's can either start with X- for experimental
   versions, or are registered with the IANA.
@@ -254,6 +340,20 @@ begin
    urn_isvalid:=true;
 end;
 
+ function urn_pathsplit(path: string; var namespace, nss: string): boolean;
+ var
+  idx: integer;
+ begin
+   { verify the NID }
+   idx:=pos(':',path);
+   namespace:=lowstring(copy(path,1,idx-1));
+   delete(path,1,idx);
+   nss:=path;
+   urn_pathsplit:=true;
+ end;
+
+
+
 function urn_split(urn:string; var urnidstr,nidstr,nssstr: string): boolean;
 var
  idx: integer;
@@ -332,12 +432,172 @@ begin
  langtag_isvalid:=langtag_split(s,primary,sub);
 end;
 
+{***********************************************************************
+                            URI
+***********************************************************************}
+
+ {** Checks if the URL is conformant to the specification
+     defined in IETFC RFC 1738.
+     @param(scheme The scheme to check)
+     @returns(TRUE if the scheme is valid, or false if
+         the scheme has an invalid syntax).
+ }
+ function uri_isvalidscheme(scheme: string): boolean;
+ var
+  i: integer;
+ begin
+   scheme:=lowstring(scheme);
+   uri_isvalidscheme:=false;
+   for i:=1 to length(scheme) do
+     begin
+       if not (scheme[i] in uri_scheme_chars) then
+          exit;
+     end;
+   uri_isvalidscheme:=true;
+ end;
+
+ function uri_isvalidhost(host: string): boolean;
+ var
+  i: integer;
+ begin
+   host:=lowstring(host);
+   uri_isvalidhost:=false;
+   for i:=1 to length(host) do
+     begin
+       if not (host[i] in uri_host_chars) then
+          exit;
+     end;
+   uri_isvalidhost:=true;
+ end;
+
+
+ function uri_split(url: string; var scheme,
+   authority,path, query: string): boolean;
+ var
+  idx: integer;
+  i: integer;
+  present_path: boolean;
+  present_authority: boolean;
+ begin
+   path:='';
+   scheme:='';
+   path:='';
+   authority:='';
+   query:='';
+   uri_split:=true;
+   present_path:=false;
+   present_authority:=false;
+   { Verify if there is a scheme present }
+   idx:=pos(':',url);
+   { There is a scheme - extract it and check its validity }
+   if idx > 1 then
+     begin
+       scheme:=copy(url,1,idx-1);
+       delete(url,1,idx);
+       { Determine the scheme type }
+       scheme:=lowstring(scheme);
+       uri_split:=uri_isvalidscheme(scheme);
+       {********* Check presence of the authority **********}
+       if pos('//',url) = 1 then
+       begin
+         { This seems to be valid! }
+         delete(url,1,2);
+         {** Extract the authority information }
+         for i:=1 to length(url) do
+           begin
+             { The authority component is terminated
+               by one of these characters }
+             if url[i] in ['?','/'] then
+                break;
+             authority:=authority+url[i];
+           end;
+         { delete the authority part of the URI }
+         delete(url,1,i-1);
+         present_authority:=true;
+       end;
+       {********* Check presence path **********}
+       idx:=pos(URI_PATH_SEPARATOR,url);
+       if (idx = 1) then
+       begin
+            path:=url[1];
+            {** Extract the path information }
+            for i:=2 to length(url) do
+             begin
+               { The path component is terminated
+                 by a query separator or end of string }
+               if url[i] in ['?'] then
+                  break;
+               path:=path+url[i];
+           end;
+           delete(url,1,i-1);
+           path:=trim(path);
+           present_path:=true;
+       end;
+       {********* Check presence of query **********}
+       { Query is only available if there is an     }
+       { authority, or abs_path                     }
+       idx:=pos(URI_QUERY_SEPARATOR,url);
+       if (idx = 1) and (present_path or present_authority) then
+         begin
+           { Do not keep the query separator }
+           query:=copy(url,idx+1,length(url));
+           delete(url,idx,length(url));
+           { Copy the actual name of the resource to
+             access from the directories }
+           query:=trim(query);
+         end;
+       {********* This is an opaque string **********}
+       { If authority and path not present           }
+       if (present_path=false) and (present_authority=false) then
+         begin
+           { Keep the path separator }
+           path:=copy(url,idx,length(url));
+           delete(url,idx,length(url));
+           { Copy the actual name of the resource to
+             access from the directories }
+           path:=trim(path);
+         end;
+   end;
+ end;
+
+ function http_pathsplit(path: string; var directory, name: string): boolean;
+ var
+  i: integer;
+ begin
+   http_pathsplit:=true;
+   directory:=trim(path);
+   name:='';
+   { This is probably a filename }
+   if directory[length(directory)] <> URI_PATH_SEPARATOR then
+     begin
+       for i:=length(directory) downto 1 do
+         begin
+          if directory[i] = URI_PATH_SEPARATOR then
+            break;
+          name:=directory[i] + name;
+         end;
+       delete(directory,i,length(directory));
+     end;
+ end;
+
+ function file_pathsplit(path: string; var directory, name: string): boolean;
+ begin
+    file_pathsplit:=http_pathsplit(path,directory,name);
+ end;
+
+
+
+
+
 
 
 end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.6  2004/12/26 23:41:22  carl
+    + added some separator constants
+
   Revision 1.5  2004/11/21 19:52:57  carl
     + some const parameters for strings
     - remove some warnings
