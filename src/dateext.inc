@@ -162,6 +162,33 @@ begin
   DateTimeToStrExt:=DateTimeToStr(DateTime)+tzstr;
 end;
 
+procedure GetCurrentDate(var Year,Month,Day,DayOfWeek: integer);
+var
+ aYear,aMonth,aDay,aDayOfWeek: platformword;
+begin
+  Dos.GetDate(aYear,aMonth,aDay,aDayOfWeek);
+  Year:=integer(aYear);
+  Month:=integer(aMonth);
+  Day:=integer(aDay);
+  DayOfWeek:=integer(aDayOfWeek);
+end;
+
+procedure GetCurrentTime(var Hour,Minute,Second,Sec100: integer);
+var
+ aHour,aMinute,aSecond,aSec100: platformword;
+begin
+  Dos.GetTime(aHour,aMinute,aSecond,aSec100);
+  Hour:=integer(aHour);
+  Minute:=integer(aMinute);
+  Second:=integer(aSecond);
+  Sec100:=integer(aSec100);
+end;
+
+
+
 {
   $Log: not supported by cvs2svn $
+  Revision 1.1  2004/10/31 19:53:06  carl
+    + Add support for extended format conversion (Ext routines)
+
 }

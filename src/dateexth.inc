@@ -64,6 +64,20 @@ function TryEncodeDateAndTimeToStr(const Year, Month, Day, Hour, Minute, Second,
   
 function DateTimeToStrExt(DateTime: TDateTime; utc: boolean): string; 
 
+
+{** @abstract(Returns the current date set in the operating system) }
+procedure GetCurrentDate(var Year,Month,Day,DayOfWeek: integer);
+
+{** @abstract(Returns the current time set in the operating system) 
+
+   Ranges of the values returned are Hour 0..23, Minute 0..59, 
+   Second 0..60, Sec100 0..99.
+}
+procedure GetCurrentTime(var Hour,Minute,Second,Sec100: integer);
+
 {
   $Log: not supported by cvs2svn $
+  Revision 1.1  2004/10/31 19:53:07  carl
+    + Add support for extended format conversion (Ext routines)
+
 }

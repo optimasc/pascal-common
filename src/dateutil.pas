@@ -1,5 +1,5 @@
 {
-    $Id: dateutil.pas,v 1.4 2004-10-31 19:52:50 carl Exp $
+    $Id: dateutil.pas,v 1.5 2004-11-23 03:44:53 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere (Optima SC Inc.)
 
     Date and time utility routines
@@ -48,7 +48,12 @@ type
  TDatetime = real;
 
  float = real;
-
+ 
+{$IFDEF VPASCAL}
+   platformword = use32.word;
+{$ELSE}
+   platformword = system.word;
+{$ENDIF}
 
 { Provide symbolic constants for ISO 8601-compliant day of the week values. }
 const
@@ -830,7 +835,7 @@ end;
 
 function CurrentYear: word;
 var
- Year,Month,Day,DayOfWeek: word;
+ Year,Month,Day,DayOfWeek: platformword;
 begin
   Dos.GetDate(Year,Month,Day,DayOfWeek);
   CurrentYear:=Year;
@@ -838,7 +843,7 @@ end;
 
 function Date: TDatetime;
 var
- Year,Month,Day,DayOfWeek: word;
+ Year,Month,Day,DayOfWeek: platformword;
 begin
   Dos.GetDate(Year,Month,Day,DayOfWeek);
   Date:=datetojd(Year,Month,Day,0,0,0,0);
@@ -1009,8 +1014,8 @@ end;
 
 function Now: TDatetime;
 var
- Year,Month,Day,DayOfWeek: word;
- Hour,Minute,Sec,Sec100: word;
+ Year,Month,Day,DayOfWeek: platformword;
+ Hour,Minute,Sec,Sec100: platformword;
 begin
   Dos.GetDate(Year,Month,Day,DayOfWeek);
   Dos.GetTime(Hour,Minute,Sec,Sec100);
@@ -1052,7 +1057,7 @@ end;
 
 function Time: TDateTime;
 var
-  Hour,Minute,Second,Sec100: word;
+  Hour,Minute,Second,Sec100: platformword;
 begin
   Dos.GetTime(Hour,Minute,Second,Sec100);
   Time:=datetojd(0,0,0,Hour,Minute,Second,Sec100);
@@ -1079,7 +1084,7 @@ end;
 
 function Today: TDatetime;
 var
- Year,Month,Day,DayOfWeek: word;
+ Year,Month,Day,DayOfWeek: platformword;
 begin
   Dos.GetDate(Year,Month,Day,DayOfWeek);
   Today:=trunc(datetojd(Year,Month,Day,0,0,0,0));
@@ -1186,6 +1191,12 @@ end;
 end.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.4  2004/10/31 19:52:50  carl
+    * TryStrToDateTime would not accept Dates only
+    + Add support fore PDF, Openoffice HTML date parsing
+      in TryStrToDateTime
+    + Add supported for extended format conversion (Ext routines)
+
   Revision 1.3  2004/10/27 01:57:45  carl
    - avoid range check error warning
 
