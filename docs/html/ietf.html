@@ -8,7 +8,7 @@
 <body bgcolor="#ffffff" text="#000000" link="#0000ff" vlink="#800080" alink="#FF0000">
 <h1>Unit ietf</h1>
 <table class="sections"><tr>
-<td><a class="normal" href="#@Description">Description</a></td><td>uses</td><td>Classes, Interfaces and Objects</td><td><a class="normal" href="#@FuncsProcs">Functions and Procedures</a></td><td>Types</td><td>Constants</td><td>Variables</td></tr></table>
+<td><a class="normal" href="#@Description">Description</a></td><td>uses</td><td>Classes, Interfaces and Objects</td><td><a class="normal" href="#@FuncsProcs">Functions and Procedures</a></td><td>Types</td><td><a class="normal" href="#@Constants">Constants</a></td><td>Variables</td></tr></table>
 <a name="@Description"></a><h2>Description</h2>
 ietf/web related support unit<p>This unit contains routines to validate
     strings, and characters according to different
@@ -22,14 +22,36 @@ ietf/web related support unit<p>This unit contains routines to validate
 </tr>
 <tr class="list" valign="top"><td><code>function <a class="normal" href="#langtag_split"><b>langtag_split</b></a>(const s: string; var primary,sub: string): boolean;</code></td>
 </tr>
-<tr class="list2" valign="top"><td><code>function <a class="normal" href="#urn_isvalid"><b>urn_isvalid</b></a>(s: shortstring): boolean;</code></td>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#uri_split"><b>uri_split</b></a>(url: string; var scheme, authority,path, query: string): boolean;</code></td>
 </tr>
-<tr class="list" valign="top"><td><code>function <a class="normal" href="#urn_isvalidnid"><b>urn_isvalidnid</b></a>(nid: string): boolean;</code></td>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#urn_isvalid"><b>urn_isvalid</b></a>(s: shortstring): boolean;</code></td>
 </tr>
-<tr class="list2" valign="top"><td><code>function <a class="normal" href="#urn_split"><b>urn_split</b></a>(urn:string; var urnidstr,nidstr,nssstr: string): boolean;</code></td>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#urn_isvalidnid"><b>urn_isvalidnid</b></a>(nid: string): boolean;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#urn_split"><b>urn_split</b></a>(urn:string; var urnidstr,nidstr,nssstr: string): boolean;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#urn_pathsplit"><b>urn_pathsplit</b></a>(path: string; var namespace, nss: string): boolean;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#http_pathsplit"><b>http_pathsplit</b></a>(path: string; var directory, name: string): boolean;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#file_pathsplit"><b>file_pathsplit</b></a>(path: string; var directory, name: string): boolean;</code></td>
 </tr>
 </table>
 <h3>Description</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="file_pathsplit"></a><code>function <b>file_pathsplit</b>(path: string; var directory, name: string): boolean;</code></td>
+</tr>
+</table>
+<p><p>Splits a path string returned by uri_split into its
+    individual components for the file URI.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="http_pathsplit"></a><code>function <b>http_pathsplit</b>(path: string; var directory, name: string): boolean;</code></td>
+</tr>
+</table>
+<p><p>Splits a path string returned by uri_split into its
+    individual components for the http URI.</p>
+</p>
 <table cellspacing="2" cellpadding="4" width="100%">
 <tr class="list" valign="top"><td width="100%"><a name="langtag_isvalid"></a><code>function <b>langtag_isvalid</b>(const s: string): boolean;</code></td>
 </tr>
@@ -46,6 +68,24 @@ ietf/web related support unit<p>This unit contains routines to validate
 </table>
 <p>&nbsp;</p>
 <table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="uri_split"></a><code>function <b>uri_split</b>(url: string; var scheme, authority,path, query: string): boolean;</code></td>
+</tr>
+</table>
+<p>Extract information from an URI string<p>Given an URI complete specification string, extract
+     and return the scheme, authority, path and query
+     components of the URI. The exact definition of
+     these terms is specified in IETF RFC 2396.</p>
+</p>
+<h6>parameters</h6>
+<dl class="parameters">
+<dt class="parameters">
+url</dt>
+<dd class="parameters">
+URI to check</dd>
+</dl>
+<h6>returns</h6>
+<p class="return">FALSE if the URI is not valid, otherwise
+       returns TRUE</p><table cellspacing="2" cellpadding="4" width="100%">
 <tr class="list" valign="top"><td width="100%"><a name="urn_isvalid"></a><code>function <b>urn_isvalid</b>(s: shortstring): boolean;</code></td>
 </tr>
 </table>
@@ -65,6 +105,13 @@ ietf/web related support unit<p>This unit contains routines to validate
 </p>
 <h6>returns</h6>
 <p class="return">TRUE if this is a registered or experimental NID string</p><table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="urn_pathsplit"></a><code>function <b>urn_pathsplit</b>(path: string; var namespace, nss: string): boolean;</code></td>
+</tr>
+</table>
+<p><p>Splits a path string returned by uri_split into its
+    individual components for URN.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
 <tr class="list" valign="top"><td width="100%"><a name="urn_split"></a><code>function <b>urn_split</b>(urn:string; var urnidstr,nidstr,nssstr: string): boolean;</code></td>
 </tr>
 </table>
@@ -87,7 +134,23 @@ Namespace specific string NSS</dd>
 </dl>
 <h6>returns</h6>
 <p class="return">TRUE if the operation was successfull, or
-      FALSE if the URN is malformed</p><a name="@Types"></a><a name="@Constants"></a><a name="@Variables"></a><h2>Author</h2>
+      FALSE if the URN is malformed</p><a name="@Types"></a><a name="@Constants"></a><h2>Constants</h2>
+<table class="itemlist" cellspacing="2" cellpadding="4" width="100%"><tr class="listheader"><th class="listheader" nowrap="nowrap">Name</th><th class="listheader" width="100%">Description</th></tr>
+<tr class="list2" valign="top"><td><a name="URI_START_DELIMITER_CHAR"></a>URI_START_DELIMITER_CHAR<code> = '&lt;';</code></td>
+<td><p>Suggested start delimiter character for an URI, c.f. RFC  2396</p>
+</td>
+</tr>
+<tr class="list" valign="top"><td><a name="URI_END_DELIMITER_CHAR"></a>URI_END_DELIMITER_CHAR<code> = '&gt;';</code></td>
+<td><p>Suggested end delimiter character for an URI, c.f. RFC  2396</p>
+</td>
+</tr>
+<tr class="list2" valign="top"><td><a name="URI_SCHEME_NAME_EMAIL"></a>URI_SCHEME_NAME_EMAIL<code> = 'mailto';</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list" valign="top"><td><a name="URI_SCHEME_SEPARATOR"></a>URI_SCHEME_SEPARATOR<code> = ':';</code></td>
+<td>&nbsp;</td>
+</tr>
+</table><a name="@Variables"></a><h2>Author</h2>
 <p>Carl Eric Codere</p>
-<hr noshade="1" size="1"/><em>Generated by <a class="normal" target="_new" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8.3</a> on 2004-11-22 22:11:40</em>
+<hr noshade="1" size="1"/><em>Generated by <a class="normal" target="_new" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8.3</a> on 2005-01-08 16:01:02</em>
 </body></html>

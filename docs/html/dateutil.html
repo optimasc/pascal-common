@@ -8,7 +8,7 @@
 <body bgcolor="#ffffff" text="#000000" link="#0000ff" vlink="#800080" alink="#FF0000">
 <h1>Unit dateutil</h1>
 <table class="sections"><tr>
-<td><a class="normal" href="#@Description">Description</a></td><td>uses</td><td>Classes, Interfaces and Objects</td><td><a class="normal" href="#@FuncsProcs">Functions and Procedures</a></td><td><a class="normal" href="#@Types">Types</a></td><td><a class="normal" href="#@Constants">Constants</a></td><td>Variables</td></tr></table>
+<td><a class="normal" href="#@Description">Description</a></td><td>uses</td><td><a class="normal" href="#@Classes">Classes, Interfaces and Objects</a></td><td><a class="normal" href="#@FuncsProcs">Functions and Procedures</a></td><td><a class="normal" href="#@Types">Types</a></td><td><a class="normal" href="#@Constants">Constants</a></td><td>Variables</td></tr></table>
 <a name="@Description"></a><h2>Description</h2>
 Date and time utility routines<p>This unit is quite similar to the unit dateutils provided
     with Delphi 6 and Delphi 7. Only a subset of the API found
@@ -20,8 +20,20 @@ Date and time utility routines<p>This unit is quite similar to the unit dateutil
     2. The internal format of TDatetime is not the same as on the Delphi
     compilers (Internally TDateTime is stored as a Julian date)
     3. The milliseconds field is only an approximation, and should not
-    be considered as accurate.</p><p>All dates are assumed to be in Gregorian calendar date
+    be considered as accurate.
+    4. Becasue everything is coded with floats, the seconds field has
+    a precision of +/- 2 seconds.</p><p>All dates are assumed to be in Gregorian calendar date
     format (This is a proleptic Gregorian calendar unit).</p>
+<a name="@Classes"></a><h2>Classes, Interfaces and Objects</h2>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="listheader"><th class="listheader">Name</th><th class="listheader">Description</th></tr>
+<tr class="list" valign="top"><td nowrap="nowrap">record&nbsp;<a class="normal" href="dateutil.TDateInfo.html"><code>TDateInfo</code></a></td>
+<td width="100%">&nbsp;</td>
+</tr>
+<tr class="list2" valign="top"><td nowrap="nowrap">packed record&nbsp;<a class="normal" href="dateutil.tfiletime.html"><code>tfiletime</code></a></td>
+<td>&nbsp;</td>
+</tr>
+</table>
 <a name="@FuncsProcs"></a><h2>Functions and Procedures</h2>
 <h3>Overview</h3>
 <table cellspacing="2" cellpadding="4" width="100%">
@@ -115,6 +127,10 @@ Date and time utility routines<p>This unit is quite similar to the unit dateutil
 </tr>
 <tr class="list" valign="top"><td><code>procedure <a class="normal" href="#GetCurrentTime"><b>GetCurrentTime</b></a>(var Hour,Minute,Second,Sec100: integer);</code></td>
 </tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#TryUNIXToDateTimeExt"><b>TryUNIXToDateTimeExt</b></a>(unixtime: big_integer_t; var DateTime: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>; var UTC: boolean): boolean;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#TryFileTimeToDateTimeExt"><b>TryFileTimeToDateTimeExt</b></a>(ftime: <a class="normal" href="dateutil.tfiletime.html">tfiletime</a>; var DateTime: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>; var UTC: boolean): boolean;</code></td>
+</tr>
 </table>
 <h3>Description</h3>
 <table cellspacing="2" cellpadding="4" width="100%">
@@ -191,7 +207,7 @@ Date and time utility routines<p>This unit is quite similar to the unit dateutil
 <tr class="list" valign="top"><td width="100%"><a name="GetCurrentTime"></a><code>procedure <b>GetCurrentTime</b>(var Hour,Minute,Second,Sec100: integer);</code></td>
 </tr>
 </table>
-<p>Returns the current time set in the operating system<p>Ranges of the values returned are Hour 0..23, Minute 0..59, 
+<p>Returns the current time set in the operating system<p>Ranges of the values returned are Hour 0..23, Minute 0..59,
    Second 0..60, Sec100 0..99.</p>
 </p>
 <table cellspacing="2" cellpadding="4" width="100%">
@@ -362,6 +378,11 @@ Date and time utility routines<p>This unit is quite similar to the unit dateutil
 <p><p>Returns a TDateTime value for a specified Hour, Min, Sec, and MSec.</p>
 </p>
 <table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="TryFileTimeToDateTimeExt"></a><code>function <b>TryFileTimeToDateTimeExt</b>(ftime: <a class="normal" href="dateutil.tfiletime.html">tfiletime</a>; var DateTime: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>; var UTC: boolean): boolean;</code></td>
+</tr>
+</table>
+<p>&nbsp;</p>
+<table cellspacing="2" cellpadding="4" width="100%">
 <tr class="list" valign="top"><td width="100%"><a name="TryStrToDate"></a><code>function <b>TryStrToDate</b>(const S: string; var Value: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>): Boolean;</code></td>
 </tr>
 </table>
@@ -418,6 +439,11 @@ Date and time utility routines<p>This unit is quite similar to the unit dateutil
     truncated and is equal to zero upon return.</p>
 </p>
 <table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="TryUNIXToDateTimeExt"></a><code>function <b>TryUNIXToDateTimeExt</b>(unixtime: big_integer_t; var DateTime: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>; var UTC: boolean): boolean;</code></td>
+</tr>
+</table>
+<p>&nbsp;</p>
+<table cellspacing="2" cellpadding="4" width="100%">
 <tr class="list" valign="top"><td width="100%"><a name="YearOf"></a><code>function <b>YearOf</b>(const AValue: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>): Word;</code></td>
 </tr>
 </table>
@@ -460,5 +486,5 @@ Date and time utility routines<p>This unit is quite similar to the unit dateutil
 </tr>
 </table><a name="@Variables"></a><h2>Author</h2>
 <p>Carl Eric Codere</p>
-<hr noshade="1" size="1"/><em>Generated by <a class="normal" target="_new" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8.3</a> on 2004-11-22 22:11:40</em>
+<hr noshade="1" size="1"/><em>Generated by <a class="normal" target="_new" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8.3</a> on 2005-01-08 16:01:02</em>
 </body></html>
