@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: locale.pas,v 1.4 2004-06-20 18:49:39 carl Exp $
+    $Id: locale.pas,v 1.5 2004-07-05 02:26:39 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Localization and date/time unit
@@ -37,8 +37,7 @@ uses
   fpautils,
   gpautils,
   tpautils;
-
-
+  
 {** Returns the preferred date string as recommended
     by ISO 8601 (Gregorian Calendar). 
     
@@ -235,7 +234,7 @@ var
 begin
   Datenum:=(Epoch div 86400) + c1970;
   JulianToGregorian(DateNum,Year,Month,day);
-  Epoch:=Abs(Epoch mod 86400);
+  Epoch:=longword(Abs(Epoch mod 86400));
   Hour:=Epoch div 3600;
   Epoch:=Epoch mod 3600;
   Minute:=Epoch div 60;
@@ -548,7 +547,9 @@ function GetCharEncoding(alias: string; var _name: string): integer;
     Search: boolean;
     Index: integer;
     char_sets: pcharsets;
+{$ifdef tp}    
     p: pchar;
+{$endif}    
   begin
     _name:='';
     alias:=upstring(alias);
@@ -616,6 +617,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.4  2004/06/20 18:49:39  carl
+    + added  GPC support
+
   Revision 1.3  2004/06/17 11:46:25  carl
     + GetCharEncoding
 
