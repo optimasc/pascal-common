@@ -514,10 +514,14 @@ Begin
   testutfnull;
   testremovenulls;
   testucs4strtrim;
+  WriteLn(ErrOutput,'Std Error OUTPUT');
 end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.15  2004/11/18 04:23:09  carl
+    * more routine testing
+
   Revision 1.14  2004/11/02 12:16:18  carl
     * More testing for dateutil unit
 

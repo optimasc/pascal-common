@@ -11,6 +11,10 @@ uses
 {$IFDEF VPASCAL}
  use32,
 {$ENDIF}
+ fpautils,
+ dpautils,
+ vpautils,
+ tpautils,
  dateutil;
 
 
@@ -497,7 +501,14 @@ end;
 
 
 procedure test_unit;
+var
+ Year,Month,Day,DayOfWeek: integer;
+ Hour,Minute,Second,Sec100: integer;
 begin
+  GetCurrentDate(Year,Month,Day,DayOfWeek);
+  WriteLn(Year,'-',Month,'-',Day,' ',DayOfWeek);
+  GetCurrentTime(Hour,Minute,Second,Sec100);
+  WriteLn(Hour,':',Minute,':',Second,' ',Sec100);
   test_date;
   test_tryencode;
   test_validate;
@@ -537,6 +548,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.2  2004/11/02 12:16:16  carl
+    * More testing for dateutil unit
+
   Revision 1.1  2004/09/29 00:56:53  carl
     + update to include dateutil testing
 
