@@ -1,6 +1,14 @@
 ifndef VERSION
 VERSION=0.0
 endif
+## Target compilers
+#USETPC=1
+USEFPC2=1
+USEVPC=1
+USEFPC=1
+#USEGPC=1
+USEDELPHI=1
+
 
 #######################################################################
 # USER CONFIGURATION : These should be configured manually 
