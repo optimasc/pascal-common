@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: utils.pas,v 1.16 2004-11-23 03:45:25 carl Exp $
+    $Id: utils.pas,v 1.17 2004-11-29 03:45:55 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Common utilities
@@ -77,10 +77,18 @@ CONST
   {** @abstract(Change the endian of a 16-bit value) }
   Procedure SwapWord(var x : word);
 
-  {** @abstract(Convert a string to uppercase ASCII) }
+  {** @abstract(Convert a string to uppercase ASCII) 
+   
+      Converts a string containing ASCII characters
+      to a string in upper case ASCII characters. 
+  }
   function UpString(s : string): string;
 
-  {** @abstract(Convert a string to lowercase ASCII) }
+  {** @abstract(Convert a string to lowercase ASCII) 
+  
+      Converts a string containing ASCII characters
+      to a string in lower case ASCII characters.
+  }
   function LowString(s : string): string;
 
 
@@ -241,7 +249,8 @@ uses dos;
      i : integer;
     Begin
       for I:=1 to length(s) do
-        s[i] := Upcase(s[i]);
+        if s[i] in ['a'..'z'] then
+          s[i]:=chr(ord(s[i])-ord(#$20));
       UpString := s;
     End;
 
@@ -873,6 +882,9 @@ end;
 end.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.16  2004/11/23 03:45:25  carl
+    + ErrOutput standard error stream support
+
   Revision 1.15  2004/11/21 19:54:26  carl
     * 10-25% speed optimizations (change some parameter types to const, code folding)
 
