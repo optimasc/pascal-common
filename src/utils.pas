@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: utils.pas,v 1.2 2004-05-13 23:03:40 carl Exp $
+    $Id: utils.pas,v 1.3 2004-06-17 11:46:54 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Common utilities
@@ -91,6 +91,9 @@ CONST
       To avoid left padding with spaces, set @code(cnt) to zero.
   }      
   function boolstr(val: boolean; cnt: byte): string; 
+  
+  function CompareByte(buf1,buf2: pchar;len:longint):integer;
+   
    
   
   {** 
@@ -230,6 +233,7 @@ Const WhiteSpace = [' ',#10,#13,#9];
      Position := Pos('%d',s);
      if Position <> 0 then
        Begin
+         l:=0;
          { separate the strings before the specifier and }
          { after the specifier.                          }
          LeftStr := Copy(s, 1, Position-1);
@@ -312,6 +316,7 @@ Const WhiteSpace = [' ',#10,#13,#9];
       Else
       if Pos('%bh',s) <> 0 then
        Begin
+         l:=0;
          Position := Pos('%bh',s);
          { separate the strings before the specifier and }
          { after the specifier.                          }
@@ -326,6 +331,7 @@ Const WhiteSpace = [' ',#10,#13,#9];
       Else
       if Pos('%bl',s) <> 0 then
        Begin
+         l:=0;
          Position := Pos('%bl',s);
          { separate the strings before the specifier and }
          { after the specifier.                          }
@@ -722,11 +728,41 @@ begin
  uppercase:=s; 
 end;
 
+function CompareByte(buf1,buf2: pchar;len:longint):integer;
+type
+  bytearray    = array [0..high(word)-1] of byte;
+var
+  I : longint;
+begin
+  I:=0;
+  if (Len<>0) and (Buf1<>Buf2) then
+   begin
+     while (Buf1[I]=Buf2[I]) and (I<Len) do
+      inc(I);
+     if I=Len then  {No difference}
+      I:=0
+     else
+      begin
+        I:=ord(Buf1[I])-ord(Buf2[I]);
+        if I>0 then
+         I:=1
+        else
+         if I<0 then
+          I:=-1;
+      end;
+   end;
+  CompareByte:=I;
+end;
+
 
 
 end.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.2  2004/05/13 23:03:40  carl
+    + added decstr()
+    + added boolstr()
+
   Revision 1.1  2004/05/05 16:28:23  carl
     Release 0.95 updates
 
