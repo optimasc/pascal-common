@@ -416,6 +416,7 @@ uses dpautils,
     p:=UTF8StrNew(pucs4char(@utf32null));
     if strcomp(p,'Hello') <> 0 then
       RunError(255);
+    utf8strdispose(p);  
     putf:=ucs4Strnew(strnull,'CP850');
     if assigned(putf) then
        RunError(255);
@@ -540,6 +541,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.13  2004/10/13 23:40:52  carl
+    + added sgml unit testing
+
   Revision 1.12  2004/09/29 00:56:54  carl
     + update to include dateutil testing
 

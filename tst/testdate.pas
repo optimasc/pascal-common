@@ -164,6 +164,7 @@ begin
    RunError(255);
  if Second<>ASecond then
    RunError(255);
+
 end;
 
 procedure test_validate;
@@ -250,7 +251,8 @@ var
  Hour,Minute,Second,MSecond: word;
  AValue: TDatetime;
 begin
-  { Check all TryStrXXX routines }
+ {*********************** ISO 8601 compatible *************************}
+  { Check all TryStrXXX ISO 8601 routines }
   {**************************************************}
   if TryStrToDate('0001-01-01',AValue) = false then
     RunError(255);
@@ -313,7 +315,186 @@ begin
     RunError(255);
   if (Year<>1500) or (Month<>06) or (Day<>05) then
     RunError(255);
+  if TryStrToDateTime('1500-06-05',AValue) = false then
+    RunError(255);
+  DecodeDateTime(AValue,Year,Month,Day,Hour,Minute,Second,MSecond);
+  if (Year<>1500) or (Month<>06) or (Day<>05) then
+    RunError(255);
+  if (Hour<>0) or (Minute<>0) or (Second<>0) then
+    RunError(255);
+  if TryStrToDateTime('1400',AValue) = false then
+    RunError(255);
+  DecodeDateTime(AValue,Year,Month,Day,Hour,Minute,Second,MSecond);
+  if (Year<>1400) or (Month<>01) or (Day<>01) then
+    RunError(255);
+  if (Hour<>0) or (Minute<>0) or (Second<>0) then
+    RunError(255);
+ {*********************** NON ISO 8601 compatible *************************}
+ { Format: YYYY-MM-DD HH:mm:ss TZ                                          }
+  if TryStrToDateTime('2000-01-01  23:45:45  UT',AValue) = false then
+    RunError(255);
+  DecodeDateTime(AValue,Year,Month,Day,Hour,Minute,Second,MSecond);
+  if (Hour<>23) or (Minute<>45) or (Second<>45) then
+    RunError(255);
+  if (Year<>2000) or (Month<>01) or (Day<>01) then
+    RunError(255);
+  if TryStrToTime('  23:45:45  UT',AValue) = false then
+    RunError(255);
+  DecodeDateTime(AValue,Year,Month,Day,Hour,Minute,Second,MSecond);
+  if (Hour<>23) or (Minute<>45) or (Second<>45) then
+    RunError(255);
+ { Format: YYYYMMDD;HHmmssuu (Openoffice)                              }
+  if TryStrToDateTime(' 20000101;23454588  ',AValue) = false then
+    RunError(255);
+  DecodeDateTime(AValue,Year,Month,Day,Hour,Minute,Second,MSecond);
+  if (Hour<>23) or (Minute<>45) or (Second<>45) then
+    RunError(255);
+  if (Year<>2000) or (Month<>01) or (Day<>01) then
+    RunError(255);
+  if TryStrToTime('  23454599',AValue) = false then
+    RunError(255);
+  DecodeDateTime(AValue,Year,Month,Day,Hour,Minute,Second,MSecond);
+  if (Hour<>23) or (Minute<>45) or (Second<>45) then
+    RunError(255);
+ { Format:D:YYYYMMDDHHmmssOhh'mm' (Adobe PDF)                               }
+  if TryStrToDateTime(' D:2004 ',AValue) = false then
+    RunError(255);
+  DecodeDateTime(AValue,Year,Month,Day,Hour,Minute,Second,MSecond);
+  if (Hour<>0) or (Minute<>00) or (Second<>00) then
+    RunError(255);
+  if (Year<>2004) or (Month<>01) or (Day<>01) then
+    RunError(255);
+  {***}
+  if TryStrToDateTime(' D:20040912235959 ',AValue) = false then
+    RunError(255);
+  DecodeDateTime(AValue,Year,Month,Day,Hour,Minute,Second,MSecond);
+  if (Hour<>23) or (Minute<>59) or (Second<>59) then
+    RunError(255);
+  if (Year<>2004) or (Month<>09) or (Day<>12) then
+    RunError(255);
+  if TryStrToDateTime(' D:20040912235959Z',AValue) = false then
+    RunError(255);
+  DecodeDateTime(AValue,Year,Month,Day,Hour,Minute,Second,MSecond);
+  if (Hour<>23) or (Minute<>59) or (Second<>59) then
+    RunError(255);
+  if (Year<>2004) or (Month<>09) or (Day<>12) then
+    RunError(255);
+  if TryStrToDateTime(' D:20040912235959-05''30''',AValue) = false then
+    RunError(255);
+  DecodeDateTime(AValue,Year,Month,Day,Hour,Minute,Second,MSecond);
+  if (Hour<>18) or (Minute<>29) or (Second<>59) then
+    RunError(255);
+  if (Year<>2004) or (Month<>09) or (Day<>12) then
+    RunError(255);
 end;
+
+{ Same as above, except timezone is also indicated }
+procedure test_encodeext;
+var
+ Year,Month,Day: word;
+ Hour,Minute,Second,MSecond: word;
+ AValue: TDatetime;
+ UTC: boolean;
+begin
+ {*********************** ISO 8601 compatible *************************}
+  {**************************************************}
+  if TryStrToDateTimeExt('1500-06-05T12:59:01+01:00',AValue,utc) = false then
+    RunError(255);
+  DecodeDateTime(AValue,Year,Month,Day,Hour,Minute,Second,MSecond);
+  if (Hour<>13) or (Minute<>59) or (Second<>01) then
+    RunError(255);
+  if (Year<>1500) or (Month<>06) or (Day<>05) then
+    RunError(255);
+  if not UTC then
+    RunError(255);
+  if TryStrToDateTimeExt('1979-06-05T12:59:01Z',AValue,utc) = false then
+    RunError(255);
+  DecodeDateTime(AValue,Year,Month,Day,Hour,Minute,Second,MSecond);
+  if (Hour<>12) or (Minute<>59) or (Second<>01) then
+    RunError(255);
+  if (Year<>1979) or (Month<>06) or (Day<>05) then
+    RunError(255);
+  if not UTC then
+    RunError(255);
+  if TryStrToDateTimeExt('1500-06-05',AValue,UTC) = false then
+    RunError(255);
+  if UTC then
+     RunError(255);
+  DecodeDateTime(AValue,Year,Month,Day,Hour,Minute,Second,MSecond);
+  if (Year<>1500) or (Month<>06) or (Day<>05) then
+    RunError(255);
+  if (Hour<>0) or (Minute<>0) or (Second<>0) then
+    RunError(255);
+  if TryStrToDateTime('1400',AValue) = false then
+    RunError(255);
+  DecodeDateTime(AValue,Year,Month,Day,Hour,Minute,Second,MSecond);
+  if (Year<>1400) or (Month<>01) or (Day<>01) then
+    RunError(255);
+  if (Hour<>0) or (Minute<>0) or (Second<>0) then
+    RunError(255);
+  if UTC then
+    RunError(255);
+ {*********************** NON ISO 8601 compatible *************************}
+ { Format: YYYY-MM-DD HH:mm:ss TZ                                          }
+  if TryStrToDateTimeExt('2000-01-01  23:45:45  UT',AValue,UTC) = false then
+    RunError(255);
+  DecodeDateTime(AValue,Year,Month,Day,Hour,Minute,Second,MSecond);
+  if (Hour<>23) or (Minute<>45) or (Second<>45) then
+    RunError(255);
+  if (Year<>2000) or (Month<>01) or (Day<>01) then
+    RunError(255);
+  if not UTC then
+    RunError(255);
+ { Format: YYYYMMDD;HHmmssuu (Openoffice)                              }
+  if TryStrToDateTimeExt(' 20000101;23454588  ',AValue,UTC) = false then
+    RunError(255);
+  DecodeDateTime(AValue,Year,Month,Day,Hour,Minute,Second,MSecond);
+  if (Hour<>23) or (Minute<>45) or (Second<>45) then
+    RunError(255);
+  if (Year<>2000) or (Month<>01) or (Day<>01) then
+    RunError(255);
+  if UTC then
+    RunError(255);
+ { Format:D:YYYYMMDDHHmmssOhh'mm' (Adobe PDF)                               }
+  if TryStrToDateTimeExt(' D:2004 ',AValue,UTC) = false then
+    RunError(255);
+  DecodeDateTime(AValue,Year,Month,Day,Hour,Minute,Second,MSecond);
+  if (Hour<>0) or (Minute<>00) or (Second<>00) then
+    RunError(255);
+  if (Year<>2004) or (Month<>01) or (Day<>01) then
+    RunError(255);
+  if UTC then
+    RunError(255);
+  {***}
+  if TryStrToDateTimeExt(' D:20040912235959 ',AValue,UTC) = false then
+    RunError(255);
+  DecodeDateTime(AValue,Year,Month,Day,Hour,Minute,Second,MSecond);
+  if (Hour<>23) or (Minute<>59) or (Second<>59) then
+    RunError(255);
+  if (Year<>2004) or (Month<>09) or (Day<>12) then
+    RunError(255);
+  if UTC then
+    Runerror(255);
+  if TryStrToDateTimeExt(' D:20040912235959Z',AValue,UTC) = false then
+    RunError(255);
+  DecodeDateTime(AValue,Year,Month,Day,Hour,Minute,Second,MSecond);
+  if (Hour<>23) or (Minute<>59) or (Second<>59) then
+    RunError(255);
+  if (Year<>2004) or (Month<>09) or (Day<>12) then
+    RunError(255);
+  if not UTC then
+    RunError(255);
+  if TryStrToDateTimeExt(' D:20040912235959-05''30''',AValue,UTC) = false then
+    RunError(255);
+  DecodeDateTime(AValue,Year,Month,Day,Hour,Minute,Second,MSecond);
+  if (Hour<>18) or (Minute<>29) or (Second<>59) then
+    RunError(255);
+  if (Year<>2004) or (Month<>09) or (Day<>12) then
+    RunError(255);
+  if not UTC then
+    RunError(255);
+end;
+
 
 procedure test_unit;
 begin
@@ -322,10 +503,41 @@ begin
   test_validate;
   test_same;
   test_encode;
+  test_encodeext;
 end;
+
+{
+var
+ s: string;
+Begin
+  s:=AdobeDateToISODate('D:2004');
+  WriteLn(s);
+  s:=AdobeDateToISODate('D:200401');
+  WriteLn(s);
+  s:=AdobeDateToIsoDate('D:20040304');
+  WriteLn(s);
+  s:=AdobeDateToIsoDate('D:2004030423');
+  WriteLn(s);
+  s:=AdobeDateToIsoDate('D:200403042359');
+  WriteLn(s);
+  s:=AdobeDateToIsoDate('D:20040304235900');
+  WriteLn(s);
+  s:=AdobeDateToIsoDate('D:20040304235900Z');
+  WriteLn(s);
+  s:=AdobeDateToIsoDate('D:20040304235900+00');
+  WriteLn(s);
+  s:=AdobeDateToIsoDate('D:20040304235900-02');
+  WriteLn(s);
+  s:=AdobeDateToIsoDate('D:20040304235900+00''12''');
+  WriteLn(s);
+end.
+}
 
 end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.1  2004/09/29 00:56:53  carl
+    + update to include dateutil testing
+
 }
