@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: dpautils.pas,v 1.3 2004-12-08 04:25:50 carl Exp $
+    $Id: dpautils.pas,v 1.4 2004-12-26 23:32:59 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Routines for Delphi 6/7 (Win32 target) compatibility
@@ -47,12 +47,21 @@ uses SysUtils;
     ptrint = longint;
     
 const
+{$IFDEF WIN32}
  LineEnding : string = #13#10;
  LFNSupport = TRUE;
  DirectorySeparator = '\';
  DriveSeparator = ':';
  PathSeparator = ';';
  FileNameCaseSensitive = FALSE;
+{$ELSE}
+ LineEnding : string = #10;
+ LFNSupport = TRUE;
+ DirectorySeparator = '/';
+ DriveSeparator = '';
+ PathSeparator = ':';
+ FileNameCaseSensitive = TRUE;
+{$ENDIF}
  
  { Symbolic filemode constant }
  fmOpenRead       = Sysutils.fmOpenRead;
@@ -74,6 +83,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.3  2004/12/08 04:25:50  carl
+    + make it compile under kylix
+
   Revision 1.2  2004/08/27 02:11:06  carl
     + added filemodes, as defined in sysutils
 
