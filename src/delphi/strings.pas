@@ -1,5 +1,5 @@
 {
-    $Id: strings.pas,v 1.1 2004-05-05 16:28:26 carl Exp $
+    $Id: strings.pas,v 1.2 2004-06-17 11:40:58 carl Exp $
     This file is part of the Free Pascal run time library.
     Copyright (c) 1999-2000 by Carl-Eric Codere,
     member of the Free Pascal development team.
@@ -318,7 +318,6 @@ Implementation
 
    Str1Length := StrLen(Str1);
    Str2Length := StrLen(Str2);
-   found := true;
    oldindex := 0;
 
    { If the search string is greater than the string to be searched }
@@ -470,7 +469,6 @@ Implementation
    var
     counter : byte;
   Begin
-    counter := 0;
    { if empty pascal string  }
    { then setup and exit now }
    if Source = '' then
@@ -612,4 +610,7 @@ Implementation
 end.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.1  2004/05/05 16:28:26  carl
+    Release 0.95 updates
+
 }
