@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: fileio.pas,v 1.2 2004-11-17 22:12:36 user63 Exp $
+    $Id: fileio.pas,v 1.3 2004-11-18 21:22:55 user63 Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Generic portable file I/O routines with debug support.
@@ -74,10 +74,13 @@ begin
 end;
 
 procedure FileAssign(var F: file; Name: string);
+var
+ status: integer;
 begin
 {$IFDEF DEBUG}
- if FileIOResult <> 0 then
-   RunError(FileIOResult and $ff);
+ status:=FileIOResult;
+ if status <> 0 then
+   RunError(status and $ff);
 {$ENDIF}
   Assign(F,name);
 end;
@@ -88,10 +91,12 @@ var
  FRec: FileRec;
  s: string;
  p: pshortstring;
+ status: integer;
 begin
 {$IFDEF DEBUG}
- if FileIOResult <> 0 then
-   RunError(FileIOResult and $ff);
+ status:=FileIOResult;
+ if status <> 0 then
+   RunError(status and $ff);
 {$ENDIF}
  OldFileMode:=FileMode;
  FileMode:=mode and $ff;
@@ -112,10 +117,12 @@ var
  Frec: FileRec;
  s: string;
  p: pshortstring;
+ status: integer;
 begin
 {$IFDEF DEBUG}
- if FileIOResult <> 0 then
-   RunError(FileIOResult and $ff);
+ status:=FileIOResult;
+ if status <> 0 then
+   RunError(status and $ff);
 {$ENDIF}
 { OldFileMode:=FileMode;
  if (mode and fmOpenReadWrite) <> mode
@@ -137,10 +144,12 @@ var
  Frec: FileRec;
  s: string;
  p: pshortstring;
+ status: integer;
 begin
 {$IFDEF DEBUG}
- if FileIOResult <> 0 then
-   RunError(FileIOResult and $ff);
+ status:=FileIOResult;
+ if status <> 0 then
+   RunError(status and $ff);
 {$ENDIF}
   FRec:=FileRec(F);
   s:=strpas(Frec.name);
@@ -159,10 +168,12 @@ end;
 function FileBlockRead(var F: file; var Buf; Count: integer): integer;
 var
  _result: integer;
+ status: integer;
 begin
 {$IFDEF DEBUG}
- if FileIOResult <> 0 then
-   RunError(FileIOResult and $ff);
+ status:=FileIOResult;
+ if status <> 0 then
+   RunError(status and $ff);
 {$ENDIF}
   BlockRead(F,Buf,count,_result);
   FileBlockRead:=_result;
@@ -172,10 +183,12 @@ end;
 function FileBlockWrite(var F: file; var Buf; Count: integer): integer;
 var
  _result: integer;
+ status: integer;
 begin
 {$IFDEF DEBUG}
- if FileIOResult <> 0 then
-   RunError(FileIOResult and $ff);
+ status:=FileIOResult;
+ if status <> 0 then
+   RunError(status and $ff);
 {$ENDIF}
   BlockWrite(F,Buf,Count,_result);
   FileBlockWrite:=_result;
@@ -183,36 +196,47 @@ begin
 end;
 
 procedure FileSeek(var F: file; N: longint);
+var
+ status: integer;
 begin
 {$IFDEF DEBUG}
- if FileIOResult <> 0 then
-   RunError(FileIOResult and $ff);
+ status:=FileIOResult;
+ if status <> 0 then
+   RunError(status and $ff);
 {$ENDIF}
   Seek(F,N);
   LastIOResult:=IOResult;
 end;
 
 function FileGetSize(var F: file): big_integer_t;
+var
+ status: integer;
 begin
 {$IFDEF DEBUG}
- if FileIOResult <> 0 then
-   RunError(FileIOResult and $ff);
+ status:=FileIOResult;
+ if status <> 0 then
+   RunError(status and $ff);
 {$ENDIF}
   FileGetSize:=FileSize(F);
   LastIOResult:=IOResult;
 end;
 
 function FileGetPos(var F: file): big_integer_t;
+var
+ status: integer;
 begin
 {$IFDEF DEBUG}
- if FileIOResult <> 0 then
-   RunError(FileIOResult and $ff);
+ status:=FileIOResult;
+ if status <> 0 then
+   RunError(status and $ff);
 {$ENDIF}
   FileGetPos:=FilePos(F);
   LastIOResult:=IOResult;
 end;
 
 procedure FileTruncate(var F: file);
+var
+ status: integer;
 begin
 {$IFDEF DEBUG}
  if FileIOResult <> 0 then
@@ -255,6 +279,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.2  2004/11/17 22:12:36  user63
+    * bugfix with memory allocation (big heap leak!)
+
   Revision 1.1  2004/11/17 04:02:15  carl
     + Portable API for reading and writing to and from files.
 
