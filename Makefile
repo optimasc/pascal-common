@@ -30,7 +30,7 @@ FILE:=./src/allunits.pas
 #BINFILES:=
 DOCFILES:=./docs/license.txt ./docs/changes.txt ./docs/copying ./docs/copying.fpc ./docs/readme.txt ./docs/$(PACKAGENAME).pdf ./docs/html
 #LIBFILES
-SRCFILES:=./src/* ./src/delphi/*
+SRCFILES:=./src/*
 #INCFILES:=
 FILESTODOCUMENT:=./src/crc.pas ./src/dpautils.pas ./src/fpautils.pas ./src/locale.pas \
 	./src/tpautils.pas ./src/unicode.pas ./src/utils.pas ./src/vpautils.pas
