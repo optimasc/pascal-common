@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: utils.pas,v 1.6 2004-07-15 01:01:07 carl Exp $
+    $Id: utils.pas,v 1.7 2004-08-01 05:33:49 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Common utilities
@@ -175,12 +175,10 @@ CONST
   function ValHexadecimal(const S:String; var code: integer):longint;
   
   
-  function uppercase(s: string):string;
-
-
   function ChangeFileExt(const FileName, Extension: string): string;
   
 
+function fillwithzero(s: string; newlength: integer): string;
 
 Implementation
 
@@ -761,14 +759,6 @@ Begin
   EscapeToPascal:=hs;
 end;
 
-function uppercase(s: string):string;
-var
- i:integer;
-begin
- for i:=1 to length(s) do
-  s[i]:=upcase(s[i]);
- uppercase:=s; 
-end;
 
 function CompareByte(buf1,buf2: pchar;len:longint):integer;
 var
@@ -799,6 +789,9 @@ end;
 end.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.6  2004/07/15 01:01:07  carl
+    + unsigned decimal conversion
+
   Revision 1.5  2004/07/05 02:25:45  carl
     + fix some compiler option targets
     - remove some compiler warnings
