@@ -1124,7 +1124,8 @@ BEGIN
    else
      Begin
        OldFileMode := FileMode;
-       FileMode := Mode and 3;
+       { Keep sharing modes }
+       FileMode := Mode and $ff;
        System.Reset(FileInfo,1);
        FileMode := OldFileMode;
        { To use the correct mode we must reclose the file 
@@ -2756,6 +2757,9 @@ END;
 END.
 {
    $Log: not supported by cvs2svn $
+   Revision 1.2  2004/07/05 02:25:08  carl
+     + fix some compiler option targets
+
    Revision 1.1  2004/05/05 16:28:25  carl
      Release 0.95 updates
 
