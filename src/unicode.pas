@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: unicode.pas,v 1.28 2005-01-30 20:07:11 carl Exp $
+    $Id: unicode.pas,v 1.29 2005-03-06 20:13:50 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Unicode related routines
@@ -24,19 +24,19 @@
     limited by the compiler and integer type size.
 
     Since all these encoding are variable length,
-    except the UCS-4 (which is equivalent to UTF-32 according to 
-    ISO 10646:2003) and UCS-2 encoding, to parse through characters, 
+    except the UCS-4 (which is equivalent to UTF-32 according to
+    ISO 10646:2003) and UCS-2 encoding, to parse through characters,
     every string should be converted to UCS-4 or UCS-2 before being used.
-    
+
     The principal encoding scheme for this unit is UCS-4.
- 
+
 }
 {$T-}
 {$X+}
 {$Q-}
 
 {$IFNDEF TP}
-{$IFOPT H+}      
+{$IFOPT H+}
 {$DEFINE ANSISTRINGS}
 {$ENDIF}
 {$ENDIF}
@@ -59,7 +59,7 @@ uses
 
 const
   {** Gives the number of characters that can be contained in a string }
-  MAX_STRING_LENGTH = 255;  
+  MAX_STRING_LENGTH = 512;  
 
 type
 
@@ -85,10 +85,11 @@ type
   }
   ucs4string = array[0..MAX_STRING_LENGTH] of ucs4char;
 
-  {** UTF-8 string declaration. Index 0 contains the active length
-      of the string in BYTES
+  {** UTF-8 string declaration. This can either map to 
+      a short string or an ansi string depending on
+      the compilation options.
   }
-  utf8string = shortstring;
+  utf8string = string;
   {** UTF-16 string declaration. Index 0 contains the active length
       of the string in BYTES
   }
@@ -1068,7 +1069,7 @@ const
    i: integer;
    ch: ucs4char;
    bytesToWrite: integer;
-   OutStringLength : byte;
+   OutStringLength : integer;
    OutIndex : integer;
    Currentindex: integer;
    StartIndex: integer;
@@ -1077,7 +1078,6 @@ const
     ConvertUCS4ToUTF8:=UNICODE_ERR_OK;
     OutIndex := 1;
     OutStringLength := 0;
-    utf8_setlength(outstr,0);
     { Check if only one character is passed as src, in that case
       this is not an UTF string, but a simple character (in other
       words, there is not a length byte.
@@ -1086,11 +1086,17 @@ const
       begin
         StartIndex:=0;
         EndIndex:=0;
+        { Put it a safe value, this is present because it can be
+          an AnsiString }
+        utf8_setlength(outstr,sizeof(ucs4char));
       end
     else
       begin
         StartIndex:=1;
         EndIndex:=UCS4_Length(s);
+        { Put it a safe value, this is present because it can be
+          an AnsiString }
+        utf8_setlength(outstr,endindex*sizeof(ucs4char));
       end;
 
     for i:=StartIndex to EndIndex do
@@ -1973,7 +1979,7 @@ end;
 
  function ucs4strpasToASCII(Str: pucs4char): string;
   var
-   counter : byte;
+   counter : integer;
    lstr: string;
    stringarray: pucs4strarray;
  Begin
@@ -1997,7 +2003,7 @@ end;
 
  procedure ucs4strpas(Str: pucs4char; var res:ucs4string);
   var
-   counter : byte;
+   counter : integer;
    lstr: ucs4string;
    stringarray: pucs4strarray;
  Begin
@@ -2479,7 +2485,7 @@ end;
 
  Function UCS4StrPCopy(Dest: Pucs4char; Source: UCS4String):PUCS4Char;
    var
-    counter : byte;
+    counter : integer;
     stringarray: pucs4strarray;
     stringlength: integer;
 
@@ -2622,7 +2628,7 @@ end;
    i: integer;
    ch: ucs4char;
    bytesToWrite: integer;
-   OutStringLength : byte;
+   OutStringLength : integer;
    OutIndex : integer;
    Currentindex: integer;
    StartIndex: integer;
@@ -2632,13 +2638,15 @@ end;
   begin
     OutIndex := 1;
     OutStringLength := 0;
-    utf8_setlength(outstr,0);
     StartIndex:=0;
     ucs4strpastoutf8:='';
     if not assigned(str) then
       exit;
     EndIndex:=ucs4strlen(str)-1;
     inbuf:=pucs4strarray(str);
+    { Assume a greater length than possible, this is here
+      for ansistring support.}
+    utf8_setlength(outstr,(endindex+1)*sizeof(ucs4char));
 
     for i:=StartIndex to EndIndex do
      begin
@@ -2670,13 +2678,13 @@ end;
           ch:=UNI_REPLACEMENT_CHAR;
           bytesToWrite:=2;
         end;
-      Inc(outindex,BytesToWrite);  
-{      if Outindex > High(utf8string) then
+      Inc(outindex,BytesToWrite);
+{      
+      if Outindex > High(utf8string) then
         begin
           convertUCS4ToUTF8:=UNICODE_ERR_LENGTH_EXCEED;
           exit;
         end;}
-        
         CurrentIndex := BytesToWrite;
         if CurrentIndex = 4 then
         begin
@@ -3415,6 +3423,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.28  2005/01/30 20:07:11  carl
+   + routine to convert from UCS-4 to ISO-8859-1
+
   Revision 1.27  2005/01/08 21:37:32  carl
     + added utf8strnewstr
 
