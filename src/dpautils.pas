@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: dpautils.pas,v 1.1 2004-05-05 16:28:18 carl Exp $
+    $Id: dpautils.pas,v 1.2 2004-08-27 02:11:06 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Routines for Delphi 6/7 (Win32 target) compatibility
@@ -34,7 +34,9 @@ Unit dpautils;
 
 interface
 
+
 {$IFDEF DELPHI_COMPILER}
+uses sysutils;
 
 {$IFDEF LINUX}
 Error Unsupported target
@@ -54,6 +56,15 @@ const
  DriveSeparator = ':';
  PathSeparator = ';';
  FileNameCaseSensitive = FALSE;
+ 
+ { Symbolic filemode constant }
+ fmOpenRead       = Sysutils.fmOpenRead;
+ fmOpenWrite      = Sysutils.fmOpenWrite;
+ fmOpenReadWrite  = Sysutils.fmOpenReadWrite;
+
+ fmShareExclusive = Sysutils.fmShareExclusive;
+ fmShareDenyWrite = Sysutils.fmShareDenyWrite;
+ fmShareDenyNone  = Sysutils.fmShareDenyNone;
     
 
 {$ENDIF DELPHI_COMPILER}    
@@ -66,5 +77,8 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.1  2004/05/05 16:28:18  carl
+    Release 0.95 updates
+
 
 }

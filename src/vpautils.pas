@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: vpautils.pas,v 1.2 2004-08-19 00:18:21 carl Exp $
+    $Id: vpautils.pas,v 1.3 2004-08-27 02:11:08 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Virtual pascal 2.1 or higher compatibility unit (Win32 or OS/2 targets)
@@ -47,6 +47,28 @@ const
  PathSeparator = ';';
  FileNameCaseSensitive = FALSE;
  
+
+ { Filemode symbolic constants }
+ const
+{$IFDEF WIN32} 
+    fmOpenRead       = $0000;
+    fmOpenWrite      = $0001;
+    fmOpenReadWrite  = $0002;
+
+    fmShareExclusive = $0010;
+    fmShareDenyWrite = $0020;
+    fmShareDenyNone  = $0040;
+{$ENDIF}    
+{$IFDEF OS2} 
+    fmOpenRead       = $0000;
+    fmOpenWrite      = $0001;
+    fmOpenReadWrite  = $0002;
+
+    fmShareExclusive = $0010;
+    fmShareDenyWrite = $0020;
+    fmShareDenyNone  = $0040;
+{$ENDIF}    
+ 
   procedure Assert(b: boolean);
 
     
@@ -65,6 +87,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.2  2004/08/19 00:18:21  carl
+    + assert routine
+
   Revision 1.1  2004/05/05 16:28:23  carl
     Release 0.95 updates
 

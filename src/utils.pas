@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: utils.pas,v 1.9 2004-08-20 04:08:01 carl Exp $
+    $Id: utils.pas,v 1.10 2004-08-27 02:11:07 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Common utilities
@@ -44,10 +44,6 @@ TYPE
 
 
 CONST
-  { Filemode constant defines }
-  READ_MODE = 0;
-  WRITE_MODE = 1;
-  READ_WRITE_MODE = 2;
 
   { Possible error codes returned to DOS by program }
   EXIT_DOSERROR = 2;
@@ -285,7 +281,7 @@ Const WhiteSpace = [' ',#10,#13,#9];
          LeftStr := Copy(s, 1, Position-1);
          RightStr := Copy(s, Position+2, Length(s));
          { the string removes all null characters }
-         LeftStr := LeftStr + RemoveUpToNull(string(Buf)) + RightStr;
+         LeftStr := LeftStr + RemoveUpToNull(Shortstring(Buf)) + RightStr;
        end
      Else
      { string value with length }
@@ -304,7 +300,7 @@ Const WhiteSpace = [' ',#10,#13,#9];
                { correct numeric value ? }
                if b in [0..9] then
                   Begin
-                     OutStr := Copy(String(Buf),1,b);
+                     OutStr := Copy(ShortString(Buf),1,b);
                      { remove up to null character }
                      OutStr := RemoveUpToNull(OutStr);
                   End
@@ -327,7 +323,7 @@ Const WhiteSpace = [' ',#10,#13,#9];
                   if Code = 0 then
                      Begin
                         { correct numeric value ? }
-                        OutStr := Copy(String(Buf),1,b);
+                        OutStr := Copy(ShortString(Buf),1,b);
                         { remove up to null character }
                         OutStr := RemoveUpToNull(OutStr);
                      End
@@ -388,7 +384,7 @@ Const WhiteSpace = [' ',#10,#13,#9];
        { Bug, would not detect read only files }
        { therefore try in read only mode       }
        OldMode := FileMode;
-       FileMode := READ_MODE;
+       FileMode := fmOpenRead or fmShareDenyWrite;;
        Assign(F,FName);
        Reset(F,1);
        FileMode := OldMode;
@@ -821,6 +817,9 @@ end;
 end.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.9  2004/08/20 04:08:01  carl
+    * range check error bugfixes in EscapeToPascal
+
   Revision 1.8  2004/08/19 00:25:10  carl
     + removenull routine
 
