@@ -1331,6 +1331,8 @@ CONSTRUCTOR TBufStream.Init (FileName: FNameStr; Mode, Size: Word);
 BEGIN
    Inherited Init(FileName, Mode);                    { Call ancestor }
    BufSize := Size;                                   { Hold buffer size }
+   BufPtr:=0;
+   BufEnd:=0;
    If (Size<>0) Then GetMem(Buffer, Size);            { Allocate buffer }
    If (Buffer=Nil) Then Error(stInitError, 0);        { Buffer allocate fail }
 END;
@@ -2746,6 +2748,9 @@ END;
 END.
 {
    $Log: not supported by cvs2svn $
+   Revision 1.6  2004/12/09 00:51:12  carl
+     * start fixing for kylix compilation
+
    Revision 1.5  2004/11/17 04:02:36  carl
      * Now based on fileio routines
 
