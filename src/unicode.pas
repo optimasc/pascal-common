@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: unicode.pas,v 1.11 2004-08-19 00:17:12 carl Exp $
+    $Id: unicode.pas,v 1.12 2004-08-19 01:07:38 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Unicode related routines
@@ -1716,29 +1716,28 @@ end;
      Inc(counter);
    ucs4strlen := counter;
  end;
- 
+
  function ucs4strpasToISO8859_1(Str: pucs4char): string;
   var
-   counter : byte;
+   i: integer;
    lstr: string;
    stringarray: pucs4strarray;
  Begin
-   counter := 0;
    ucs4strpasToISO8859_1:='';
    if not assigned(str) then exit;
    stringarray := pointer(str);
    setlength(lstr,0);
-   while ((stringarray^[counter]) <> 0) and (counter < high(ucs4string)) do
-   begin
-     Inc(counter);
-     if Stringarray^[counter-1] <= 255 then
-        lstr := lstr + chr(Stringarray^[counter-1])
-     else
-        lstr := lstr + '\u'+hexstr(Stringarray^[counter-1],8);
-   end;
+   for i:=1 to ucs4strlen(str) do
+     begin
+       if i >= high(ucs4string) then break;
+       if Stringarray^[i-1] <= 255 then
+          lstr := lstr + chr(Stringarray^[i-1])
+       else
+          lstr := lstr + '\u'+hexstr(Stringarray^[i-1],8);
+     end;
    ucs4strpasToISO8859_1:= lstr;
  end;
- 
+
  function ucs4strpasToASCII(Str: pucs4char): string;
   var
    counter : byte;
@@ -2599,6 +2598,11 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.11  2004/08/19 00:17:12  carl
+    + renamed all basic types to use the UCS-4 type name instead.
+    + Unicode case conversion of characters
+    * several bugfixes in memory allocation with strings containing null characters
+
   Revision 1.10  2004/08/01 05:33:02  carl
     + more UTF-8 encoding routines
     * small bugfix in certain occasions with UCS-4 conversion
