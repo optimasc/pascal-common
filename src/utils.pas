@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: utils.pas,v 1.17 2004-11-29 03:45:55 carl Exp $
+    $Id: utils.pas,v 1.18 2005-01-06 03:20:51 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Common utilities
@@ -661,7 +661,8 @@ end;
 Function ValDecimal(const S:String; var code: integer):longint;
 { Converts a decimal string to longint }
 var
-  vs,c : longint;
+  vs: big_integer_t;
+  c: longint;
 Begin
   vs:=0;
   code := 0;
@@ -677,7 +678,7 @@ Begin
         exit;
       end;
    end;
-  ValDecimal:=vs;
+  ValDecimal:=longint(vs);
 end;
 
 Function ValOctal(const S:String;var code: integer):longint;
@@ -882,6 +883,9 @@ end;
 end.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.17  2004/11/29 03:45:55  carl
+    + speed optimization of upcase (no longer calls system unit routine)
+
   Revision 1.16  2004/11/23 03:45:25  carl
     + ErrOutput standard error stream support
 
