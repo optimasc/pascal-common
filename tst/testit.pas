@@ -19,7 +19,8 @@ uses dpautils,
      dos,
      strings,
      iso639,
-     utils
+     utils,
+     testdate
      ;
 
   var
@@ -519,6 +520,7 @@ Begin
   s:=DirectorySeparator;
   s:=PathSeparator;
   b:=FileNameCaseSensitive;
+  testdate.test_unit;
   testreadutf8;
   testreadutf16le;
   testreadcp850;
@@ -536,6 +538,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.11  2004/09/06 20:35:17  carl
+    + new test files
+
   Revision 1.10  2004/08/27 02:09:49  carl
     + more unicode testing
 

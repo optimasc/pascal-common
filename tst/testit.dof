@@ -100,7 +100,7 @@ Conditionals=ENDIAN_LITTLE DEBUG
 DebugSourceDirs=U:\users\data\carl\source\describe\src\win32\activex-control
 UsePackages=0
 [Parameters]
-RunParams=
+RunParams=Z:\
 HostApplication=
 Launcher=
 UseLauncher=0
