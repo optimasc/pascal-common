@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: unicode.pas,v 1.16 2004-09-06 20:35:33 carl Exp $
+    $Id: unicode.pas,v 1.17 2004-09-16 02:32:58 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Unicode related routines
@@ -301,9 +301,10 @@ type
 
       This routine converts an UCS-2 encoded null terminared string to an UCS-4 
       null terminated string that is stored in native byte order, up to
-      length conversion.
+      length conversion. The destination buffer should already have been
+      allocated.
 
-      @returns(nil if there was no error in the conversion)
+      @returns(nil if there was an error in the conversion)
   }
   function ucs2strlcopyucs4(src: pucs2char; dst: pucs4char; maxlen: integer): pucs4char;
   
@@ -2709,6 +2710,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.16  2004/09/06 20:35:33  carl
+    * utf8string is now a shortstring
+
   Revision 1.15  2004/09/06 19:50:01  carl
     + Updated documentation
 
