@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: ietf.pas,v 1.4 2004-11-09 03:53:27 carl Exp $
+    $Id: ietf.pas,v 1.5 2004-11-21 19:52:57 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Unicode related routines
@@ -35,7 +35,7 @@ uses
 {----------------- MIME related routines ----------------}
 
 
-function mime_isvalidcontenttype(s: shortstring): boolean;
+function mime_isvalidcontenttype(const s: shortstring): boolean;
 
 {------- RFC 1766 (language tags) related routines --------}
 
@@ -125,7 +125,7 @@ const
  );
 
 
-function mime_isvalidcontenttype(s: shortstring): boolean;
+function mime_isvalidcontenttype(const s: shortstring): boolean;
 var
  idx: integer;
  typestr: string;
@@ -271,7 +271,6 @@ const
   PRIMARY_TAG_PRIVATE = 'x';
   PRIMARY_TAG_RESERVED= 'i';
 var
- status: boolean;
  index: integer;
  i: integer;
 begin
@@ -330,6 +329,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.4  2004/11/09 03:53:27  carl
+   + IETF RFC 1766 language code parsing routines
+
   Revision 1.3  2004/06/20 18:49:38  carl
     + added  GPC support
 
