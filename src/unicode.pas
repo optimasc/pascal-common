@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: unicode.pas,v 1.6 2004-07-01 22:27:15 carl Exp $
+    $Id: unicode.pas,v 1.7 2004-07-05 02:27:32 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Unicode related routines
@@ -208,13 +208,27 @@ const
                            UCS-2 string handling
 -----------------------------------------------------------------------------}
 
-
   {** @abstract(Returns the current length of an UCS-2 string) }
   function ucs2_length(s: array of ucs2char): integer;
   
   {** @abstract(Set the new dynamic length of an ucs-2 string) }
   procedure ucs2_setlength(var s: array of ucs2char; l: integer);
+  
+{---------------------------------------------------------------------------
+                  UTF-8 null terminated string handling
+-----------------------------------------------------------------------------}
 
+  {** @abstract(Converts an UTF-32 null terminated string to an UTF-8 null 
+   terminated string) 
+   
+   The memory for the buffer is allocated. Use strlen to dispose of the
+   allocated string. The string is null terminated.
+  }
+  function UTF8StrNew(src: putf32char): pchar;
+  
+  
+  
+  
 
 {---------------------------------------------------------------------------
                           Other  string handling
@@ -722,6 +736,11 @@ const
  (
    #$00, #$00, #$C0, #$E0, #$F0, #$F8, #$FC
  );
+ 
+  const
+    byteMask: utf32 = $BF;
+    byteMark: utf32 = $80;
+ 
    
 
   function convertUTF32toUTF8(s: array of utf32; var outstr: utf8string): integer;
@@ -734,9 +753,6 @@ const
    Currentindex: integer;
    StartIndex: integer;
    EndIndex: integer;
-  const
-    byteMask: utf32 = $BF;
-    byteMark: utf32 = $80;
   begin
     ConvertUTF32ToUTF8:=UNICODE_ERR_OK;
     OutIndex := 1;
@@ -1248,7 +1264,7 @@ end;
 
   procedure utf32_concat(var resultstr: utf32string;s1: utf32string; s2: array of utf32);
   var
-    s1l, s2l : byte;
+    s1l, s2l : integer;
     idx: integer;
   begin
     { if only one character must be moved }
@@ -1471,6 +1487,8 @@ end;
    stringarray: pstrarray;
  Begin
    counter := 0;
+   utf32strpasToISO8859_1:='';
+   if not assigned(str) then exit;
    stringarray := pointer(str);
    setlength(lstr,0);
    while ((stringarray^[counter]) <> 0) and (counter < high(utf32string)) do
@@ -1491,7 +1509,9 @@ end;
  Begin
    counter := 0;
    stringarray := pointer(str);
+   utf32_setlength(res,0);
    utf32_setlength(lstr,0);
+   if not assigned(str) then exit;
    while ((stringarray^[counter]) <> 0) and (counter < high(utf32string)) do
    begin
      Inc(counter);
@@ -1507,6 +1527,9 @@ end;
     stringarray: pstrarray;
   Begin
    stringarray:=pointer(Dest);
+   UTF32StrPCopy := nil;
+   if not assigned(Dest) then
+     exit;
    { if empty pascal string  }
    { then setup and exit now }
    if utf32_length(Source) = 0 then
@@ -1520,7 +1543,7 @@ end;
      StringArray^[counter-1] := Source[counter];
    end;
    { terminate the string }
-   StringArray^[counter] := 0;
+   StringArray^[utf32_length(Source)] := 0;
    UTF32StrPCopy:=Dest;
  end;
 
@@ -1530,6 +1553,9 @@ end;
     stringarray: pstrarray;
   Begin
    stringarray:=pointer(Dest);
+   UTF32StrPCopyASCII := nil;
+   if not assigned(Dest) then
+     exit;
    { if empty pascal string  }
    { then setup and exit now }
    if length(Source) = 0 then
@@ -1543,11 +1569,108 @@ end;
      StringArray^[counter-1] := ord(Source[counter]);
    end;
    { terminate the string }
-   StringArray^[counter] := 0;
+   StringArray^[length(Source)] := 0;
    UTF32StrPCopyASCII:=Dest;
  end;
 
 
+  function UTF8StrNew(src: putf32char): pchar;
+  var
+   utf32stringlen: integer;
+   p: pchar;
+   ch: utf32;
+   OutIndex,BytesToWrite,OutStringLength,StartIndex: integer;
+   CurrentIndex, EndIndex: integer;
+   i: integer;
+   instr: pstrarray;
+  begin
+    utf32stringlen:=utf32strlen(src);
+    instr:=pointer(src);
+    { allocate at least the space taken up by the
+      strlen*4 - because each character can take up to 4 bytes.
+    }  
+    GetMem(p,utf32stringlen*sizeof(utf32));
+    fillchar(p^,utf32stringlen*sizeof(utf32),#0);
+    OutIndex := 0;
+    bytestoWrite:=0; 
+    OutStringLength := 0;
+    StartIndex:=0;
+    EndIndex:=utf32stringlen-1;
+      
+    for i:=StartIndex to EndIndex do
+     begin
+       ch:=instr^[i];    
+
+       if (ch > UNI_MAX_UTF16) then
+       begin
+         UTF8StrNew := nil;
+         FreeMem(p,utf32stringlen*sizeof(utf32));
+         exit;
+       end;
+     
+     
+       if ((ch >= UNI_SUR_HIGH_START) and (ch <= UNI_SUR_LOW_END)) then
+       begin
+         UTF8StrNew := nil;
+         FreeMem(p,utf32stringlen*sizeof(utf32));
+         exit;
+       end;
+    
+      if (ch < utf32($80)) then
+        bytesToWrite:=1
+      else
+      if (ch < utf32($800)) then
+        bytesToWrite:=2
+      else
+      if (ch < utf32($10000)) then
+        bytesToWrite:=3
+      else
+      if (ch < utf32($200000)) then
+        bytesToWrite:=4
+      else
+        begin
+          ch:=UNI_REPLACEMENT_CHAR;
+          bytesToWrite:=2;
+        end;
+      Inc(outindex,BytesToWrite);  
+        
+        CurrentIndex := BytesToWrite;
+        if CurrentIndex = 4 then
+        begin
+          dec(OutIndex);
+          p[outindex] := utf8((ch or byteMark) and ByteMask);
+          ch:=ch shr 6;
+          dec(CurrentIndex);
+        end;
+        if CurrentIndex = 3 then
+        begin
+          dec(OutIndex);
+          p[outindex] := utf8((ch or byteMark) and ByteMask);
+          ch:=ch shr 6;
+          dec(CurrentIndex);
+        end;
+        if CurrentIndex = 2 then
+        begin
+          dec(OutIndex);
+          p[outindex] := utf8((ch or byteMark) and ByteMask);
+          ch:=ch shr 6;
+          dec(CurrentIndex);
+        end;
+        if CurrentIndex = 1 then
+        begin
+          dec(OutIndex);
+          p[outindex] := utf8((byte(ch) or byte(FirstbyteMark[BytesToWrite])));
+        end;  
+        inc(OutStringLength);
+        Inc(OutIndex,BytesToWrite);
+      end;      
+      ReallocMem(pointer(p),OutStringLength+1);
+      p[OutStringLength] := #0;
+      UTF8StrNew:=p;
+  end;
+  
+  
+  
   
 
 begin
@@ -1610,6 +1733,10 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.6  2004/07/01 22:27:15  carl
+    * Added support for Null terminated utf32 character string
+    + renamed utf32 to utf32char
+
   Revision 1.5  2004/06/20 18:49:39  carl
     + added  GPC support
 
