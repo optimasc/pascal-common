@@ -249,12 +249,6 @@ end;
                         --- Info / Date / Time ---
 ******************************************************************************}
 
-   function GetVersion : longint;
-     external 'kernel32.dll' name 'GetVersion';
-   procedure GetLocalTime(var t : TSystemTime);
-     external 'kernel32.dll' name 'GetLocalTime';
-   function SetLocalTime(const t : TSystemTime) : longbool;
-     external 'kernel32.dll' name 'SetLocalTime';
 
 function dosversion : word;
 begin
@@ -1040,6 +1034,9 @@ function GetProcAddress(hModule : THandle;lpProcName : pchar) : pointer;
 end.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.5  2004/09/06 19:46:17  carl
+    * Wrong driveseparator value ;(
+
   Revision 1.4  2004/07/15 01:00:31  carl
     - remove some compiler warnings
 
