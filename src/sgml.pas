@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: sgml.pas,v 1.2 2004-10-27 02:00:19 carl Exp $
+    $Id: sgml.pas,v 1.3 2004-10-31 19:50:57 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere (Optima SC Inc.)
 
     SGML related utility routines
@@ -354,6 +354,11 @@ begin
             if inentity then
               begin
                 inentity:=false;
+                if (length(entitystr) = 0) then
+                  begin
+                    inc(i);
+                    continue;
+                  end;
                 { Check the type of entity we have }
                 if (entitystr[1] = '#') and (entitystr[2] in ['X','x']) then
                   begin
@@ -435,6 +440,9 @@ end;
 end.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.2  2004/10/27 02:00:19  carl
+    * bugfix with infinit loop when validating the Doctype declaration
+
   Revision 1.1  2004/10/13 23:26:11  carl
     + initial revision
 
