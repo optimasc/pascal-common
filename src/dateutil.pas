@@ -1,5 +1,5 @@
 {
-    $Id: dateutil.pas,v 1.7 2004-12-08 04:24:42 carl Exp $
+    $Id: dateutil.pas,v 1.8 2004-12-26 23:31:01 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere (Optima SC Inc.)
 
     Date and time utility routines
@@ -1316,9 +1316,11 @@ end;
 function Today: TDatetime;
 var
  Year,Month,Day,DayOfWeek: platformword;
+ Hour,Minute,Sec,Sec100: platformword;
 begin
   Dos.GetDate(Year,Month,Day,DayOfWeek);
-  Today:=trunc(datetojd(Year,Month,Day,0,0,0,0));
+  Dos.GetTime(Hour,Minute,Sec,Sec100);
+  Today:=trunc(datetojd(Year,Month,Day,Hour,Minute,Sec,Sec100));
 end;
 
 
@@ -1422,6 +1424,9 @@ end;
 end.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.7  2004/12/08 04:24:42  carl
+    * range check error bugfixes
+
   Revision 1.6  2004/11/29 03:50:24  carl
     + UNIX and FILETIME to DateTime conversion
 
