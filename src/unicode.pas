@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: unicode.pas,v 1.3 2004-05-06 15:47:27 carl Exp $
+    $Id: unicode.pas,v 1.4 2004-06-17 11:48:13 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Unicode related routines
@@ -17,17 +17,16 @@
 
     This unit contains routines to convert
     between the different unicode encoding
-    schemes. 
+    schemes.
     
-    All unicode strings are limited to
-    255 characters. 
+    All UNICODE/ISO 10646 strings are limited to
+    255 characters.
     
     Since all these encoding are variable length,
-    except the UTF-32 and UCS-2 encoding, to parse through
-    characters, every string should be converted to
-    UTF-32 or UCS-2 before being used.
-    
-    UCS-2 is encoded in network byte order (big-endian).
+    except the UTF-32 (which is equivalent to UCS-4 according to 
+    ISO 10646:2003) and UCS-2 encoding, to parse through characters, 
+    every string should be converted to UTF-32 or UCS-2 before being used.
+ 
 }
 unit unicode;
 
@@ -52,10 +51,10 @@ type
   
   {** UCS-2 string declaration. Index 0 contains the active length
       of the string in characters.
-  }  
+  }
   ucs2string = array[0..255] of ucs2;
   {** UTF-32 string declaration. Index 0 contains the active length
-      of the string in characters. 
+      of the string in characters.
   }
   utf32string = array[0..255] of utf32;
 
@@ -68,7 +67,7 @@ type
   }
   utf16string = array[0..255] of utf16;
 
-const  
+const
   {** Return status: conversion successful }
   UNICODE_ERR_OK =     0;
   {** Return status: source sequence is illegal/malformed }
@@ -80,14 +79,119 @@ const
   {** Return status: The character set is not found }
   UNICODE_ERR_NOTFOUND = -4;
   
+  {** Byte order mark: UTF-8 encoding signature }
+  BOM_UTF8     = #$EF#$BB#$BF;
+  {** Byte order mark: UTF-32 big endian encoding signature }
+  BOM_UTF32_BE = #00#00#$FE#$FF;
+  {** Byte order mark: UTF-32 little endian encoding signature }
+  BOM_UTF32_LE = #$FF#$FE#00#00;
+  
+  BOM_UTF16_BE = #$FE#$FF;
+  BOM_UTF16_LE = #$FF#$FE;
+  
+    
+  
+
+{---------------------------------------------------------------------------
+                          UTF-32 string handling
+-----------------------------------------------------------------------------}
+
+  {** @abstract(Returns the current length of an UTF-32 string) }
+  function utf32_length(s: array of utf32): integer;
+  
+  {** @abstract(Set the new dynamic length of an utf-32 string) }
+  procedure utf32_setlength(var s: array of utf32; l: integer);
+
+  {** @abstract(Determines if the specified character is a whitespace character) }
+  function utf32_iswhitespace(c: utf32): boolean;
+
+  {** @abstract(Trims leading spaces and control characters from an UTF-32 string.) }
+  procedure utf32_trimleft(var s: utf32string);
+  
+  {** @abstract(Trims trailing spaces and control characters from an UTF-32 string.) }
+  procedure utf32_trimright(var s: utf32string);
+  
+  {** @abstract(Returns an utf-32 substring of an utf-32 string) }
+  procedure utf32_copy(var resultstr: utf32string; s: array of utf32; index: integer; count: integer);
+
+  {** @abstract(Deletes a substring from a string) }
+  procedure utf32_delete(var s: utf32string; index: integer; count: integer);
+
+  {** @abstract(Concatenates two UTF-32 strings, and gives a resulting UTF-32 string) }
+  procedure utf32_concat(var resultstr: utf32string;s1: utf32string; s2: array of utf32);
+
+  {** @abstract(Concatenates an UTF-32 string with an ASCII string, and gives
+      a resulting UTF-32 string)
+  }    
+  procedure utf32_concatascii(var resultstr: utf32string;s1: utf32string; s2: shortstring);
+
+  {** @abstract(Searches for an ASCII substring in an UTF-32 string) }
+  function utf32_posascii(substr: shortstring; s: utf32string): integer;
+
+  {** @abstract(Checks if an ASCII string is equal to an UTF-32 string ) }
+  function utf32_equalascii(s1 : array of utf32; s2: shortstring): boolean;
+
+  {** @abstract(Searches for an UTF-32 substring in an UTF-32 string) }
+  function utf32_pos(substr: utf32string;s : utf32string): integer;
+
+  {** @abstract(Checks if both UTF-32 strings are equal) }
+  function utf32_equal(const s1,s2: utf32string): boolean;
+
+  {** @abstract(Checks if the UTF-32 character is valid)
+
+      This routine verifies if the UTF-32 character is
+      within the valid ranges of UTF-32 characters, as
+      specified in the Unicode standard 4.0. BOM characters
+      are NOT valid with this routine.
+  }
+  function utf32_isvalid(c: utf32): boolean;
+
+  {** @abstract(Checks if conversion from/to this character set format to/from UTF-32
+      is supported)
+
+      @param(s This is an alias for a character set, as defined by IANA)
+      @returns(true if conversion to/from UTF-32 is supported with this
+        character set, otherwise FALSE)
+  }
+  function utf32_issupported(s: string): boolean;
+
+
+
+
+{---------------------------------------------------------------------------
+                           UCS-2 string handling
+-----------------------------------------------------------------------------}
+
+  function ucs2_length(s: array of ucs2): integer;
+  
+  procedure ucs2_setlength(var s: array of ucs2; l: integer);
+
+
+{---------------------------------------------------------------------------
+                          Other  string handling
+-----------------------------------------------------------------------------}
+  {** @abstract(Returns the number of characters that are used to encode this
+      character).
+
+      Actually checks if this is a high-surrogate value, if not returns 1,
+      indicating that the character is encoded a single @code(utf16) character,
+      otherwise returns 2, indicating that 1 one other @code(utf16) character
+      is required to encode this data.
+  }
+  function utf16_sizeencoding(c: utf16): integer;
+  
+  {** @abstract(Returns the number of characters that are used to encode this
+      character).
+      
+  }      
+  function utf8_sizeencoding(c: utf8): integer;
+  
   {** @abstract(Returns the current length of an UTF-16 string) }
   function lengthUTF16(s: array of utf16): integer;
 
   {** @abstract(Returns the current length of an UTF-8 string) }
   function lengthutf8(s: array of utf8): integer;
   
-  {** @abstract(Returns the current length of an UTF-32 string) }
-  function lengthutf32(s: array of utf32): integer;
   
   {** @abstract(Set the length of an UTF-8 string) }
   procedure setlengthUTF8(var s: array of utf8; l: integer);
@@ -95,14 +199,25 @@ const
   {** @abstract(Set the length of an UTF-16 string) }
   procedure setlengthUTF16(var s: array of utf16; l: integer);
 
-  procedure setlengthutf32(var s: array of utf32; l: integer);
+
+{---------------------------------------------------------------------------
+                      Unicode Conversion routines
+-----------------------------------------------------------------------------}
+  
 
   {** @abstract(Convert an UTF-32 string to an UTF-8 string) 
+  
+      Converts an UTF-32 string or character 
+      in native endian to an UTF-8 string. 
+      
+      @param(s Either a single utf-32 character or a complete utf-32 string)
+      @param(outstr Resulting UTF-8 coded string)
+      @returns(@link(UNICODE_ERR_OK) if there was no error in the conversion)
   }
   function convertUTF32toUTF8(s: array of utf32; var outstr: utf8string): integer;
   
-  {** @abstract(Convert an UTF-32 string to a single byte encoded string) 
-  
+  {** @abstract(Convert an UTF-32 string to a single byte encoded string)
+
      This routine converts an UTF-32 string stored in native byte order
      (native endian) to a single-byte encoded string.
 
@@ -116,7 +231,7 @@ const
   }  
   function ConvertFromUTF32(source: utf32string; var dest: shortstring; desttype: string): integer;
 
-  {** @abstract(Convert a byte encoded string to an UTF-32 string) 
+  {** @abstract(Convert a byte encoded string to an UTF-32 string)
   
      This routine converts a single byte encoded string to an UTF-32
      string stored in native byte order
@@ -128,7 +243,7 @@ const
   
       @param(srctype Indicates the single byte encoding scheme)
       @returns(@link(UNICODE_ERR_OK) if there was no error in the conversion)
-  }  
+  }
   function ConvertToUTF32(source: shortstring; var dest: utf32string; srctype: string): integer;
   
   {** @abstract(Convert an UTF-16 string to an UTF-32 string)
@@ -138,36 +253,54 @@ const
   
       @returns(@link(UNICODE_ERR_OK) if there was no error in the conversion)
   }
-  function ConvertUTF16ToUTF32(src: array of utf16; var dst: utf32string): integer;
-  
+  function ConvertUTF16ToUTF32(src: utf16string; var dst: utf32string): integer;
+
   {** @abstract(Convert an UTF-32 string to an UTF-16 string)
   
       This routine converts an UTF-32 string to an UTF-16 string.
       Both strings must be stored in native byte order (native endian).
   
+      @param(src Either a single utf-32 character or a complete utf-32 string)
+      @param(dest Resulting UTF-16 coded string)
       @returns(@link(UNICODE_ERR_OK) if there was no error in the conversion)
   }
   function ConvertUTF32toUTF16(src: array of utf32; var dest: utf16string): integer;
   
   {** @abstract(Convert an UTF-8 string to an UTF-32 string)
-  
+
       This routine converts an UTF-8 string to an UTF-32 string that
       is stored in native byte order.
   
       @returns(@link(UNICODE_ERR_OK) if there was no error in the conversion)
   }
-  function ConvertUTF8ToUTF32(src: array of utf8; var dst: utf32string): integer;
+  function ConvertUTF8ToUTF32(src: utf8string; var dst: utf32string): integer;
 
   {** @abstract(Convert an UTF-32 string to an UCS-2 string)
   
       This routine converts an UTF-32 string to an UCS-2 string that
-      is stored in network byte order (big-endian). If some characters
+      is stored in native byte order. If some characters
       could not be converted an error will be reported.
       
+      @param(src Either a single utf-32 character or a complete utf-32 string)
+      @param(dest Resulting UCS-2 coded string)
       @returns(@link(UNICODE_ERR_OK) if there was no error in the conversion)
   
   }
   function ConvertUTF32ToUCS2(src: array of utf32; var dst: ucs2string): integer;
+  
+
+  {** @abstract(Convert an UCS-2 string to an UTF-32 string)
+  
+      This routine converts an UCS-2 string to an UTF-32 string that
+      is stored in native byte order (big-endian). If some characters
+      could not be converted an error will be reported.
+      
+      @param(src Either a single ucs-2 character or a complete ucs-2 string)
+      @param(dest Resulting UTF-32 coded string)
+      @returns(@link(UNICODE_ERR_OK) if there was no error in the conversion)
+  
+  }
+  function ConvertUCS2ToUTF32(src: array of ucs2; var dst: utf32string): integer;
   
 
 implementation
@@ -180,7 +313,7 @@ type
     name: string[32];
     table: pchararray;
   end;   
-  
+
 const
 {$i i8859_1.inc}
 {$i i8859_2.inc}
@@ -455,7 +588,7 @@ const
 
 const
   MAX_ALIAS = 26;
-  aliaslist: array[1..MAX_ALIAS] of taliasinfo = 
+  aliaslist: array[1..MAX_ALIAS] of taliasinfo =
   (
     (name: 'ISO-8859-1';table: @i8859_1toUTF32),
     (name: 'ISO_8859-1';table: @i8859_1toUTF32),
@@ -483,7 +616,7 @@ const
     (name: 'IBM367';table: @ASCIItoUTF32),
     (name: 'cp367';table: @ASCIItoUTF32),
     (name: 'ISO646-US';table: @ASCIItoUTF32)
-  );  
+  );
 
 const
   {* Some fundamental constants *}
@@ -492,18 +625,18 @@ const
   UNI_MAX_UTF16        = $0010FFFF;
   UNI_MAX_UTF32        = $7FFFFFFF;
   
+  { Surrogate marks for UTF-16 encoding }
+  UNI_SUR_HIGH_START = $D800;
+  UNI_SUR_HIGH_END   = $DBFF;
+  UNI_SUR_LOW_START  = $DC00;
+  UNI_SUR_LOW_END    = $DFFF;
   
 
-   const 
     halfShift  = 10; {* used for shifting by 10 bits *}
 
     halfBase = $0010000;
     halfMask = $3FF;
 
-    UNI_SUR_HIGH_START = $D800;
-    UNI_SUR_HIGH_END   = $DBFF;
-    UNI_SUR_LOW_START  = $DC00;
-    UNI_SUR_LOW_END    = $DFFF;
     
     
 
@@ -519,7 +652,7 @@ const
     );
     
     offsetsFromUTF8: array[0..5] of utf32 = ( 
-           $00000000, $00003080, $000E2080, 
+           $00000000, $00003080, $000E2080,
            $03C82080, $FA082080, $82082080
            );
     
@@ -545,6 +678,8 @@ const
    OutStringLength : byte;
    OutIndex : integer;
    Currentindex: integer;
+   StartIndex: integer;
+   EndIndex: integer;
   const
     byteMask: utf32 = $BF;
     byteMark: utf32 = $80;
@@ -554,77 +689,92 @@ const
     bytestoWrite:=0; 
     OutStringLength := 0;
     SetLengthUTF8(outstr,0);
-    for i:=1 to lengthUTF32(s) do
-     begin
-       ch:=s[i];    
-       
-     if (ch > UNI_MAX_UTF16) then
-     begin
-       convertUTF32ToUTF8:= UNICODE_ERR_SOURCEILLEGAL;
-       exit;
-     end;
-     
-     
-     if ((ch >= UNI_SUR_HIGH_START) and (ch <= UNI_SUR_LOW_END)) then
-     begin
-       convertUTF32ToUTF8:= UNICODE_ERR_SOURCEILLEGAL;
-       exit;
-     end;
-    
-    if (ch < utf32($80)) then
-      bytesToWrite:=1
-    else
-    if (ch < utf32($800)) then
-      bytesToWrite:=2
-    else
-    if (ch < utf32($10000)) then
-      bytesToWrite:=3
-    else
-    if (ch < utf32($200000)) then
-      bytesToWrite:=4
+    { Check if only one character is passed as src, in that case
+      this is not an UTF string, but a simple character (in other
+      words, there is not a length byte.
+    }
+    if High(s) = 0 then
+      begin
+        StartIndex:=0;
+        EndIndex:=0;
+      end
     else
       begin
-        ch:=UNI_REPLACEMENT_CHAR;
-        bytesToWrite:=2;
-      end;
-    Inc(outindex,BytesToWrite);  
-    if Outindex > High(utf8string) then
-      begin
-        convertUTF32ToUTF8:=UNICODE_ERR_LENGTH_EXCEED;
-        exit;
+        StartIndex:=1;
+        EndIndex:=UTF32_Length(s);
       end;
       
-      CurrentIndex := BytesToWrite;
-      if CurrentIndex = 4 then
-      begin
-        dec(OutIndex);
-        outstr[outindex] := utf8((ch or byteMark) and ByteMask);
-        ch:=ch shr 6;
-        dec(CurrentIndex);
-      end;
-      if CurrentIndex = 3 then
-      begin
-        dec(OutIndex);
-        outstr[outindex] := utf8((ch or byteMark) and ByteMask);
-        ch:=ch shr 6;
-        dec(CurrentIndex);
-      end;
-      if CurrentIndex = 2 then
-      begin
-        dec(OutIndex);
-        outstr[outindex] := utf8((ch or byteMark) and ByteMask);
-        ch:=ch shr 6;
-        dec(CurrentIndex);
-      end;
-      if CurrentIndex = 1 then
-      begin
-        dec(OutIndex);
-        outstr[outindex] := utf8((byte(ch) or byte(FirstbyteMark[BytesToWrite])));
-      end;  
-      inc(OutStringLength);
-      Inc(OutIndex,BytesToWrite);
-    end;      
-    setlengthutf8(outstr,OutStringLength);
+    for i:=StartIndex to EndIndex do
+     begin
+       ch:=s[i];    
+
+       if (ch > UNI_MAX_UTF16) then
+       begin
+         convertUTF32ToUTF8:= UNICODE_ERR_SOURCEILLEGAL;
+         exit;
+       end;
+     
+     
+       if ((ch >= UNI_SUR_HIGH_START) and (ch <= UNI_SUR_LOW_END)) then
+       begin
+         convertUTF32ToUTF8:= UNICODE_ERR_SOURCEILLEGAL;
+         exit;
+       end;
+    
+      if (ch < utf32($80)) then
+        bytesToWrite:=1
+      else
+      if (ch < utf32($800)) then
+        bytesToWrite:=2
+      else
+      if (ch < utf32($10000)) then
+        bytesToWrite:=3
+      else
+      if (ch < utf32($200000)) then
+        bytesToWrite:=4
+      else
+        begin
+          ch:=UNI_REPLACEMENT_CHAR;
+          bytesToWrite:=2;
+        end;
+      Inc(outindex,BytesToWrite);  
+      if Outindex > High(utf8string) then
+        begin
+          convertUTF32ToUTF8:=UNICODE_ERR_LENGTH_EXCEED;
+          exit;
+        end;
+        
+        CurrentIndex := BytesToWrite;
+        if CurrentIndex = 4 then
+        begin
+          dec(OutIndex);
+          outstr[outindex] := utf8((ch or byteMark) and ByteMask);
+          ch:=ch shr 6;
+          dec(CurrentIndex);
+        end;
+        if CurrentIndex = 3 then
+        begin
+          dec(OutIndex);
+          outstr[outindex] := utf8((ch or byteMark) and ByteMask);
+          ch:=ch shr 6;
+          dec(CurrentIndex);
+        end;
+        if CurrentIndex = 2 then
+        begin
+          dec(OutIndex);
+          outstr[outindex] := utf8((ch or byteMark) and ByteMask);
+          ch:=ch shr 6;
+          dec(CurrentIndex);
+        end;
+        if CurrentIndex = 1 then
+        begin
+          dec(OutIndex);
+          outstr[outindex] := utf8((byte(ch) or byte(FirstbyteMark[BytesToWrite])));
+        end;  
+        inc(OutStringLength);
+        Inc(OutIndex,BytesToWrite);
+      end;      
+      setlengthutf8(outstr,OutStringLength);
   end;
   
   function lengthUTF16(s: array of utf16): integer;
@@ -637,10 +787,6 @@ const
    LengthUTF8:=integer(s[0]);
   end;
   
-  function lengthutf32(s: array of utf32): integer;
-  begin
-   LengthUTF32:=integer(s[0]);
-  end;
   
   
 
@@ -654,10 +800,6 @@ const
    s[0]:=utf16(l);
   end;
   
-  procedure setlengthutf32(var s: array of utf32; l: integer);
-  begin
-   s[0]:=utf32(l);
-  end;
   
 
   function isLegalUTF8(src: array of utf8; _length: integer): boolean;
@@ -690,7 +832,7 @@ const
         exit;
       end;
     { for each character in the UTF32 string ... }  
-    for i:=1 to lengthutf32(source) do
+    for i:=1 to utf32_length(source) do
       begin
         found:=false;
         { search the table by reverse lookup }
@@ -708,7 +850,7 @@ const
             ConvertFromUTF32:=UNICODE_ERR_INCOMPLETE_CONVERSION;
           end;
       end;
-    setlength(dest,lengthutf32(source));  
+    setlength(dest,utf32_length(source));
   end;
   
   function ConvertToUTF32(source: shortstring; var dest: utf32string; srctype: string): integer;
@@ -717,7 +859,7 @@ const
    l: longint;
    p: pchararray;
   begin
-    ConvertToUTF32:=UNICODE_ERR_OK;  
+    ConvertToUTF32:=UNICODE_ERR_OK;
     p:=nil;
     { Search the alias type }
     for i:=1 to MAX_ALIAS do
@@ -742,11 +884,11 @@ const
           end;
         dest[i]:=utf32(l);  
       end;
-    setlengthUtf32(dest,length(source));  
+    Utf32_setlength(dest,length(source));
   end;
-  
 
-  function ConvertUTF16ToUTF32(src: array of utf16; var dst: utf32string): integer;
+
+  function ConvertUTF16ToUTF32(src: utf16string; var dst: utf32string): integer;
    var
      ch,ch2: utf32;
      i: integer;
@@ -782,10 +924,10 @@ const
         dst[OutIndex] := ch;
         Inc(OutIndex);
      end;     
-  setlengthutf32(dst,OutIndex-1);
+  utf32_setlength(dst,OutIndex-1);
 end;     
 
-function ConvertUTF8ToUTF32(src: array of utf8; var dst: utf32string): integer;
+function ConvertUTF8ToUTF32(src: utf8string; var dst: utf32string): integer;
   var
    ch: utf32;
    i: integer;
@@ -851,7 +993,7 @@ function ConvertUTF8ToUTF32(src: array of utf8; var dst: utf32string): integer;
             inc(OutIndex);
           end;
       end;
-     setlengthutf32(dst, outindex-1);
+     utf32_setlength(dst, outindex-1);
   end;
   
 
@@ -860,11 +1002,27 @@ var
  ch: utf32;
    i: integer;
    Outindex: integer;
+   StartIndex, EndIndex: integer;
 begin
-    i:=1;
     OutIndex := 1;
     ConvertUTF32ToUTF16:=UNICODE_ERR_OK;
-    while i <= lengthutf32(src) do
+    { Check if only one character is passed as src, in that case
+      this is not an UTF string, but a simple character (in other
+      words, there is not a length byte.
+    }
+    if High(src) = 0 then
+      begin
+        StartIndex:=0;
+        EndIndex:=0;
+      end
+    else
+      begin
+        StartIndex:=1;
+        EndIndex:=UTF32_Length(src);
+      end;
+    
+    i:=Startindex;
+    while i <= EndIndex do
       begin
         ch:=src[i];
         inc(i);
@@ -906,34 +1064,344 @@ begin
 end;
 
 
-function ConvertUTF32ToUCS2(src: array of utf32; var dst: ucs2string): integer;
-var
- ch: utf32;
- i: integer;
-begin
-  ConvertUTF32ToUCS2:=UNICODE_ERR_OK;
-  for i:=1 to lengthutf32(src) do
-    begin
-      ch:=src[i];
-      if ch > UNI_MAX_BMP then
-        begin 
-          ConvertUTF32ToUCS2:=UNICODE_ERR_INCOMPLETE_CONVERSION;
-          continue;
-        end;
-      dst[i]:=ucs2(ch and UNI_MAX_BMP);
-{$ifdef endian_little}
-      { convert to big endian order }
-      swapword(dst[i]);
-{$endif}
-    end;
-  dst[0]:=ucs2(lengthutf32(src));  
-end;
+  function ConvertUTF32ToUCS2(src: array of utf32; var dst: ucs2string): integer;
+  var
+   ch: utf32;
+   i: integer;
+   StartIndex, EndIndex: integer;
+  begin
+    ConvertUTF32ToUCS2:=UNICODE_ERR_OK;
+  
+    { Check if only one character is passed as src, in that case
+      this is not an UTF string, but a simple character (in other
+      words, there is not a length byte.
+    }
+    if High(src) = 0 then
+      begin
+        StartIndex:=0;
+        EndIndex:=0;
+        dst[0]:=ucs2(1);
+      end
+    else
+      begin
+        StartIndex:=1;
+        EndIndex:=UTF32_Length(src);
+        dst[0]:=ucs2(utf32_length(src));
+      end;
+  
+    for i:=StartIndex to EndIndex do
+      begin
+        ch:=src[i];
+        if ch > UNI_MAX_BMP then
+          begin 
+            ConvertUTF32ToUCS2:=UNICODE_ERR_INCOMPLETE_CONVERSION;
+            continue;
+          end;
+        dst[i]:=ucs2(ch and UNI_MAX_BMP);
+      end;
+  end;
+  
+  
+  function ConvertUCS2ToUTF32(src: array of ucs2; var dst: utf32string): integer;
+  var
+   ch: utf32;
+   i: integer;
+   StartIndex, EndIndex: integer;
+  begin
+    ConvertUCS2ToUTF32:=UNICODE_ERR_OK;
+  
+    { Check if only one character is passed as src, in that case
+      this is not an UCS string, but a simple character (in other
+      words, there is not a length byte.
+    }
+    if High(src) = 0 then
+      begin
+        StartIndex:=0;
+        EndIndex:=0;
+        dst[0]:=utf32(1);
+      end
+    else
+      begin
+        StartIndex:=1;
+        EndIndex:=UCS2_Length(src);
+       utf32_setlength(dst,ucs2_length(src));
+      end;
+    for i:=StartIndex to EndIndex do
+      begin
+        ch:=src[i];
+        if ((ch >=  UNI_SUR_HIGH_START) and (ch <= UNI_SUR_HIGH_END)) or
+           ((ch >=  UNI_SUR_LOW_START) and (ch <= UNI_SUR_LOW_END)) then
+          begin 
+            ConvertUCS2ToUTF32:=UNICODE_ERR_SOURCEILLEGAL;
+            continue;
+          end;
+        dst[i]:=utf32(ch);
+      end;
+  end;
 
+
+{---------------------------------------------------------------------------
+                          UTF-32 string handling
+-----------------------------------------------------------------------------}
+
+  function utf32_iswhitespace(c: utf32): boolean;
+  begin
+   if (c = $20) or (c = $09) or (c = $10) or (c = $13) or (c = $85) or (c = $2028) 
+   then
+      utf32_iswhitespace:=true
+   else   
+      utf32_iswhitespace:=false;
+  end;
+  
+  procedure utf32_copy(var resultstr: utf32string; s: array of utf32; index: integer; count: integer);
+  var
+   slen: integer;
+   i: integer;
+  begin
+    utf32_setlength(resultstr,0);
+    if count = 0 then
+      exit;
+    slen:=utf32_length(s);
+    if index > slen then
+      exit;
+    if (count+index)>slen then
+      count:=slen-index+1;
+    { don't forget the length character }
+    if count <> 0 then
+      begin
+        for i:=1 to count do
+          begin
+            resultstr[i]:=s[i+index-1];
+          end;
+      end;
+    resultstr[0]:=utf32(count);
+  end;
+  
+  procedure utf32_delete(var s: utf32string; index: integer; count: integer);
+  begin
+    if index<=0 then
+      exit;
+    if (Index<=Utf32_Length(s)) and (Count>0) then
+     begin
+       if Count>Utf32_length(s)-Index then
+        Count:=Utf32_length(s)-Index+1;
+       s[0]:=(Utf32_length(s)-Count);
+       if Index<=utf32_Length(s) then
+        Move(s[Index+Count],s[Index],(Utf32_Length(s)-Index+1)*sizeof(utf32));
+     end;
+  end;
+  
+
+  procedure utf32_concat(var resultstr: utf32string;s1: utf32string; s2: array of utf32);
+  var
+    s1l, s2l : byte;
+    idx: integer;
+  begin
+    { if only one character must be moved }
+    if high(s2) = 0 then
+      begin
+        s2l:=1;
+        idx:=0;
+      end
+    else
+      begin
+        s2l:=utf32_length(s2);
+        idx:=1;
+      end;  
+    s1l:=utf32_length(s1);
+    if s2l+s1l>255 then
+      s2l:=255-s1l;
+    move(s2[idx],s1[utf32_length(s1)+1],s2l*sizeof(utf32));
+    move(s1[1],resultstr[1],(s2l+s1l)*sizeof(utf32));
+    utf32_setlength(resultstr, s2l+s1l);
+  end;
+  
+  function utf32_pos(substr: utf32string; s: utf32string): integer;
+  var
+    i,j : integer;
+    e   : boolean;
+    Substr2: utf32string;
+  begin
+    i := 0;
+    j := 0;
+    e:=(utf32_length(SubStr)>0);
+    while e and (i<=utf32_Length(s)-utf32_Length(SubStr)) do
+     begin
+       inc(i);
+       utf32_Copy(Substr2,s,i,utf32_Length(Substr));
+       if (SubStr[1]=s[i]) and (utf32_equal(Substr,Substr2)) then
+        begin
+          j:=i;
+          e:=false;
+        end;
+     end;
+    utf32_Pos:=j;
+  end;
+  
+  function utf32_equal(const s1,s2: utf32string): boolean;
+    var
+     i: integer;
+  begin
+    utf32_equal:=false;
+    if utf32_length(s1) <> utf32_length(s2) then
+      exit;
+    for i:=1 to utf32_length(s1) do
+      begin
+        if s1[i] <> s2[i] then
+          exit;
+      end;
+    utf32_equal:=true;
+  end;
+  
+
+  function utf32_length(s: array of utf32): integer;
+  begin
+   utf32_length:=integer(s[0]);
+  end;
+  
+  procedure utf32_setlength(var s: array of utf32; l: integer);
+  begin
+   if l > 255 then
+     l:=255;
+   s[0]:=utf32(l);
+  end;
+
+  procedure utf32_concatascii(var resultstr: utf32string;s1: utf32string; s2: shortstring);
+  var
+   utfstr: utf32string;
+  begin
+    if ConvertToUTF32(s2,utfstr,'ASCII')  = UNICODE_ERR_OK then
+       utf32_concat(resultstr,s1,utfstr);
+  end;
+
+  function utf32_posascii(substr: shortstring; s: utf32string): integer;
+  var
+   utfstr: utf32string;
+  begin
+    utf32_posascii:=0;
+    if ConvertToUTF32(substr,utfstr,'ASCII')  = UNICODE_ERR_OK then
+     utf32_posascii:=utf32_pos(utfstr,s);
+  end;
+
+  function utf32_equalascii(s1 : array of utf32; s2: shortstring): boolean;
+  var
+   utfstr: utf32string;
+   s3: utf32string;
+   i: integer;
+  begin
+    utf32_equalascii:=false;
+    for i:=1 to utf32_length(s1) do
+      begin
+        s3[i] := s1[i];
+      end;
+    utf32_setlength(s3,utf32_length(s1));
+    if ConvertToUTF32(s2,utfstr,'ASCII')  = UNICODE_ERR_OK then
+     utf32_equalascii:=utf32_equal(utfstr,s3);
+  end;
+
+  function utf32_issupported(s: string): boolean;
+  var
+   i: integer;
+  begin
+    s:=upstring(s);
+    utf32_issupported := true;
+    if (s = 'UTF-16') or (s = 'UTF-16BE') or (s = 'UTF-16LE') or
+       (s = 'UTF-32') or (s = 'UTF-32BE') or (s = 'UTF-32LE') or
+       (s = 'UTF-8') then
+     begin
+        utf32_issupported := true;
+        exit;
+     end;
+    for i:=1 to MAX_ALIAS do
+    begin
+      if upstring(aliaslist[i].name) = s then
+      begin
+         utf32_issupported := true;
+         exit;
+      end;
+    end;
+  end;
+  
+  function utf32_isvalid(c: utf32): boolean;
+  begin
+    utf32_isvalid := false;
+    { maximum unicode range }
+    if (c > UNI_MAX_UTF16) then
+       exit;
+    { surrogates are not allowed in this encoding }
+    if (c >= UNI_SUR_HIGH_START) and (c <= UNI_SUR_HIGH_END) then
+      exit;
+    if (c >= UNI_SUR_LOW_START) and (c <= UNI_SUR_LOW_END) then
+      exit;
+    { check for non-characters, which are not allowed in 
+      interchange data
+    }  
+    if (c and $FFFF) = $FFFE then exit;
+    if (c and $FFFF) = $FFFF then exit;
+    utf32_isvalid := true;
+  end;
+
+
+  procedure UTF32_TrimLeft(var S: utf32string);
+  var i,l:integer;
+      outstr: utf32string;
+  begin
+    utf32_setlength(outstr,0);
+    l := utf32_length(s);
+    i := 1;
+    while (i<=l) and (utf32_iswhitespace(s[i])) do
+     inc(i);
+    utf32_copy(outstr,s, i, l);
+    move(outstr,s,sizeof(utf32string));
+  end ;
+
+
+  procedure UTF32_TrimRight(var S: utf32string);
+  var l:integer;
+      outstr: utf32string;
+  begin
+    utf32_setlength(outstr,0);
+    l := utf32_length(s);
+    while (l>0) and (utf32_iswhitespace(s[l])) do
+     dec(l);
+    utf32_copy(outstr,s,1,l);
+    move(outstr,s,sizeof(utf32string));
+  end ;
+
+
+  function utf16_sizeencoding(c: utf16): integer;
+  begin
+    utf16_sizeencoding:=2;
+    if (c >= UNI_SUR_HIGH_START) and (c <= UNI_SUR_HIGH_END) then
+      utf16_sizeencoding:=4;
+  end;
+  
+  function utf8_sizeencoding(c: utf8): integer;
+  begin
+    utf8_sizeencoding:= trailingBytesForUTF8[ord(c)]+1;
+  end;
+  
+  
+  function ucs2_length(s: array of ucs2): integer;
+  begin
+   ucs2_length:=integer(s[0]);
+  end;
+  
+  procedure ucs2_setlength(var s: array of ucs2; l: integer);
+  begin
+   if l > 255 then
+     l:=255;
+   s[0]:=ucs2(l);
+  end;
+  
      
 end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.3  2004/05/06 15:47:27  carl
+    - remove some warnings
+
   Revision 1.2  2004/05/06 15:27:05  carl
      + add support for ISO8859, ASCII, CP850, CP1252 to UTF-32 conversion
        (and vice-versa)
