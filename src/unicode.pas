@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: unicode.pas,v 1.22 2004-11-21 19:53:59 carl Exp $
+    $Id: unicode.pas,v 1.23 2004-11-29 03:48:09 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Unicode related routines
@@ -284,25 +284,25 @@ type
    the resulting string. 
 
    @param(str The string to convert, single character coded)
-   @param(srctype The encoding of the string, UTF-8 is also valid)
+   @param(srctype The encoding of the string, UTF-8 is also valid - case-insensitive)
   }
- function ucs4strnewstr(str: string; const srctype: string): pucs4char;
+ function ucs4strnewstr(str: string; srctype: string): pucs4char;
 
   {** @abstract(Converts a null terminated string to an UCS-4 null
-   terminated string) 
-   
-   The memory for the buffer is allocated. Use @link(ucs4strdispose) to dispose 
+   terminated string)
+
+   The memory for the buffer is allocated. Use @link(ucs4strdispose) to dispose
    of the allocated string. The string is null terminated. If str is nil, then
    this routine returns nil and does not allocate anything.
 
    @param(str The string to convert, single character coded, or UTF-8 coded)
-   @param(srctype The encoding of the string, UTF-8 is also valid)
+   @param(srctype The encoding of the string, UTF-8 is also valid - case-insensitive)
   }
- function ucs4strnew(str: pchar; const srctype: string): pucs4char;
- 
-  {** @abstract(Allocates and copies an UCS-4 null terminated string) 
-   
-   The memory for the buffer is allocated. Use @link(ucs4strdispose) to dispose 
+ function ucs4strnew(str: pchar; srctype: string): pucs4char;
+
+  {** @abstract(Allocates and copies an UCS-4 null terminated string)
+
+   The memory for the buffer is allocated. Use @link(ucs4strdispose) to dispose
    of the allocated string. The string is copied from src and is null terminated.
    If the parameter is nil, this routine returns nil and does not allocate
    anything.
@@ -356,10 +356,10 @@ type
 
   {** @abstract(Returns the current length of an UCS-2 string) }
   function ucs2_length(const s: array of ucs2char): integer;
-  
+
   {** @abstract(Set the new dynamic length of an ucs-2 string) }
   procedure ucs2_setlength(var s: array of ucs2char; l: integer);
-  
+
   {** @abstract(Checks if the UCS-2 character is valid)
 
       This routine verifies if the UCS-2 character is
@@ -368,14 +368,14 @@ type
       are NOT valid with this routine.
   }
   function ucs2_isvalid(ch: ucs2char): boolean;
-  
+
 {---------------------------------------------------------------------------
                    UCS-2 null terminated string handling
 -----------------------------------------------------------------------------}
-  
+
   {** @abstract(Convert an UCS-2 null terminated string to an UCS-4 null terminated string)
 
-      This routine converts an UCS-2 encoded null terminared string to an UCS-4 
+      This routine converts an UCS-2 encoded null terminared string to an UCS-4
       null terminated string that is stored in native byte order, up to
       length conversion. The destination buffer should already have been
       allocated.
@@ -383,8 +383,8 @@ type
       @returns(nil if there was an error in the conversion)
   }
   function ucs2strlcopyucs4(src: pucs2char; dst: pucs4char; maxlen: integer): pucs4char;
-  
-  
+
+
   {** @abstract(Returns the number of characters in the null terminated UCS-2 string)
 
       @param(str The UCS-2 null terminated string to check)
@@ -392,95 +392,95 @@ type
         character)
   }
   function ucs2strlen(str: pucs2char): integer;
-  
-  
-  
+
+
+
   {** @abstract(Converts an UCS-4 null terminated string to an UCS-2 null
-   terminated string) 
-   
-   The memory for the buffer is allocated. Use @link(ucs2strdispose) to dispose 
+   terminated string)
+
+   The memory for the buffer is allocated. Use @link(ucs2strdispose) to dispose
    of the allocated string. The string is null terminated. If src is nil,
    this routine returns nil, and does not allocate anything.
-   
+
    @returns(nil if the conversion cannot be represented in UCS-2 encoding,
       or nil if there was an error)
   }
   function ucs2strnew(src: pucs4char): pucs2char;
 
-  {** @abstract(Disposes of an UCS-2 null terminated string on the heap) 
-  
+  {** @abstract(Disposes of an UCS-2 null terminated string on the heap)
+
       Disposes of a string that was previously allocated with
-      @code(ucs2strnew), and sets the pointer to nil. 
-   
+      @code(ucs2strnew), and sets the pointer to nil.
+
   }
   function ucs2strdispose(str: pucs2char): pucs2char;
-  
+
 {---------------------------------------------------------------------------
                   UTF-8 null terminated string handling
 -----------------------------------------------------------------------------}
 
   {** @abstract(Converts an UCS-4 null terminated string to an UTF-8 null
-   terminated string) 
-   
-   The memory for the buffer is allocated. Use @link(utf8strdispose) to dispose 
-   of the allocated string. The string is null terminated. If the parameter is 
+   terminated string)
+
+   The memory for the buffer is allocated. Use @link(utf8strdispose) to dispose
+   of the allocated string. The string is null terminated. If the parameter is
    nil, this routine returns nil and does not allocate anything.
   }
   function utf8strnew(src: pucs4char): pchar;
-  
-  {** @abstract(Allocates and copies an UTF-8 null terminated string) 
-   
-   The memory for the buffer is allocated. Use @link(utf8strdispose) to dispose 
+
+  {** @abstract(Allocates and copies an UTF-8 null terminated string)
+
+   The memory for the buffer is allocated. Use @link(utf8strdispose) to dispose
    of the allocated string. The string is copied from src and is null terminated.
    If the parameter is nil, this routine returns nil and does not allocate
    anything.
   }
   function utf8strnewutf8(src: pchar): pchar;
-  
 
-  {** @abstract(Disposes of an UTF-8 null terminated string on the heap) 
-  
+
+  {** @abstract(Disposes of an UTF-8 null terminated string on the heap)
+
       Disposes of a string that was previously allocated with
-      @code(utf8strnew), and sets the pointer to nil. 
-   
+      @code(utf8strnew), and sets the pointer to nil.
+
   }
   function utf8strdispose(p: pchar): pchar;
-  
-  
+
+
   {** @abstract(Convert an UTF-8 null terminated string to an UCS-4 null terminated string)
 
-      This routine converts an UTF-8 null terminared string to an UCS-4 
+      This routine converts an UTF-8 null terminared string to an UCS-4
       null terminated string that is stored in native byte order, up to
       length conversion.
 
       @returns(nil if there was no error in the conversion)
   }
   function utf8strlcopyucs4(src: pchar; dst: pucs4char; maxlen: integer): pucs4char;
-  
-  {** @abstract(Converts a null-terminated UTF-8 string to a Pascal-style 
+
+  {** @abstract(Converts a null-terminated UTF-8 string to a Pascal-style
        ISO 8859-1 encoded string.)
-       
-      Characters that cannot be converted are converted to 
+
+      Characters that cannot be converted are converted to
       escape sequences of the form : \uxxxxxxxx where xxxxxxxx is
       the hex representation of the character.
   }
  function utf8strpastoISO8859_1(src: pchar): string;
-  
-  {** @abstract(Converts a null-terminated UTF-8 string to a Pascal-style 
+
+  {** @abstract(Converts a null-terminated UTF-8 string to a Pascal-style
        ASCII encoded string.)
-       
-      Characters that cannot be converted are converted to 
+
+      Characters that cannot be converted are converted to
       escape sequences of the form : \uxxxxxxxx where xxxxxxxx is
       the hex representation of the character.
   }
  function utf8strpastoASCII(src: pchar): string;
-  
-  {** @abstract(Converts a null-terminated UTF-8 string to a Pascal-style 
+
+  {** @abstract(Converts a null-terminated UTF-8 string to a Pascal-style
        UTF-8 encoded string.)
-       
+
   }
  function utf8strpas(src: pchar): string;
-  
+
 
 {---------------------------------------------------------------------------
                           Other  string handling
@@ -497,25 +497,25 @@ type
 
   {** @abstract(Returns the number of characters that are used to encode this
       character).
-      
-  }      
+
+  }
   function utf8_sizeencoding(c: utf8char): integer;
-  
+
   {** @abstract(Returns the current length of an UTF-16 string) }
   function utf16_length(const s: array of utf16char): integer;
 
   {** @abstract(Returns the current length of an UTF-8 string) }
   function utf8_length(const s: utf8string): integer;
-  
-  {** @abstract(Returns if the specified UTF-8 string is legal or not) 
-  
+
+  {** @abstract(Returns if the specified UTF-8 string is legal or not)
+
       Verifies that the UTF-8 encoded strings is encoded in a legal
-      way. 
-       
-      @returns(FALSE if the string is illegal, otherwise returns TRUE) 
+      way.
+
+      @returns(FALSE if the string is illegal, otherwise returns TRUE)
   }
   function utf8_islegal(const s: utf8string): boolean;
-  
+
   {** @abstract(Set the length of an UTF-8 string) }
   procedure utf8_setlength(var s: utf8string; l: integer);
 
@@ -526,56 +526,57 @@ type
 {---------------------------------------------------------------------------
                       Unicode Conversion routines
 -----------------------------------------------------------------------------}
-  
 
-  {** @abstract(Convert an UCS-4 string to an UTF-8 string) 
+
+  {** @abstract(Convert an UCS-4 string to an UTF-8 string)
 
       Converts an UCS-4 string or character
-      in native endian to an UTF-8 string. 
-      
+      in native endian to an UTF-8 string.
+
       @param(s Either a single UCS-4 character or a complete UCS-4 string)
       @param(outstr Resulting UTF-8 coded string)
       @returns(@link(UNICODE_ERR_OK) if there was no error in the conversion)
   }
   function convertUCS4toUTF8(s: array of ucs4char; var outstr: utf8string): integer;
-  
+
   {** @abstract(Convert an UCS-4 string to a single byte encoded string)
 
      This routine converts an UCS-4 string stored in native byte order
      (native endian) to a single-byte encoded string.
 
-     The string is limited to MAX_STRING_LENGTH characters, and if 
-     the conversion cannot be successfully be completed, it gives out an error. 
-     
+     The string is limited to MAX_STRING_LENGTH characters, and if
+     the conversion cannot be successfully be completed, it gives out an error.
+
      The following @code(desttype) can be specified: ISO-8859-1, windows-1252,
-     ISO-8859-2, ISO-8859-5, ISO-8859-16, macintosh, atari, cp437, cp850, ASCII.
-  
-      @param(desttype Indicates the single byte encoding scheme)
-      @returns(@link(UNICODE_ERR_OK) if there was no error in the conversion)
-  }  
-  function ConvertFromUCS4(const source: ucs4string; var dest: string; const desttype: string): integer;
+     ISO-8859-2, ISO-8859-5, ISO-8859-16, macintosh, atari, cp437, cp850, ASCII
+     and UTF-8.
 
-  {** @abstract(Convert a byte encoded string to an UCS-4 string)
-  
-     This routine converts a single byte encoded string to an UCS-4
-     string stored in native byte order
-     
-     Characters that cannot be converted are converted to escape 
-     sequences of the form : \uxxxxxxxx where xxxxxxxx is the hex 
-     representation of the character, an error code will also be 
-     returned by the function
-
-     The string is limited to MAX_STRING_LENGTH characters, and if 
-     the conversion cannot be successfully be completed, it gives 
-     out an error. The following @code(srctype) can be specified: 
-     ISO-8859-1, windows-1252, ISO-8859-2, ISO-8859-5, ISO-8859-16, 
-     macintosh, atari, cp437, cp850, ASCII.
-
-      @param(srctype Indicates the single byte encoding scheme)
+      @param(desttype Indicates the single byte encoding scheme - case-insensitive)
       @returns(@link(UNICODE_ERR_OK) if there was no error in the conversion)
   }
-  function ConvertToUCS4(source: string; var dest: ucs4string; const srctype: string): integer;
-  
+  function ConvertFromUCS4(const source: ucs4string; var dest: string; desttype: string): integer;
+
+  {** @abstract(Convert a byte encoded string to an UCS-4 string)
+
+     This routine converts a single byte encoded string to an UCS-4
+     string stored in native byte order
+
+     Characters that cannot be converted are converted to escape
+     sequences of the form : \uxxxxxxxx where xxxxxxxx is the hex
+     representation of the character, an error code will also be
+     returned by the function
+
+     The string is limited to MAX_STRING_LENGTH characters, and if
+     the conversion cannot be successfully be completed, it gives
+     out an error. The following @code(srctype) can be specified:
+     ISO-8859-1, windows-1252, ISO-8859-2, ISO-8859-5, ISO-8859-16,
+     macintosh, atari, cp437, cp850, ASCII.
+
+      @param(srctype Indicates the single byte encoding scheme - case-insensitive)
+      @returns(@link(UNICODE_ERR_OK) if there was no error in the conversion)
+  }
+  function ConvertToUCS4(source: string; var dest: ucs4string; srctype: string): integer;
+
   {** @abstract(Convert an UTF-16 string to an UCS-4 string)
 
       This routine converts an UTF-16 string to an UCS-4 string.
@@ -586,7 +587,7 @@ type
   function ConvertUTF16ToUCS4(src: utf16string; var dst: ucs4string): integer;
 
   {** @abstract(Convert an UCS-4 string to an UTF-16 string)
-  
+
       This routine converts an UCS-4 string to an UTF-16 string.
       Both strings must be stored in native byte order (native endian).
 
@@ -595,7 +596,7 @@ type
       @returns(@link(UNICODE_ERR_OK) if there was no error in the conversion)
   }
   function ConvertUCS4toUTF16(src: array of ucs4char; var dest: utf16string): integer;
-  
+
   {** @abstract(Convert an UTF-8 string to an UCS-4 string)
 
       This routine converts an UTF-8 string to an UCS-4 string that
@@ -606,15 +607,15 @@ type
   function ConvertUTF8ToUCS4(src: utf8string; var dst: ucs4string): integer;
 
   {** @abstract(Convert an UCS-4 string to an UCS-2 string)
-  
+
       This routine converts an UCS-4 string to an UCS-2 string that
       is stored in native byte order. If some characters
       could not be converted an error will be reported.
-      
+
       @param(src Either a single UCS-4 character or a complete UCS-4 string)
       @param(dest Resulting UCS-2 coded string)
       @returns(@link(UNICODE_ERR_OK) if there was no error in the conversion)
-  
+
   }
   function ConvertUCS4ToUCS2(src: array of ucs4char; var dst: ucs2string): integer;
 
@@ -926,33 +927,34 @@ const
   MAX_ALIAS = 26;
 
 const
+  { This list must be in uppercase characters! }
   aliaslist: array[1..MAX_ALIAS] of taliasinfo =
   (
     (aliasname: 'ISO-8859-1';table: @i8859_1toUTF32),
     (aliasname: 'ISO_8859-1';table: @i8859_1toUTF32),
-    (aliasname: 'latin1';    table: @i8859_1toUTF32),
+    (aliasname: 'LATIN1';    table: @i8859_1toUTF32),
     (aliasname: 'CP819';     table: @i8859_1toUTF32),
     (aliasname: 'IBM819';    table: @i8859_1toUTF32),
     (aliasname: 'ISO-8859-2';table: @i8859_2toUTF32),
     (aliasname: 'ISO_8859-2';table: @i8859_2toUTF32),
-    (aliasname: 'latin2';    table: @i8859_2toUTF32),
+    (aliasname: 'LATIN2';    table: @i8859_2toUTF32),
     (aliasname: 'ISO-8859-5';table: @i8859_5toUTF32),
     (aliasname: 'ISO_8859-5';table: @i8859_5toUTF32),
     (aliasname: 'ISO-8859-16';table: @i8859_16toUTF32),
     (aliasname: 'ISO_8859-16';table: @i8859_16toUTF32),
-    (aliasname: 'latin10';   table: @i8859_16toUTF32),
-    (aliasname: 'windows-1252';table: @cp1252toUTF32),
+    (aliasname: 'LATIN10';   table: @i8859_16toUTF32),
+    (aliasname: 'WINDOWS-1252';table: @cp1252toUTF32),
     (aliasname: 'IBM437';table: @cp437toUTF32),
-    (aliasname: 'cp437';table: @cp437toUTF32),
+    (aliasname: 'CP437';table: @cp437toUTF32),
     (aliasname: 'IBM850';table: @cp850toUTF32),
-    (aliasname: 'cp850';table: @cp850toUTF32),
-    (aliasname: 'macintosh';table: @RomantoUTF32),
-    (aliasname: 'MacRoman';table: @RomantoUTF32),
-    (aliasname: 'atari';table: @AtariSTtoUTF32),
+    (aliasname: 'CP850';table: @cp850toUTF32),
+    (aliasname: 'MACINTOSH';table: @RomantoUTF32),
+    (aliasname: 'MACROMAN';table: @RomantoUTF32),
+    (aliasname: 'ATARI';table: @AtariSTtoUTF32),
     (aliasname: 'ASCII';table: @ASCIItoUTF32),
     (aliasname: 'US-ASCII';table: @ASCIItoUTF32),
     (aliasname: 'IBM367';table: @ASCIItoUTF32),
-    (aliasname: 'cp367';table: @ASCIItoUTF32),
+    (aliasname: 'CP367';table: @ASCIItoUTF32),
     (aliasname: 'ISO646-US';table: @ASCIItoUTF32)
   );
 
@@ -1110,7 +1112,7 @@ const
           dec(OutIndex);
           outstr[outindex] := utf8char((byte(ch) or byte(FirstbyteMark[BytesToWrite])));
         end;  
-        inc(OutStringLength);
+        inc(OutStringLength,BytesToWrite);
         Inc(OutIndex,BytesToWrite);
       end;      
       utf8_setlength(outstr,OutStringLength);
@@ -1168,7 +1170,7 @@ const
   
 
   
-  function ConvertFromUCS4(const source: ucs4string; var dest: string; const desttype: string): integer;
+  function ConvertFromUCS4(const source: ucs4string; var dest: string; desttype: string): integer;
   var
    i: integer;
    j: char;
@@ -1179,42 +1181,43 @@ const
     dest:='';
     ConvertFromUCS4:=UNICODE_ERR_OK;  
     p:=nil;
-    for i:=1 to MAX_ALIAS do
-      begin
-        if aliaslist[i].aliasname = desttype then
+    desttype:=upstring(desttype);
+        for i:=1 to MAX_ALIAS do
           begin
-            p:=aliaslist[i].table;
-          end;
-      end;
-    if not assigned(p) then
-      begin
-        ConvertFromUCS4:=UNICODE_ERR_NOTFOUND;  
-        exit;
-      end;
-    { for each character in the UCS-4 string ... }  
-    sourcelength:=ucs4_length(source);
-    for i:=1 to sourcelength do
-      begin
-        found:=false;
-        { search the table by reverse lookup }
-        for j:=#0 to high(char) do 
-          begin     
-            if ucs4char(source[i]) = ucs4char(p^[j]) then
+            if aliaslist[i].aliasname = desttype then
               begin
-                dest:=dest+j;
-                found:=true;
-                break;
+                p:=aliaslist[i].table;
               end;
           end;
-        if not found then
+        if not assigned(p) then
           begin
-            dest:=dest+'\u'+hexstr(source[i],8);
-            ConvertFromUCS4:=UNICODE_ERR_INCOMPLETE_CONVERSION;
+            ConvertFromUCS4:=UNICODE_ERR_NOTFOUND;  
+            exit;
           end;
-      end;
+        { for each character in the UCS-4 string ... }  
+        sourcelength:=ucs4_length(source);
+        for i:=1 to sourcelength do
+            begin
+              found:=false;
+              { search the table by reverse lookup }
+              for j:=#0 to high(char) do 
+                begin     
+                  if ucs4char(source[i]) = ucs4char(p^[j]) then
+                    begin
+                      dest:=dest+j;
+                      found:=true;
+                      break;
+                    end;
+                end;
+              if not found then
+                begin
+                  dest:=dest+'\u'+hexstr(source[i],8);
+                  ConvertFromUCS4:=UNICODE_ERR_INCOMPLETE_CONVERSION;
+                end;
+            end;
   end;
   
-  function ConvertToUCS4(source: string; var dest: ucs4string; const srctype: string): integer;
+  function ConvertToUCS4(source: string; var dest: ucs4string; srctype: string): integer;
   var
    i: integer;
    l: longint;
@@ -1223,6 +1226,7 @@ const
   begin
     ConvertToUCS4:=UNICODE_ERR_OK;
     source:=removenulls(source);
+    srctype:=upstring(srctype);
     p:=nil;
     { Check if we have a null length, then set the length and exit }
     if length(source) = 0 then
@@ -1769,7 +1773,7 @@ end;
      end;
     for i:=1 to MAX_ALIAS do
     begin
-      if upstring(aliaslist[i].aliasname) = s then
+      if aliaslist[i].aliasname = s then
       begin
          ucs4_issupported := true;
          exit;
@@ -2016,7 +2020,7 @@ end;
    UCS4StrPosISO8859_1 := nil;
  end;
 
- function ucs4strnewstr(str: string; const srctype: string): pucs4char;
+ function ucs4strnewstr(str: string; srctype: string): pucs4char;
   var
    i: integer;
    dest: pucs4strarray;
@@ -2031,6 +2035,7 @@ end;
   begin
     str:=removenulls(str);
     ucs4strnewstr:=nil;
+    srctype:=upstring(srctype);
     dest:=nil;
     p:=nil;
     { Check if we have an empty string }
@@ -2206,7 +2211,7 @@ end;
   dest:=outstr;
  end;
 
- function ucs4strnew(str: pchar; const srctype: string): pucs4char;
+ function ucs4strnew(str: pchar; srctype: string): pucs4char;
   var
    i: integer;
    dest: pucs4strarray;
@@ -2221,6 +2226,7 @@ end;
   begin
     ucs4strnew:=nil;
     dest:=nil;
+    srctype:=upstring(srctype);
     p:=nil;
     if not assigned(str) then exit;
     { Just a simple null character to add }
@@ -3184,6 +3190,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.22  2004/11/21 19:53:59  carl
+    * 10-25% speed optimizations (change some parameter types to const, code folding)
+
   Revision 1.21  2004/11/09 03:51:42  carl
     + ucs4strtrim
 
