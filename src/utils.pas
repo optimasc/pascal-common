@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: utils.pas,v 1.7 2004-08-01 05:33:49 carl Exp $
+    $Id: utils.pas,v 1.8 2004-08-19 00:25:10 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Common utilities
@@ -179,6 +179,11 @@ CONST
   
 
 function fillwithzero(s: string; newlength: integer): string;
+
+  {** Remove all null characters from a string.
+  }
+function removenulls(s: string): string;  
+
 
 Implementation
 
@@ -398,6 +403,27 @@ Const WhiteSpace = [' ',#10,#13,#9];
 {$I+}
 {$ENDIF}
      end;
+     
+ function removenulls(s: string): string;  
+ var
+  outstr: string;
+  i,j: integer;
+ begin
+  { Allocate at least enough memory if using ansistrings }
+  setlength(outstr,length(s));
+  j:=1;
+  for i:=1 to length(s) do
+    begin
+      if s[i] <> #0 then
+      begin
+        outstr[j]:=s[i];
+        inc(j);
+      end;
+    end;
+  setlength(outstr,j-1);
+  removenulls:=outstr;
+ end;
+     
 
 
 (*************************************************************************)
@@ -789,6 +815,9 @@ end;
 end.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.7  2004/08/01 05:33:49  carl
+   - remove uppercase routine (use upstring instead)
+
   Revision 1.6  2004/07/15 01:01:07  carl
     + unsigned decimal conversion
 
