@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: sgml.pas,v 1.3 2004-10-31 19:50:57 carl Exp $
+    $Id: sgml.pas,v 1.4 2004-11-29 03:45:03 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere (Optima SC Inc.)
 
     SGML related utility routines
@@ -28,7 +28,8 @@ uses
  tpautils,
  fpautils,
  vpautils,
- dpautils;
+ dpautils,
+ unicode;
 
  
 
@@ -43,13 +44,21 @@ uses
 function SGMLGetDTDInfo(s: string; var top_element,availability,fpi: string): boolean;
 
 {** Parses and returns the name of an attribute as well as
-    its value. Works with both SGML and XML syntax. }
+    its value. Works with both SGML and XML syntax, assumes
+    UTF-8 or SIO encoded characters }
 procedure SGMLGetAttributeValue(attr: string; var name,value: string);
+
+{** Parses and returns the name of an attribute as well as
+    its value. Works with both SGML and XML syntax. }
+procedure SGMLGetAttributeValueUCS4String(attr: ucs4string; var name,value: ucs4string);
 
 {** Convert a string possibly containing main SGML/HTML/XML entities to 
     its ISO-8859-1 representation }    
 function SGMLEntitiesToISO8859_1(s: string): string;
 
+{** Convert an UCS-4 string possibly containing main SGML/HTML/XML entities to 
+    its UCS-4 string representation }    
+procedure SGMLEntitiesToUCS4String(instr: ucs4string; var outstr:ucs4string);
 
 
 
@@ -304,6 +313,40 @@ end;
      inc(i);
     end;
   end;
+  
+  { Returns the string value enclosed either in single quotes or double
+    quotes. Scraps the rest of the string.
+  }
+  procedure SGMLGetQuotedValueUCS4String(var resultstr: ucs4string; s:ucs4string);
+  var
+   i: integer;
+   { this is the character which started the quote }
+   c: ucs4char;
+  begin
+    ucs4_setlength(resultstr,0);
+    i:=1;
+    c:=ucs4char(#0);
+    while i <= ucs4_length(s) do
+    begin
+     if (c = 0) and (char(s[i]) = '''') then
+       c:=ucs4char('''')
+     else
+     if (c = 0) and (char(s[i]) = '"') then
+       c:=ucs4char('"')
+     else
+     if (c <> 0) then
+       begin
+         { end of quoted string }
+         if s[i] = c then
+         begin
+            exit;
+         end;
+         ucs4_concat(resultstr,resultstr,s[i]);
+       end;
+     inc(i);
+    end;
+  end;
+  
 
 procedure SGMLGetAttributeValue(attr: string; var name,value: string);
 var
@@ -324,6 +367,27 @@ begin
        value:=attr;
    end;
 end;
+
+procedure SGMLGetAttributeValueUCS4String(attr: ucs4string; var name,value: ucs4string);
+var
+ index: integer;
+begin
+ index:=ucs4_posascii('=',attr);
+ ucs4_setlength(name,0);
+ ucs4_setlength(value,0);
+ if index <> 0 then
+   begin
+    ucs4_copy(name,attr,1,index-1);
+    ucs4_delete(attr,1,index);
+    ucs4_trim(attr);
+    if (ucs4_posascii('"',attr)=1) or (ucs4_posascii('''',attr)=1) then
+       SGMLGetQuotedValueUCS4String(value,attr)
+    else
+       value:=attr;
+   end;
+end;
+
+
 
 function SGMLEntitiesToISO8859_1(s: string): string;
 var
@@ -437,9 +501,123 @@ begin
 end;
 
 
+procedure SGMLEntitiesToUCS4String(instr: ucs4string; var outstr:ucs4string);
+var
+ i: integer;
+ j: integer;
+ entitystr: ucs4string;
+ asciientitystr: string;
+ inentity: boolean;
+ code: integer;
+ value: longint;
+ found: boolean;
+ c: ucs4char;
+begin
+  UCS4_SetLength(outstr,0);
+  UCS4_SetLength(entitystr,0);
+  i:=1;
+  inentity:=false;
+  while i <= ucs4_length(instr) do
+  begin
+    case char(instr[i]) of
+    '&':
+          begin
+            inentity:=true;
+            inc(i);
+          end;
+    ';':
+          begin
+            if inentity then
+              begin
+                inentity:=false;
+                if (ucs4_length(entitystr) = 0) then
+                  begin
+                    inc(i);
+                    continue;
+                  end;
+                { Check the type of entity we have }
+                if (entitystr[1] = ucs4char('#')) and (char(entitystr[2]) in ['X','x']) then
+                  begin
+                    { Hexadecimal representation }
+                    ucs4_delete(entitystr,1,2);
+                    ConvertFromUCS4(entitystr,asciientitystr,'ASCII');
+                    value:=ValHexaDecimal(asciientitystr,code);
+                    if (code = 0) then
+                      begin
+                        ucs4_concat(outstr,outstr,ucs4char(value));
+                      end;
+                  end
+                else
+                if (entitystr[1] = ucs4char('#')) and not (char(entitystr[2]) in ['X','x']) then
+                  begin
+                    { Decimal representation }
+                    ucs4_delete(entitystr,1,1);
+                    ConvertFromUCS4(entitystr,asciientitystr,'ASCII');
+                    value:=ValDecimal(asciientitystr,code);
+                    if (code = 0) then
+                      begin
+                        ucs4_concat(outstr,outstr,ucs4char(value));
+                      end;
+                  end
+                else
+                  begin
+                    found:=false;
+                    ConvertFromUCS4(entitystr,asciientitystr,'ASCII');
+                    { Entity reference - search the tables }
+                    { now search the entity lists and convert them to characters }
+                    for j:=MIN_ENTITIES to MAX_ENTITIES do
+                      begin
+                        if main_entities[j] = asciientitystr then
+                          begin
+                            c:=ucs4char(j);
+                            ucs4_concat(outstr,outstr,c);
+                            found:=true;
+                            break;
+                          end;
+                      end;
+                    { special entities search? }
+                    if not found then
+                      begin
+                        for j:=MIN_EXTRA_ENTITIES to MAX_EXTRA_ENTITIES do
+                           begin
+                             if extra_entities[j].name = asciientitystr then
+                               begin
+                                 value:=extra_entities[j].numeric;
+                                 ucs4_concat(outstr,outstr,ucs4char(value));
+                                 break;
+                               end;
+                           end;
+                      end;
+                  end;
+               { reset entity string }
+               ucs4_setlength(entitystr,0);
+              end { if inentity }
+            else
+                ucs4_concat(outstr,outstr,instr[i]);
+            inc(i);
+          end; { end switch case }
+    else
+      begin
+        { Fill up either the result string or the entity value }
+        if not inentity then
+           ucs4_concat(outstr,outstr,instr[i])
+        else
+           ucs4_concat(entitystr,entitystr,instr[i]);
+        inc(i);
+      end;
+    end;
+  end;
+end;
+
+
+
+
 end.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.3  2004/10/31 19:50:57  carl
+    * range check error bugfix
+
   Revision 1.2  2004/10/27 02:00:19  carl
     * bugfix with infinit loop when validating the Doctype declaration
 
