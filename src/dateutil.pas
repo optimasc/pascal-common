@@ -1,5 +1,5 @@
 {
-    $Id: dateutil.pas,v 1.5 2004-11-23 03:44:53 carl Exp $
+    $Id: dateutil.pas,v 1.6 2004-11-29 03:50:24 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere (Optima SC Inc.)
 
     Date and time utility routines
@@ -24,6 +24,8 @@
     compilers (Internally TDateTime is stored as a Julian date)
     3. The milliseconds field is only an approximation, and should not
     be considered as accurate.
+    4. Becasue everything is coded with floats, the seconds field has
+    a precision of +/- 2 seconds.
 
     All dates are assumed to be in Gregorian calendar date
     format (This is a proleptic Gregorian calendar unit).
@@ -46,6 +48,13 @@ uses
 type
  {** This is the Julian Day number }
  TDatetime = real;
+ {** Useful structure that contains additional information on a date and time }
+ TDateInfo = record
+   {** Actual date and time value *}
+   DateTime: TDateTime;
+   {** Is this value local or according to UTC? }
+   UTC: boolean;
+ end;
 
  float = real;
  
@@ -827,6 +836,228 @@ end;
   end;
 
 
+function RFC822ToISODateTime(s:string): string;
+type
+ TRFC822ZoneInfo = record
+   name: string[3];
+   offsetstr: string[6];
+ end;
+
+const
+ RFC822DayString: array[1..7] of string[3] =
+  ('Mon','Tue','Wed','Thu','Fri','Sat','Sun');
+ RFC822MonthString: array[1..12] of string[3] =
+ ('Jan','Feb','Mar','Apr','May','Jun','Jul',
+  'Aug','Sep','Oct','Nov','Dec');
+ RFC822_TIME_SEPARATOR = ':';
+ MAX_RFC822_ZONE_INFO = 15;
+ RFC822ZoneInfo: array[1..MAX_RFC822_ZONE_INFO] of TRFC822ZoneInfo =
+ (
+   { The wrong values are kept as stated in RFC 1123 for backward
+     compatibility, even if the decoded date and time will be
+     invalid
+   }
+   (name:  'UT';offsetstr:'+00:00'),
+   (name: 'GMT';offsetstr:'+00:00'),
+   (name: 'EST';offsetstr:'-05:00'),
+   (name: 'EDT';offsetstr:'-04:00'),
+   (name: 'CST';offsetstr:'-06:00'),
+   (name: 'CDT';offsetstr:'-05:00'),
+   (name: 'MST';offsetstr:'-07:00'),
+   (name: 'MDT';offsetstr:'-06:00'),
+   (name: 'PST';offsetstr:'-08:00'),
+   (name: 'PDT';offsetstr:'-07:00'),
+   (name:   'Z';offsetstr:'+00:00'),
+   (name:   'A';offsetstr:'-01:00'),  { RFC 1123 states that this value is wrong }
+   (name:   'M';offsetstr:'-12:00'),  { RFC 1123 states that this value is wrong }
+   (name:   'N';offsetstr:'+01:00'),  { RFC 1123 states that this value is wrong }
+   (name:   'Y';offsetstr:'+12:00')   { RFC 1123 states that this value is wrong }
+ );
+
+var
+ i: integer;
+ index:integer;
+ found: boolean;
+ DayDigits,YearDigits: string[4];
+ HourDigits,MinuteDigits: string[4];
+ SecondDigits: string[4];
+ MonthStr: string[4];
+ OffsetStr: string[12];
+ Day,Month,Hours,Minutes,Seconds,Year: integer;
+ code: integer;
+ ISODateString,ISOTimeString: string[16];
+begin
+ RFC822ToISODateTime:='';
+ { Check if [ Day ","] is present }
+ index:=pos(',',s);
+ { Remove all these parts as we do not need them }
+ if index <> 0 then
+   delete(s,1,index);
+ s:=trim(s);
+ if length(s) = 0 then
+   exit;
+ {************************ DATE ***************************}
+ { 1*2 DIGIT DAY VALUE }
+ i:=1;
+ DayDigits:='';
+ while s[i] in ['0'..'9'] do
+   begin
+     { Hmm.. invalid date/time format }
+     if i > length(s) then exit;
+     DayDigits:=DayDigits+s[i];
+     inc(i);
+   end;
+ { Maximum 2 digits for the day, as defined in RFC 822 }
+ if (length(DayDigits) > 2) or (length(DayDigits) = 0) then
+   exit;
+ { Now delete those digits }
+ delete(s,1,i-1);
+ i:=1;
+ { Now we should have the 'month' string }
+ s:=trim(s);
+ found:=false;
+ for i:=1 to 12 do
+  begin
+    index:=pos(RFC822MonthString[i],s);
+    if index = 1 then
+      begin
+        found:=true;
+        month:=i;
+        break;
+      end;
+  end;
+ { No month string, so this is not a valid RFC822 date }
+ if not found then
+   exit;
+ { Now remove the month string }
+ delete(s,1,3);
+ s:=trim(s);
+ i:=1;
+ YearDigits:='';
+ while s[i] in ['0'..'9'] do
+   begin
+     { Hmm.. invalid date/time format }
+     if i > length(s) then exit;
+     YearDigits:=YearDigits+s[i];
+     inc(i);
+   end;
+ { Maximum 4 digits for the year, as defined in RFC 1123 }
+ if (length(YearDigits) > 4) or (length(YearDigits) = 0) then
+   exit;
+ { If the length is on two digits, we are in the 20th century }
+ if length(YearDigits) = 2 then
+   YearDigits:='19'+YearDigits;
+ { Delete the year digits }
+ delete(s,1,i-1);
+ {************************ TIME ***************************}
+ s:=trim(s);
+ i:=1;
+ HourDigits:='';
+ while s[i] in ['0'..'9'] do
+   begin
+     { Hmm.. invalid date/time format }
+     if i > length(s) then exit;
+     HourDigits:=HourDigits+s[i];
+     inc(i);
+   end;
+ if length(HourDigits) <> 2 then
+   exit;
+ delete(s,1,i-1);
+ if s[1] <> RFC822_TIME_SEPARATOR then
+   exit;
+ delete(s,1,1);
+ { The minutes are present here }
+ i:=1;
+ MinuteDigits:='';
+ while s[i] in ['0'..'9'] do
+   begin
+     { Hmm.. invalid date/time format }
+     if i > length(s) then exit;
+     MinuteDigits:=MinuteDigits+s[i];
+     inc(i);
+   end;
+ if length(MinuteDigits) <> 2 then
+   exit;
+ { Check if the seconds are present here }
+ SecondDigits:='';
+ delete(s,1,i-1);
+ if s[1] = RFC822_TIME_SEPARATOR then
+   begin
+      delete(s,1,1);
+      i:=1;
+      while s[i] in ['0'..'9'] do
+        begin
+         { Hmm.. invalid date/time format }
+         if i > length(s) then exit;
+         SecondDigits:=SecondDigits+s[i];
+         inc(i);
+       end;
+     if length(SecondDigits)<>2 then exit;
+     delete(s,1,i);
+   end;
+ {************************ TZ INFO ***************************}
+ s:=trim(s);
+ { Check if we have timezone information as a string }
+ found:=false;
+ OffsetStr:='';
+ { Check if we have a form +/- HHMM }
+ if s[1] in ['+','-'] then
+   begin
+      offsetstr:=s[1];
+      found:=true;
+      i:=2;
+      while s[i] in ['0'..'9'] do
+        begin
+         { Hmm.. invalid date/time format }
+         if i > length(s) then break;
+         offsetstr:=offsetstr+s[i];
+         inc(i);
+       end;
+      { The string must be of the form +/-HHMM }
+      if length(offsetstr) <> 5 then
+        exit;
+      { Add the separators to this string }
+      insert(':',offsetstr,4);
+   end;
+ { Check for string timezone information }
+ if not found then
+   begin
+     for i:=1 to MAX_RFC822_ZONE_INFO do
+       begin
+         if s = RFC822ZoneInfo[i].name then
+           begin
+            found:=true;
+            offsetstr:=RFC822ZoneInfo[i].offsetstr;
+            break;
+           end;
+       end;
+  end;
+  if not found then exit;
+  {********************** Everything should be setup here ******************}
+  { Convert the month information }
+  MonthStr:=decstr(Month,2);
+  Day:=ValDecimal(DayDigits,code) and $ff;
+  if code <> 0 then
+    exit;
+  Year:=ValDecimal(YearDigits,code) and $ffff;
+  if code <> 0 then
+    exit;
+  Hours:=ValDecimal(HourDigits,code) and $ff;
+  if code <> 0 then
+    exit;
+  Minutes:=ValDecimal(MinuteDigits,code) and $ff;
+  if code <> 0 then
+    exit;
+  Seconds:=ValDecimal(SecondDigits,code) and $ff;
+  if code <> 0 then
+    exit;
+  { Create the ISO 8601 string }
+  ISODateString:=DecStr(Year,4)+'-'+DecStr(Month,2)+'-'+DecStr(Day,2);
+  ISOTimeString:='T'+DecStr(Hours,2)+':'+DecStr(Minutes,2)+':'+DecStr(Seconds,2)+offsetstr;
+
+  RFC822ToISODateTime:=ISODateString+ISOTimeString;
+end;
+
 
 {**************************************************************************}
 
@@ -1191,6 +1422,9 @@ end;
 end.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.5  2004/11/23 03:44:53  carl
+    * fixes for compilation with Virtual Pascal 2.x
+
   Revision 1.4  2004/10/31 19:52:50  carl
     * TryStrToDateTime would not accept Dates only
     + Add support fore PDF, Openoffice HTML date parsing

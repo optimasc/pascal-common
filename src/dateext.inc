@@ -12,11 +12,13 @@ var
  MSecVal: word;
  error: boolean;
  outs: string;
+ s1: string;
 begin
   error:=false;
   TryStrToDateTimeExt:=false;
   MSecVal:=0;
   utc:=false;
+  Value:=0;
   { Check for complete ISO 8601 string }
   idx:=pos('T',s);
   if idx <> 0 then
@@ -27,16 +29,20 @@ begin
          error:=true;
       if not parsedateISO(datestring,yearval,monthval,dayval) then
          error:=true;
-      Value:=datetojd(Yearval,Monthval,Dayval,HourVal,MinVal,SecVal,MSecval);
-      { Convert to UTC if required }
-      if (offsethourval <> 0) or (offsetminval <> 0) then
-        utc:=true;
-      Value:=IncHour(Value,offsethourval);
-      Value:=IncMinute(Value,offsetminval);
-      if not error then
+      if IsValidDateTime(YearVal,MonthVal,DayVal,HourVal,Minval,SecVal,MSecVal) then
         begin
-          TryStrToDatetimeExt:=true;
-          exit;
+          Value:=datetojd(Yearval,Monthval,Dayval,HourVal,MinVal,SecVal,MSecval);
+
+         { Convert to UTC if required }
+         if (offsethourval <> 0) or (offsetminval <> 0) then
+           utc:=true;
+         Value:=IncHour(Value,offsethourval);
+         Value:=IncMinute(Value,offsetminval);
+        end;
+         if not error then
+           begin
+             TryStrToDatetimeExt:=true;
+             exit;
         end;
     end;
   { Check for non-standard string with space that separates the date
@@ -56,16 +62,20 @@ begin
          error:=true;
       if not parsedateISO(datestring,yearval,monthval,dayval) then
          error:=true;
-      Value:=datetojd(Yearval,Monthval,Dayval,HourVal,MinVal,SecVal,MSecval);
-      { Convert to UTC if required }
-      if (offsethourval <> 0) or (offsetminval <> 0) then
-        utc:=true;
-      Value:=IncHour(Value,offsethourval);
-      Value:=IncMinute(Value,offsetminval);
-      if not error then
+      if IsValidDateTime(YearVal,MonthVal,DayVal,HourVal,Minval,SecVal,MSecVal) then
         begin
-         TryStrToDatetimeExt:=true;
-         exit;
+
+          Value:=datetojd(Yearval,Monthval,Dayval,HourVal,MinVal,SecVal,MSecval);
+          { Convert to UTC if required }
+          if (offsethourval <> 0) or (offsetminval <> 0) then
+             utc:=true;
+          Value:=IncHour(Value,offsethourval);
+          Value:=IncMinute(Value,offsetminval);
+          if not error then
+            begin
+             TryStrToDatetimeExt:=true;
+             exit;
+            end;
         end;
     end;
   { Openoffice HTML output date/time format }
@@ -81,16 +91,19 @@ begin
          error:=true;
       if not parsedateISO(datestring,yearval,monthval,dayval) then
          error:=true;
-      Value:=datetojd(Yearval,Monthval,Dayval,HourVal,MinVal,SecVal,MSecval);
-      { Convert to UTC if required }
-      if (offsethourval <> 0) or (offsetminval <> 0) then
-        utc:=true;
-      Value:=IncHour(Value,offsethourval);
-      Value:=IncMinute(Value,offsetminval);
-      if not error then
+      if IsValidDateTime(YearVal,MonthVal,DayVal,HourVal,Minval,SecVal,MSecVal) then
         begin
-         TryStrToDatetimeExt:=true;
-         exit;
+          Value:=datetojd(Yearval,Monthval,Dayval,HourVal,MinVal,SecVal,MSecval);
+          { Convert to UTC if required }
+          if (offsethourval <> 0) or (offsetminval <> 0) then
+             utc:=true;
+          Value:=IncHour(Value,offsethourval);
+          Value:=IncMinute(Value,offsetminval);
+          if not error then
+            begin
+              TryStrToDatetimeExt:=true;
+              exit;
+            end;
         end;
     end;
   { PDF date/time format }
@@ -106,6 +119,22 @@ begin
           TryStrToDatetimeExt:=true;
           exit;
         end;
+    end;
+  { RFC 822/RFC 1123 Date/Time format}
+  utc:=false;
+  error:=false;
+  { Convert to an ISO date }
+  if length(outs) <> 0 then
+    begin
+     s1:=RFC822ToISODateTime(outs);
+     if s1 <> '' then
+       begin
+         if TryStrToDateTimeExt(s1,value,utc) then
+           begin
+              TryStrToDatetimeExt:=true;
+              exit;
+           end;
+       end;
     end;
   { ISO 8601 date only }
   datestring:=outs;
@@ -130,7 +159,7 @@ begin
     end;
 end;
 
-  
+
 {  See documentation in header file }
 function TryEncodeDateAndTimeToStr(const Year, Month, Day, Hour, Minute, Second, MilliSecond: 
   word; UTC: boolean; var AValue: string):boolean;
@@ -184,10 +213,60 @@ begin
   Sec100:=integer(aSec100);
 end;
 
+function TryUNIXToDateTimeExt(unixtime: big_integer_t; var DateTime: TDateTime; var UTC: boolean): boolean;
+var
+  year,month,day,minute,hour,second: word;
+begin
+  utc:=true;
+  Locale.UNIXToDateTime(unixtime, year,month,day,minute,hour,second);
+  TryUNIXToDateTimeExt:=TryEncodeDateTime(Year, Month, Day, Hour, Minute, Second, 0,
+   DateTime);
+end;
 
+function TryFileTimeToDateTimeExt(ftime: tfiletime; var DateTime: TDateTime; var UTC: boolean): boolean;
+var
+  julianday: float;
+  d: float;
+  fracvalue:float;
+  HighDateTime: float;
+begin
+  utc:=true;
+  TryFileTimeToDateTimeExt:=false;
+  { Check if the format of the data is actually encoded as signed value }
+  if (Low(ftime.LowDateTime)<0) and (ftime.LowDateTime < 0) then
+    begin
+      exit;
+    end
+  else
+  julianday:=ftime.LowDateTime;
+  if (Low(ftime.HighDateTime)<0) and (ftime.HighDateTime < 0) then
+    begin
+      exit;
+    end
+  else
+    HighDateTime:=ftime.HighDateTime;
+
+  julianday:=julianday+(HighDateTime*4294967295.0);
+  d:=julianday / 864000000000.0 + 2305813.5;
+  { Now do some adjustements so that the seconds are valid.
+    How do we do this? Well simple, we only keep two digits
+    for the hour, minute and seconds parts. }
+  fracvalue:=frac(d);
+  fracvalue:=fracvalue*10000.0;
+  { Round up or down the .00X digit }
+  fracvalue:=round(fracvalue);
+  d:=int(d);
+  { Re-add these digits to the resulting floating point value }
+  d:=d+(fracvalue / 10000.0);
+  DateTime:=d;
+  TryFileTimeToDateTimeExt:=true;
+end;
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.2  2004/11/23 03:44:51  carl
+    * fixes for compilation with Virtual Pascal 2.x
+
   Revision 1.1  2004/10/31 19:53:06  carl
     + Add support for extended format conversion (Ext routines)
 

@@ -2,6 +2,14 @@
 { These are extensions to the standard Delphi dateutil unit interface  }
 {**********************************************************************}
 
+type
+  {** Win32 FILETIME timestamp }
+  tfiletime = packed record
+    LowDateTime: longword;
+    HighDateTime: longword;
+  end;
+
+
 {** Returns Year, Month, Day, Hour, Minute, Second, and Millisecond values for a TDateTime.
     This routine uses extended format which permits negative years.
 }
@@ -10,7 +18,7 @@
 {** Returns Year, Month, and Day values for a TDateTime value. This is
     the same as DecodeDateExt except that it also permits years in
     the negative range.
-}    
+}
 {procedure DecodeDateExt(Date: TDateTime; var Year, Month, Day: integer);}
 
 
@@ -70,13 +78,40 @@ procedure GetCurrentDate(var Year,Month,Day,DayOfWeek: integer);
 
 {** @abstract(Returns the current time set in the operating system) 
 
-   Ranges of the values returned are Hour 0..23, Minute 0..59, 
+   Ranges of the values returned are Hour 0..23, Minute 0..59,
    Second 0..60, Sec100 0..99.
 }
 procedure GetCurrentTime(var Hour,Minute,Second,Sec100: integer);
 
+{ @abstract(Converts a UNIX time_t to a DateTime)
+
+  This routine converts a UNIX time_t format time into a
+  TDateTime format. The time_t is always according to UTC,
+  so the UTC value shall always return TRUE.
+  
+  On Turbo Pascal and Virtual Pascal this routine shall fail
+  with all values greater that represent years greater than
+  2038.
+}
+function TryUNIXToDateTimeExt(unixtime: big_integer_t; var DateTime: TDateTime; var UTC: boolean): boolean;
+
+{ @abstract(Converts a Win32 FILETIME to a DateTime)
+
+  This routine converts a 64-bit FILETIME format time into a
+  TDateTime format. The time_t is always according to UTC,
+  so the UTC value shall always return TRUE. Because floating
+  point values are used, the precision of the returned timestamp
+  will be +/- 2 seconds.
+
+}
+function TryFileTimeToDateTimeExt(ftime: tfiletime; var DateTime: TDateTime; var UTC: boolean): boolean;
+
+
 {
   $Log: not supported by cvs2svn $
+  Revision 1.2  2004/11/23 03:44:53  carl
+    * fixes for compilation with Virtual Pascal 2.x
+
   Revision 1.1  2004/10/31 19:53:07  carl
     + Add support for extended format conversion (Ext routines)
 
