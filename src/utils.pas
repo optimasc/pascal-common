@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: utils.pas,v 1.12 2004-09-13 02:41:57 carl Exp $
+    $Id: utils.pas,v 1.13 2004-10-27 02:01:11 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Common utilities
@@ -120,7 +120,9 @@ CONST
   
   function CompareByte(buf1,buf2: pchar;len:longint):integer;
    
-   
+ {** @abstract(Trim removes leading and trailing spaces and control 
+     characters from the given string S)}
+  function Trim(const S: string): string; 
   
   {** 
      @abstract(Format a string and print it out to the console)
@@ -191,12 +193,12 @@ function fillwithzero(s: string; newlength: integer): string;
   }
 function removenulls(s: string): string;  
 
+Const WhiteSpace = [' ',#10,#13,#9];
 
 Implementation
 
 uses dos;
 
-Const WhiteSpace = [' ',#10,#13,#9];
 
 
   Function RemoveUpToNull(const s: string): string;
@@ -564,6 +566,14 @@ begin
   decstrunsigned:=fillwithzero(s,cnt);
 end;
 
+function Trim(const S: string): string; 
+var
+ s1: string;
+begin
+  s1:=TrimLeft(s);
+  s1:=TrimRight(s1);
+  Trim:=s1;
+end;
 
 
 {   TrimLeft returns a copy of S with all blank characters on the left stripped off  }
@@ -845,6 +855,9 @@ end;
 end.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.12  2004/09/13 02:41:57  carl
+    + DirectoryExists routine
+
   Revision 1.11  2004/09/06 19:40:24  carl
     * clear IOResult before using I/O routines in FileExists
 
