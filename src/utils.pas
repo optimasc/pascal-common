@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: utils.pas,v 1.4 2004-06-20 18:49:40 carl Exp $
+    $Id: utils.pas,v 1.5 2004-07-05 02:25:45 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Common utilities
@@ -17,6 +17,17 @@
 Unit utils;
 
 Interface
+ {==== Compiler directives ===========================================}
+ {$X+} { Extended syntax }
+ {$V-} { Strict VAR strings }
+ {$P-} { Implicit open strings }
+ {$T-} { Typed pointers }
+ {$IFNDEF TP}
+ {$J+} { Writeable constants }
+ {$ENDIF}
+ {====================================================================}
+
+
 
 uses
  tpautils,
@@ -26,12 +37,8 @@ uses
  gpautils,
  objects
  ;
-
-{$IFNDEF TP}
-{$H-}
-{$ENDIF}
-
-
+ 
+ 
 TYPE
     PshortString = ^ShortString;
 
@@ -732,8 +739,6 @@ begin
 end;
 
 function CompareByte(buf1,buf2: pchar;len:longint):integer;
-type
-  bytearray    = array [0..high(word)-1] of byte;
 var
   I : longint;
 begin
@@ -762,6 +767,9 @@ end;
 end.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.4  2004/06/20 18:49:40  carl
+    + added  GPC support
+
   Revision 1.3  2004/06/17 11:46:54  carl
     + CompareByte routine
 
