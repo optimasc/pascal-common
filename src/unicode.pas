@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: unicode.pas,v 1.5 2004-06-20 18:49:39 carl Exp $
+    $Id: unicode.pas,v 1.6 2004-07-01 22:27:15 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Unicode related routines
@@ -18,10 +18,10 @@
     This unit contains routines to convert
     between the different unicode encoding
     schemes.
-    
+
     All UNICODE/ISO 10646 strings are limited to
     255 characters.
-    
+
     Since all these encoding are variable length,
     except the UTF-32 (which is equivalent to UCS-4 according to 
     ISO 10646:2003) and UCS-2 encoding, to parse through characters, 
@@ -42,6 +42,7 @@ uses
   fpautils,
   utils;
 
+
 type
   {** UTF-8 base data type }
   utf8 = char;
@@ -49,13 +50,15 @@ type
   utf16 = word;
   {** UTF-32 base data type }
   utf32 = longword;
+  {** UTF-32 string null terminated string }
+  putf32char = ^utf32;
   {** UCS-2 base data type }
-  ucs2 = word;
+  ucs2char = word;
   
   {** UCS-2 string declaration. Index 0 contains the active length
       of the string in characters.
   }
-  ucs2string = array[0..255] of ucs2;
+  ucs2string = array[0..255] of ucs2char;
   {** UTF-32 string declaration. Index 0 contains the active length
       of the string in characters.
   }
@@ -71,6 +74,9 @@ type
   utf16string = array[0..255] of utf16;
 
 const
+   {** Maximum size of a null-terminated UTF-32 character string }
+   MAX_UTF32_CHARS = high(smallint) div (sizeof(utf32));
+
   {** Return status: conversion successful }
   UNICODE_ERR_OK =     0;
   {** Return status: source sequence is illegal/malformed }
@@ -81,7 +87,7 @@ const
   UNICODE_ERR_INCOMPLETE_CONVERSION = -3;
   {** Return status: The character set is not found }
   UNICODE_ERR_NOTFOUND = -4;
-  
+
   {** Byte order mark: UTF-8 encoding signature }
   BOM_UTF8     = #$EF#$BB#$BF;
   {** Byte order mark: UTF-32 big endian encoding signature }
@@ -93,7 +99,7 @@ const
   BOM_UTF16_LE = #$FF#$FE;
   
     
-  
+
 
 {---------------------------------------------------------------------------
                           UTF-32 string handling
@@ -101,7 +107,7 @@ const
 
   {** @abstract(Returns the current length of an UTF-32 string) }
   function utf32_length(s: array of utf32): integer;
-  
+
   {** @abstract(Set the new dynamic length of an utf-32 string) }
   procedure utf32_setlength(var s: array of utf32; l: integer);
 
@@ -113,7 +119,7 @@ const
   
   {** @abstract(Trims trailing spaces and control characters from an UTF-32 string.) }
   procedure utf32_trimright(var s: utf32string);
-  
+
   {** @abstract(Returns an utf-32 substring of an utf-32 string) }
   procedure utf32_copy(var resultstr: utf32string; s: array of utf32; index: integer; count: integer);
 
@@ -158,16 +164,56 @@ const
   }
   function utf32_issupported(s: string): boolean;
 
+{---------------------------------------------------------------------------
+                  UTF-32 null terminated string handling
+-----------------------------------------------------------------------------}
 
 
+
+  {** @abstract(Returns the number of characters in the null terminated UTF-32 string)
+
+      @param(str The UTF-32 null terminated string to check)
+      @returns(The number of characters in str, not counting the null
+        character)
+  }
+  function utf32strlen(str: putf32char): integer;
+
+  {** @abstract(Converts a null-terminated UTF-32 string to a Pascal-style UTF-32 string.)
+  }
+ procedure utf32strpas(Str: putf32char; var res:utf32string);
+ 
+  {** @abstract(Converts a null-terminated UTF-32 string to a Pascal-style 
+       ISO 8859-1 encoded string.)
+  }
+ function utf32strpasToISO8859_1(Str: putf32char): string;
+ 
+
+  {** @abstract(Copies a Pascal-style UTF-32 string to a null-terminated UTF-32 string.)
+
+      UTF32StrPCopy does not perform any length checking.
+
+      The destination buffer must have room for at least Length(Source)+1 characters.
+  }
+ Function UTF32StrPCopy(Dest: Putf32char; Source: UTF32String):PUTF32Char;
+
+  {** @abstract(Copies a Pascal-style string to a null-terminated UTF-32 string.)
+
+      UTF32StrPCopyASCII does not perform any length checking.
+
+      The destination buffer must have room for at least Length(Source)+1 characters.
+  }
+ Function UTF32StrPCopyASCII(Dest: Putf32char; Source: string):PUTF32Char;
 
 {---------------------------------------------------------------------------
                            UCS-2 string handling
 -----------------------------------------------------------------------------}
 
-  function ucs2_length(s: array of ucs2): integer;
+
+  {** @abstract(Returns the current length of an UCS-2 string) }
+  function ucs2_length(s: array of ucs2char): integer;
   
-  procedure ucs2_setlength(var s: array of ucs2; l: integer);
+  {** @abstract(Set the new dynamic length of an ucs-2 string) }
+  procedure ucs2_setlength(var s: array of ucs2char; l: integer);
 
 
 {---------------------------------------------------------------------------
@@ -182,7 +228,7 @@ const
       is required to encode this data.
   }
   function utf16_sizeencoding(c: utf16): integer;
-  
+
   {** @abstract(Returns the number of characters that are used to encode this
       character).
       
@@ -194,7 +240,7 @@ const
 
   {** @abstract(Returns the current length of an UTF-8 string) }
   function lengthutf8(s: array of utf8): integer;
-  
+
   
   {** @abstract(Set the length of an UTF-8 string) }
   procedure setlengthUTF8(var s: array of utf8; l: integer);
@@ -210,7 +256,7 @@ const
 
   {** @abstract(Convert an UTF-32 string to an UTF-8 string) 
   
-      Converts an UTF-32 string or character 
+      Converts an UTF-32 string or character
       in native endian to an UTF-8 string. 
       
       @param(s Either a single utf-32 character or a complete utf-32 string)
@@ -250,10 +296,10 @@ const
   function ConvertToUTF32(source: shortstring; var dest: utf32string; srctype: string): integer;
   
   {** @abstract(Convert an UTF-16 string to an UTF-32 string)
-  
+
       This routine converts an UTF-16 string to an UTF-32 string.
       Both strings must be stored in native byte order (native endian).
-  
+
       @returns(@link(UNICODE_ERR_OK) if there was no error in the conversion)
   }
   function ConvertUTF16ToUTF32(src: utf16string; var dst: utf32string): integer;
@@ -262,7 +308,7 @@ const
   
       This routine converts an UTF-32 string to an UTF-16 string.
       Both strings must be stored in native byte order (native endian).
-  
+
       @param(src Either a single utf-32 character or a complete utf-32 string)
       @param(dest Resulting UTF-16 coded string)
       @returns(@link(UNICODE_ERR_OK) if there was no error in the conversion)
@@ -273,7 +319,7 @@ const
 
       This routine converts an UTF-8 string to an UTF-32 string that
       is stored in native byte order.
-  
+
       @returns(@link(UNICODE_ERR_OK) if there was no error in the conversion)
   }
   function ConvertUTF8ToUTF32(src: utf8string; var dst: utf32string): integer;
@@ -290,26 +336,29 @@ const
   
   }
   function ConvertUTF32ToUCS2(src: array of utf32; var dst: ucs2string): integer;
-  
+
 
   {** @abstract(Convert an UCS-2 string to an UTF-32 string)
-  
+
       This routine converts an UCS-2 string to an UTF-32 string that
       is stored in native byte order (big-endian). If some characters
       could not be converted an error will be reported.
-      
+
       @param(src Either a single ucs-2 character or a complete ucs-2 string)
       @param(dest Resulting UTF-32 coded string)
       @returns(@link(UNICODE_ERR_OK) if there was no error in the conversion)
-  
+
   }
-  function ConvertUCS2ToUTF32(src: array of ucs2; var dst: utf32string): integer;
-  
+  function ConvertUCS2ToUTF32(src: array of ucs2char; var dst: utf32string): integer;
+
 
 implementation
 
 
-type 
+type
+  utf32strarray = array[0..MAX_UTF32_CHARS] of utf32;
+  pstrarray = ^utf32strarray;
+
   pchararray = ^tchararray;
   tchararray = array[#0..#255] of longint;
   taliasinfo = record
@@ -592,7 +641,7 @@ const
 const
   MAX_ALIAS = 26;
 
-const  
+const
   aliaslist: array[1..MAX_ALIAS] of taliasinfo =
   (
     (aliasname: 'ISO-8859-1';table: @i8859_1toUTF32),
@@ -672,7 +721,7 @@ const
  const firstByteMark: array[0..6] of utf8 = 
  (
    #$00, #$00, #$C0, #$E0, #$F0, #$F8, #$FC
- );  
+ );
    
 
   function convertUTF32toUTF8(s: array of utf32; var outstr: utf8string): integer;
@@ -792,7 +841,7 @@ const
    LengthUTF8:=integer(s[0]);
   end;
   
-  
+
   
 
   procedure setlengthutf8(var s: array of utf8; l: integer);
@@ -930,7 +979,7 @@ const
         Inc(OutIndex);
      end;     
   utf32_setlength(dst,OutIndex-1);
-end;     
+end;
 
 function ConvertUTF8ToUTF32(src: utf8string; var dst: utf32string): integer;
   var
@@ -1085,13 +1134,13 @@ end;
       begin
         StartIndex:=0;
         EndIndex:=0;
-        dst[0]:=ucs2(1);
+        dst[0]:=ucs2char(1);
       end
     else
       begin
         StartIndex:=1;
         EndIndex:=UTF32_Length(src);
-        dst[0]:=ucs2(utf32_length(src));
+        dst[0]:=ucs2char(utf32_length(src));
       end;
   
     for i:=StartIndex to EndIndex do
@@ -1102,12 +1151,12 @@ end;
             ConvertUTF32ToUCS2:=UNICODE_ERR_INCOMPLETE_CONVERSION;
             continue;
           end;
-        dst[i]:=ucs2(ch and UNI_MAX_BMP);
+        dst[i]:=ucs2char(ch and UNI_MAX_BMP);
       end;
   end;
   
   
-  function ConvertUCS2ToUTF32(src: array of ucs2; var dst: utf32string): integer;
+  function ConvertUCS2ToUTF32(src: array of ucs2char; var dst: utf32string): integer;
   var
    ch: utf32;
    i: integer;
@@ -1212,7 +1261,7 @@ end;
       begin
         s2l:=utf32_length(s2);
         idx:=1;
-      end;  
+      end;
     s1l:=utf32_length(s1);
     if s2l+s1l>255 then
       s2l:=255-s1l;
@@ -1347,6 +1396,7 @@ end;
   end;
 
 
+
   procedure UTF32_TrimLeft(var S: utf32string);
   var i,l:integer;
       outstr: utf32string;
@@ -1387,17 +1437,117 @@ end;
   end;
   
   
-  function ucs2_length(s: array of ucs2): integer;
+  function ucs2_length(s: array of ucs2char): integer;
   begin
    ucs2_length:=integer(s[0]);
   end;
   
-  procedure ucs2_setlength(var s: array of ucs2; l: integer);
+  procedure ucs2_setlength(var s: array of ucs2char; l: integer);
   begin
    if l > 255 then
      l:=255;
-   s[0]:=ucs2(l);
+   s[0]:=ucs2char(l);
   end;
+
+  function utf32strlen(str: putf32char): integer;
+  var
+   counter : Longint;
+   stringarray: pstrarray;
+ Begin
+   utf32strlen:=0;
+   if not assigned(str) then
+     exit;
+   stringarray := pointer(str);
+   counter := 0;
+   while stringarray^[counter] <> 0 do
+     Inc(counter);
+   utf32strlen := counter;
+ end;
+ 
+ function utf32strpasToISO8859_1(Str: putf32char): string;
+  var
+   counter : byte;
+   lstr: string;
+   stringarray: pstrarray;
+ Begin
+   counter := 0;
+   stringarray := pointer(str);
+   setlength(lstr,0);
+   while ((stringarray^[counter]) <> 0) and (counter < high(utf32string)) do
+   begin
+     Inc(counter);
+     lstr := lstr + chr(Stringarray^[counter-1]);
+   end;
+   SetLength(lstr,counter);
+   utf32strpasToISO8859_1:= lstr;
+ end;
+ 
+
+ procedure utf32strpas(Str: putf32char; var res:utf32string);
+  var
+   counter : byte;
+   lstr: utf32string;
+   stringarray: pstrarray;
+ Begin
+   counter := 0;
+   stringarray := pointer(str);
+   utf32_setlength(lstr,0);
+   while ((stringarray^[counter]) <> 0) and (counter < high(utf32string)) do
+   begin
+     Inc(counter);
+     utf32_concat(lstr, lstr, Stringarray^[counter-1]);
+   end;
+   UTF32_SetLength(lstr,counter);
+   res := lstr;
+ end;
+
+ Function UTF32StrPCopy(Dest: Putf32char; Source: UTF32String):PUTF32Char;
+   var
+    counter : byte;
+    stringarray: pstrarray;
+  Begin
+   stringarray:=pointer(Dest);
+   { if empty pascal string  }
+   { then setup and exit now }
+   if utf32_length(Source) = 0 then
+   Begin
+     stringarray^[0] := 0;
+     UTF32StrPCopy := pointer(StringArray);
+     exit;
+   end;
+   for counter:=1 to utf32_length(Source) do
+   begin
+     StringArray^[counter-1] := Source[counter];
+   end;
+   { terminate the string }
+   StringArray^[counter] := 0;
+   UTF32StrPCopy:=Dest;
+ end;
+
+ Function UTF32StrPCopyASCII(Dest: Putf32char; Source: string):PUTF32Char;
+   var
+    counter : byte;
+    stringarray: pstrarray;
+  Begin
+   stringarray:=pointer(Dest);
+   { if empty pascal string  }
+   { then setup and exit now }
+   if length(Source) = 0 then
+   Begin
+     stringarray^[0] := 0;
+     UTF32StrPCopyAscii := pointer(StringArray);
+     exit;
+   end;
+   for counter:=1 to length(Source) do
+   begin
+     StringArray^[counter-1] := ord(Source[counter]);
+   end;
+   { terminate the string }
+   StringArray^[counter] := 0;
+   UTF32StrPCopyASCII:=Dest;
+ end;
+
+
   
 
 begin
@@ -1425,7 +1575,7 @@ begin
     aliaslist[11].aliasname:= 'ISO-8859-1';
     aliaslist[11].table:= i8859_1toUTF32;
     
-    
+
     (aliasname: 'ISO-8859-2';table: @i8859_2toUTF32),
     (aliasname: 'ISO_8859-2';table: @i8859_2toUTF32),
     (aliasname: 'latin2';    table: @i8859_2toUTF32),
@@ -1460,6 +1610,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.5  2004/06/20 18:49:39  carl
+    + added  GPC support
+
   Revision 1.4  2004/06/17 11:48:13  carl
     + UTF32 complete support
     + add UCS2 support
@@ -1480,5 +1633,5 @@ end.
 
 }
   
-  
+
 
