@@ -1,5 +1,5 @@
 {
-    $Id: strings.pas,v 1.2 2004-06-17 11:40:58 carl Exp $
+    $Id: strings.pas,v 1.3 2004-07-01 22:25:41 carl Exp $
     This file is part of the Free Pascal run time library.
     Copyright (c) 1999-2000 by Carl-Eric Codere,
     member of the Free Pascal development team.
@@ -227,9 +227,9 @@ Implementation
    while (ord(Str[counter]) <> 0) and (counter < 255) do
    begin
      Inc(counter);
-     lstr[counter] := char(Str[counter-1]);
+     lstr:=lstr+char(Str[counter-1]);
    end;
-   lstr[0] := char(counter);
+   SetLength(lstr,counter);
    strpas := lstr;
  end;
 
@@ -610,6 +610,9 @@ Implementation
 end.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.2  2004/06/17 11:40:58  carl
+    - remove some warnings
+
   Revision 1.1  2004/05/05 16:28:26  carl
     Release 0.95 updates
 
