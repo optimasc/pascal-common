@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: fileio.pas,v 1.1 2004-11-17 04:02:15 carl Exp $
+    $Id: fileio.pas,v 1.2 2004-11-17 22:12:36 user63 Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Generic portable file I/O routines with debug support.
@@ -150,6 +150,7 @@ begin
     begin
       OpenedFileCollection.Free(OpenedFileCollection.At(Index));
     end;
+  stringdispose(p);  
 {$ENDIF}
   Close(F);
   LastIOResult:=IOResult;
@@ -254,6 +255,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.1  2004/11/17 04:02:15  carl
+    + Portable API for reading and writing to and from files.
+
 
 }
 
