@@ -101,29 +101,31 @@ unicode support unit<p>This unit contains routines to convert
 </tr>
 <tr class="list2" valign="top"><td><code>function <a class="normal" href="#utf8_sizeencoding"><b>utf8_sizeencoding</b></a>(c: <a class="normal" href="unicode.html#utf8char">utf8char</a>): integer;</code></td>
 </tr>
-<tr class="list" valign="top"><td><code>function <a class="normal" href="#lengthUTF16"><b>lengthUTF16</b></a>(s: array of <a class="normal" href="unicode.html#utf16char">utf16char</a>): integer;</code></td>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#utf16_length"><b>utf16_length</b></a>(s: array of <a class="normal" href="unicode.html#utf16char">utf16char</a>): integer;</code></td>
 </tr>
-<tr class="list2" valign="top"><td><code>function <a class="normal" href="#lengthutf8"><b>lengthutf8</b></a>(s: array of <a class="normal" href="unicode.html#utf8char">utf8char</a>): integer;</code></td>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#utf8_length"><b>utf8_length</b></a>(s: <a class="normal" href="unicode.html#utf8string">utf8string</a>): integer;</code></td>
 </tr>
-<tr class="list" valign="top"><td><code>procedure <a class="normal" href="#setlengthUTF8"><b>setlengthUTF8</b></a>(var s: array of <a class="normal" href="unicode.html#utf8char">utf8char</a>; l: integer);</code></td>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#utf8_islegal"><b>utf8_islegal</b></a>(s: <a class="normal" href="unicode.html#utf8string">utf8string</a>): boolean;</code></td>
 </tr>
-<tr class="list2" valign="top"><td><code>procedure <a class="normal" href="#setlengthUTF16"><b>setlengthUTF16</b></a>(var s: array of <a class="normal" href="unicode.html#utf16char">utf16char</a>; l: integer);</code></td>
+<tr class="list2" valign="top"><td><code>procedure <a class="normal" href="#utf8_setlength"><b>utf8_setlength</b></a>(var s: <a class="normal" href="unicode.html#utf8string">utf8string</a>; l: integer);</code></td>
 </tr>
-<tr class="list" valign="top"><td><code>function <a class="normal" href="#convertUCS4toUTF8"><b>convertUCS4toUTF8</b></a>(s: array of <a class="normal" href="unicode.html#ucs4char">ucs4char</a>; var outstr: <a class="normal" href="unicode.html#utf8string">utf8string</a>): integer;</code></td>
+<tr class="list" valign="top"><td><code>procedure <a class="normal" href="#utf16_setlength"><b>utf16_setlength</b></a>(var s: array of <a class="normal" href="unicode.html#utf16char">utf16char</a>; l: integer);</code></td>
 </tr>
-<tr class="list2" valign="top"><td><code>function <a class="normal" href="#ConvertFromUCS4"><b>ConvertFromUCS4</b></a>(source: <a class="normal" href="unicode.html#ucs4string">ucs4string</a>; var dest: string; desttype: string): integer;</code></td>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#convertUCS4toUTF8"><b>convertUCS4toUTF8</b></a>(s: array of <a class="normal" href="unicode.html#ucs4char">ucs4char</a>; var outstr: <a class="normal" href="unicode.html#utf8string">utf8string</a>): integer;</code></td>
 </tr>
-<tr class="list" valign="top"><td><code>function <a class="normal" href="#ConvertToUCS4"><b>ConvertToUCS4</b></a>(source: string; var dest: <a class="normal" href="unicode.html#ucs4string">ucs4string</a>; srctype: string): integer;</code></td>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#ConvertFromUCS4"><b>ConvertFromUCS4</b></a>(source: <a class="normal" href="unicode.html#ucs4string">ucs4string</a>; var dest: string; desttype: string): integer;</code></td>
 </tr>
-<tr class="list2" valign="top"><td><code>function <a class="normal" href="#ConvertUTF16ToUCS4"><b>ConvertUTF16ToUCS4</b></a>(src: <a class="normal" href="unicode.html#utf16string">utf16string</a>; var dst: <a class="normal" href="unicode.html#ucs4string">ucs4string</a>): integer;</code></td>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#ConvertToUCS4"><b>ConvertToUCS4</b></a>(source: string; var dest: <a class="normal" href="unicode.html#ucs4string">ucs4string</a>; srctype: string): integer;</code></td>
 </tr>
-<tr class="list" valign="top"><td><code>function <a class="normal" href="#ConvertUCS4toUTF16"><b>ConvertUCS4toUTF16</b></a>(src: array of <a class="normal" href="unicode.html#ucs4char">ucs4char</a>; var dest: <a class="normal" href="unicode.html#utf16string">utf16string</a>): integer;</code></td>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#ConvertUTF16ToUCS4"><b>ConvertUTF16ToUCS4</b></a>(src: <a class="normal" href="unicode.html#utf16string">utf16string</a>; var dst: <a class="normal" href="unicode.html#ucs4string">ucs4string</a>): integer;</code></td>
 </tr>
-<tr class="list2" valign="top"><td><code>function <a class="normal" href="#ConvertUTF8ToUCS4"><b>ConvertUTF8ToUCS4</b></a>(src: <a class="normal" href="unicode.html#utf8string">utf8string</a>; var dst: <a class="normal" href="unicode.html#ucs4string">ucs4string</a>): integer;</code></td>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#ConvertUCS4toUTF16"><b>ConvertUCS4toUTF16</b></a>(src: array of <a class="normal" href="unicode.html#ucs4char">ucs4char</a>; var dest: <a class="normal" href="unicode.html#utf16string">utf16string</a>): integer;</code></td>
 </tr>
-<tr class="list" valign="top"><td><code>function <a class="normal" href="#ConvertUCS4ToUCS2"><b>ConvertUCS4ToUCS2</b></a>(src: array of <a class="normal" href="unicode.html#ucs4char">ucs4char</a>; var dst: <a class="normal" href="unicode.html#ucs2string">ucs2string</a>): integer;</code></td>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#ConvertUTF8ToUCS4"><b>ConvertUTF8ToUCS4</b></a>(src: <a class="normal" href="unicode.html#utf8string">utf8string</a>; var dst: <a class="normal" href="unicode.html#ucs4string">ucs4string</a>): integer;</code></td>
 </tr>
-<tr class="list2" valign="top"><td><code>function <a class="normal" href="#ConvertUCS2ToUCS4"><b>ConvertUCS2ToUCS4</b></a>(src: array of <a class="normal" href="unicode.html#ucs2char">ucs2char</a>; var dst: <a class="normal" href="unicode.html#ucs4string">ucs4string</a>): integer;</code></td>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#ConvertUCS4ToUCS2"><b>ConvertUCS4ToUCS2</b></a>(src: array of <a class="normal" href="unicode.html#ucs4char">ucs4char</a>; var dst: <a class="normal" href="unicode.html#ucs2string">ucs2string</a>): integer;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#ConvertUCS2ToUCS4"><b>ConvertUCS2ToUCS4</b></a>(src: array of <a class="normal" href="unicode.html#ucs2char">ucs2char</a>; var dst: <a class="normal" href="unicode.html#ucs4string">ucs4string</a>): integer;</code></td>
 </tr>
 </table>
 <h3>Description</h3>
@@ -261,26 +263,6 @@ Resulting UTF-8 coded string</dd>
 </p>
 <h6>returns</h6>
 <p class="return"><a class="normal" href="unicode.html#UNICODE_ERR_OK">UNICODE_ERR_OK</a> if there was no error in the conversion</p><table cellspacing="2" cellpadding="4" width="100%">
-<tr class="list" valign="top"><td width="100%"><a name="lengthUTF16"></a><code>function <b>lengthUTF16</b>(s: array of <a class="normal" href="unicode.html#utf16char">utf16char</a>): integer;</code></td>
-</tr>
-</table>
-<p>Returns the current length of an UTF-16 string</p>
-<table cellspacing="2" cellpadding="4" width="100%">
-<tr class="list" valign="top"><td width="100%"><a name="lengthutf8"></a><code>function <b>lengthutf8</b>(s: array of <a class="normal" href="unicode.html#utf8char">utf8char</a>): integer;</code></td>
-</tr>
-</table>
-<p>Returns the current length of an UTF-8 string</p>
-<table cellspacing="2" cellpadding="4" width="100%">
-<tr class="list" valign="top"><td width="100%"><a name="setlengthUTF16"></a><code>procedure <b>setlengthUTF16</b>(var s: array of <a class="normal" href="unicode.html#utf16char">utf16char</a>; l: integer);</code></td>
-</tr>
-</table>
-<p>Set the length of an UTF-16 string</p>
-<table cellspacing="2" cellpadding="4" width="100%">
-<tr class="list" valign="top"><td width="100%"><a name="setlengthUTF8"></a><code>procedure <b>setlengthUTF8</b>(var s: array of <a class="normal" href="unicode.html#utf8char">utf8char</a>; l: integer);</code></td>
-</tr>
-</table>
-<p>Set the length of an UTF-8 string</p>
-<table cellspacing="2" cellpadding="4" width="100%">
 <tr class="list" valign="top"><td width="100%"><a name="ucs2strdispose"></a><code>function <b>ucs2strdispose</b>(str: <a class="normal" href="unicode.html#pucs2char">pucs2char</a>): <a class="normal" href="unicode.html#pucs2char">pucs2char</a>;</code></td>
 </tr>
 </table>
@@ -293,10 +275,11 @@ Resulting UTF-8 coded string</dd>
 </table>
 <p>Convert an UCS-2 null terminated string to an UCS-4 null terminated string<p>This routine converts an UCS-2 encoded null terminared string to an UCS-4 
       null terminated string that is stored in native byte order, up to
-      length conversion.</p>
+      length conversion. The destination buffer should already have been
+      allocated.</p>
 </p>
 <h6>returns</h6>
-<p class="return">nil if there was no error in the conversion</p><table cellspacing="2" cellpadding="4" width="100%">
+<p class="return">nil if there was an error in the conversion</p><table cellspacing="2" cellpadding="4" width="100%">
 <tr class="list" valign="top"><td width="100%"><a name="ucs2strlen"></a><code>function <b>ucs2strlen</b>(str: <a class="normal" href="unicode.html#pucs2char">pucs2char</a>): integer;</code></td>
 </tr>
 </table>
@@ -536,6 +519,16 @@ This is an alias for a character set, as defined by IANA</dd>
       algorithm (e.g full form is not supported).</p>
 </p>
 <table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="utf16_length"></a><code>function <b>utf16_length</b>(s: array of <a class="normal" href="unicode.html#utf16char">utf16char</a>): integer;</code></td>
+</tr>
+</table>
+<p>Returns the current length of an UTF-16 string</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="utf16_setlength"></a><code>procedure <b>utf16_setlength</b>(var s: array of <a class="normal" href="unicode.html#utf16char">utf16char</a>; l: integer);</code></td>
+</tr>
+</table>
+<p>Set the length of an UTF-16 string</p>
+<table cellspacing="2" cellpadding="4" width="100%">
 <tr class="list" valign="top"><td width="100%"><a name="utf16_sizeencoding"></a><code>function <b>utf16_sizeencoding</b>(c: <a class="normal" href="unicode.html#utf16char">utf16char</a>): integer;</code></td>
 </tr>
 </table>
@@ -595,6 +588,24 @@ This is an alias for a character set, as defined by IANA</dd>
       the hex representation of the character.</p>
 </p>
 <table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="utf8_islegal"></a><code>function <b>utf8_islegal</b>(s: <a class="normal" href="unicode.html#utf8string">utf8string</a>): boolean;</code></td>
+</tr>
+</table>
+<p>Returns if the specified UTF-8 string is legal or not<p>Verifies that the UTF-8 encoded strings is encoded in a legal
+      way.</p>
+</p>
+<h6>returns</h6>
+<p class="return">FALSE if the string is illegal, otherwise returns TRUE</p><table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="utf8_length"></a><code>function <b>utf8_length</b>(s: <a class="normal" href="unicode.html#utf8string">utf8string</a>): integer;</code></td>
+</tr>
+</table>
+<p>Returns the current length of an UTF-8 string</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="utf8_setlength"></a><code>procedure <b>utf8_setlength</b>(var s: <a class="normal" href="unicode.html#utf8string">utf8string</a>; l: integer);</code></td>
+</tr>
+</table>
+<p>Set the length of an UTF-8 string</p>
+<table cellspacing="2" cellpadding="4" width="100%">
 <tr class="list" valign="top"><td width="100%"><a name="utf8_sizeencoding"></a><code>function <b>utf8_sizeencoding</b>(c: <a class="normal" href="unicode.html#utf8char">utf8char</a>): integer;</code></td>
 </tr>
 </table>
@@ -639,7 +650,7 @@ This is an alias for a character set, as defined by IANA</dd>
       of the string in characters.</p>
 </td>
 </tr>
-<tr class="list" valign="top"><td><a name="utf8string"></a>utf8string<code> = array[0..1024] of <a class="normal" href="unicode.html#utf8char">utf8char</a>;</code></td>
+<tr class="list" valign="top"><td><a name="utf8string"></a>utf8string<code> = shortstring;</code></td>
 <td><p>UTF-8 string declaration. Index 0 contains the active length
       of the string in BYTES</p>
 </td>
@@ -710,6 +721,6 @@ This is an alias for a character set, as defined by IANA</dd>
 <td>&nbsp;</td>
 </tr>
 </table><a name="@Variables"></a><h2>Author</h2>
-<p>Carl Eric Codere</p>
-<hr noshade="1" size="1"/><em>Generated by <a class="normal" target="_new" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8.3</a> on 2004-08-19 20:08:25</em>
+<p>Carl Eric Codère</p>
+<hr noshade="1" size="1"/><em>Generated by <a class="normal" target="_new" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8.3</a> on 2004-09-28 21:09:23</em>
 </body></html>

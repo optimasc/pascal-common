@@ -1,5 +1,9 @@
 History of major changes in the releases:
 
+1.10
+   + add dateutil unit (clone of delphi dateutils)
+   * some more bugfixes in the Delphi dos unit (GetDate)
+   
 1.00
    + add more crc/checksum routines in CRC unit
    * some more bugfixes (UTF-8 encoding using 4 and 5 characters)

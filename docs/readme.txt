@@ -109,6 +109,9 @@ Some of the source code in this package is derived from the Free Pascal
 compiler runtime library.  Visit http://www.freepascal.org to get your 
 hands on a great Open source pascal compiler.
 
+You can report bugs for this library on the following site:
+http://www.optimasc.com/bugs/
+
 Enjoy!
 Carl Eric Codere
 cecodere@yahoo.ca

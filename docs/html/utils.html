@@ -15,51 +15,53 @@ General utilities common to all platforms.<a name="@FuncsProcs"></a><h2>Function
 <table cellspacing="2" cellpadding="4" width="100%">
 <tr class="list" valign="top"><td width="100%"><code>Function <a class="normal" href="#FileExists"><b>FileExists</b></a>(FName : string): Boolean;</code></td>
 </tr>
-<tr class="list2" valign="top"><td><code>Procedure <a class="normal" href="#SwapLong"><b>SwapLong</b></a>(var x : longword);</code></td>
+<tr class="list2" valign="top"><td><code>Function <a class="normal" href="#DirectoryExists"><b>DirectoryExists</b></a>(DName : string): Boolean;</code></td>
 </tr>
-<tr class="list" valign="top"><td><code>Procedure <a class="normal" href="#SwapWord"><b>SwapWord</b></a>(var x : word);</code></td>
+<tr class="list" valign="top"><td><code>Procedure <a class="normal" href="#SwapLong"><b>SwapLong</b></a>(var x : longword);</code></td>
 </tr>
-<tr class="list2" valign="top"><td><code>function <a class="normal" href="#UpString"><b>UpString</b></a>(s : string): string;</code></td>
+<tr class="list2" valign="top"><td><code>Procedure <a class="normal" href="#SwapWord"><b>SwapWord</b></a>(var x : word);</code></td>
 </tr>
-<tr class="list" valign="top"><td><code>procedure <a class="normal" href="#StreamErrorProcedure"><b>StreamErrorProcedure</b></a>(Var S: TStream);</code></td>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#UpString"><b>UpString</b></a>(s : string): string;</code></td>
 </tr>
-<tr class="list2" valign="top"><td><code>function <a class="normal" href="#TrimLeft"><b>TrimLeft</b></a>(const S: string): string;</code></td>
+<tr class="list2" valign="top"><td><code>procedure <a class="normal" href="#StreamErrorProcedure"><b>StreamErrorProcedure</b></a>(Var S: TStream);</code></td>
 </tr>
-<tr class="list" valign="top"><td><code>function <a class="normal" href="#TrimRight"><b>TrimRight</b></a>(const S: string): string;</code></td>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#TrimLeft"><b>TrimLeft</b></a>(const S: string): string;</code></td>
 </tr>
-<tr class="list2" valign="top"><td><code>function <a class="normal" href="#hexstr"><b>hexstr</b></a>(val : longint;cnt : byte) : string;</code></td>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#TrimRight"><b>TrimRight</b></a>(const S: string): string;</code></td>
 </tr>
-<tr class="list" valign="top"><td><code>function <a class="normal" href="#decstr"><b>decstr</b></a>(val : longint;cnt : byte) : string;</code></td>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#hexstr"><b>hexstr</b></a>(val : longint;cnt : byte) : string;</code></td>
 </tr>
-<tr class="list2" valign="top"><td><code>function <a class="normal" href="#decstrunsigned"><b>decstrunsigned</b></a>(l : longword;cnt: byte): string;</code></td>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#decstr"><b>decstr</b></a>(val : longint;cnt : byte) : string;</code></td>
 </tr>
-<tr class="list" valign="top"><td><code>function <a class="normal" href="#boolstr"><b>boolstr</b></a>(val: boolean; cnt: byte): string;</code></td>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#decstrunsigned"><b>decstrunsigned</b></a>(l : longword;cnt: byte): string;</code></td>
 </tr>
-<tr class="list2" valign="top"><td><code>function <a class="normal" href="#CompareByte"><b>CompareByte</b></a>(buf1,buf2: pchar;len:longint):integer;</code></td>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#boolstr"><b>boolstr</b></a>(val: boolean; cnt: byte): string;</code></td>
 </tr>
-<tr class="list" valign="top"><td><code>function <a class="normal" href="#Printf"><b>Printf</b></a>(const s : string; var Buf; size : word): string;</code></td>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#CompareByte"><b>CompareByte</b></a>(buf1,buf2: pchar;len:longint):integer;</code></td>
 </tr>
-<tr class="list2" valign="top"><td><code>function <a class="normal" href="#FillTo"><b>FillTo</b></a>(s : string; tolength: integer): string;</code></td>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#Printf"><b>Printf</b></a>(const s : string; var Buf; size : word): string;</code></td>
 </tr>
-<tr class="list" valign="top"><td><code>function <a class="normal" href="#stringdup"><b>stringdup</b></a>(const s : string) : <a class="normal" href="utils.html#PshortString">pShortstring</a>;</code></td>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#FillTo"><b>FillTo</b></a>(s : string; tolength: integer): string;</code></td>
 </tr>
-<tr class="list2" valign="top"><td><code>procedure <a class="normal" href="#stringdispose"><b>stringdispose</b></a>(var p : <a class="normal" href="utils.html#PshortString">pShortstring</a>);</code></td>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#stringdup"><b>stringdup</b></a>(const s : string) : <a class="normal" href="utils.html#PshortString">pShortstring</a>;</code></td>
 </tr>
-<tr class="list" valign="top"><td><code>function <a class="normal" href="#EscapeToPascal"><b>EscapeToPascal</b></a>(const s:string; var code: integer): string;</code></td>
+<tr class="list" valign="top"><td><code>procedure <a class="normal" href="#stringdispose"><b>stringdispose</b></a>(var p : <a class="normal" href="utils.html#PshortString">pShortstring</a>);</code></td>
 </tr>
-<tr class="list2" valign="top"><td><code>function <a class="normal" href="#ValDecimal"><b>ValDecimal</b></a>(const S:String; var code: integer):longint;</code></td>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#EscapeToPascal"><b>EscapeToPascal</b></a>(const s:string; var code: integer): string;</code></td>
 </tr>
-<tr class="list" valign="top"><td><code>function <a class="normal" href="#ValOctal"><b>ValOctal</b></a>(const S:String;var code: integer):longint;</code></td>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#ValDecimal"><b>ValDecimal</b></a>(const S:String; var code: integer):longint;</code></td>
 </tr>
-<tr class="list2" valign="top"><td><code>function <a class="normal" href="#ValBinary"><b>ValBinary</b></a>(const S:String; var code: integer):longint;</code></td>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#ValOctal"><b>ValOctal</b></a>(const S:String;var code: integer):longint;</code></td>
 </tr>
-<tr class="list" valign="top"><td><code>function <a class="normal" href="#ValHexadecimal"><b>ValHexadecimal</b></a>(const S:String; var code: integer):longint;</code></td>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#ValBinary"><b>ValBinary</b></a>(const S:String; var code: integer):longint;</code></td>
 </tr>
-<tr class="list2" valign="top"><td><code>function <a class="normal" href="#ChangeFileExt"><b>ChangeFileExt</b></a>(const FileName, Extension: string): string;</code></td>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#ValHexadecimal"><b>ValHexadecimal</b></a>(const S:String; var code: integer):longint;</code></td>
 </tr>
-<tr class="list" valign="top"><td><code>function <a class="normal" href="#fillwithzero"><b>fillwithzero</b></a>(s: string; newlength: integer): string;</code></td>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#ChangeFileExt"><b>ChangeFileExt</b></a>(const FileName, Extension: string): string;</code></td>
 </tr>
-<tr class="list2" valign="top"><td><code>function <a class="normal" href="#removenulls"><b>removenulls</b></a>(s: string): string;</code></td>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#fillwithzero"><b>fillwithzero</b></a>(s: string; newlength: integer): string;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#removenulls"><b>removenulls</b></a>(s: string): string;</code></td>
 </tr>
 </table>
 <h3>Description</h3>
@@ -105,6 +107,13 @@ val</dt>
 <dd class="parameters">
 unsigned 32-bit value to convert</dd>
 </dl>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="DirectoryExists"></a><code>Function <b>DirectoryExists</b>(DName : string): Boolean;</code></td>
+</tr>
+</table>
+<p>Verifies the existence of a directory<p>This routine verifies if the directory named can be
+     opened or if it actually exists.</p><p>DName  Name of the directory to check</p><p>Returns  FALSE if the directory cannot be opened or if it does not exist.</p>
+</p>
 <table cellspacing="2" cellpadding="4" width="100%">
 <tr class="list" valign="top"><td width="100%"><a name="EscapeToPascal"></a><code>function <b>EscapeToPascal</b>(const s:string; var code: integer): string;</code></td>
 </tr>
@@ -249,22 +258,13 @@ Result of operation, 0 when there is no error</dd>
 </tr>
 </table><a name="@Constants"></a><h2>Constants</h2>
 <table class="itemlist" cellspacing="2" cellpadding="4" width="100%"><tr class="listheader"><th class="listheader" nowrap="nowrap">Name</th><th class="listheader" width="100%">Description</th></tr>
-<tr class="list" valign="top"><td><a name="READ_MODE"></a>READ_MODE<code> = 0;</code></td>
+<tr class="list" valign="top"><td><a name="EXIT_DOSERROR"></a>EXIT_DOSERROR<code> = 2;</code></td>
 <td>&nbsp;</td>
 </tr>
-<tr class="list2" valign="top"><td><a name="WRITE_MODE"></a>WRITE_MODE<code> = 1;</code></td>
-<td>&nbsp;</td>
-</tr>
-<tr class="list" valign="top"><td><a name="READ_WRITE_MODE"></a>READ_WRITE_MODE<code> = 2;</code></td>
-<td>&nbsp;</td>
-</tr>
-<tr class="list2" valign="top"><td><a name="EXIT_DOSERROR"></a>EXIT_DOSERROR<code> = 2;</code></td>
-<td>&nbsp;</td>
-</tr>
-<tr class="list" valign="top"><td><a name="EXIT_ERROR"></a>EXIT_ERROR<code> = 1;</code></td>
+<tr class="list2" valign="top"><td><a name="EXIT_ERROR"></a>EXIT_ERROR<code> = 1;</code></td>
 <td>&nbsp;</td>
 </tr>
 </table><a name="@Variables"></a><h2>Author</h2>
 <p>Carl Eric Codere</p>
-<hr noshade="1" size="1"/><em>Generated by <a class="normal" target="_new" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8.3</a> on 2004-08-19 20:08:25</em>
+<hr noshade="1" size="1"/><em>Generated by <a class="normal" target="_new" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8.3</a> on 2004-09-28 21:09:23</em>
 </body></html>

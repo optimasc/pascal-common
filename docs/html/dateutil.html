@@ -1,0 +1,391 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.1 Strict//EN" "http://www.w3.org/TR/REC-html4/strict.dtd">
+<html>
+<head>
+<meta name="GENERATOR" content="PasDoc 0.8.8.3"/>
+<title>Common pascal units documentation: dateutil</title>
+<link rel="StyleSheet" href="pasdoc.css"/>
+</head>
+<body bgcolor="#ffffff" text="#000000" link="#0000ff" vlink="#800080" alink="#FF0000">
+<h1>Unit dateutil</h1>
+<table class="sections"><tr>
+<td><a class="normal" href="#@Description">Description</a></td><td>uses</td><td>Classes, Interfaces and Objects</td><td><a class="normal" href="#@FuncsProcs">Functions and Procedures</a></td><td><a class="normal" href="#@Types">Types</a></td><td><a class="normal" href="#@Constants">Constants</a></td><td>Variables</td></tr></table>
+<a name="@Description"></a><h2>Description</h2>
+Date and time utility routines<p>This unit is quite similar to the unit dateutils provided
+    with Delphi 6 and Delphi 7. Only a subset of the API found
+    in those units is implemented in this unit.</p><p>There are subtle differences with the Delphi implementation:
+    1. All string related parameters and function results use ISO 8601
+    formatted date and time strings. 
+    2. The internal format of TDatetime is not the same as on the Delphi
+    compilers.
+    3. The milliseconds field is only an approximation, and should not
+    be considered as accurate.</p><p>All dates are assumed to be in Gregorian calendar date
+    format (proleptic).</p>
+<a name="@FuncsProcs"></a><h2>Functions and Procedures</h2>
+<h3>Overview</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><code>function <a class="normal" href="#CurrentYear"><b>CurrentYear</b></a>: word;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#Date"><b>Date</b></a>: <a class="normal" href="dateutil.html#TDatetime">TDatetime</a>;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#DateOf"><b>DateOf</b></a>(const AValue: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>): <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#DateTimeToStr"><b>DateTimeToStr</b></a>(DateTime: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>): string;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#DateToStr"><b>DateToStr</b></a>(date: <a class="normal" href="dateutil.html#TDatetime">TDatetime</a>): string;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#DayOf"><b>DayOf</b></a>(const AValue: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>): Word;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#DaysBetween"><b>DaysBetween</b></a>(const ANow, AThen: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>): integer;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>procedure <a class="normal" href="#DecodeDate"><b>DecodeDate</b></a>(Date: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>; var Year, Month, Day: Word);</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>procedure <a class="normal" href="#DecodeDateTime"><b>DecodeDateTime</b></a>(const AValue: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>; var Year, Month, Day, Hour, Minute, Second, MilliSecond: Word);</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>procedure <a class="normal" href="#DecodeTime"><b>DecodeTime</b></a>(Time: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>; var Hour, Min, Sec, MSec: Word);</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#HourOf"><b>HourOf</b></a>(const AValue: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>): Word;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#IncDay"><b>IncDay</b></a>(const AValue: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>; const ANumberOfDays: Integer): <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#IncHour"><b>IncHour</b></a>(const AValue: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>; const ANumberOfHours: longint): <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#IncMilliSecond"><b>IncMilliSecond</b></a>(const AValue: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>; const ANumberOfMilliSeconds: big_integer_t): <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#IncMinute"><b>IncMinute</b></a>(const AValue: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>; const ANumberOfMinutes: big_integer_t): <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#IncSecond"><b>IncSecond</b></a>(const AValue: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>; const ANumberOfSeconds: big_integer_t): <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#IncWeek"><b>IncWeek</b></a>(const AValue: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>; const ANumberOfWeeks: Integer): <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#IsPM"><b>IsPM</b></a>(const AValue: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>): Boolean;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#IsValidDate"><b>IsValidDate</b></a>(const AYear, AMonth, ADay: Word): Boolean;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#IsValidDateTime"><b>IsValidDateTime</b></a>(const AYear, AMonth, ADay, AHour, AMinute, ASecond, AMilliSecond: Word): Boolean;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#IsValidTime"><b>IsValidTime</b></a>(const AHour, AMinute, ASecond, AMilliSecond: Word): Boolean;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#MinuteOf"><b>MinuteOf</b></a>(const AValue: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>): Word;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#MonthOf"><b>MonthOf</b></a>(const AValue: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>): Word;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#Now"><b>Now</b></a>: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#SameDate"><b>SameDate</b></a>(const A, B: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>): Boolean;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#SameDateTime"><b>SameDateTime</b></a>(const A, B: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>): Boolean;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#SameTime"><b>SameTime</b></a>(const A, B: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>): Boolean;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#SecondOf"><b>SecondOf</b></a>(const AValue: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>): Word;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#Time"><b>Time</b></a>: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#GetTime"><b>GetTime</b></a>: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#TimeOf"><b>TimeOf</b></a>(const AValue: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>): <a class="normal" href="dateutil.html#TDatetime">TDatetime</a>;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#TimeToStr"><b>TimeToStr</b></a>(Time: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>): string;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#Today"><b>Today</b></a>: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#TryEncodeDate"><b>TryEncodeDate</b></a>(Year, Month, Day: Word; var Date: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>): Boolean;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#TryEncodeTime"><b>TryEncodeTime</b></a>(Hour, Min, Sec, MSec: Word; var Time: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>): Boolean;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#TryEncodeDateTime"><b>TryEncodeDateTime</b></a>(const AYear, AMonth, ADay, AHour, AMinute, ASecond, AMilliSecond: Word; var AValue: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>): Boolean;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#TryStrToDate"><b>TryStrToDate</b></a>(const S: string; var Value: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>): Boolean;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#TryStrToDateTime"><b>TryStrToDateTime</b></a>(const S: string; var Value: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>): Boolean;</code></td>
+</tr>
+<tr class="list" valign="top"><td><code>function <a class="normal" href="#TryStrToTime"><b>TryStrToTime</b></a>(const S: string; var Value: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>): Boolean;</code></td>
+</tr>
+<tr class="list2" valign="top"><td><code>function <a class="normal" href="#YearOf"><b>YearOf</b></a>(const AValue: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>): Word;</code></td>
+</tr>
+</table>
+<h3>Description</h3>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="CurrentYear"></a><code>function <b>CurrentYear</b>: word;</code></td>
+</tr>
+</table>
+<p><p>Returns the current year</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="Date"></a><code>function <b>Date</b>: <a class="normal" href="dateutil.html#TDatetime">TDatetime</a>;</code></td>
+</tr>
+</table>
+<p><p>Returns the current date, with the time value equal to midnight.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="DateOf"></a><code>function <b>DateOf</b>(const AValue: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>): <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>;</code></td>
+</tr>
+</table>
+<p><p>Strips the time portion from a TDateTime value.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="DateTimeToStr"></a><code>function <b>DateTimeToStr</b>(DateTime: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>): string;</code></td>
+</tr>
+</table>
+<p><p>Converts a TDateTime value to a string in standard ISO 8601 format.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="DateToStr"></a><code>function <b>DateToStr</b>(date: <a class="normal" href="dateutil.html#TDatetime">TDatetime</a>): string;</code></td>
+</tr>
+</table>
+<p><p>Converts a TDatetime value to a string in ISO 8601 format</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="DayOf"></a><code>function <b>DayOf</b>(const AValue: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>): Word;</code></td>
+</tr>
+</table>
+<p><p>Returns the day of the month represented by a TDateTime value.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="DaysBetween"></a><code>function <b>DaysBetween</b>(const ANow, AThen: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>): integer;</code></td>
+</tr>
+</table>
+<p><p>Returns the number of days between two specified TDateTime values.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="DecodeDate"></a><code>procedure <b>DecodeDate</b>(Date: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>; var Year, Month, Day: Word);</code></td>
+</tr>
+</table>
+<p><p>Returns Year, Month, and Day values for a TDateTime value.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="DecodeDateTime"></a><code>procedure <b>DecodeDateTime</b>(const AValue: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>; var Year, Month, Day, Hour, Minute, Second, MilliSecond: Word);</code></td>
+</tr>
+</table>
+<p><p>Returns Year, Month, Day, Hour, Minute, Second, and Millisecond values for a TDateTime.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="DecodeTime"></a><code>procedure <b>DecodeTime</b>(Time: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>; var Hour, Min, Sec, MSec: Word);</code></td>
+</tr>
+</table>
+<p><p>Breaks a TDateTime value into hours, minutes, seconds, and milliseconds.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="GetTime"></a><code>function <b>GetTime</b>: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>;</code></td>
+</tr>
+</table>
+<p><p>Returns the current time.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="HourOf"></a><code>function <b>HourOf</b>(const AValue: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>): Word;</code></td>
+</tr>
+</table>
+<p><p>Returns the hour of the day represented by a TDateTime value.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="IncDay"></a><code>function <b>IncDay</b>(const AValue: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>; const ANumberOfDays: Integer): <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>;</code></td>
+</tr>
+</table>
+<p><p>Returns a date shifted by a specified number of days.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="IncHour"></a><code>function <b>IncHour</b>(const AValue: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>; const ANumberOfHours: longint): <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>;</code></td>
+</tr>
+</table>
+<p><p>Returns a date/time value shifted by a specified number of hours.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="IncMilliSecond"></a><code>function <b>IncMilliSecond</b>(const AValue: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>; const ANumberOfMilliSeconds: big_integer_t): <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>;</code></td>
+</tr>
+</table>
+<p><p>Returns a date/time value shifted by a specified number of milliseconds.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="IncMinute"></a><code>function <b>IncMinute</b>(const AValue: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>; const ANumberOfMinutes: big_integer_t): <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>;</code></td>
+</tr>
+</table>
+<p><p>Returns a date/time value shifted by a specified number of minutes.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="IncSecond"></a><code>function <b>IncSecond</b>(const AValue: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>; const ANumberOfSeconds: big_integer_t): <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>;</code></td>
+</tr>
+</table>
+<p><p>Returns a date/time value shifted by a specified number of seconds.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="IncWeek"></a><code>function <b>IncWeek</b>(const AValue: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>; const ANumberOfWeeks: Integer): <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>;</code></td>
+</tr>
+</table>
+<p><p>Returns a date shifted by a specified number of weeks.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="IsPM"></a><code>function <b>IsPM</b>(const AValue: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>): Boolean;</code></td>
+</tr>
+</table>
+<p><p>Indicates whether the time portion of a specified TDateTime value occurs after noon.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="IsValidDate"></a><code>function <b>IsValidDate</b>(const AYear, AMonth, ADay: Word): Boolean;</code></td>
+</tr>
+</table>
+<p><p>Indicates whether a specified year, month, and day represent a valid date.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="IsValidDateTime"></a><code>function <b>IsValidDateTime</b>(const AYear, AMonth, ADay, AHour, AMinute, ASecond, AMilliSecond: Word): Boolean;</code></td>
+</tr>
+</table>
+<p><p>Indicates whether a specified year, month, day, hour, minute, second, and millisecond represent a valid date and time.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="IsValidTime"></a><code>function <b>IsValidTime</b>(const AHour, AMinute, ASecond, AMilliSecond: Word): Boolean;</code></td>
+</tr>
+</table>
+<p><p>Indicates whether a specified hour, minute, second, and millisecond represent a valid date and time.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="MinuteOf"></a><code>function <b>MinuteOf</b>(const AValue: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>): Word;</code></td>
+</tr>
+</table>
+<p><p>Returns the minute of the hour represented by a TDateTime value.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="MonthOf"></a><code>function <b>MonthOf</b>(const AValue: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>): Word;</code></td>
+</tr>
+</table>
+<p><p>Returns the month of the year represented by a TDateTime value.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="Now"></a><code>function <b>Now</b>: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>;</code></td>
+</tr>
+</table>
+<p><p>Returns the current date and time.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="SameDate"></a><code>function <b>SameDate</b>(const A, B: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>): Boolean;</code></td>
+</tr>
+</table>
+<p><p>Indicates whether two TDateTime values represent the same year, month, and day.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="SameDateTime"></a><code>function <b>SameDateTime</b>(const A, B: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>): Boolean;</code></td>
+</tr>
+</table>
+<p><p>Indicates whether two TDateTime values represent the same year, month, day, hour, minute, second, and millisecond.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="SameTime"></a><code>function <b>SameTime</b>(const A, B: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>): Boolean;</code></td>
+</tr>
+</table>
+<p><p>Indicates whether two TDateTime values represent the same time of day, ignoring the date portion.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="SecondOf"></a><code>function <b>SecondOf</b>(const AValue: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>): Word;</code></td>
+</tr>
+</table>
+<p><p>Returns the second of the minute represented by a TDateTime value.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="Time"></a><code>function <b>Time</b>: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>;</code></td>
+</tr>
+</table>
+<p><p>Returns the current time.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="TimeOf"></a><code>function <b>TimeOf</b>(const AValue: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>): <a class="normal" href="dateutil.html#TDatetime">TDatetime</a>;</code></td>
+</tr>
+</table>
+<p><p>Strips the date portion from a TDatetime value</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="TimeToStr"></a><code>function <b>TimeToStr</b>(Time: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>): string;</code></td>
+</tr>
+</table>
+<p><p>Returns a string that represents a TDateTime value.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="Today"></a><code>function <b>Today</b>: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>;</code></td>
+</tr>
+</table>
+<p><p>Returns a TDateTime value that represents the current date.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="TryEncodeDate"></a><code>function <b>TryEncodeDate</b>(Year, Month, Day: Word; var Date: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>): Boolean;</code></td>
+</tr>
+</table>
+<p><p>Returns a TDateTime value that represents a specified Year, Month, and Day.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="TryEncodeDateTime"></a><code>function <b>TryEncodeDateTime</b>(const AYear, AMonth, ADay, AHour, AMinute, ASecond, AMilliSecond: Word; var AValue: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>): Boolean;</code></td>
+</tr>
+</table>
+<p><p>Returns a TDateTime that represents a specified year, month, day, hour, minute, second, and millisecond.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="TryEncodeTime"></a><code>function <b>TryEncodeTime</b>(Hour, Min, Sec, MSec: Word; var Time: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>): Boolean;</code></td>
+</tr>
+</table>
+<p><p>Returns a TDateTime value for a specified Hour, Min, Sec, and MSec.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="TryStrToDate"></a><code>function <b>TryStrToDate</b>(const S: string; var Value: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>): Boolean;</code></td>
+</tr>
+</table>
+<p><p>Converts a string to a TDateTime value, with a Boolean success code.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="TryStrToDateTime"></a><code>function <b>TryStrToDateTime</b>(const S: string; var Value: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>): Boolean;</code></td>
+</tr>
+</table>
+<p><p>Converts a string to a TDateTime value with a Boolean success code.</p><p>The string should conform to the format of Complete Representation
+    for calendar dates (as specified in ISO 8601), which should include
+    the Time designator character.</p><p>The string can also use Timezone offsets, as specified
+    in ISO 8601, the returned value will be according to UTC
+    if timezone information is specified.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="TryStrToTime"></a><code>function <b>TryStrToTime</b>(const S: string; var Value: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>): Boolean;</code></td>
+</tr>
+</table>
+<p><p>Converts a string to a TDateTime value with an error default,
+    The string can also use Timezone offsets, as specified
+    in ISO 8601, the returned value will be according to UTC
+    if timezone information is specified. The Date field is
+    truncated and is equal to zero upon return.</p>
+</p>
+<table cellspacing="2" cellpadding="4" width="100%">
+<tr class="list" valign="top"><td width="100%"><a name="YearOf"></a><code>function <b>YearOf</b>(const AValue: <a class="normal" href="dateutil.html#TDatetime">TDateTime</a>): Word;</code></td>
+</tr>
+</table>
+<p><p>Returns the year represented by a TDateTime value.</p>
+</p>
+<a name="@Types"></a><h2>Types</h2>
+<table class="itemlist" cellspacing="2" cellpadding="4" width="100%"><tr class="listheader"><th class="listheader" nowrap="nowrap">Name</th><th class="listheader" width="100%">Description</th></tr>
+<tr class="list2" valign="top"><td><a name="TDatetime"></a>TDatetime<code> = extended;</code></td>
+<td><p>This is the Julian Day number</p>
+</td>
+</tr>
+<tr class="list" valign="top"><td><a name="float"></a>float<code> = extended;</code></td>
+<td>&nbsp;</td>
+</tr>
+</table><a name="@Constants"></a><h2>Constants</h2>
+<table class="itemlist" cellspacing="2" cellpadding="4" width="100%"><tr class="listheader"><th class="listheader" nowrap="nowrap">Name</th><th class="listheader" width="100%">Description</th></tr>
+<tr class="list2" valign="top"><td><a name="DayMonday"></a>DayMonday<code> = 1;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list" valign="top"><td><a name="DayTuesday"></a>DayTuesday<code> = 2;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list2" valign="top"><td><a name="DayWednesday"></a>DayWednesday<code> = 3;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list" valign="top"><td><a name="DayThursday"></a>DayThursday<code> = 4;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list2" valign="top"><td><a name="DayFriday"></a>DayFriday<code> = 5;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list" valign="top"><td><a name="DaySaturday"></a>DaySaturday<code> = 6;</code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="list2" valign="top"><td><a name="DaySunday"></a>DaySunday<code> = 7;</code></td>
+<td>&nbsp;</td>
+</tr>
+</table><a name="@Variables"></a><h2>Author</h2>
+<p>Carl Eric Codere</p>
+<hr noshade="1" size="1"/><em>Generated by <a class="normal" target="_new" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8.3</a> on 2004-09-28 21:09:23</em>
+</body></html>
