@@ -20,6 +20,7 @@ endif
 # LIBFILES: Files that will go into the resulting lib directory
 # INCFILES: Files that will go into the resulting include directory
 # OUTDIR : Base directory where libs, units, objects files will go
+# DATAFILES : Files to copy for the tests
 # FILESTODOCUMENT: Files to document
 # DATE : Utility name to get the ISO Date
 
@@ -32,6 +33,7 @@ DOCFILES:=./docs/license.txt ./docs/changes.txt ./docs/copying ./docs/copying.fp
 #LIBFILES
 SRCFILES:=./src/*
 #INCFILES:=
+DATAFILES:=./tst/*.txt
 FILESTODOCUMENT:=./src/crc.pas ./src/dpautils.pas ./src/fpautils.pas ./src/locale.pas \
 	./src/tpautils.pas ./src/unicode.pas ./src/utils.pas ./src/vpautils.pas
 
