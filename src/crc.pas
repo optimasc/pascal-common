@@ -1,5 +1,5 @@
 {
-    $Id: crc.pas,v 1.3 2004-08-27 02:10:32 carl Exp $
+    $Id: crc.pas,v 1.4 2004-11-19 01:37:27 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     CRC and Chekcsum routines    
@@ -80,7 +80,8 @@ uses utils,
 }
 
 
-{** Routine to get the CRC-32 CCITT value.
+{** @abstract(Calculates a CRC-32 CCITT value)
+    Routine to get the CRC-32 CCITT value.
 
     Normally to be compatible with the ISO 3309 standard,
     the first call to this routine should set @code(InitCRC)
@@ -93,7 +94,8 @@ uses utils,
 }    
 function UpdateCrc32(InitCrc:longword; b: byte):longword;
 
-{** Routine to get the CRC-16 CCITT value.
+{** @abstract(Calculates a CRC-16 CCITT value)
+    Routine to get the CRC-16 CCITT value.
     
     Normally to be compatible with the CCITT standards,
     the first call to this routine should set @code(InitCRC)
@@ -108,7 +110,8 @@ function UpdateCrc32(InitCrc:longword; b: byte):longword;
 }    
 function UpdateCrc16(InitCrc: word; b: byte): word;
 
-{** Routine to get the Adler-32 checksum as
+{** @abstract(Calculates an Adler-32 checksum value)
+    Routine to get the Adler-32 checksum as
     defined in IETF RFC 1950.
     
     Normally to be compatible with the standard,
@@ -122,7 +125,8 @@ function UpdateCrc16(InitCrc: word; b: byte): word;
 }    
 function UpdateAdler32(InitAdler: longword; b: byte): longword;
 
-{** Routine to get the Fletcher 8-bit checksum as
+{** @abstract(Calculates an 8-bit fletcher checksum value)
+    Routine to get the Fletcher 8-bit checksum as
     defined in IETF RFC 1146
     
     Normally to be compatible with the standard,
@@ -136,7 +140,8 @@ function UpdateAdler32(InitAdler: longword; b: byte): longword;
 }    
 function UpdateFletcher8(InitFletcher: word; b: byte): word;
 
-{** Standard CRC-16 bit algorithm as used in the ARC archiver.
+{** @abstract(Calculates a standard 16-bit CRC)
+    Standard CRC-16 bit algorithm as used in the ARC archiver.
     
     The first call to this routine should set @code(InitCRC)
     to @code(0), and the final result of the should be 
@@ -373,6 +378,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.3  2004/08/27 02:10:32  carl
+    + support for more checksum algorithms
+
   Revision 1.2  2004/06/20 18:49:37  carl
     + added  GPC support
 

@@ -1,5 +1,5 @@
 {
-    $Id: collects.pas,v 1.4 2004-11-18 04:23:41 carl Exp $
+    $Id: collects.pas,v 1.5 2004-11-19 01:37:25 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Collections (Object style)
@@ -13,7 +13,7 @@
     
     This routine contains collection objects, being quite
     similar to those included in the objects unit. The only
-    difference being that they compiler on all compiler
+    difference being that they compile on all compiler
     targets.
     
 }
@@ -50,6 +50,10 @@ TYPE
       data: pointer;
     end;
 
+  {** @abstract(Stack object)
+      This implement an object that is used as a LIFO stack
+      containing pointers as data. 
+  }
   PStack = ^TStack;
   TStack = object
     constructor init;
@@ -72,9 +76,7 @@ TYPE
 {  bit code. All existing code will compile without any changes.        }
 { ****************************** END REMARK *** Leon de Boer, 10May96 * }
 
-{---------------------------------------------------------------------------}
-{              TExtendedCollection OBJECT - COLLECTION ANCESTOR OBJECT              }
-{---------------------------------------------------------------------------}
+   {** @abstract(Base collection object) }
    TExtendedCollection = OBJECT
          Items: PItemList;                            { Item list pointer }
          Count: Integer;                           { Item count }
@@ -107,6 +109,7 @@ TYPE
 {          TExtendedSortedCollection OBJECT - SORTED COLLECTION ANCESTOR            }
 {---------------------------------------------------------------------------}
 TYPE
+   {** @abstract(Base sorted collection object) }
    TExtendedSortedCollection = OBJECT (TExtendedCollection)
          Duplicates: Boolean;                         { Duplicates flag }
       CONSTRUCTOR Init (ALimit, ADelta: Integer);
@@ -118,12 +121,22 @@ TYPE
    END;
    PExtendedSortedCollection = ^TExtendedSortedCollection;
    
+   {** @abstract(String pointer collection object) 
+   
+       This collection accepts pointers to shortstrings
+       as input. The data is not sorted.
+   }
    TExtendedStringCollection = OBJECT (TExtendedCollection)
       PROCEDURE FreeItem (Item: Pointer); Virtual;
    END;
    PExtendedStringCollection = ^TExtendedStringCollection;
    
 
+   {** @abstract(Sorted string pointer collection object) 
+   
+       This collection accepts pointers to shortstrings
+       as input. The data is sorted as it is added in.
+   }
    TExtendedSortedStringCollection = OBJECT (TExtendedSortedCollection)
       CONSTRUCTOR Init (ALimit, ADelta: Integer);
       FUNCTION Compare (Key1, Key2: Pointer): Integer;            Virtual;
@@ -600,6 +613,9 @@ end;
 End.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.4  2004/11/18 04:23:41  carl
+    + added non-sorted string collection
+
   Revision 1.3  2004/11/17 04:01:07  carl
     + Sorted string collection object
 
