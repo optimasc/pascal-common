@@ -8,6 +8,7 @@ History of major changes in the releases:
    * unicode: ucs4strnewstr, length was incorrect with UTF-8 conversion
    * objects for Delphi: Major bugfix with TBufStream, some fields were
       not initialized.
+   * Several minor bugfixes
    + dateutil: TDateInfo added (probably will be used later for the extended Date api)
    + ietf: uri parsing/validation routines
 
