@@ -91,7 +91,7 @@ const
    biblio_code: 'alb'
   ),
   (
-   name_fr: 'aléoute';
+   name_fr: 'al'#233'oute';
    name_en: 'Aleut';
    code: '';
    biblio_code: 'ale'
@@ -127,7 +127,7 @@ const
    biblio_code: 'ara'
   ),
   (
-   name_fr: 'araméen';
+   name_fr: 'aram'#233'en';
    name_en: 'Aramaic';
    code: '';
    biblio_code: 'arc'
@@ -139,7 +139,7 @@ const
    biblio_code: 'arg'
   ),
   (
-   name_fr: 'arménien';
+   name_fr: 'arm'#233'nien';
    name_en: 'Armenian';
    code: 'hy';
    biblio_code: 'arm'
@@ -217,7 +217,7 @@ const
    biblio_code: 'aym'
   ),
   (
-   name_fr: 'azéri';
+   name_fr: 'az'#233'ri';
    name_en: 'Azerbaijani';
    code: 'az';
    biblio_code: 'aze'
@@ -229,7 +229,7 @@ const
    biblio_code: 'bad'
   ),
   (
-   name_fr: 'bamilékés, langues';
+   name_fr: 'bamil'#233'k'#233's, langues';
    name_en: 'Bamileke languages';
    code: '';
    biblio_code: 'bai'
@@ -283,7 +283,7 @@ const
    biblio_code: 'bej'
   ),
   (
-   name_fr: 'biélorusse';
+   name_fr: 'bi'#233'lorusse';
    name_en: 'Belarusian';
    code: 'be';
    biblio_code: 'bel'
@@ -301,7 +301,7 @@ const
    biblio_code: 'ben'
   ),
   (
-   name_fr: 'berbères, autres langues';
+   name_fr: 'berb'#232'res, autres langues';
    name_en: 'Berber (Other)';
    code: '';
    biblio_code: 'ber'
@@ -367,7 +367,7 @@ const
    biblio_code: 'bre'
   ),
   (
-   name_fr: 'batak (Indonésie)';
+   name_fr: 'batak (Indon'#233'sie)';
    name_en: 'Batak (Indonesia)';
    code: '';
    biblio_code: 'btk'
@@ -409,7 +409,7 @@ const
    biblio_code: 'cad'
   ),
   (
-   name_fr: 'indiennes d''''Amérique centrale, autres langues';
+   name_fr: 'indiennes d''''Am'#233'rique centrale, autres langues';
    name_en: 'Central American Indian (Other)';
    code: '';
    biblio_code: 'cai'
@@ -457,7 +457,7 @@ const
    biblio_code: 'chb'
   ),
   (
-   name_fr: 'tchétchène';
+   name_fr: 'tch'#233'tch'#232'ne';
    name_en: 'Chechen';
    code: 'ce';
    biblio_code: 'che'
@@ -511,7 +511,7 @@ const
    biblio_code: 'chr'
   ),
   (
-   name_fr: 'slavon d''''église; vieux slave; slavon liturgique; vieux bulgare';
+   name_fr: 'slavon d'''''#233'glise; vieux slave; slavon liturgique; vieux bulgare';
    name_en: 'Church Slavic; Old Slavonic; Church Slavonic; Old Bulgarian; Old';
    code: 'cu';
    biblio_code: 'chu'
@@ -553,19 +553,19 @@ const
    biblio_code: 'cos'
   ),
   (
-   name_fr: 'créoles et pidgins anglais, autres';
+   name_fr: 'cr'#233'oles et pidgins anglais, autres';
    name_en: 'Creoles and pidgins, English based (Other)';
    code: '';
    biblio_code: 'cpe'
   ),
   (
-   name_fr: 'créoles et pidgins français, autres';
+   name_fr: 'cr'#233'oles et pidgins fran'#231'ais, autres';
    name_en: 'Creoles and pidgins, French-based (Other)';
    code: '';
    biblio_code: 'cpf'
   ),
   (
-   name_fr: 'créoles et pidgins portugais, autres';
+   name_fr: 'cr'#233'oles et pidgins portugais, autres';
    name_en: 'Creoles and pidgins, Portuguese-based (Other)';
    code: '';
    biblio_code: 'cpp'
@@ -577,13 +577,13 @@ const
    biblio_code: 'cre'
   ),
   (
-   name_fr: 'tatar de Crimé';
+   name_fr: 'tatar de Crim'#233'';
    name_en: 'Crimean Tatar; Crimean Turkish';
    code: '';
    biblio_code: 'crh'
   ),
   (
-   name_fr: 'créoles et pidgins divers';
+   name_fr: 'cr'#233'oles et pidgins divers';
    name_en: 'Creoles and pidgins (Other)';
    code: '';
    biblio_code: 'crp'
@@ -601,7 +601,7 @@ const
    biblio_code: 'cus'
   ),
   (
-   name_fr: 'tchèque';
+   name_fr: 'tch'#232'que';
    name_en: 'Czech';
    code: 'cs';
    biblio_code: 'cze'
@@ -685,13 +685,13 @@ const
    biblio_code: 'dua'
   ),
   (
-   name_fr: 'néerlandais moyen (ca. 1050-1350)';
+   name_fr: 'n'#233'erlandais moyen (ca. 1050-1350)';
    name_en: 'Dutch, Middle (ca.1050-1350)';
    code: '';
    biblio_code: 'dum'
   ),
   (
-   name_fr: 'néerlandais; flamand';
+   name_fr: 'n'#233'erlandais; flamand';
    name_en: 'Dutch; Flemish';
    code: 'nl';
    biblio_code: 'dut'
@@ -715,7 +715,7 @@ const
    biblio_code: 'efi'
   ),
   (
-   name_fr: 'égyptien';
+   name_fr: ''#233'gyptien';
    name_en: 'Egyptian (Ancient)';
    code: '';
    biblio_code: 'egy'
@@ -727,7 +727,7 @@ const
    biblio_code: 'eka'
   ),
   (
-   name_fr: 'élamite';
+   name_fr: ''#233'lamite';
    name_en: 'Elamite';
    code: '';
    biblio_code: 'elx'
@@ -745,7 +745,7 @@ const
    biblio_code: 'enm'
   ),
   (
-   name_fr: 'espéranto';
+   name_fr: 'esp'#233'ranto';
    name_en: 'Esperanto';
    code: 'eo';
    biblio_code: 'epo'
@@ -757,13 +757,13 @@ const
    biblio_code: 'est'
   ),
   (
-   name_fr: 'éwé';
+   name_fr: ''#233'w'#233'';
    name_en: 'Ewe';
    code: 'ee';
    biblio_code: 'ewe'
   ),
   (
-   name_fr: 'éwondo';
+   name_fr: ''#233'wondo';
    name_en: 'Ewondo';
    code: '';
    biblio_code: 'ewo'
@@ -775,7 +775,7 @@ const
    biblio_code: 'fan'
   ),
   (
-   name_fr: 'féroïen';
+   name_fr: 'f'#233'roïen';
    name_en: 'Faroese';
    code: 'fo';
    biblio_code: 'fao'
@@ -811,19 +811,19 @@ const
    biblio_code: 'fon'
   ),
   (
-   name_fr: 'français';
+   name_fr: 'fran'#231'ais';
    name_en: 'French';
    code: 'fr';
    biblio_code: 'fre'
   ),
   (
-   name_fr: 'français moyen (1400-1800)';
+   name_fr: 'fran'#231'ais moyen (1400-1800)';
    name_en: 'French, Middle (ca.1400-1800)';
    code: '';
    biblio_code: 'frm'
   ),
   (
-   name_fr: 'français ancien (842-ca.1400)';
+   name_fr: 'fran'#231'ais ancien (842-ca.1400)';
    name_en: 'French, Old (842-ca.1400)';
    code: '';
    biblio_code: 'fro'
@@ -871,7 +871,7 @@ const
    biblio_code: 'gem'
   ),
   (
-   name_fr: 'géorgien';
+   name_fr: 'g'#233'orgien';
    name_en: 'Georgian';
    code: 'ka';
    biblio_code: 'geo'
@@ -883,7 +883,7 @@ const
    biblio_code: 'ger'
   ),
   (
-   name_fr: 'guèze';
+   name_fr: 'gu'#232'ze';
    name_en: 'Geez';
    code: '';
    biblio_code: 'gez'
@@ -895,7 +895,7 @@ const
    biblio_code: 'gil'
   ),
   (
-   name_fr: 'gaélique; gaélique écossais';
+   name_fr: 'ga'#233'lique; ga'#233'lique '#233'cossais';
    name_en: 'Gaelic; Scottish Gaelic';
    code: 'gd';
    biblio_code: 'gla'
@@ -955,13 +955,13 @@ const
    biblio_code: 'grb'
   ),
   (
-   name_fr: 'grec ancien (jusqu''''à 1453)';
+   name_fr: 'grec ancien (jusqu'''''#224' 1453)';
    name_en: 'Greek, Ancient (to 1453)';
    code: '';
    biblio_code: 'grc'
   ),
   (
-   name_fr: 'grec moderne (après 1453)';
+   name_fr: 'grec moderne (apr'#232's 1453)';
    name_en: 'Greek, Modern (1453-)';
    code: 'el';
    biblio_code: 'gre'
@@ -991,7 +991,7 @@ const
    biblio_code: 'hai'
   ),
   (
-   name_fr: 'haïtien; créole haïtien';
+   name_fr: 'haïtien; cr'#233'ole haïtien';
    name_en: 'Haitian; Haitian Creole';
    code: 'ht';
    biblio_code: 'hat'
@@ -1009,7 +1009,7 @@ const
    biblio_code: 'haw'
   ),
   (
-   name_fr: 'hébreu';
+   name_fr: 'h'#233'breu';
    name_en: 'Hebrew';
    code: 'he';
    biblio_code: 'heb'
@@ -1141,13 +1141,13 @@ const
    biblio_code: 'inc'
   ),
   (
-   name_fr: 'indonésien';
+   name_fr: 'indon'#233'sien';
    name_en: 'Indonesian';
    code: 'id';
    biblio_code: 'ind'
   ),
   (
-   name_fr: 'indo-européennes, autres langues';
+   name_fr: 'indo-europ'#233'ennes, autres langues';
    name_en: 'Indo-European (Other)';
    code: '';
    biblio_code: 'ine'
@@ -1201,13 +1201,13 @@ const
    biblio_code: 'jpn'
   ),
   (
-   name_fr: 'judéo-persan';
+   name_fr: 'jud'#233'o-persan';
    name_en: 'Judeo-Persian';
    code: '';
    biblio_code: 'jpr'
   ),
   (
-   name_fr: 'judéo-arabe';
+   name_fr: 'jud'#233'o-arabe';
    name_en: 'Judeo-Arabic';
    code: '';
    biblio_code: 'jrb'
@@ -1351,7 +1351,7 @@ const
    biblio_code: 'kon'
   ),
   (
-   name_fr: 'coréen';
+   name_fr: 'cor'#233'en';
    name_en: 'Korean';
    code: 'ko';
    biblio_code: 'kor'
@@ -1363,7 +1363,7 @@ const
    biblio_code: 'kos'
   ),
   (
-   name_fr: 'kpellé';
+   name_fr: 'kpell'#233'';
    name_en: 'Kpelle';
    code: '';
    biblio_code: 'kpe'
@@ -1411,7 +1411,7 @@ const
    biblio_code: 'kut'
   ),
   (
-   name_fr: 'judéo-espagnol';
+   name_fr: 'jud'#233'o-espagnol';
    name_en: 'Ladino';
    code: '';
    biblio_code: 'lad'
@@ -1531,7 +1531,7 @@ const
    biblio_code: 'lus'
   ),
   (
-   name_fr: 'macédonien';
+   name_fr: 'mac'#233'donien';
    name_en: 'Macedonian';
    code: 'mk';
    biblio_code: 'mac'
@@ -1585,7 +1585,7 @@ const
    biblio_code: 'mao'
   ),
   (
-   name_fr: 'malayo-polynésiennes, autres langues';
+   name_fr: 'malayo-polyn'#233'siennes, autres langues';
    name_en: 'Austronesian (Other)';
    code: '';
    biblio_code: 'map'
@@ -1621,7 +1621,7 @@ const
    biblio_code: 'mdr'
   ),
   (
-   name_fr: 'mendé';
+   name_fr: 'mend'#233'';
    name_en: 'Mende';
    code: '';
    biblio_code: 'men'
@@ -1705,7 +1705,7 @@ const
    biblio_code: 'mon'
   ),
   (
-   name_fr: 'moré';
+   name_fr: 'mor'#233'';
    name_en: 'Mossi';
    code: '';
    biblio_code: 'mos'
@@ -1753,7 +1753,7 @@ const
    biblio_code: 'nah'
   ),
   (
-   name_fr: 'indiennes d''''Amérique du Nord, autres langues';
+   name_fr: 'indiennes d''''Am'#233'rique du Nord, autres langues';
    name_en: 'North American Indian';
    code: '';
    biblio_code: 'nai'
@@ -1777,13 +1777,13 @@ const
    biblio_code: 'nav'
   ),
   (
-   name_fr: 'ndébélé du Sud';
+   name_fr: 'nd'#233'b'#233'l'#233' du Sud';
    name_en: 'Ndebele, South; South Ndebele';
    code: 'nr';
    biblio_code: 'nbl'
   ),
   (
-   name_fr: 'ndébélé du Nord';
+   name_fr: 'nd'#233'b'#233'l'#233' du Nord';
    name_en: 'Ndebele, North; North Ndebele';
    code: 'nd';
    biblio_code: 'nde'
@@ -1801,7 +1801,7 @@ const
    biblio_code: 'nds'
   ),
   (
-   name_fr: 'népalais';
+   name_fr: 'n'#233'palais';
    name_en: 'Nepali';
    code: 'ne';
    biblio_code: 'nep'
@@ -1819,25 +1819,25 @@ const
    biblio_code: 'nia'
   ),
   (
-   name_fr: 'nigéro-congolaises, autres langues';
+   name_fr: 'nig'#233'ro-congolaises, autres langues';
    name_en: 'Niger-Kordofanian (Other)';
    code: '';
    biblio_code: 'nic'
   ),
   (
-   name_fr: 'niué';
+   name_fr: 'niu'#233'';
    name_en: 'Niuean';
    code: '';
    biblio_code: 'niu'
   ),
   (
-   name_fr: 'norvégien nynorsk; nynorsk, norvégien';
+   name_fr: 'norv'#233'gien nynorsk; nynorsk, norv'#233'gien';
    name_en: 'Norwegian Nynorsk; Nynorsk, Norwegian';
    code: 'nn';
    biblio_code: 'nno'
   ),
   (
-   name_fr: 'norvégien bokmål; bokmål, norvégien';
+   name_fr: 'norv'#233'gien bokmål; bokmål, norv'#233'gien';
    name_en: 'Norwegian Bokmål; Bokmål, Norwegian';
    code: 'nb';
    biblio_code: 'nob'
@@ -1855,7 +1855,7 @@ const
    biblio_code: 'non'
   ),
   (
-   name_fr: 'norvégien';
+   name_fr: 'norv'#233'gien';
    name_en: 'Norwegian';
    code: 'no';
    biblio_code: 'nor'
@@ -1891,7 +1891,7 @@ const
    biblio_code: 'nym'
   ),
   (
-   name_fr: 'nyankolé';
+   name_fr: 'nyankol'#233'';
    name_en: 'Nyankole';
    code: '';
    biblio_code: 'nyn'
@@ -1909,8 +1909,8 @@ const
    biblio_code: 'nzi'
   ),
   (
-   name_fr: 'occitan (après 1500); provençal';
-   name_en: 'Occitan (post 1500); Provençal';
+   name_fr: 'occitan (apr'#232's 1500); proven'#231'al';
+   name_en: 'Occitan (post 1500); Proven'#231'al';
    code: 'oc';
    biblio_code: 'oci'
   ),
@@ -1939,7 +1939,7 @@ const
    biblio_code: 'osa'
   ),
   (
-   name_fr: 'ossète';
+   name_fr: 'oss'#232'te';
    name_en: 'Ossetian; Ossetic';
    code: 'os';
    biblio_code: 'oss'
@@ -2017,7 +2017,7 @@ const
    biblio_code: 'phi'
   ),
   (
-   name_fr: 'phénicien';
+   name_fr: 'ph'#233'nicien';
    name_en: 'Phoenician';
    code: '';
    biblio_code: 'phn'
@@ -2053,8 +2053,8 @@ const
    biblio_code: 'pra'
   ),
   (
-   name_fr: 'provençal ancien (jusqu''''à 1500)';
-   name_en: 'Provençal, Old (to 1500)';
+   name_fr: 'proven'#231'al ancien (jusqu'''''#224' 1500)';
+   name_en: 'Proven'#231'al, Old (to 1500)';
    code: '';
    biblio_code: 'pro'
   ),
@@ -2065,7 +2065,7 @@ const
    biblio_code: 'pus'
   ),
   (
-   name_fr: 'réservée à l''''usage local';
+   name_fr: 'r'#233'serv'#233'e '#224' l''''usage local';
    name_en: 'Reserved for local use';
    code: '';
    biblio_code: 'qaa'
@@ -2101,7 +2101,7 @@ const
    biblio_code: 'roa'
   ),
   (
-   name_fr: 'rhéto-roman';
+   name_fr: 'rh'#233'to-roman';
    name_en: 'Raeto-Romance';
    code: 'rm';
    biblio_code: 'roh'
@@ -2149,7 +2149,7 @@ const
    biblio_code: 'sah'
   ),
   (
-   name_fr: 'indiennes d''''Amérique du Sud, autres langues';
+   name_fr: 'indiennes d''''Am'#233'rique du Sud, autres langues';
    name_en: 'South American Indian (Other)';
    code: '';
    biblio_code: 'sai'
@@ -2191,7 +2191,7 @@ const
    biblio_code: '7sc'
   ),
   (
-   name_fr: 'écossais';
+   name_fr: ''#233'cossais';
    name_en: 'Scots';
    code: '';
    biblio_code: 'sco'
@@ -2209,13 +2209,13 @@ const
    biblio_code: 'sel'
   ),
   (
-   name_fr: 'sémitiques, autres langues';
+   name_fr: 's'#233'mitiques, autres langues';
    name_en: 'Semitic (Other)';
    code: '';
    biblio_code: 'sem'
   ),
   (
-   name_fr: 'irlandais ancien (jusqu''''à 900)';
+   name_fr: 'irlandais ancien (jusqu'''''#224' 900)';
    name_en: 'Irish, Old (to 900)';
    code: '';
    biblio_code: 'sga'
@@ -2251,7 +2251,7 @@ const
    biblio_code: 'sio'
   ),
   (
-   name_fr: 'sino-tibétaines, autres langues';
+   name_fr: 'sino-tib'#233'taines, autres langues';
    name_en: 'Sino-Tibetan (Other)';
    code: '';
    biblio_code: 'sit'
@@ -2269,7 +2269,7 @@ const
    biblio_code: 'slo'
   ),
   (
-   name_fr: 'slovène';
+   name_fr: 'slov'#232'ne';
    name_en: 'Slovenian';
    code: 'sl';
    biblio_code: 'slv'
@@ -2329,7 +2329,7 @@ const
    biblio_code: 'snd'
   ),
   (
-   name_fr: 'soninké';
+   name_fr: 'sonink'#233'';
    name_en: 'Soninke';
    code: '';
    biblio_code: 'snk'
@@ -2371,7 +2371,7 @@ const
    biblio_code: 'srd'
   ),
   (
-   name_fr: 'sérère';
+   name_fr: 's'#233'r'#232're';
    name_en: 'Serer';
    code: '';
    biblio_code: 'srr'
@@ -2407,7 +2407,7 @@ const
    biblio_code: 'sus'
   ),
   (
-   name_fr: 'sumérien';
+   name_fr: 'sum'#233'rien';
    name_en: 'Sumerian';
    code: '';
    biblio_code: 'sux'
@@ -2419,7 +2419,7 @@ const
    biblio_code: 'swa'
   ),
   (
-   name_fr: 'suédois';
+   name_fr: 'su'#233'dois';
    name_en: 'Swedish';
    code: 'sv';
    biblio_code: 'swe'
@@ -2455,7 +2455,7 @@ const
    biblio_code: 'tat'
   ),
   (
-   name_fr: 'télougou';
+   name_fr: 't'#233'lougou';
    name_en: 'Telugu';
    code: 'te';
    biblio_code: 'tel'
@@ -2497,13 +2497,13 @@ const
    biblio_code: 'tha'
   ),
   (
-   name_fr: 'tibétain';
+   name_fr: 'tib'#233'tain';
    name_en: 'Tibetan';
    code: 'bo';
    biblio_code: 'tib'
   ),
   (
-   name_fr: 'tigré';
+   name_fr: 'tigr'#233'';
    name_en: 'Tigre';
    code: '';
    biblio_code: 'tig'
@@ -2551,7 +2551,7 @@ const
    biblio_code: 'tog'
   ),
   (
-   name_fr: 'tongan (Îles Tonga)';
+   name_fr: 'tongan ('#206'les Tonga)';
    name_en: 'Tonga (Tonga Islands)';
    code: 'to';
    biblio_code: 'ton'
@@ -2581,7 +2581,7 @@ const
    biblio_code: 'tso'
   ),
   (
-   name_fr: 'turkmène';
+   name_fr: 'turkm'#232'ne';
    name_en: 'Turkmen';
    code: 'tk';
    biblio_code: 'tuk'
@@ -2659,7 +2659,7 @@ const
    biblio_code: 'umb'
   ),
   (
-   name_fr: 'indéterminée';
+   name_fr: 'ind'#233'termin'#233'e';
    name_en: 'Undetermined';
    code: '';
    biblio_code: 'und'
@@ -2797,7 +2797,7 @@ const
    biblio_code: 'ypk'
   ),
   (
-   name_fr: 'zapotèque';
+   name_fr: 'zapot'#232'que';
    name_en: 'Zapotec';
    code: '';
    biblio_code: 'zap'
@@ -2815,7 +2815,7 @@ const
    biblio_code: 'zha'
   ),
   (
-   name_fr: 'zandé';
+   name_fr: 'zand'#233'';
    name_en: 'Zande';
    code: '';
    biblio_code: 'znd'
