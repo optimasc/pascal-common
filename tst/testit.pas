@@ -19,7 +19,8 @@ uses dpautils,
      locale,
      ietf,
      unicode,
-     dos
+     dos,
+     strings
      ;
 
   var
@@ -329,6 +330,41 @@ uses dpautils,
   end;
 
 
+  { Test UTF-32 and UTF-8 null terminated string encodings }
+  procedure testutfnull;
+  const
+   utf32null: array[0..5] of utf32 =
+   (ord('H'),ord('e'),Ord('l'),Ord('l'),Ord('o'),0);
+  var
+   utf32s: utf32string;
+   utf32buffer: array[0..1023] of utf32;
+   p: pchar;
+  begin
+    if utf32strlen(nil) <> 0 then
+       RunError(255);
+    if utf32strlen(@utf32null) <> ((sizeof(utf32null) div sizeof(utf32)) - 1) then
+       RunError(255);
+    utf32strpas(nil,utf32s);
+    if utf32_length(utf32s) <> 0 then
+       RunError(255);
+    utf32strpas(@utf32null,utf32s);
+    if not utf32_equalascii(utf32s,'Hello') then
+       RunError(255);
+    if utf32strpasToISO8859_1(nil) <> '' then
+       RunError(255);
+    if utf32strpasToISO8859_1(@utf32null) <> 'Hello' then
+       RunError(255);
+    if UTF32StrPCopy(nil, utf32s) <> nil then
+       RunError(255);
+    if UTF32StrPCopyASCII(nil, 'Hello') <> nil then
+       RunError(255);
+    p:=UTF8StrNew(@utf32null);
+    if strcomp(p,'Hello') <> 0 then
+      RunError(255);
+  end;
+  
+
+
 var
   s: string;
   b: boolean;
@@ -364,10 +400,14 @@ Begin
   testmime;
   testutf32;
   testcharencoding;
+  testutfnull;
 end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.5  2004/06/20 18:46:02  carl
+    + updated for GPC support
+
   Revision 1.4  2004/06/17 11:43:13  carl
     + tests for utf-32
     + tests for character encoding
