@@ -82,21 +82,6 @@ type
     Sec   : word;
   End;
 
-  PWin32FindData = ^TWin32FindData;
-  TWin32FindData = record
-    dwFileAttributes: Cardinal;
-    ftCreationTime: TFileTime;
-    ftLastAccessTime: TFileTime;
-    ftLastWriteTime: TFileTime;
-    nFileSizeHigh: Cardinal;
-    nFileSizeLow: Cardinal;
-    dwReserved0: Cardinal;
-    dwReserved1: Cardinal;
-    cFileName: array[0..MAX_PATH - 1] of Char;
-    cAlternateFileName: array[0..13] of Char;
-    // The structure should be 320 bytes long...
-    pad : system.integer;
-  end;
 
   Searchrec = Packed Record
     FindHandle  : THandle;
@@ -198,16 +183,6 @@ type
                            --- Conversion ---
 ******************************************************************************}
 
-   function GetLastError : DWORD;
-     external 'kernel32.dll' name 'GetLastError';
-   function FileTimeToDosDateTime(const ft :TFileTime;var data,time : word) : longbool;
-     external 'kernel32.dll' name 'FileTimeToDosDateTime';
-   function DosDateTimeToFileTime(date,time : word;var ft :TFileTime) : longbool;
-     external 'kernel32.dll' name 'DosDateTimeToFileTime';
-   function FileTimeToLocalFileTime(const ft : TFileTime;var lft : TFileTime) : longbool;
-     external 'kernel32.dll' name 'FileTimeToLocalFileTime';
-   function LocalFileTimeToFileTime(const lft : TFileTime;var ft : TFileTime) : longbool;
-     external 'kernel32.dll' name 'LocalFileTimeToFileTime';
 
 type
   Longrec=packed record
@@ -559,18 +534,14 @@ end;
 
 { Needed kernel calls }
 
-   function FindFirstFile (lpFileName: PChar; var lpFindFileData: TWIN32FindData): THandle;
-     external 'kernel32.dll' name 'FindFirstFileA';
-   function FindNextFile  (hFindFile: THandle; var lpFindFileData: TWIN32FindData): LongBool;
-     external 'kernel32.dll' name 'FindNextFileA';
-   function FindCloseFile (hFindFile: THandle): LongBool;
-     external 'kernel32.dll' name 'FindClose';
 
 Procedure StringToPchar (Var S : String);
 Var L : Longint;
+    idx: integer;
 begin
-  L:=ord(S[0]);
-  Move (S[1],S[0],L);
+  l:=length(s);
+  for idx:=0 to l do
+    s[idx+1]:=s[idx];
   S[L]:=#0;
 end;
 
@@ -600,20 +571,23 @@ begin
   f.size:=F.W32FindData.NFileSizeLow;
   f.attr:=WinToDosAttr(F.W32FindData.dwFileAttributes);
   WinToDosTime(F.W32FindData.ftLastWriteTime,f.Time);
-  f.Name:=StrPas(@F.W32FindData.cFileName);
+  f.Name:=StrPas(F.W32FindData.cFileName);
 end;
 
 
 procedure findfirst(const path : pathstr;attr : word;var f : searchRec);
+var
+ pFileName: array[0..MAX_PATH-1] of char;
 begin
 { no error }
   doserror:=0;
   F.Name:=Path;
   F.Attr:=attr;
   F.ExcludeAttr:=(not Attr) and ($1e); {hidden,sys,dir,volume}
-  StringToPchar(f.name);
+  fillchar(pFileName,sizeof(pFileName),#0);
+  strpcopy(pFileName,path);
 { FindFirstFile is a Win32 Call }
-  F.FindHandle:=FindFirstFile (pchar(@f.Name),F.W32FindData);
+  F.FindHandle:=FindFirstFile (pFileName,F.W32FindData);
   If longint(F.FindHandle)=Invalid_Handle_value then
    begin
      DosError:=Last2DosError(GetLastError);
@@ -652,7 +626,7 @@ begin
   DosError:=0;
   If longint(F.FindHandle)<>Invalid_Handle_value then
    begin
-     if not FindCloseFile(F.FindHandle) then
+     if not Windows.FindClose(F.FindHandle) then
       begin
         DosError:=Last2DosError(GetLastError);
         exit;
@@ -1066,6 +1040,9 @@ function GetProcAddress(hModule : THandle;lpProcName : pchar) : pointer;
 end.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.2  2004/06/17 11:40:31  carl
+    * bugfix with textrec
+
   Revision 1.1  2004/05/05 16:28:24  carl
     Release 0.95 updates
 
