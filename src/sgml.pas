@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: sgml.pas,v 1.4 2004-11-29 03:45:03 carl Exp $
+    $Id: sgml.pas,v 1.5 2005-01-30 20:07:31 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere (Optima SC Inc.)
 
     SGML related utility routines
@@ -540,7 +540,7 @@ begin
                   begin
                     { Hexadecimal representation }
                     ucs4_delete(entitystr,1,2);
-                    ConvertFromUCS4(entitystr,asciientitystr,'ASCII');
+                    asciientitystr:=ucs4_converttoiso8859_1(entitystr);
                     value:=ValHexaDecimal(asciientitystr,code);
                     if (code = 0) then
                       begin
@@ -552,7 +552,7 @@ begin
                   begin
                     { Decimal representation }
                     ucs4_delete(entitystr,1,1);
-                    ConvertFromUCS4(entitystr,asciientitystr,'ASCII');
+                    asciientitystr:=ucs4_converttoiso8859_1(entitystr);
                     value:=ValDecimal(asciientitystr,code);
                     if (code = 0) then
                       begin
@@ -562,7 +562,7 @@ begin
                 else
                   begin
                     found:=false;
-                    ConvertFromUCS4(entitystr,asciientitystr,'ASCII');
+                    asciientitystr:=ucs4_converttoiso8859_1(entitystr);
                     { Entity reference - search the tables }
                     { now search the entity lists and convert them to characters }
                     for j:=MIN_ENTITIES to MAX_ENTITIES do
@@ -615,6 +615,9 @@ end;
 end.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.4  2004/11/29 03:45:03  carl
+    + UCS-4 string version of SGML routinrd.
+
   Revision 1.3  2004/10/31 19:50:57  carl
     * range check error bugfix
 
