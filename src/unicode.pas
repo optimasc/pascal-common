@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: unicode.pas,v 1.9 2004-07-15 01:04:12 carl Exp $
+    $Id: unicode.pas,v 1.10 2004-08-01 05:33:02 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Unicode related routines
@@ -20,7 +20,8 @@
     schemes.
 
     All UNICODE/ISO 10646 pascal styled strings are limited to
-    255 characters.
+    255 characters. Null terminated unicode strings are
+    limited by the compiler and integer type size.
 
     Since all these encoding are variable length,
     except the UTF-32 (which is equivalent to UCS-4 according to 
@@ -105,7 +106,7 @@ const
 
 type
   utf32strarray = array[0..MAX_UTF32_CHARS] of utf32;
-  pstrarray = ^utf32strarray;
+  putf32strarray = ^utf32strarray;
     
   ucs2strarray = array[0..MAX_UCS2_CHARS] of ucs2char;
   pucs2strarray = ^ucs2strarray;
@@ -142,13 +143,13 @@ type
   {** @abstract(Concatenates an UTF-32 string with an ASCII string, and gives
       a resulting UTF-32 string)
   }    
-  procedure utf32_concatascii(var resultstr: utf32string;s1: utf32string; s2: shortstring);
+  procedure utf32_concatascii(var resultstr: utf32string;s1: utf32string; s2: string);
 
   {** @abstract(Searches for an ASCII substring in an UTF-32 string) }
-  function utf32_posascii(substr: shortstring; s: utf32string): integer;
+  function utf32_posascii(substr: string; s: utf32string): integer;
 
   {** @abstract(Checks if an ASCII string is equal to an UTF-32 string ) }
-  function utf32_equalascii(s1 : array of utf32; s2: shortstring): boolean;
+  function utf32_equalascii(s1 : array of utf32; s2: string): boolean;
 
   {** @abstract(Searches for an UTF-32 substring in an UTF-32 string) }
   function utf32_pos(substr: utf32string;s : utf32string): integer;
@@ -195,16 +196,18 @@ type
   {** @abstract(Converts a null-terminated UTF-32 string to a Pascal-style 
        ISO 8859-1 encoded string.)
        
-      Characters that cannot be converted are simply removed from
-      the final string entirely.
+      Characters that cannot be converted are converted to 
+      escape sequences of the form : \uxxxxxxxx where xxxxxxxx is
+      the hex representation of the character.
   }
  function utf32strpastoISO8859_1(str: putf32char): string;
  
   {** @abstract(Converts a null-terminated UTF-32 string to a Pascal-style 
        ASCII encoded string.)
        
-      Characters that cannot be converted are simply removed from
-      the final string entirely.
+      Characters that cannot be converted are converted to 
+      escape sequences of the form : \uxxxxxxxx where xxxxxxxx is
+      the hex representation of the character.
   }
  function utf32strpastoASCII(str: putf32char): string;
  
@@ -226,8 +229,18 @@ type
   }
  function utf32strpcopyISO8859_1(dest: putf32char; source: string):putf32char;
  
+  {** @abstract(Converts a pascal string to an UTF-32 null 
+   terminated string) 
+   
+   The memory for the buffer is allocated. Use @link(utf32strdispose) to dispose 
+   of the allocated string. The string is null terminated.
+   
+   @param(str The string to convert, single character coded)
+   @param(srctype The encoding of the string, UTF-8 is also valid)
+  }
+ function utf32strnewstr(str: string; srctype: string): putf32char;
 
-  {** @abstract(Converts a  null terminated string to an UTF-32 null 
+  {** @abstract(Converts a null terminated string to an UTF-32 null 
    terminated string) 
    
    The memory for the buffer is allocated. Use @link(utf32strdispose) to dispose 
@@ -320,6 +333,14 @@ type
    of the allocated string. The string is null terminated.
   }
   function utf8strnew(src: putf32char): pchar;
+  
+  {** @abstract(Allocates and copies an UTF-8 null terminated string) 
+   
+   The memory for the buffer is allocated. Use @link(utf8strdispose) to dispose 
+   of the allocated string. The string is copied from src and is null terminated.
+  }
+  function utf8strnewutf8(src: pchar): pchar;
+  
 
   {** @abstract(Disposes of an UTF-8 null terminated string on the heap) 
   
@@ -339,6 +360,24 @@ type
       @returns(nil if there was no error in the conversion)
   }
   function utf8strlcopyutf32(src: pchar; dst: putf32char; maxlen: integer): putf32char;
+  
+  {** @abstract(Converts a null-terminated UTF-8 string to a Pascal-style 
+       ISO 8859-1 encoded string.)
+       
+      Characters that cannot be converted are converted to 
+      escape sequences of the form : \uxxxxxxxx where xxxxxxxx is
+      the hex representation of the character.
+  }
+ function utf8strpastoISO8859_1(src: pchar): string;
+  
+  {** @abstract(Converts a null-terminated UTF-8 string to a Pascal-style 
+       ASCII encoded string.)
+       
+      Characters that cannot be converted are converted to 
+      escape sequences of the form : \uxxxxxxxx where xxxxxxxx is
+      the hex representation of the character.
+  }
+ function utf8strpastoASCII(src: pchar): string;
   
   
 
@@ -404,12 +443,17 @@ type
       @param(desttype Indicates the single byte encoding scheme)
       @returns(@link(UNICODE_ERR_OK) if there was no error in the conversion)
   }  
-  function ConvertFromUTF32(source: utf32string; var dest: shortstring; desttype: string): integer;
+  function ConvertFromUTF32(source: utf32string; var dest: string; desttype: string): integer;
 
   {** @abstract(Convert a byte encoded string to an UTF-32 string)
   
      This routine converts a single byte encoded string to an UTF-32
      string stored in native byte order
+     
+     Characters that cannot be converted are converted to escape 
+     sequences of the form : \uxxxxxxxx where xxxxxxxx is the hex 
+     representation of the character, an error code will also be 
+     returned by the function
 
      The string is limited to 255 characters, and if the conversion cannot
      be successfully be completed, it gives out an error. The following
@@ -419,7 +463,7 @@ type
       @param(srctype Indicates the single byte encoding scheme)
       @returns(@link(UNICODE_ERR_OK) if there was no error in the conversion)
   }
-  function ConvertToUTF32(source: shortstring; var dest: utf32string; srctype: string): integer;
+  function ConvertToUTF32(source: string; var dest: utf32string; srctype: string): integer;
   
   {** @abstract(Convert an UTF-16 string to an UTF-32 string)
 
@@ -990,7 +1034,7 @@ const
 
 
   
-  function ConvertFromUTF32(source: utf32string; var dest: shortstring; desttype: string): integer;
+  function ConvertFromUTF32(source: utf32string; var dest: string; desttype: string): integer;
   var
    i: integer;
    j: char;
@@ -1028,13 +1072,13 @@ const
           end;
         if not found then
           begin
+            dest:=dest+'\u'+hexstr(source[i],8);
             ConvertFromUTF32:=UNICODE_ERR_INCOMPLETE_CONVERSION;
           end;
       end;
-    setlength(dest,utf32_length(source));
   end;
   
-  function ConvertToUTF32(source: shortstring; var dest: utf32string; srctype: string): integer;
+  function ConvertToUTF32(source: string; var dest: utf32string; srctype: string): integer;
   var
    i: integer;
    l: longint;
@@ -1446,7 +1490,7 @@ end;
    s[0]:=utf32(l);
   end;
 
-  procedure utf32_concatascii(var resultstr: utf32string;s1: utf32string; s2: shortstring);
+  procedure utf32_concatascii(var resultstr: utf32string;s1: utf32string; s2: string);
   var
    utfstr: utf32string;
   begin
@@ -1454,7 +1498,7 @@ end;
        utf32_concat(resultstr,s1,utfstr);
   end;
 
-  function utf32_posascii(substr: shortstring; s: utf32string): integer;
+  function utf32_posascii(substr: string; s: utf32string): integer;
   var
    utfstr: utf32string;
   begin
@@ -1463,7 +1507,7 @@ end;
      utf32_posascii:=utf32_pos(utfstr,s);
   end;
 
-  function utf32_equalascii(s1 : array of utf32; s2: shortstring): boolean;
+  function utf32_equalascii(s1 : array of utf32; s2: string): boolean;
   var
    utfstr: utf32string;
    s3: utf32string;
@@ -1578,7 +1622,7 @@ end;
   function utf32strlen(str: putf32char): integer;
   var
    counter : Longint;
-   stringarray: pstrarray;
+   stringarray: putf32strarray;
  Begin
    utf32strlen:=0;
    if not assigned(str) then
@@ -1594,7 +1638,7 @@ end;
   var
    counter : byte;
    lstr: string;
-   stringarray: pstrarray;
+   stringarray: putf32strarray;
  Begin
    counter := 0;
    utf32strpasToISO8859_1:='';
@@ -1605,9 +1649,10 @@ end;
    begin
      Inc(counter);
      if Stringarray^[counter-1] <= 255 then
-        lstr := lstr + chr(Stringarray^[counter-1]);
+        lstr := lstr + chr(Stringarray^[counter-1])
+     else
+        lstr := lstr + '\u'+hexstr(Stringarray^[counter-1],8);
    end;
-   SetLength(lstr,counter);
    utf32strpasToISO8859_1:= lstr;
  end;
  
@@ -1615,7 +1660,7 @@ end;
   var
    counter : byte;
    lstr: string;
-   stringarray: pstrarray;
+   stringarray: putf32strarray;
  Begin
    counter := 0;
    utf32strpasToASCII:='';
@@ -1626,9 +1671,10 @@ end;
    begin
      Inc(counter);
      if Stringarray^[counter-1] <= 127 then
-        lstr := lstr + chr(Stringarray^[counter-1]);
+        lstr := lstr + chr(Stringarray^[counter-1])
+     else
+        lstr := lstr + '\u'+hexstr(Stringarray^[counter-1],8);
    end;
-   SetLength(lstr,counter);
    utf32strpasToASCII:= lstr;
  end;
  
@@ -1638,7 +1684,7 @@ end;
   var
    counter : byte;
    lstr: utf32string;
-   stringarray: pstrarray;
+   stringarray: putf32strarray;
  Begin
    counter := 0;
    stringarray := pointer(str);
@@ -1655,10 +1701,122 @@ end;
  end;
  
  
+ function utf32strnewstr(str: string; srctype: string): putf32char;
+  var
+   i: integer;
+   dest: putf32strarray;
+   count: integer;
+   Currentindex: integer;
+   Outindex,totalsize: integer;
+   ch: utf32;
+   ExtraBytesToRead: integer;
+   p:pchararray;
+  begin
+    utf32strnewstr:=nil;
+    dest:=nil;
+    p:=nil;
+    { Special case: UTF-8 encoding }
+    if srctype = 'UTF-8' then
+      begin
+        { Calculate the length to store the decoded length }
+        i:=1;
+        totalsize:=0;
+        while (i <> length(str)) do
+          begin
+            count:=utf8_sizeencoding(str[i]);
+            { increment the pointer accordingly }
+            inc(i,count);
+            inc(totalsize);
+          end;  
+        Getmem(dest,totalsize*sizeof(utf32)+sizeof(utf32));
+        fillchar(dest^,totalsize*sizeof(utf32)+sizeof(utf32),$55);
+        i:=1;
+        OutIndex := 0;
+        while (i <> length(str)) do
+          begin
+            ch := 0;
+            extrabytestoread:= trailingBytesForUTF8[ord(str[i])];
+{            if not isLegalUTF8(str, extraBytesToRead+1) then
+              begin
+                exit;
+              end;}
+            CurrentIndex := ExtraBytesToRead;
+            if CurrentIndex = 3 then
+            begin
+              ch:=ch + utf32(str[i]);
+              inc(i);
+              ch:=ch shl 6;
+              dec(CurrentIndex);
+            end;
+            if CurrentIndex = 2 then
+            begin
+              ch:=ch + utf32(str[i]);
+              inc(i);
+              ch:=ch shl 6;
+              dec(CurrentIndex);
+            end;
+            if CurrentIndex = 1 then
+            begin
+              ch:=ch + utf32(str[i]);
+              inc(i);
+              ch:=ch shl 6;
+              dec(CurrentIndex);
+            end;
+            if CurrentIndex = 0 then
+            begin
+              ch:=ch + utf32(str[i]);
+              inc(i);
+            end;
+            ch := ch - offsetsFromUTF8[extraBytesToRead];
+            if (ch <= UNI_MAX_UTF32) then
+              begin
+                dest^[OutIndex] := ch;
+                inc(OutIndex);
+              end
+            else
+              begin
+                dest^[OutIndex] := UNI_REPLACEMENT_CHAR;
+                inc(OutIndex);
+              end;
+          end;
+        { add null character }
+        dest^[outindex]:=0;
+      end
+    else
+      begin
+        { The size to allocate is the same to allocate }
+        Getmem(dest,length(str)*sizeof(utf32)+sizeof(utf32));        
+        { Search the alias type }
+        for i:=1 to MAX_ALIAS do
+          begin
+            if aliaslist[i].aliasname = srctype then
+              begin
+                p:=aliaslist[i].table;
+              end;
+          end;
+        if not assigned(p) then
+            exit;
+        for i:=0 to length(str)-1 do
+          begin
+            ch:=p^[str[i+1]];
+            if ch = utf32(-1) then
+              begin
+                continue;
+              end;
+            dest^[i]:=utf32(ch);
+          end;
+        { add null character }  
+        dest^[length(str)]:=0;
+        utf32strnewstr:=putf32char(dest);
+      end;
+  end;
+ 
+ 
+ 
  function utf32strnew(str: pchar; srctype: string): putf32char;
   var
    i: integer;
-   dest: pstrarray;
+   dest: putf32strarray;
    count: integer;
    Currentindex: integer;
    Outindex,totalsize: integer;
@@ -1780,7 +1938,7 @@ end;
  Function UTF32StrPCopy(Dest: Putf32char; Source: UTF32String):PUTF32Char;
    var
     counter : byte;
-    stringarray: pstrarray;
+    stringarray: putf32strarray;
   Begin
    stringarray:=pointer(Dest);
    UTF32StrPCopy := nil;
@@ -1806,7 +1964,7 @@ end;
  Function UTF32StrPCopyISO8859_1(Dest: Putf32char; Source: string):PUTF32Char;
    var
     counter : byte;
-    stringarray: pstrarray;
+    stringarray: putf32strarray;
   Begin
    stringarray:=pointer(Dest);
    UTF32StrPCopyISO8859_1 := nil;
@@ -1838,6 +1996,19 @@ end;
     Freemem(str,strlen(str)+1);
     str:=nil;
   end;
+  
+  function utf8strnewutf8(src: pchar): pchar;
+  var
+   lengthtoalloc: integer;
+   dst: pchar;
+  begin
+    lengthtoalloc:=strlen(src)+sizeof(utf8);
+    { also copy the null character }
+    Getmem(dst,lengthtoalloc);
+    move(src^,dst^,lengthtoalloc);
+    utf8strnewutf8:=dst;
+  end;
+  
 
   function UTF8StrNew(src: putf32char): pchar;
   var
@@ -1847,7 +2018,7 @@ end;
    OutIndex,BytesToWrite,OutStringLength,StartIndex: integer;
    CurrentIndex, EndIndex: integer;
    i: integer;
-   instr: pstrarray;
+   instr: putf32strarray;
   begin
     utf32stringlen:=utf32strlen(src);
     instr:=pointer(src);
@@ -1943,7 +2114,7 @@ end;
    Outindex: integer;
    ExtraBytesToRead: integer;
    CurrentIndex: integer;
-   stringarray: pstrarray;
+   stringarray: putf32strarray;
   
   begin
     utf8strlcopyutf32:=nil;
@@ -2011,6 +2182,162 @@ end;
   end;
   
   
+  function utf8strpastoISO8859_1(src: pchar): string;
+  var
+   ch: utf32;
+   s: string;
+   i: integer;
+   StringLength: integer;
+   Outindex: integer;
+   ExtraBytesToRead: integer;
+   CurrentIndex: integer;
+  begin
+    i:=0;
+    setlength(s,0);
+    utf8strpastoISO8859_1:='';
+    if not assigned(src) then
+       exit;
+    stringlength := 0;
+    OutIndex := 1;
+    while i < strlen(src) do
+      begin
+        ch := 0;
+        extrabytestoread:= trailingBytesForUTF8[ord(src[i])];
+        if (stringlength + extraBytesToRead) >= high(utf32string) then
+          begin
+            exit;
+          end;
+        CurrentIndex := ExtraBytesToRead;
+        if CurrentIndex = 3 then
+        begin
+          ch:=ch + utf32(src[i]);
+          inc(i);
+          ch:=ch shl 6;
+          dec(CurrentIndex);
+        end;
+        if CurrentIndex = 2 then
+        begin
+          ch:=ch + utf32(src[i]);
+          inc(i);
+          ch:=ch shl 6;
+          dec(CurrentIndex);
+        end;
+        if CurrentIndex = 1 then
+        begin
+          ch:=ch + utf32(src[i]);
+          inc(i);
+          ch:=ch shl 6;
+          dec(CurrentIndex);
+        end;
+        if CurrentIndex = 0 then
+        begin
+          ch:=ch + utf32(src[i]);
+          inc(i);
+        end;
+        ch := ch - offsetsFromUTF8[extraBytesToRead];
+        if (ch <= UNI_MAX_UTF32) then
+          begin
+            if ch > 255 then
+              begin
+                s:= s + '\u' + hexstr(ch,8);
+              end
+            else
+               s:=s+chr(ch and $ff);
+            inc(OutIndex);
+          end
+        else
+          begin
+            if ch > 255 then
+              begin
+                s:= s + '\u' + hexstr(ch,8);
+              end
+            else
+               s:=s+chr(ch and $ff);
+            inc(OutIndex);
+          end;
+      end;
+     utf8strpastoISO8859_1:=s;      
+  end;
+  
+
+  function utf8strpastoascii(src: pchar): string;
+  var
+   ch: utf32;
+   s: string;
+   i: integer;
+   StringLength: integer;
+   Outindex: integer;
+   ExtraBytesToRead: integer;
+   CurrentIndex: integer;
+  begin
+    i:=0;
+    setlength(s,0);
+    utf8strpastoASCII:='';
+    if not assigned(src) then
+       exit;
+    stringlength := 0;
+    OutIndex := 1;
+    while i < strlen(src) do
+      begin
+        ch := 0;
+        extrabytestoread:= trailingBytesForUTF8[ord(src[i])];
+        if (stringlength + extraBytesToRead) >= high(utf32string) then
+          begin
+            exit;
+          end;
+        CurrentIndex := ExtraBytesToRead;
+        if CurrentIndex = 3 then
+        begin
+          ch:=ch + utf32(src[i]);
+          inc(i);
+          ch:=ch shl 6;
+          dec(CurrentIndex);
+        end;
+        if CurrentIndex = 2 then
+        begin
+          ch:=ch + utf32(src[i]);
+          inc(i);
+          ch:=ch shl 6;
+          dec(CurrentIndex);
+        end;
+        if CurrentIndex = 1 then
+        begin
+          ch:=ch + utf32(src[i]);
+          inc(i);
+          ch:=ch shl 6;
+          dec(CurrentIndex);
+        end;
+        if CurrentIndex = 0 then
+        begin
+          ch:=ch + utf32(src[i]);
+          inc(i);
+        end;
+        ch := ch - offsetsFromUTF8[extraBytesToRead];
+        if (ch <= UNI_MAX_UTF32) then
+          begin
+            if ch > 127 then
+              begin
+                s:= s + '\u' + hexstr(ch,8);
+              end
+            else
+               s:=s+chr(ch and $7f);
+            inc(OutIndex);
+          end
+        else
+          begin
+            if ch > 127 then
+              begin
+                s:= s + '\u' + hexstr(ch,8);
+              end
+            else
+               s:=s+chr(ch and $7f);
+            inc(OutIndex);
+          end;
+      end;
+     utf8strpastoASCII:=s;      
+  end;
+  
+  
   function ucs2_isvalid(ch: ucs2char): boolean;
   begin
     ucs2_isvalid := true;
@@ -2030,7 +2357,7 @@ end;
   var
    i: integer;
    Outindex: integer;
-   stringarray: pstrarray;
+   stringarray: putf32strarray;
    srcarray: pucs2strarray;  
   begin
     ucs2strlcopyutf32:=nil;
@@ -2058,7 +2385,7 @@ end;
    ch: utf32;
    i: integer;
    StartIndex, EndIndex: integer;
-   srcarray: pstrarray;
+   srcarray: putf32strarray;
    sizetoalloc: integer;
    buffer: pucs2char;
    dst: pucs2strarray;
@@ -2180,6 +2507,10 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.9  2004/07/15 01:04:12  carl
+    * small bugfixes
+    - remove compiler warnings
+
   Revision 1.8  2004/07/05 02:38:15  carl
     + add collects unit
     + some small changes in cases of identifiers
