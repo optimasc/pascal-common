@@ -3,7 +3,7 @@ VERSION=0.0
 endif
 ## Target compilers
 USETPC=1
-#USEFPC2=1
+USEFPC2=1
 USEVPC=1
 USEFPC=1
 #USEGPC=1
@@ -44,7 +44,7 @@ SRCFILES:=./src/*
 DATAFILES:=./tst/*.txt
 FILESTODOCUMENT:=./src/crc.pas ./src/dpautils.pas ./src/fpautils.pas ./src/locale.pas \
 	./src/tpautils.pas ./src/unicode.pas ./src/utils.pas ./src/vpautils.pas ./src/ietf.pas \
-	./src/collects.pas ./src/iso639.pas ./src/iso3166.pas
+	./src/collects.pas ./src/iso639.pas ./src/iso3166.pas ./src/dateutil.pas
 TSTFILES:=./tst/*
 
 
