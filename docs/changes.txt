@@ -1,5 +1,14 @@
 History of major changes in the releases:
 
+----
+   + Add validation routines for ISO Date/Time strings
+   * Bugfix when passing one single character to the unicode
+     conversion routine (less change of a crash now)
+   + Add IANA character set aliases and information
+   + Add routine to determine the size of a character encoding
+     for UTF-8 and UTF-16 characters
+   + utf32_trimleft and utf32_trimright
+
 0.96:
    + add support for ISO8859, ASCII, CP850, CP1252 to UTF-32 conversion
      (and vice-versa)
