@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: locale.pas,v 1.2 2004-05-13 23:04:06 carl Exp $
+    $Id: locale.pas,v 1.3 2004-06-17 11:46:25 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Localization and date/time unit
@@ -23,6 +23,10 @@
     http://www.cl.cam.ac.uk/~mgk25/iso-time.html
 }
 unit locale;
+
+{$IFNDEF TP}
+{$H-}
+{$ENDIF}
 
 
 interface
@@ -91,11 +95,43 @@ function GetISODateTimeString(Year, Month, Day, Hour, Minute, Second: Word; UTC:
 procedure UNIXToDateTime(epoch: longword; var year, month, day, hour, minute, second:
   Word);
 
+{** Using a registered ALIAS name for a specific character encoding,
+    return the common or MIME name associated with this character set, 
+    and indicate the type of stream format used. The type of stream 
+    format used can be one of the @code(CHAR_ENCODING_XXXX) constants.
+}
+function GetCharEncoding(alias: string; var name: string): integer;
+
+const
+  {** @abstract(Character encoding value: UTF-8 storage format)}
+  CHAR_ENCODING_UTF8 = 0;
+  {** @abstract(Character encoding value: unknown format)}
+  CHAR_ENCODING_UNKNOWN = -1;
+  {** @abstract(Character encoding value: UTF-32 Big endian)}
+  CHAR_ENCODING_UTF32BE = 1;
+  {** @abstract(Character encoding value: UTF-32 Little endian)}
+  CHAR_ENCODING_UTF32LE = 2;
+  {** @abstract(Character encoding value: UTF-16 Little endian)}
+  CHAR_ENCODING_UTF16LE = 3;
+  {** @abstract(Character encoding value: UTF-16 Big endian)}
+  CHAR_ENCODING_UTF16BE = 4;
+  {** @abstract(Character encoding value: One byte per character storage format)}
+  CHAR_ENCODING_BYTE = 5;
+  {** @abstract(Character encoding value: UTF-16 unknown endian (determined by BOM))}
+  CHAR_ENCODING_UTF16 = 6;
+  {** @abstract(Character encoding value: UTF-32 unknown endian (determined by BOM))}
+  CHAR_ENCODING_UTF32 = 7;
 
 
 
 implementation
 
+uses utils;
+
+{ IANA Registered character set table }
+{$i charset.inc}
+{ Character encodings }
+{$i charenc.inc}
 
 function fillwithzeros(s: shortstring; newlength: Integer): shortstring;
 begin
@@ -467,10 +503,121 @@ begin
 end;
 
 
+
+function CompareString(s1,s2: shortstring): integer;
+VAR I, J: integer; P1, P2: ^shortString;
+  BEGIN
+    P1 := @s1;                               { String 1 pointer }
+    P2 := @s2;                               { String 2 pointer }
+    If (Length(P1^)<Length(P2^)) Then 
+      J := Length(P1^)
+    Else 
+      J := Length(P2^);                           { Shortest length }
+    I := 1;                                            { First character }
+    While (I<J) AND (P1^[I]=P2^[I]) Do 
+      Inc(I);         { Scan till fail }
+    If (I=J) Then 
+      Begin                                { Possible match }
+       If (P1^[I]<P2^[I]) Then 
+        CompareString := -1 
+       Else       { String1 < String2 }
+       If (P1^[I]>P2^[I]) Then 
+        CompareString := 1 
+       Else      { String1 > String2 }
+       If (Length(P1^)>Length(P2^)) Then 
+        CompareString := 1 { String1 > String2 }
+       Else 
+       If (Length(P1^)<Length(P2^)) Then       { String1 < String2 }
+        CompareString := -1 
+       Else 
+          CompareString := 0;           { String1 = String2 }
+      End 
+     Else 
+     If (P1^[I]<P2^[I]) Then 
+      CompareString := -1     { String1 < String2 }
+     Else CompareString := 1;                               { String1 > String2 }
+  END;
+
+function GetCharEncoding(alias: string; var name: string): integer;
+  type
+    tcharsets =  array[1..CHARSET_RECORDS] of charsetrecord;
+    pcharsets = ^tcharsets;
+  var
+    L,H,C,I,j: integer;
+    Search: boolean;
+    Index: integer;
+    char_sets: pcharsets;
+    p: pchar;
+  begin
+    name:='';
+    alias:=upstring(alias);
+    { Search for the appropriate name }
+    GetCharEncoding:=CHAR_ENCODING_UNKNOWN;
+    if alias = '' then exit;
+    new(char_sets);
+{$ifdef tp}
+    p:=@charsetsproc;
+    move(p^,char_sets^,sizeof(tcharsets));
+{$else}    
+    move(charsets,char_sets^,sizeof(tcharsets));
+{$endif}
+    Search:=false;
+    { Search for the name }
+    L := 1;                                            { Start count }
+    H := CHARSET_RECORDS;                              { End count }
+    While (L <= H) Do
+      Begin
+        I := (L + H) SHR 1;                            { Mid point }
+        C := CompareString(char_sets^[I].name, alias);   { Compare with key }
+        If (C < 0) Then 
+          L := I + 1 
+        Else 
+        Begin            { Item to left }
+          H := I - 1;                                   { Item to right }
+          If C = 0 Then 
+            Begin                                       { Item match found }
+              Search := True;                           { Result true }
+            End;
+        End;
+      End;
+    Index := L;                                        { Return result }
+    { If the value has been found, then easy, nothing else to do }
+    if Search then
+      begin
+        name:=char_sets^[index].name;
+        getcharencoding:=charencoding[index].encoding;
+        dispose(char_sets);
+        exit;
+      end;  
+    { not found, then search for all aliases }
+    for i:=1 to CHARSET_RECORDS do
+      begin
+        for j:=1 to CHARSET_MAX_ALIASES do
+          begin
+            if alias = char_sets^[i].aliases[j] then
+              begin
+                name:=char_sets^[i].name;
+                getcharencoding:=charencoding[i].encoding;
+                dispose(char_sets);
+                exit;
+              end
+            else
+            { no more entries, stop the loop }
+            if char_sets^[i].aliases[j] = '' then
+              break;
+          end;
+      end;
+    dispose(char_sets);
+  end;
+
+
 end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.2  2004/05/13 23:04:06  carl
+    + routines to verify the validity of ISO date/time strings
+
   Revision 1.1  2004/05/05 16:28:20  carl
     Release 0.95 updates
 
