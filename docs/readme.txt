@@ -12,6 +12,7 @@ so that code can be compiled with the following compilers:
 - Kylix 1 and higher (kylix)
 - Turbo Pascal 7.0 (tp)
 - Virtual pascal 2.1 or higher (Win32 and OS/2 targets only)  (vp)
+- GNU Pascal (only partial support)
 
 The units are entirely portable and should work on most processors 
 and operating systems.
@@ -22,8 +23,8 @@ See license.txt for the exact licensing terms. They are broad and
 this package can essentially be considered as freeware.
 
 Some of the source code (especially the Delphi units) were taken from 
-the Freepascal compiler, and the Freepascal applies to them (see 
-copying.fpc for more information).
+the Freepascal compiler, and the Freepascal license applies to them 
+(see copying.fpc for more information).
 
 3. Standard types
 
@@ -105,8 +106,8 @@ versions of Freepascal. Otherwise define CPU64.
 4. Credits
 
 Some of the source code in this package is derived from the Free Pascal 
-compiler runtime library.  Visit http://www.freepascal.org to get your hands
-on a great Open source pascal compiler.
+compiler runtime library.  Visit http://www.freepascal.org to get your 
+hands on a great Open source pascal compiler.
 
 Enjoy!
 Carl Eric Codere
