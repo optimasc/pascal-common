@@ -1,5 +1,14 @@
 History of major changes in the releases:
 
+1.2.0:
+   + more routines in dateutil that know about timezones 
+     (extensions to base unit)
+   + TryStrToDateTime() now knows about a lot of new
+     date/time string representations (PDF,Openoffice,others).
+   * several bugfixes, again with conversion of unicode
+     strings.
+   + ucs4strnewucs4
+
 1.1.0
    + add dateutil unit (clone of delphi dateutils)
    * some more bugfixes in the Delphi dos unit (GetDate)
