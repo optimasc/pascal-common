@@ -36,7 +36,7 @@ INCFILES:=./src/*
 DATAFILES:=./tst/*.txt
 FILESTODOCUMENT:=./src/crc.pas ./src/dpautils.pas ./src/fpautils.pas ./src/locale.pas \
 	./src/tpautils.pas ./src/unicode.pas ./src/utils.pas ./src/vpautils.pas ./src/ietf.pas \
-	./src/collects.pas
+	./src/collects.pas ./src/iso639.pas ./src/iso3166.pas
 
 
 
