@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: utils.pas,v 1.11 2004-09-06 19:40:24 carl Exp $
+    $Id: utils.pas,v 1.12 2004-09-13 02:41:57 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Common utilities
@@ -59,6 +59,17 @@ CONST
      @returns FALSE if the file cannot be opened or if it does not exist.
   }
   Function FileExists(FName : string): Boolean;
+  
+  {** 
+     @abstract(Verifies the existence of a directory)
+     This routine verifies if the directory named can be
+     opened or if it actually exists.
+
+     @param DName Name of the directory to check
+     @returns FALSE if the directory cannot be opened or if it does not exist.
+  }
+  Function DirectoryExists(DName : string): Boolean;
+  
 
   {** @abstract(Change the endian of a 32-bit value) }
   Procedure SwapLong(var x : longword);
@@ -182,6 +193,8 @@ function removenulls(s: string): string;
 
 
 Implementation
+
+uses dos;
 
 Const WhiteSpace = [' ',#10,#13,#9];
 
@@ -370,6 +383,18 @@ Const WhiteSpace = [' ',#10,#13,#9];
            End;
      Printf := LeftStr;
    End;
+   
+    Function DirectoryExists(DName : string): Boolean;
+    var
+       ResourceInfo: SearchRec;
+    begin
+      DirectoryExists:=false;
+      findfirst(dname,Directory,ResourceInfo);
+      findclose(ResourceInfo);
+      if DosError <> 0 then
+        exit;
+      DirectoryExists:=true;  
+    end;
 
 
     Function FileExists(FName: String) : Boolean;
@@ -820,6 +845,9 @@ end;
 end.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.11  2004/09/06 19:40:24  carl
+    * clear IOResult before using I/O routines in FileExists
+
   Revision 1.10  2004/08/27 02:11:07  carl
     + added filemodes, as defined in sysutils
 
