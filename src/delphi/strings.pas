@@ -1,5 +1,5 @@
 {
-    $Id: strings.pas,v 1.3 2004-07-01 22:25:41 carl Exp $
+    $Id: strings.pas,v 1.4 2004-07-05 02:24:31 carl Exp $
     This file is part of the Free Pascal run time library.
     Copyright (c) 1999-2000 by Carl-Eric Codere,
     member of the Free Pascal development team.
@@ -482,7 +482,7 @@ Implementation
      Dest[counter-1] := Source[counter];
    end;
    { terminate the string }
-   Dest[counter] := #0;
+   Dest[length(Source)] := #0;
    StrPCopy:=Dest;
  end;
 
@@ -610,6 +610,9 @@ Implementation
 end.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.3  2004/07/01 22:25:41  carl
+    + start of ansistring support
+
   Revision 1.2  2004/06/17 11:40:58  carl
     - remove some warnings
 
