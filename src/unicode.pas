@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: unicode.pas,v 1.20 2004-10-31 19:54:06 carl Exp $
+    $Id: unicode.pas,v 1.21 2004-11-09 03:51:42 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Unicode related routines
@@ -149,6 +149,9 @@ type
   {** @abstract(Trims trailing spaces and control characters from an UCS-4 string.) }
   procedure ucs4_trimright(var s: ucs4string);
 
+  {** @abstract(Trims trailing and leading spaces and control characters from an UCS-4 string.) }
+  procedure ucs4_trim(var s: ucs4string);
+
   {** @abstract(Returns an UCS-4 substring of an UCS-4 string) }
   procedure ucs4_copy(var resultstr: ucs4string; s: array of ucs4char; index: integer; count: integer);
 
@@ -275,9 +278,9 @@ type
    anything.
   }
   function ucs4strnewucs4(src: pucs4char): pucs4char;
- 
- 
- 
+
+
+
 
   {** @abstract(Disposes of an UCS-4 null terminated string on the heap)
 
@@ -293,6 +296,28 @@ type
 
  }
  function ucs4StrPosISO8859_1(S: pucs4char; Str2: PChar): pucs4char;
+
+ {** Allocates a new UCS-4 null terminated string, and copies
+     the existing string, avoid a copy of the whitespace at
+     the start and end of the string
+ }
+ function ucs4strtrim(const p: pucs4char): pucs4char;
+
+ {** Fills a memory region consisting of ucs-4 characters
+     with the specified UCS-4 character.
+ }
+ function ucs4strfill(var p: pucs4char; count: integer; value: ucs4char): pucs4char;
+
+
+  {** This routine checks the validity of an UCS-4 null terminated string.
+      It first skips to the null character, and if maxcount is greater than
+      the index, verifies that the values in memory are of value VALUE.
+
+      Otherwise, returns an ERROR. This routine is used with UCS4StrFill.
+  }
+  procedure ucs4strcheck(p: pucs4char; maxcount: integer; value: ucs4char);
+
+
 
 
 {---------------------------------------------------------------------------
@@ -1732,6 +1757,11 @@ end;
     ucs4_isvalid := true;
   end;
 
+  procedure ucs4_trim(var s: ucs4string);
+  begin
+    ucs4_trimleft(s);
+    ucs4_trimright(s);
+  end;
 
 
   procedure UCS4_TrimLeft(var S: ucs4string);
@@ -1785,6 +1815,10 @@ end;
      l:=255;
    s[0]:=ucs2char(l);
   end;
+
+{---------------------------------------------------------------------------
+                   UCS-4 null terminated string handling
+-----------------------------------------------------------------------------}
 
   function ucs4strlen(str: pucs4char): integer;
   var
@@ -2294,7 +2328,7 @@ end;
     Freemem(str,ucs4strlen(str)*sizeof(ucs4char)+sizeof(ucs4char));
     str:=nil;
  end;
- 
+
 
  Function UCS4StrPCopy(Dest: Pucs4char; Source: UCS4String):PUCS4Char;
    var
@@ -2325,23 +2359,136 @@ end;
    UCS4StrPCopy:=Dest;
  end;
 
+  function ucs4strtrim(const p: pucs4char): pucs4char;
+{$IFDEF DEBUG}
+  const
+    TEST_VALUE = $ff;
+{$ENDIF}
+  var
+   i: integer;
+   lastindex: integer;
+   inbuf,outbuf,outbuf1: pucs4strarray;
+   allocsize: integer;
+   allocsize1: integer;
+  begin
+    ucs4strtrim:=nil;
+    if not assigned(p) then
+      exit;
+    { allocate a copy of the string that will be overwritten }
+    lastindex := ucs4strlen(p)+1;
+    allocsize:=lastindex*sizeof(ucs4char);
+    Getmem(outbuf,allocsize);
+{$IFDEF DEBUG}
+    UCS4StrFill(pucs4char(outbuf),lastindex,TEST_VALUE);
+{$ENDIF}
+    inbuf:=pucs4strarray(p);
+    i := 0;
+    while (i<=lastindex) and (ucs4_iswhitespace(inbuf^[i])) do
+      inc(i);
+    move(inbuf^[i],outbuf^,(lastindex-i)*sizeof(ucs4char));
+{$IFDEF DEBUG}
+    UCS4StrCheck(pucs4char(outbuf),lastindex,TEST_VALUE);
+{$ENDIF}
+
+    lastindex := ucs4strlen(pucs4char(outbuf))+1;
+    allocsize1:=lastindex*sizeof(ucs4char);
+    Getmem(outbuf1,allocsize1);
+{$IFDEF DEBUG}
+    UCS4StrFill(pucs4char(outbuf1),lastindex,TEST_VALUE);
+{$ENDIF}
+    inbuf:=pucs4strarray(outbuf);
+    { No null character, and forget to decrease because index starts at zero }
+    i:=ucs4strlen(pucs4char(outbuf))-1;
+    while (i>=0) and (ucs4_iswhitespace(inbuf^[i])) do
+       dec(i);
+    if i >= 0 then
+      begin
+        move(inbuf^,outbuf1^,(i+1)*sizeof(ucs4char));
+        { add the null character }
+        outbuf1^[i+1]:=0;
+      end
+    else
+        { add the null character }
+        outbuf1^[0]:=0;
+
+{$IFDEF DEBUG}
+    UCS4StrCheck(pucs4char(outbuf1),lastindex,TEST_VALUE);
+{$ENDIF}
+    ucs4strtrim:=ucs4strnewucs4(pucs4char(outbuf1));
+    Freemem(outbuf,allocsize);
+    Freemem(outbuf1,allocsize1);
+  end;
+
+  function ucs4strfill(var p: pucs4char; count: integer; value: ucs4char): pucs4char;
+  var
+   outbuf: pucs4strarray;
+   i: integer;
+  begin
+    outbuf:=pucs4strarray(p);
+    if count > 0 then
+      begin
+        for i:=1 to count do
+          begin
+            outbuf^[i-1]:=value;
+          end;
+      end;
+   ucs4strfill:=pucs4char(outbuf);
+  end;
+
+
+  procedure UCS4StrCheck(p: pucs4char; maxcount: integer; value: ucs4char);
+  var
+   inbuf: pucs4strarray;
+   i: integer;
+   firstindex: integer;
+   maxval: integer;
+  begin
+    inbuf:=pucs4strarray(p);
+    { Now search for null }
+    maxval:=maxcount-1;
+    firstindex:=0;
+    for i:=0 to maxval do
+    begin
+      if inbuf^[i] = 0 then
+        break;
+      inc(firstindex);
+    end;
+    { No null! }
+    if (firstindex = maxcount) then
+      RunError(255);
+    { Now check the values }
+    if firstindex <= maxcount then
+      begin
+        { first index should point to the null now }
+        inc(firstindex);
+        for i:=firstindex to maxval do
+          if inbuf^[i] <> value then
+             RunError(255);
+      end;
+  end;
+
+
+
+{---------------------------------------------------------------------------
+                   UTF-8 null terminated string handling
+-----------------------------------------------------------------------------}
 
   function utf8strdispose(p: pchar): pchar;
   begin
     utf8strdispose := nil;
-    if not assigned(p) then 
+    if not assigned(p) then
       exit;
     Freemem(p,strlen(p)+1);
     p:=nil;
   end;
-  
+
   function utf8strnewutf8(src: pchar): pchar;
   var
    lengthtoalloc: integer;
    dst: pchar;
   begin
     utf8strnewutf8:=nil;
-    if not assigned(src) then 
+    if not assigned(src) then
       exit;
     lengthtoalloc:=strlen(src)+sizeof(utf8char);
     { also copy the null character }
@@ -2741,7 +2888,7 @@ end;
 {---------------------------------------------------------------------------
                    UCS-2 null terminated string handling
 -----------------------------------------------------------------------------}
-  
+
   function ucs2strlcopyucs4(src: pucs2char; dst: pucs4char; maxlen: integer): pucs4char;
   var
    i: integer;
@@ -2834,7 +2981,7 @@ end;
      Inc(counter);
    ucs2strlen := counter;
  end;
-  
+
   
   
 
@@ -2898,6 +3045,11 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.20  2004/10/31 19:54:06  carl
+    + ucs4strnewucs4 routine
+    * several range check error fixes
+    * memory corruption fix with conversion routines
+
   Revision 1.19  2004/10/27 01:58:50  carl
    * strnew returns nil if the value passed is nil
    + clarification of some comments
