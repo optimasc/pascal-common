@@ -20,7 +20,8 @@ uses dpautils,
      strings,
      iso639,
      utils,
-     testdate
+     testdate,
+     testsgml
      ;
 
   var
@@ -521,6 +522,7 @@ Begin
   s:=PathSeparator;
   b:=FileNameCaseSensitive;
   testdate.test_unit;
+  testsgml.test_unit;
   testreadutf8;
   testreadutf16le;
   testreadcp850;
@@ -538,6 +540,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.12  2004/09/29 00:56:54  carl
+    + update to include dateutil testing
+
   Revision 1.11  2004/09/06 20:35:17  carl
     + new test files
 
