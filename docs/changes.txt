@@ -1,5 +1,12 @@
 History of major changes in the releases:
 
+1.00
+   + add more crc/checksum routines in CRC unit
+   * some more bugfixes (UTF-8 encoding using 4 and 5 characters)
+   * FExpand was wrong in DOS unit for Delphi
+   + utf8_islegal implemented to verify the validity of UTF-8 strings.
+   * wrong driveseparator value in Delphi dos unit
+
 0.99:
    + unicode: UCS-2 null terminated string support
    + unicode: More UTF-8 conversion routines
