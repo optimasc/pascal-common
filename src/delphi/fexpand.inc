@@ -1,5 +1,5 @@
 {
-    $Id: fexpand.inc,v 1.1 2004-05-05 17:22:29 carl Exp $
+    $Id: fexpand.inc,v 1.2 2004-09-06 19:47:14 carl Exp $
     This file is part of the Free Pascal run time library.
     Copyright (c) 1997-2000 by the Free Pascal development team
 
@@ -69,8 +69,9 @@ begin
         Pa := Path
     else
     begin
+        Pa:='';
         for i:=1 to length(Path) do
-          Pa[i] := UpCase (Path[i]);
+          Pa := Pa + UpCase (Path[i]);
     end;    
 
 (* Allow both '/' and '\' as directory separators *)
@@ -296,5 +297,8 @@ end;
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.1  2004/05/05 17:22:29  carl
+    + release 0.95
+
 
 }
