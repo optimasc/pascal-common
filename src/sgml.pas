@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: sgml.pas,v 1.1 2004-10-13 23:26:11 carl Exp $
+    $Id: sgml.pas,v 1.2 2004-10-27 02:00:19 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere (Optima SC Inc.)
 
     SGML related utility routines
@@ -18,6 +18,7 @@ interface
  {$X+} { Extended syntax }
  {$V-} { Strict VAR strings }
  {$P-} { Implicit open strings }
+ {$B-} { No full boolean evaluation }
  {$T+} { Typed pointers }
  {$IFNDEF TP}
  {$J+} { Writeable constants }
@@ -219,6 +220,7 @@ begin
   idx:=pos(DOCTYPE_STR,s);
   if idx = 1 then
     begin
+      SGMLGetDTDInfo:=true;
       s:=copy(s,1,pos('>',s));
       if length(s) > 0 then
         begin
@@ -228,7 +230,7 @@ begin
           s:=trimright(s);
           top_element:='';
           i:=1;
-          while not (s[i] in space_character) do
+          while (i < length(s)) and not (s[i] in space_character) do
             begin
               top_element:=top_element+s[i];
               inc(i);
@@ -242,7 +244,7 @@ begin
           s:=trimright(s);
           availability:='';
           i:=1;
-          while not (s[i] in space_character) do
+          while ( i < length(s)) and not (s[i] in space_character) do
             begin
               availability:=availability+s[i];
               inc(i);
@@ -256,12 +258,11 @@ begin
           s:=trimleft(s);
           s:=trimright(s);
           { starts with double quotes }
-          if pos('"',s) = 1 then
+          if (pos('"',s) = 1) then
            begin
              delete(s,1,1);
              { end with double quotes }
              fpi:=copy(s,1,pos('"',s)-1);
-             SGMLGetDTDInfo:=true;
              exit;
            end;
         end;
@@ -434,4 +435,7 @@ end;
 end.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.1  2004/10/13 23:26:11  carl
+    + initial revision
+
 }
