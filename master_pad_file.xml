@@ -34,19 +34,19 @@
 	</Company_Info>
 	<Program_Info>
 		<Program_Name>Portable pascal units</Program_Name>
-		<Program_Version></Program_Version>
-		<Program_Release_Month>01</Program_Release_Month>
-		<Program_Release_Day>08</Program_Release_Day>
+		<Program_Version />
+		<Program_Release_Month>03</Program_Release_Month>
+		<Program_Release_Day>20</Program_Release_Day>
 		<Program_Release_Year>2005</Program_Release_Year>
 		<Program_Cost_Dollars>0</Program_Cost_Dollars>
 		<Program_Cost_Other_Code />
 		<Program_Cost_Other />
 		<Program_Type>Freeware</Program_Type>
-		<Program_Release_Status>Major Update</Program_Release_Status>
+		<Program_Release_Status>Minor Update</Program_Release_Status>
 		<Program_Install_Support>No Install Support</Program_Install_Support>
 		<Program_OS_Support>Win 3.1x,Win95,Win98,WinME,WinNT 3.x,WinNT 4.x,Windows2000,WinXP,Windows2003,Unix,Linux,MS-DOS,OS/2,OS/2 Warp,Mac PPC,Netware,BEOS</Program_OS_Support>
 		<Program_Language>English,French</Program_Language>
-		<Program_Change_Info>More date format parsing is supported, some fixes in unicode unit.</Program_Change_Info>
+		<Program_Change_Info>Several bugfixes</Program_Change_Info>
 		<Program_Specific_Category>Miscellaneous</Program_Specific_Category>
 		<Program_Category_Class>Development::Components &amp; Libraries</Program_Category_Class>
 		<Program_Categories>Pascal units</Program_Categories>
@@ -55,13 +55,13 @@
 		<Includes_VB_Runtime>N</Includes_VB_Runtime>
 		<Includes_DirectX>N</Includes_DirectX>
 		<File_Info>
-			<Filename_Versioned></Filename_Versioned>
-			<Filename_Previous></Filename_Previous>
-			<Filename_Generic></Filename_Generic>
-			<Filename_Long></Filename_Long>
-			<File_Size_Bytes></File_Size_Bytes>
-			<File_Size_K></File_Size_K>
-			<File_Size_MB></File_Size_MB>
+			<Filename_Versioned />
+			<Filename_Previous />
+			<Filename_Generic />
+			<Filename_Long />
+			<File_Size_Bytes />
+			<File_Size_K />
+			<File_Size_MB />
 		</File_Info>
 		<Expire_Info>
 			<Has_Expire_Info>N</Has_Expire_Info>
@@ -82,14 +82,6 @@
 			<Char_Desc_450>Source code of pascal units for porting code across different pascal compilers. Currently supports, Virtual Pascal, Delphi, Free Pascal and Turbo Pascal. Also includes some useful string handling routines, Unicode support, ISO 3601, ISO 639 and ISO 8601 based utility routines. Fully portable code.</Char_Desc_450>
 			<Char_Desc_2000>Source code of pascal units for porting code across different pascal compilers. Currently supports, Virtual Pascal, Delphi, Free Pascal and Turbo Pascal. Also includes some useful string handling routines, Unicode support, ISO 3601, ISO 639 and ISO 8601 based utility routines. Fully portable code.</Char_Desc_2000>
 		</English>
-		<French>
-			<Keywords>utilitaires,programmation,pascal</Keywords>
-			<Char_Desc_45>Modules d'utilitaires pascal</Char_Desc_45>
-			<Char_Desc_80>Modules pascal pour différents compilateurs</Char_Desc_80>
-			<Char_Desc_250 />
-			<Char_Desc_450>Code source de modules pascal pour porter le code pascal sur différents compilateurs pascal. Supporte présentement les compilateurs Virtual Pascal, Delphi, Free Pascal et Turbo Pascal. Cette archive contient aussi des modules pour le support ISO 3601, ISO 8601, ISO 639 et du support unicode. Le code est entièrement portable.</Char_Desc_450>
-			<Char_Desc_2000>Source code of pascal units for porting code across different pascal compilers. Currently supports, Virtual Pascal, Delphi, Free Pascal and Turbo Pascal. Also includes some useful string handling routines, Unicode support, ISO 3601, ISO 639 and ISO 8601 based utility routines. Fully portable code.</Char_Desc_2000>
-		</French>
 	</Program_Descriptions>
 	<Web_Info>
 		<Application_URLs>
