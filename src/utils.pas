@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: utils.pas,v 1.13 2004-10-27 02:01:11 carl Exp $
+    $Id: utils.pas,v 1.14 2004-11-09 03:50:23 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Common utilities
@@ -79,6 +79,10 @@ CONST
 
   {** @abstract(Convert a string to uppercase ASCII) }
   function UpString(s : string): string;
+
+  {** @abstract(Convert a string to lowercase ASCII) }
+  function LowString(s : string): string;
+
 
   {** @abstract(Generic stream error procedure)
       Generic stream error procedure that
@@ -240,6 +244,18 @@ uses dos;
         s[i] := Upcase(s[i]);
       UpString := s;
     End;
+
+  function LowString(s : string): string;
+    var
+     i : integer;
+    Begin
+      for I:=1 to length(s) do
+        if s[i] in ['A'..'Z'] then
+          s[i]:=chr(ord(s[i])+ord(#$20));
+      LowString := s;
+    End;
+
+
 
    Function FillTo(s : string; tolength: integer): string;
     Begin
@@ -855,6 +871,9 @@ end;
 end.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.13  2004/10/27 02:01:11  carl
+    + trim added
+
   Revision 1.12  2004/09/13 02:41:57  carl
     + DirectoryExists routine
 
