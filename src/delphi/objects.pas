@@ -619,7 +619,7 @@ CONST
                                 IMPLEMENTATION
 {<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>}
 
-uses sysutils;
+uses sysutils,fileio;
 
 
 {***************************************************************************}
@@ -1111,35 +1111,31 @@ BEGIN
    FileName := FileName+#0;                           { Make asciiz }
    Move(FileName[1], FName, Length(FileName));        { Create asciiz name }
    Handle := InvalidHandle;
-   Assign(FileInfo,FileName);
+   FileAssign(FileInfo,FileName);
    { Handle the mode }
    if Mode =stCreate then
-     Begin        
-       Rewrite(FileInfo,1); 
+     Begin
+       FileRewrite(FileInfo,mode and $ff);
      end
    else
      Begin
-       OldFileMode := FileMode;
-       { Keep sharing modes }
-       FileMode := Mode and $ff;
-       System.Reset(FileInfo,1);
-       FileMode := OldFileMode;
-       { To use the correct mode we must reclose the file 
+       FileReset(FileInfo,mode and $ff);
+       { To use the correct mode we must reclose the file
          and open it again 
        }
      end;
    Handle := ValidHandle;                { Set handle value   }
-   DosStreamError := IOResult;
+   DosStreamError := FileIOResult;
    If DosStreamError = 0 then
      Begin
-       StreamSize := System.FileSize(FileInfo);
+       StreamSize := FileGetSize(FileInfo);
      end;
    If DosStreamError = 0 then
-       DosStreamError := IOResult;
-   If (DosStreamError <> 0) Then 
+       DosStreamError := FileIOResult;
+   If (DosStreamError <> 0) Then
      Error(stInitError, DosStreamError)              { Call stream error }
-   else  
-     Status := StOK;  
+   else
+     Status := StOK;
 END;
 
 {--TDosStream---------------------------------------------------------------}
@@ -1151,8 +1147,8 @@ var
 BEGIN
    if Handle <> InvalidHandle then
      Begin
-       System.Close(FileInfo);
-       DosStreamError := IOResult;
+       FileClose(FileInfo);
+       DosStreamError := FileIOResult;
        If DosStreamError = 0 then
           Status := stOk
        else
@@ -1172,8 +1168,8 @@ var
 BEGIN
    if Handle <> InvalidHandle then                    { Is file closed ?   }
      Begin
-       System.Close(FileInfo);                        { Close file         }
-       DosStreamError := IOResult;                    { Check for error    }
+       FileClose(FileInfo);                        { Close file         }
+       DosStreamError := FileIOResult;                    { Check for error    }
        If DosStreamError = 0 then
           Status := stOk
        else
@@ -1192,8 +1188,8 @@ PROCEDURE TDosStream.Truncate;
 BEGIN
    If Status = stOk then
      Begin
-       System.Truncate(FileInfo);
-       DosStreamError := IOResult;
+       FileTruncate(FileInfo);
+       DosStreamError := FileIOResult;
        If DosStreamError = 0 then
            { Status is already = stOK }
            StreamSize := Position
@@ -1213,8 +1209,8 @@ BEGIN
      Begin                                  { Check status okay }
        If (Pos < 0) Then 
              Pos := 0;                      { Negatives removed }
-       System.Seek(FileInfo, Pos);      
-       DosStreamError := IOResult;
+       FileSeek(FileInfo, Pos);
+       DosStreamError := FileIOResult;
        if DosStreamError <> 0 then
           Error(stSeekError, DosStreamError){ Specific seek error }
        Else Position := Pos;                 { Adjust position     }
@@ -1233,28 +1229,25 @@ BEGIN
      Begin                        { Check status okay }
      If (Handle = InvalidHandle) Then 
         Begin                      { File not open }
-          Assign(FileInfo,FName);
+          FileAssign(FileInfo,FName);
           { Handle the mode }
           if OpenMode =stCreate then
-            Begin        
-              System.Rewrite(FileInfo,1); 
+            Begin
+              FileRewrite(FileInfo, openmode and $ff);
             end
            else
              Begin
-               OldFileMode := FileMode;
-               FileMode := OpenMode and 3;
-               System.Reset(FileInfo,1);
-               FileMode := OldFileMode;
-               { To use the correct mode we must reclose the file 
+               FileReset(FileInfo, openmode and $ff);
+               { To use the correct mode we must reclose the file
                  and open it again 
                }
            end;
            Handle := ValidHandle;                { Set handle value   }
-           DosStreamError := IOResult;
+           DosStreamError := FileIOResult;
            If DosStreamError = 0 then
-              StreamSize := System.FileSize(FileInfo);
+              StreamSize := FileGetSize(FileInfo);
            If DosStreamError = 0 then
-              DosStreamError := IOResult;
+              DosStreamError := FileIOResult;
            If (DosStreamError <> 0) Then 
               Error(stOpenError, DosStreamError)              { Call stream error }
            else   
@@ -1279,8 +1272,8 @@ BEGIN
           Error(stReadError, 0);                           { Read beyond end!!! }
         If (Handle = InvalidHandle) Then 
           Error(stReadError, 103);                         { File not open }
-        BlockRead(FileInfo, Buf, Count, BytesMoved);       { Read from file }
-        DosStreamError := IOResult;
+        BytesMoved:=FileBlockRead(FileInfo, Buf, Count);   { Read from file }
+        DosStreamError := FileIOResult;
         If ((DosStreamError<>0) OR (BytesMoved<>Count)) Then 
            Begin  { Error was detected }
              BytesMoved := 0;                              { Clear bytes moved }
@@ -1309,9 +1302,9 @@ BEGIN
    if Status <> StOK then
      exit;
    If (Handle = InvalidHandle) Then 
-    Error(stWriteError, 103);                    { File not open }
-   BlockWrite(FileInfo, Buf, Count, BytesMoved); { Write to file }
-   DosStreamError := IOResult;
+    Error(stWriteError, 103);                        { File not open }
+   BytesMoved:=FileBlockWrite(FileInfo, Buf, Count); { Write to file }
+   DosStreamError := FileIOResult;
    If ((DosStreamError<>0) OR (BytesMoved<>Count)) Then 
       Begin  { Error was detected }
           BytesMoved := 0;                               { Clear bytes moved }
@@ -1374,8 +1367,8 @@ BEGIN
      If (Handle = InvalidHandle) Then DosStreamError := 103  { File is not open }
        Else 
          Begin
-           BlockWrite(FileInfo, Buffer^,BufPtr, W);     { Write to file }
-           DosStreamError := IOResult;
+           W:=FileBlockWrite(FileInfo, Buffer^,BufPtr);     { Write to file }
+           DosStreamError :=FileIOResult;
          End;   
      If (DosStreamError<>0) OR (W<>BufPtr) Then       { We have an error }
        If (DosStreamError=0) Then Error(stWriteError, 0){ Unknown write error }
@@ -1442,8 +1435,8 @@ BEGIN
        If (Position + BufSize > StreamSize) Then
          Bw := StreamSize - Position                  { Amount of file left }
          Else Bw := BufSize;                          { Full buffer size }
-       BlockRead(FileInfo, Buffer^, Bw, W);
-       DosStreamError := IOResult;                    { Read from file }
+       W:=FileBlockRead(FileInfo, Buffer^, Bw);
+       DosStreamError := FileIOResult;                    { Read from file }
        If ((DosStreamError<>0) OR (Bw<>W)) Then Begin { Error was detected }
        If (DosStreamError<>0) Then
          Error(stReadError, DosStreamError)           { Specific read error }
@@ -1481,8 +1474,8 @@ BEGIN
    P := @Buf;                                         { Transfer address }
    While (Count>0) AND (Status=stOk) Do Begin         { Check status & count }
      If (BufPtr=BufSize) Then Begin                   { Buffer is full }
-       BlockWrite(FileInfo, Buffer^, BufSize,W);      { Write to file }
-       DosStreamError := IOResult;
+       W:=FileBlockWrite(FileInfo, Buffer^, BufSize); { Write to file }
+       DosStreamError := FileIOResult;
        If (DosStreamError<>0) OR (W<>BufSize) Then           { We have an error }
          If (DosStreamError=0) Then Error(stWriteError, 0)   { Unknown write error }
            Else Error(stError, DosStreamError);              { Specific write error }
@@ -2753,6 +2746,9 @@ END;
 END.
 {
    $Log: not supported by cvs2svn $
+   Revision 1.4  2004/10/31 19:54:58  carl
+     +  max buffer size changed.
+
    Revision 1.3  2004/09/06 19:46:42  carl
      * File sharing modes are now allowed
 
