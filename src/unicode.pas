@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: unicode.pas,v 1.10 2004-08-01 05:33:02 carl Exp $
+    $Id: unicode.pas,v 1.11 2004-08-19 00:17:12 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Unicode related routines
@@ -24,11 +24,11 @@
     limited by the compiler and integer type size.
 
     Since all these encoding are variable length,
-    except the UTF-32 (which is equivalent to UCS-4 according to 
+    except the UCS-4 (which is equivalent to UTF-32 according to 
     ISO 10646:2003) and UCS-2 encoding, to parse through characters, 
-    every string should be converted to UTF-32 or UCS-2 before being used.
+    every string should be converted to UCS-4 or UCS-2 before being used.
     
-    The principal encoding scheme for this unit is UTF-32.
+    The principal encoding scheme for this unit is UCS-4.
  
 }
 {$T-}
@@ -47,14 +47,16 @@ uses
 
 
 type
+
   {** UTF-8 base data type }
-  utf8 = char;
+  utf8char = char;
+  putf8char = pchar;
   {** UTF-16 base data type }
-  utf16 = word;
-  {** UTF-32 base data type }
-  utf32 = longword;
-  {** UTF-32 null terminated string }
-  putf32char = ^utf32;
+  utf16char = word;
+  {** UCS-4 base data type }
+  ucs4char = longword;
+  {** UCS-4 null terminated string }
+  pucs4char = ^ucs4char;
   {** UCS-2 base data type }
   ucs2char = word;
   pucs2char = ^ucs2char;
@@ -63,24 +65,24 @@ type
       of the string in characters.
   }
   ucs2string = array[0..255] of ucs2char;
-  {** UTF-32 string declaration. Index 0 contains the active length
+  {** UCS-4 string declaration. Index 0 contains the active length
       of the string in characters.
   }
-  utf32string = array[0..255] of utf32;
+  ucs4string = array[0..255] of ucs4char;
 
   {** UTF-8 string declaration. Index 0 contains the active length
       of the string in BYTES
   }
-  utf8string = array[0..1024] of utf8;
+  utf8string = array[0..1024] of utf8char;
   {** UTF-16 string declaration. Index 0 contains the active length
       of the string in BYTES
   }
-  utf16string = array[0..255] of utf16;
+  utf16string = array[0..255] of utf16char;
 
 const
-   {** Maximum size of a null-terminated UTF-32 character string }
-   MAX_UTF32_CHARS = high(smallint) div (sizeof(utf32));
-   {** Maximum size of a null-terminated UTF-32 character string }
+   {** Maximum size of a null-terminated UCS-4 character string }
+   MAX_UCS4_CHARS = high(smallint) div (sizeof(ucs4char));
+   {** Maximum size of a null-terminated UCS-4 character string }
    MAX_UCS2_CHARS = high(smallint) div (sizeof(ucs2char))-1;
 
   {** Return status: conversion successful }
@@ -96,168 +98,180 @@ const
 
   {** Byte order mark: UTF-8 encoding signature }
   BOM_UTF8     = #$EF#$BB#$BF;
-  {** Byte order mark: UTF-32 big endian encoding signature }
+  {** Byte order mark: UCS-4 big endian encoding signature }
   BOM_UTF32_BE = #00#00#$FE#$FF;
-  {** Byte order mark: UTF-32 little endian encoding signature }
+  {** Byte order mark: UCS-4 little endian encoding signature }
   BOM_UTF32_LE = #$FF#$FE#00#00;
   
   BOM_UTF16_BE = #$FE#$FF;
   BOM_UTF16_LE = #$FF#$FE;
 
 type
-  utf32strarray = array[0..MAX_UTF32_CHARS] of utf32;
-  putf32strarray = ^utf32strarray;
+  ucs4strarray = array[0..MAX_UCS4_CHARS] of ucs4char;
+  pucs4strarray = ^ucs4strarray;
     
   ucs2strarray = array[0..MAX_UCS2_CHARS] of ucs2char;
   pucs2strarray = ^ucs2strarray;
 
 
 {---------------------------------------------------------------------------
-                          UTF-32 string handling
+                          UCS-4 string handling
 -----------------------------------------------------------------------------}
 
-  {** @abstract(Returns the current length of an UTF-32 string) }
-  function utf32_length(s: array of utf32): integer;
+  {** @abstract(Returns the current length of an UCS-4 string) }
+  function ucs4_length(s: array of ucs4char): integer;
 
-  {** @abstract(Set the new dynamic length of an utf-32 string) }
-  procedure utf32_setlength(var s: array of utf32; l: integer);
+  {** @abstract(Set the new dynamic length of an UCS-4 string) }
+  procedure ucs4_setlength(var s: array of ucs4char; l: integer);
 
   {** @abstract(Determines if the specified character is a whitespace character) }
-  function utf32_iswhitespace(c: utf32): boolean;
-
-  {** @abstract(Trims leading spaces and control characters from an UTF-32 string.) }
-  procedure utf32_trimleft(var s: utf32string);
+  function ucs4_iswhitespace(c: ucs4char): boolean;
   
-  {** @abstract(Trims trailing spaces and control characters from an UTF-32 string.) }
-  procedure utf32_trimright(var s: utf32string);
+  {** @abstract(Converts a character to an uppercase character) 
+  
+      This routine only supports the simple form case folding
+      algorithm (e.g full form is not supported).
+  }
+  function ucs4_upcase(c: ucs4char): ucs4char;
 
-  {** @abstract(Returns an utf-32 substring of an utf-32 string) }
-  procedure utf32_copy(var resultstr: utf32string; s: array of utf32; index: integer; count: integer);
+  {** @abstract(Converts a character to a lowercase character)
+
+      This routine only supports the simple form case folding
+      algorithm (e.g full form is not supported).
+
+  }
+  function ucs4_lowcase(c: ucs4char): ucs4char;
+
+  {** @abstract(Trims leading spaces and control characters from an UCS-4 string.) }
+  procedure ucs4_trimleft(var s: ucs4string);
+  
+  {** @abstract(Trims trailing spaces and control characters from an UCS-4 string.) }
+  procedure ucs4_trimright(var s: ucs4string);
+
+  {** @abstract(Returns an UCS-4 substring of an UCS-4 string) }
+  procedure ucs4_copy(var resultstr: ucs4string; s: array of ucs4char; index: integer; count: integer);
 
   {** @abstract(Deletes a substring from a string) }
-  procedure utf32_delete(var s: utf32string; index: integer; count: integer);
+  procedure ucs4_delete(var s: ucs4string; index: integer; count: integer);
 
-  {** @abstract(Concatenates two UTF-32 strings, and gives a resulting UTF-32 string) }
-  procedure utf32_concat(var resultstr: utf32string;s1: utf32string; s2: array of utf32);
+  {** @abstract(Concatenates two UCS-4 strings, and gives a resulting UCS-4 string) }
+  procedure ucs4_concat(var resultstr: ucs4string;s1: ucs4string; s2: array of ucs4char);
 
-  {** @abstract(Concatenates an UTF-32 string with an ASCII string, and gives
-      a resulting UTF-32 string)
+  {** @abstract(Concatenates an UCS-4 string with an ASCII string, and gives
+      a resulting UCS-4 string)
   }    
-  procedure utf32_concatascii(var resultstr: utf32string;s1: utf32string; s2: string);
+  procedure ucs4_concatascii(var resultstr: ucs4string;s1: ucs4string; s2: string);
 
-  {** @abstract(Searches for an ASCII substring in an UTF-32 string) }
-  function utf32_posascii(substr: string; s: utf32string): integer;
+  {** @abstract(Searches for an ASCII substring in an UCS-4 string) }
+  function ucs4_posascii(substr: string; s: ucs4string): integer;
 
-  {** @abstract(Checks if an ASCII string is equal to an UTF-32 string ) }
-  function utf32_equalascii(s1 : array of utf32; s2: string): boolean;
+  {** @abstract(Checks if an ASCII string is equal to an UCS-4 string ) }
+  function ucs4_equalascii(s1 : array of ucs4char; s2: string): boolean;
 
-  {** @abstract(Searches for an UTF-32 substring in an UTF-32 string) }
-  function utf32_pos(substr: utf32string;s : utf32string): integer;
+  {** @abstract(Searches for an UCS-4 substring in an UCS-4 string) }
+  function ucs4_pos(substr: ucs4string;s : ucs4string): integer;
 
-  {** @abstract(Checks if both UTF-32 strings are equal) }
-  function utf32_equal(const s1,s2: utf32string): boolean;
+  {** @abstract(Checks if both UCS-4 strings are equal) }
+  function ucs4_equal(const s1,s2: ucs4string): boolean;
 
-  {** @abstract(Checks if the UTF-32 character is valid)
+  {** @abstract(Checks if the UCS-4 character is valid)
 
-      This routine verifies if the UTF-32 character is
-      within the valid ranges of UTF-32 characters, as
+      This routine verifies if the UCS-4 character is
+      within the valid ranges of UCS-4 characters, as
       specified in the Unicode standard 4.0. BOM characters
       are NOT valid with this routine.
   }
-  function utf32_isvalid(c: utf32): boolean;
+  function ucs4_isvalid(c: ucs4char): boolean;
 
-  {** @abstract(Checks if conversion from/to this character set format to/from UTF-32
+  {** @abstract(Checks if conversion from/to this character set format to/from UCS-4
       is supported)
 
       @param(s This is an alias for a character set, as defined by IANA)
-      @returns(true if conversion to/from UTF-32 is supported with this
+      @returns(true if conversion to/from UCS-4 is supported with this
         character set, otherwise FALSE)
   }
-  function utf32_issupported(s: string): boolean;
+  function ucs4_issupported(s: string): boolean;
 
 {---------------------------------------------------------------------------
-                  UTF-32 null terminated string handling
+                  UCS-4 null terminated string handling
 -----------------------------------------------------------------------------}
 
 
 
-  {** @abstract(Returns the number of characters in the null terminated UTF-32 string)
+  {** @abstract(Returns the number of characters in the null terminated UCS-4 string)
 
-      @param(str The UTF-32 null terminated string to check)
+      @param(str The UCS-4 null terminated string to check)
       @returns(The number of characters in str, not counting the null
         character)
   }
-  function utf32strlen(str: putf32char): integer;
+  function ucs4strlen(str: pucs4char): integer;
 
-  {** @abstract(Converts a null-terminated UTF-32 string to a Pascal-style UTF-32 string.)
+  {** @abstract(Converts a null-terminated UCS-4 string to a Pascal-style UCS-4 string.)
   }
- procedure utf32strpas(str: putf32char; var res:utf32string);
+ procedure ucs4strpas(str: pucs4char; var res:ucs4string);
  
-  {** @abstract(Converts a null-terminated UTF-32 string to a Pascal-style 
+  {** @abstract(Converts a null-terminated UCS-4 string to a Pascal-style 
        ISO 8859-1 encoded string.)
        
       Characters that cannot be converted are converted to 
       escape sequences of the form : \uxxxxxxxx where xxxxxxxx is
       the hex representation of the character.
   }
- function utf32strpastoISO8859_1(str: putf32char): string;
+ function ucs4strpastoISO8859_1(str: pucs4char): string;
  
-  {** @abstract(Converts a null-terminated UTF-32 string to a Pascal-style 
+  {** @abstract(Converts a null-terminated UCS-4 string to a Pascal-style 
        ASCII encoded string.)
-       
-      Characters that cannot be converted are converted to 
+
+      Characters that cannot be converted are converted to
       escape sequences of the form : \uxxxxxxxx where xxxxxxxx is
       the hex representation of the character.
   }
- function utf32strpastoASCII(str: putf32char): string;
+ function ucs4strpastoASCII(str: pucs4char): string;
  
  
 
-  {** @abstract(Copies a Pascal-style UTF-32 string to a null-terminated UTF-32 string.)
+  {** @abstract(Copies a Pascal-style UCS-4 string to a null-terminated UCS-4 string.)
 
       This routine does not perform any length checking.
+      If the source string contains some null characters,
+      those nulls are removed from the resulting string.
 
       The destination buffer must have room for at least Length(Source)+1 characters.
   }
- function utf32strpcopy(dest: putf32char; source: utf32string):putf32char;
+ function ucs4strpcopy(dest: pucs4char; source: ucs4string):pucs4char;
 
-  {** @abstract(Copies a Pascal-style string to a null-terminated UTF-32 string.)
 
-      This routine does not perform any length checking.
+  {** @abstract(Converts a pascal string to an UCS-4 null
+   terminated string)
 
-      The destination buffer must have room for at least Length(Source)+1 characters.
-  }
- function utf32strpcopyISO8859_1(dest: putf32char; source: string):putf32char;
- 
-  {** @abstract(Converts a pascal string to an UTF-32 null 
-   terminated string) 
-   
-   The memory for the buffer is allocated. Use @link(utf32strdispose) to dispose 
-   of the allocated string. The string is null terminated.
-   
+   The memory for the buffer is allocated. Use @link(ucs4strdispose) to dispose
+   of the allocated string. The string is null terminated. If the original
+   string contains some null characters, those nulls are removed from
+   the resulting string.
+
    @param(str The string to convert, single character coded)
    @param(srctype The encoding of the string, UTF-8 is also valid)
   }
- function utf32strnewstr(str: string; srctype: string): putf32char;
+ function ucs4strnewstr(str: string; srctype: string): pucs4char;
 
-  {** @abstract(Converts a null terminated string to an UTF-32 null 
+  {** @abstract(Converts a null terminated string to an UCS-4 null
    terminated string) 
    
-   The memory for the buffer is allocated. Use @link(utf32strdispose) to dispose 
+   The memory for the buffer is allocated. Use @link(ucs4strdispose) to dispose 
    of the allocated string. The string is null terminated.
    
    @param(str The string to convert, single character coded, or UTF-8 coded)
    @param(srctype The encoding of the string, UTF-8 is also valid)
   }
- function utf32strnew(str: pchar; srctype: string): putf32char;
+ function ucs4strnew(str: pchar; srctype: string): pucs4char;
  
-  {** @abstract(Disposes of an UTF-32 null terminated string on the heap) 
+  {** @abstract(Disposes of an UCS-4 null terminated string on the heap) 
   
       Disposes of a string that was previously allocated with
-      @code(utf32strnew), and sets the pointer to nil. 
+      @code(ucs4strnew), and sets the pointer to nil. 
    
   }
- function utf32strdispose(str: putf32char): putf32char;
+ function ucs4strdispose(str: pucs4char): pucs4char;
 
 {---------------------------------------------------------------------------
                            UCS-2 string handling
@@ -282,15 +296,15 @@ type
                    UCS-2 null terminated string handling
 -----------------------------------------------------------------------------}
   
-  {** @abstract(Convert an UCS-2 null terminated string to an UTF-32 null terminated string)
+  {** @abstract(Convert an UCS-2 null terminated string to an UCS-4 null terminated string)
 
-      This routine converts an UCS-2 encoded null terminared string to an UTF-32 
+      This routine converts an UCS-2 encoded null terminared string to an UCS-4 
       null terminated string that is stored in native byte order, up to
       length conversion.
 
       @returns(nil if there was no error in the conversion)
   }
-  function ucs2strlcopyutf32(src: pucs2char; dst: putf32char; maxlen: integer): putf32char;
+  function ucs2strlcopyucs4(src: pucs2char; dst: pucs4char; maxlen: integer): pucs4char;
   
   
   {** @abstract(Returns the number of characters in the null terminated UCS-2 string)
@@ -303,7 +317,7 @@ type
   
   
   
-  {** @abstract(Converts an UTF-32 null terminated string to an UCS-2 null
+  {** @abstract(Converts an UCS-4 null terminated string to an UCS-2 null
    terminated string) 
    
    The memory for the buffer is allocated. Use @link(ucs2strdispose) to dispose 
@@ -312,7 +326,7 @@ type
    @returns(nil if the conversion cannot be represented in UCS-2 encoding,
       or nil if there was an error)
   }
-  function ucs2strnew(src: putf32char): pucs2char;
+  function ucs2strnew(src: pucs4char): pucs2char;
 
   {** @abstract(Disposes of an UCS-2 null terminated string on the heap) 
   
@@ -326,13 +340,13 @@ type
                   UTF-8 null terminated string handling
 -----------------------------------------------------------------------------}
 
-  {** @abstract(Converts an UTF-32 null terminated string to an UTF-8 null
+  {** @abstract(Converts an UCS-4 null terminated string to an UTF-8 null
    terminated string) 
    
    The memory for the buffer is allocated. Use @link(utf8strdispose) to dispose 
    of the allocated string. The string is null terminated.
   }
-  function utf8strnew(src: putf32char): pchar;
+  function utf8strnew(src: pucs4char): pchar;
   
   {** @abstract(Allocates and copies an UTF-8 null terminated string) 
    
@@ -351,15 +365,15 @@ type
   function utf8strdispose(str: pchar): pchar;
   
   
-  {** @abstract(Convert an UTF-8 null terminated string to an UTF-32 null terminated string)
+  {** @abstract(Convert an UTF-8 null terminated string to an UCS-4 null terminated string)
 
-      This routine converts an UTF-8 null terminared string to an UTF-32 
+      This routine converts an UTF-8 null terminared string to an UCS-4 
       null terminated string that is stored in native byte order, up to
       length conversion.
 
       @returns(nil if there was no error in the conversion)
   }
-  function utf8strlcopyutf32(src: pchar; dst: putf32char; maxlen: integer): putf32char;
+  function utf8strlcopyucs4(src: pchar; dst: pucs4char; maxlen: integer): pucs4char;
   
   {** @abstract(Converts a null-terminated UTF-8 string to a Pascal-style 
        ISO 8859-1 encoded string.)
@@ -392,26 +406,26 @@ type
       otherwise returns 2, indicating that 1 one other @code(utf16) character
       is required to encode this data.
   }
-  function utf16_sizeencoding(c: utf16): integer;
+  function utf16_sizeencoding(c: utf16char): integer;
 
   {** @abstract(Returns the number of characters that are used to encode this
       character).
       
   }      
-  function utf8_sizeencoding(c: utf8): integer;
+  function utf8_sizeencoding(c: utf8char): integer;
   
   {** @abstract(Returns the current length of an UTF-16 string) }
-  function lengthUTF16(s: array of utf16): integer;
+  function lengthUTF16(s: array of utf16char): integer;
 
   {** @abstract(Returns the current length of an UTF-8 string) }
-  function lengthutf8(s: array of utf8): integer;
+  function lengthutf8(s: array of utf8char): integer;
 
   
   {** @abstract(Set the length of an UTF-8 string) }
-  procedure setlengthUTF8(var s: array of utf8; l: integer);
+  procedure setlengthUTF8(var s: array of utf8char; l: integer);
 
   {** @abstract(Set the length of an UTF-16 string) }
-  procedure setlengthUTF16(var s: array of utf16; l: integer);
+  procedure setlengthUTF16(var s: array of utf16char; l: integer);
 
 
 {---------------------------------------------------------------------------
@@ -419,20 +433,20 @@ type
 -----------------------------------------------------------------------------}
   
 
-  {** @abstract(Convert an UTF-32 string to an UTF-8 string) 
+  {** @abstract(Convert an UCS-4 string to an UTF-8 string) 
 
-      Converts an UTF-32 string or character
+      Converts an UCS-4 string or character
       in native endian to an UTF-8 string. 
       
-      @param(s Either a single utf-32 character or a complete utf-32 string)
+      @param(s Either a single UCS-4 character or a complete UCS-4 string)
       @param(outstr Resulting UTF-8 coded string)
       @returns(@link(UNICODE_ERR_OK) if there was no error in the conversion)
   }
-  function convertUTF32toUTF8(s: array of utf32; var outstr: utf8string): integer;
+  function convertUCS4toUTF8(s: array of ucs4char; var outstr: utf8string): integer;
   
-  {** @abstract(Convert an UTF-32 string to a single byte encoded string)
+  {** @abstract(Convert an UCS-4 string to a single byte encoded string)
 
-     This routine converts an UTF-32 string stored in native byte order
+     This routine converts an UCS-4 string stored in native byte order
      (native endian) to a single-byte encoded string.
 
      The string is limited to 255 characters, and if the conversion cannot
@@ -443,11 +457,11 @@ type
       @param(desttype Indicates the single byte encoding scheme)
       @returns(@link(UNICODE_ERR_OK) if there was no error in the conversion)
   }  
-  function ConvertFromUTF32(source: utf32string; var dest: string; desttype: string): integer;
+  function ConvertFromUCS4(source: ucs4string; var dest: string; desttype: string): integer;
 
-  {** @abstract(Convert a byte encoded string to an UTF-32 string)
+  {** @abstract(Convert a byte encoded string to an UCS-4 string)
   
-     This routine converts a single byte encoded string to an UTF-32
+     This routine converts a single byte encoded string to an UCS-4
      string stored in native byte order
      
      Characters that cannot be converted are converted to escape 
@@ -463,63 +477,63 @@ type
       @param(srctype Indicates the single byte encoding scheme)
       @returns(@link(UNICODE_ERR_OK) if there was no error in the conversion)
   }
-  function ConvertToUTF32(source: string; var dest: utf32string; srctype: string): integer;
+  function ConvertToUCS4(source: string; var dest: ucs4string; srctype: string): integer;
   
-  {** @abstract(Convert an UTF-16 string to an UTF-32 string)
+  {** @abstract(Convert an UTF-16 string to an UCS-4 string)
 
-      This routine converts an UTF-16 string to an UTF-32 string.
+      This routine converts an UTF-16 string to an UCS-4 string.
       Both strings must be stored in native byte order (native endian).
 
       @returns(@link(UNICODE_ERR_OK) if there was no error in the conversion)
   }
-  function ConvertUTF16ToUTF32(src: utf16string; var dst: utf32string): integer;
+  function ConvertUTF16ToUCS4(src: utf16string; var dst: ucs4string): integer;
 
-  {** @abstract(Convert an UTF-32 string to an UTF-16 string)
+  {** @abstract(Convert an UCS-4 string to an UTF-16 string)
   
-      This routine converts an UTF-32 string to an UTF-16 string.
+      This routine converts an UCS-4 string to an UTF-16 string.
       Both strings must be stored in native byte order (native endian).
 
-      @param(src Either a single utf-32 character or a complete utf-32 string)
+      @param(src Either a single UCS-4 character or a complete UCS-4 string)
       @param(dest Resulting UTF-16 coded string)
       @returns(@link(UNICODE_ERR_OK) if there was no error in the conversion)
   }
-  function ConvertUTF32toUTF16(src: array of utf32; var dest: utf16string): integer;
+  function ConvertUCS4toUTF16(src: array of ucs4char; var dest: utf16string): integer;
   
-  {** @abstract(Convert an UTF-8 string to an UTF-32 string)
+  {** @abstract(Convert an UTF-8 string to an UCS-4 string)
 
-      This routine converts an UTF-8 string to an UTF-32 string that
+      This routine converts an UTF-8 string to an UCS-4 string that
       is stored in native byte order.
 
       @returns(@link(UNICODE_ERR_OK) if there was no error in the conversion)
   }
-  function ConvertUTF8ToUTF32(src: utf8string; var dst: utf32string): integer;
+  function ConvertUTF8ToUCS4(src: utf8string; var dst: ucs4string): integer;
 
-  {** @abstract(Convert an UTF-32 string to an UCS-2 string)
+  {** @abstract(Convert an UCS-4 string to an UCS-2 string)
   
-      This routine converts an UTF-32 string to an UCS-2 string that
+      This routine converts an UCS-4 string to an UCS-2 string that
       is stored in native byte order. If some characters
       could not be converted an error will be reported.
       
-      @param(src Either a single utf-32 character or a complete utf-32 string)
+      @param(src Either a single UCS-4 character or a complete UCS-4 string)
       @param(dest Resulting UCS-2 coded string)
       @returns(@link(UNICODE_ERR_OK) if there was no error in the conversion)
   
   }
-  function ConvertUTF32ToUCS2(src: array of utf32; var dst: ucs2string): integer;
+  function ConvertUCS4ToUCS2(src: array of ucs4char; var dst: ucs2string): integer;
 
 
-  {** @abstract(Convert an UCS-2 string to an UTF-32 string)
+  {** @abstract(Convert an UCS-2 string to an UCS-4 string)
 
-      This routine converts an UCS-2 string to an UTF-32 string that
+      This routine converts an UCS-2 string to an UCS-4 string that
       is stored in native byte order (big-endian). If some characters
       could not be converted an error will be reported.
 
       @param(src Either a single ucs-2 character or a complete ucs-2 string)
-      @param(dest Resulting UTF-32 coded string)
+      @param(dest Resulting UCS-4 coded string)
       @returns(@link(UNICODE_ERR_OK) if there was no error in the conversion)
 
   }
-  function ConvertUCS2ToUTF32(src: array of ucs2char; var dst: utf32string): integer;
+  function ConvertUCS2ToUCS4(src: array of ucs2char; var dst: ucs4string): integer;
 
 
 implementation
@@ -534,6 +548,10 @@ type
     aliasname: string[32];
     table: pchararray;
   end;   
+
+
+{ Case conversion table }
+{$i case.inc}
 
 const
 {$i i8859_1.inc}
@@ -874,7 +892,7 @@ const
       2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2, 3,3,3,3,3,3,3,3,4,4,4,4,5,5,5,5
     );
     
-    offsetsFromUTF8: array[0..5] of utf32 = ( 
+    offsetsFromUTF8: array[0..5] of ucs4char = ( 
            $00000000, $00003080, $000E2080,
            $03C82080, $FA082080, $82082080
            );
@@ -887,21 +905,20 @@ const
  * as many entries in this table as there are UTF-8 sequence types.
  * (I.e., one byte sequence, two byte... six byte sequence.)
  *}
- const firstByteMark: array[0..6] of utf8 = 
+ const firstByteMark: array[0..6] of utf8char = 
  (
    #$00, #$00, #$C0, #$E0, #$F0, #$F8, #$FC
  );
  
   const
-    byteMask: utf32 = $BF;
-    byteMark: utf32 = $80;
- 
-   
-
-  function convertUTF32toUTF8(s: array of utf32; var outstr: utf8string): integer;
+    byteMask: ucs4char = $BF;
+    byteMark: ucs4char = $80;
+    
+    
+  function convertUCS4toUTF8(s: array of ucs4char; var outstr: utf8string): integer;
   var
    i: integer;
-   ch: utf32;
+   ch: ucs4char;
    bytesToWrite: integer;
    OutStringLength : byte;
    OutIndex : integer;
@@ -909,7 +926,7 @@ const
    StartIndex: integer;
    EndIndex: integer;
   begin
-    ConvertUTF32ToUTF8:=UNICODE_ERR_OK;
+    ConvertUCS4ToUTF8:=UNICODE_ERR_OK;
     OutIndex := 1;
     bytestoWrite:=0; 
     OutStringLength := 0;
@@ -926,7 +943,7 @@ const
     else
       begin
         StartIndex:=1;
-        EndIndex:=UTF32_Length(s);
+        EndIndex:=UCS4_Length(s);
       end;
       
     for i:=StartIndex to EndIndex do
@@ -935,27 +952,27 @@ const
 
        if (ch > UNI_MAX_UTF16) then
        begin
-         convertUTF32ToUTF8:= UNICODE_ERR_SOURCEILLEGAL;
+         convertUCS4ToUTF8:= UNICODE_ERR_SOURCEILLEGAL;
          exit;
        end;
      
      
        if ((ch >= UNI_SUR_HIGH_START) and (ch <= UNI_SUR_LOW_END)) then
        begin
-         convertUTF32ToUTF8:= UNICODE_ERR_SOURCEILLEGAL;
+         convertUCS4ToUTF8:= UNICODE_ERR_SOURCEILLEGAL;
          exit;
        end;
     
-      if (ch < utf32($80)) then
+      if (ch < ucs4char($80)) then
         bytesToWrite:=1
       else
-      if (ch < utf32($800)) then
+      if (ch < ucs4char($800)) then
         bytesToWrite:=2
       else
-      if (ch < utf32($10000)) then
+      if (ch < ucs4char($10000)) then
         bytesToWrite:=3
       else
-      if (ch < utf32($200000)) then
+      if (ch < ucs4char($200000)) then
         bytesToWrite:=4
       else
         begin
@@ -965,7 +982,7 @@ const
       Inc(outindex,BytesToWrite);  
       if Outindex > High(utf8string) then
         begin
-          convertUTF32ToUTF8:=UNICODE_ERR_LENGTH_EXCEED;
+          convertUCS4ToUTF8:=UNICODE_ERR_LENGTH_EXCEED;
           exit;
         end;
         
@@ -973,28 +990,28 @@ const
         if CurrentIndex = 4 then
         begin
           dec(OutIndex);
-          outstr[outindex] := utf8((ch or byteMark) and ByteMask);
+          outstr[outindex] := utf8char((ch or byteMark) and ByteMask);
           ch:=ch shr 6;
           dec(CurrentIndex);
         end;
         if CurrentIndex = 3 then
         begin
           dec(OutIndex);
-          outstr[outindex] := utf8((ch or byteMark) and ByteMask);
+          outstr[outindex] := utf8char((ch or byteMark) and ByteMask);
           ch:=ch shr 6;
           dec(CurrentIndex);
         end;
         if CurrentIndex = 2 then
         begin
           dec(OutIndex);
-          outstr[outindex] := utf8((ch or byteMark) and ByteMask);
+          outstr[outindex] := utf8char((ch or byteMark) and ByteMask);
           ch:=ch shr 6;
           dec(CurrentIndex);
         end;
         if CurrentIndex = 1 then
         begin
           dec(OutIndex);
-          outstr[outindex] := utf8((byte(ch) or byte(FirstbyteMark[BytesToWrite])));
+          outstr[outindex] := utf8char((byte(ch) or byte(FirstbyteMark[BytesToWrite])));
         end;  
         inc(OutStringLength);
         Inc(OutIndex,BytesToWrite);
@@ -1002,12 +1019,12 @@ const
       setlengthutf8(outstr,OutStringLength);
   end;
   
-  function lengthUTF16(s: array of utf16): integer;
+  function lengthUTF16(s: array of utf16char): integer;
   begin
    LengthUTF16:=integer(s[0]);
   end;
 
-  function lengthutf8(s: array of utf8): integer;
+  function lengthutf8(s: array of utf8char): integer;
   begin
    LengthUTF8:=integer(s[0]);
   end;
@@ -1015,26 +1032,26 @@ const
 
   
 
-  procedure setlengthutf8(var s: array of utf8; l: integer);
+  procedure setlengthutf8(var s: array of utf8char; l: integer);
   begin
-    s[0]:=utf8(l);
+    s[0]:=utf8char(l);
   end;
 
-  procedure setlengthutf16(var s: array of utf16; l: integer);
+  procedure setlengthutf16(var s: array of utf16char; l: integer);
   begin
-   s[0]:=utf16(l);
+   s[0]:=utf16char(l);
   end;
   
   
 
-  function isLegalUTF8(src: array of utf8; _length: integer): boolean;
+  function isLegalUTF8(src: array of utf8char; _length: integer): boolean;
   begin
     isLegalUTF8:=true;
   end;
 
 
   
-  function ConvertFromUTF32(source: utf32string; var dest: string; desttype: string): integer;
+  function ConvertFromUCS4(source: ucs4string; var dest: string; desttype: string): integer;
   var
    i: integer;
    j: char;
@@ -1042,7 +1059,7 @@ const
    found: boolean;
   begin
     dest:='';
-    ConvertFromUTF32:=UNICODE_ERR_OK;  
+    ConvertFromUCS4:=UNICODE_ERR_OK;  
     p:=nil;
     for i:=1 to MAX_ALIAS do
       begin
@@ -1053,17 +1070,17 @@ const
       end;
     if not assigned(p) then
       begin
-        ConvertFromUTF32:=UNICODE_ERR_NOTFOUND;  
+        ConvertFromUCS4:=UNICODE_ERR_NOTFOUND;  
         exit;
       end;
-    { for each character in the UTF32 string ... }  
-    for i:=1 to utf32_length(source) do
+    { for each character in the UCS-4 string ... }  
+    for i:=1 to ucs4_length(source) do
       begin
         found:=false;
         { search the table by reverse lookup }
         for j:=#0 to high(char) do 
           begin     
-            if utf32(source[i]) = utf32(p^[j]) then
+            if ucs4char(source[i]) = ucs4char(p^[j]) then
               begin
                 dest:=dest+j;
                 found:=true;
@@ -1073,18 +1090,19 @@ const
         if not found then
           begin
             dest:=dest+'\u'+hexstr(source[i],8);
-            ConvertFromUTF32:=UNICODE_ERR_INCOMPLETE_CONVERSION;
+            ConvertFromUCS4:=UNICODE_ERR_INCOMPLETE_CONVERSION;
           end;
       end;
   end;
   
-  function ConvertToUTF32(source: string; var dest: utf32string; srctype: string): integer;
+  function ConvertToUCS4(source: string; var dest: ucs4string; srctype: string): integer;
   var
    i: integer;
    l: longint;
    p: pchararray;
   begin
-    ConvertToUTF32:=UNICODE_ERR_OK;
+    ConvertToUCS4:=UNICODE_ERR_OK;
+    source:=removenulls(source);
     p:=nil;
     { Search the alias type }
     for i:=1 to MAX_ALIAS do
@@ -1096,7 +1114,7 @@ const
       end;
     if not assigned(p) then
       begin
-        ConvertToUTF32:=UNICODE_ERR_NOTFOUND;  
+        ConvertToUCS4:=UNICODE_ERR_NOTFOUND;  
         exit;
       end;
     for i:=1 to length(source) do
@@ -1104,27 +1122,27 @@ const
         l:=p^[source[i]];
         if l = -1 then
           begin
-            ConvertToUTF32:=UNICODE_ERR_INCOMPLETE_CONVERSION;
+            ConvertToUCS4:=UNICODE_ERR_INCOMPLETE_CONVERSION;
             continue;
           end;
-        dest[i]:=utf32(l);  
+        dest[i]:=ucs4char(l);  
       end;
-    Utf32_setlength(dest,length(source));
+    UCS4_setlength(dest,length(source));
   end;
 
 
-  function ConvertUTF16ToUTF32(src: utf16string; var dst: utf32string): integer;
+  function ConvertUTF16ToUCS4(src: utf16string; var dst: ucs4string): integer;
    var
-     ch,ch2: utf32;
+     ch,ch2: ucs4char;
      i: integer;
      Outindex: integer;
   begin
     i:=1;
     Outindex := 1;
-    ConvertUTF16ToUTF32:=UNICODE_ERR_OK;
+    ConvertUTF16ToUCS4:=UNICODE_ERR_OK;
     while i <= lengthutf16(src) do
       begin
-        ch:=utf32(src[i]);
+        ch:=ucs4char(src[i]);
         inc(i);
         if (ch >= UNI_SUR_HIGH_START) and (ch <= UNI_SUR_HIGH_END) and (i < lengthutf16(src)) then
           begin
@@ -1136,25 +1154,25 @@ const
                 end
              else
                 begin
-                  ConvertUTF16ToUTF32 := UNICODE_ERR_SOURCEILLEGAL;
+                  ConvertUTF16ToUCS4 := UNICODE_ERR_SOURCEILLEGAL;
                   exit;
                 end;
           end
         else
         if (ch >= UNI_SUR_LOW_START) and (ch <= UNI_SUR_LOW_END) then
           begin
-            ConvertUTF16ToUTF32 := UNICODE_ERR_SOURCEILLEGAL;
+            ConvertUTF16ToUCS4 := UNICODE_ERR_SOURCEILLEGAL;
             exit;
           end;
         dst[OutIndex] := ch;
         Inc(OutIndex);
      end;     
-  utf32_setlength(dst,OutIndex-1);
+  ucs4_setlength(dst,OutIndex-1);
 end;
 
-function ConvertUTF8ToUTF32(src: utf8string; var dst: utf32string): integer;
+function ConvertUTF8ToUCS4(src: utf8string; var dst: ucs4string): integer;
   var
-   ch: utf32;
+   ch: ucs4char;
    i: integer;
    StringLength: integer;
    Outindex: integer;
@@ -1164,46 +1182,46 @@ function ConvertUTF8ToUTF32(src: utf8string; var dst: utf32string): integer;
     i:=1;
     stringlength := 0;
     OutIndex := 1;
-    ConvertUTF8ToUTF32:=UNICODE_ERR_OK;
+    ConvertUTF8ToUCS4:=UNICODE_ERR_OK;
     while i <= lengthutf8(src) do
       begin
         ch := 0;
         extrabytestoread:= trailingBytesForUTF8[ord(src[i])];
-        if (stringlength + extraBytesToRead) >= high(utf32string) then
+        if (stringlength + extraBytesToRead) >= high(ucs4string) then
           begin
-            ConvertUTF8ToUTF32:=UNICODE_ERR_LENGTH_EXCEED;
+            ConvertUTF8ToUCS4:=UNICODE_ERR_LENGTH_EXCEED;
             exit;
           end;
         if not isLegalUTF8(src, extraBytesToRead+1) then
           begin
-            ConvertUTF8ToUTF32:=UNICODE_ERR_SOURCEILLEGAL;
+            ConvertUTF8ToUCS4:=UNICODE_ERR_SOURCEILLEGAL;
             exit;
           end;
         CurrentIndex := ExtraBytesToRead;
         if CurrentIndex = 3 then
         begin
-          ch:=ch + utf32(src[i]);
+          ch:=ch + ucs4char(src[i]);
           inc(i);
           ch:=ch shl 6;
           dec(CurrentIndex);
         end;
         if CurrentIndex = 2 then
         begin
-          ch:=ch + utf32(src[i]);
+          ch:=ch + ucs4char(src[i]);
           inc(i);
           ch:=ch shl 6;
           dec(CurrentIndex);
         end;
         if CurrentIndex = 1 then
         begin
-          ch:=ch + utf32(src[i]);
+          ch:=ch + ucs4char(src[i]);
           inc(i);
           ch:=ch shl 6;
           dec(CurrentIndex);
         end;
         if CurrentIndex = 0 then
         begin
-          ch:=ch + utf32(src[i]);
+          ch:=ch + ucs4char(src[i]);
           inc(i);
         end;
         ch := ch - offsetsFromUTF8[extraBytesToRead];
@@ -1218,19 +1236,19 @@ function ConvertUTF8ToUTF32(src: utf8string; var dst: utf32string): integer;
             inc(OutIndex);
           end;
       end;
-     utf32_setlength(dst, outindex-1);
+     ucs4_setlength(dst, outindex-1);
   end;
   
 
-function ConvertUTF32toUTF16(src: array of utf32; var dest: utf16string): integer;
+function ConvertUCS4toUTF16(src: array of ucs4char; var dest: utf16string): integer;
 var
- ch: utf32;
+ ch: ucs4char;
    i: integer;
    Outindex: integer;
    StartIndex, EndIndex: integer;
 begin
     OutIndex := 1;
-    ConvertUTF32ToUTF16:=UNICODE_ERR_OK;
+    ConvertUCS4ToUTF16:=UNICODE_ERR_OK;
     { Check if only one character is passed as src, in that case
       this is not an UTF string, but a simple character (in other
       words, there is not a length byte.
@@ -1243,7 +1261,7 @@ begin
     else
       begin
         StartIndex:=1;
-        EndIndex:=UTF32_Length(src);
+        EndIndex:=UCS4_Length(src);
       end;
     
     i:=Startindex;
@@ -1256,26 +1274,26 @@ begin
           begin
             if (ch >= UNI_SUR_HIGH_START) and (ch <= UNI_SUR_LOW_END) then
               begin
-                ConvertUTF32ToUTF16:=UNICODE_ERR_SOURCEILLEGAL;
+                ConvertUCS4ToUTF16:=UNICODE_ERR_SOURCEILLEGAL;
                 exit;
               end
             else
               begin
-                dest[OutIndex] := utf16(ch);
+                dest[OutIndex] := utf16char(ch);
                 inc(OutIndex);
               end;
           end
         else 
         if (ch > UNI_MAX_UTF16) then
           begin
-            ConvertUTF32ToUTF16:=UNICODE_ERR_SOURCEILLEGAL;
+            ConvertUCS4ToUTF16:=UNICODE_ERR_SOURCEILLEGAL;
             exit;
           end
         else
           begin
             if OutIndex + 1> High(utf16string) then
               begin
-                ConvertUTF32ToUTF16:=UNICODE_ERR_LENGTH_EXCEED;
+                ConvertUCS4ToUTF16:=UNICODE_ERR_LENGTH_EXCEED;
                 exit;
               end;
             ch := ch - Halfbase;
@@ -1289,13 +1307,13 @@ begin
 end;
 
 
-  function ConvertUTF32ToUCS2(src: array of utf32; var dst: ucs2string): integer;
+  function ConvertUCS4ToUCS2(src: array of ucs4char; var dst: ucs2string): integer;
   var
-   ch: utf32;
+   ch: ucs4char;
    i: integer;
    StartIndex, EndIndex: integer;
   begin
-    ConvertUTF32ToUCS2:=UNICODE_ERR_OK;
+    ConvertUCS4ToUCS2:=UNICODE_ERR_OK;
   
     { Check if only one character is passed as src, in that case
       this is not an UTF string, but a simple character (in other
@@ -1310,8 +1328,8 @@ end;
     else
       begin
         StartIndex:=1;
-        EndIndex:=UTF32_Length(src);
-        dst[0]:=ucs2char(utf32_length(src));
+        EndIndex:=UCS4_Length(src);
+        dst[0]:=ucs2char(ucs4_length(src));
       end;
   
     for i:=StartIndex to EndIndex do
@@ -1319,7 +1337,7 @@ end;
         ch:=src[i];
         if ch > UNI_MAX_BMP then
           begin 
-            ConvertUTF32ToUCS2:=UNICODE_ERR_INCOMPLETE_CONVERSION;
+            ConvertUCS4ToUCS2:=UNICODE_ERR_INCOMPLETE_CONVERSION;
             continue;
           end;
         dst[i]:=ucs2char(ch and UNI_MAX_BMP);
@@ -1327,13 +1345,13 @@ end;
   end;
   
   
-  function ConvertUCS2ToUTF32(src: array of ucs2char; var dst: utf32string): integer;
+  function ConvertUCS2ToUCS4(src: array of ucs2char; var dst: ucs4string): integer;
   var
-   ch: utf32;
+   ch: ucs4char;
    i: integer;
    StartIndex, EndIndex: integer;
   begin
-    ConvertUCS2ToUTF32:=UNICODE_ERR_OK;
+    ConvertUCS2ToUCS4:=UNICODE_ERR_OK;
   
     { Check if only one character is passed as src, in that case
       this is not an UCS string, but a simple character (in other
@@ -1343,49 +1361,114 @@ end;
       begin
         StartIndex:=0;
         EndIndex:=0;
-        dst[0]:=utf32(1);
+        dst[0]:=ucs4char(1);
       end
     else
       begin
         StartIndex:=1;
         EndIndex:=UCS2_Length(src);
-       utf32_setlength(dst,ucs2_length(src));
+       ucs4_setlength(dst,ucs2_length(src));
       end;
     for i:=StartIndex to EndIndex do
       begin
         ch:=src[i];
         if not ucs2_isvalid(ch and $ffff) then
           begin 
-            ConvertUCS2ToUTF32:=UNICODE_ERR_SOURCEILLEGAL;
+            ConvertUCS2ToUCS4:=UNICODE_ERR_SOURCEILLEGAL;
             continue;
           end;
-        dst[i]:=utf32(ch);
+        dst[i]:=ucs4char(ch);
       end;
   end;
 
 
 {---------------------------------------------------------------------------
-                          UTF-32 string handling
+                          UCS-4 string handling
 -----------------------------------------------------------------------------}
 
-  function utf32_iswhitespace(c: utf32): boolean;
+  function ucs4_upcase(c: ucs4char): ucs4char;
+  var
+   i: integer;
   begin
-   if (c = $20) or (c = $09) or (c = $10) or (c = $13) or (c = $85) or (c = $2028) 
-   then
-      utf32_iswhitespace:=true
-   else   
-      utf32_iswhitespace:=false;
+    { Assume there is no uppercase for this character }
+    ucs4_upcase:=c;
+    for i:=1 to MAX_CASETABLE_ENTRIES do
+      begin
+        if (c = UCS4CaseTable[i].lower) then
+          begin
+           ucs4_upcase:=UCS4CaseTable[i].upper;
+           exit;
+          end; 
+      end;
   end;
   
-  procedure utf32_copy(var resultstr: utf32string; s: array of utf32; index: integer; count: integer);
+  function ucs4_lowcase(c: ucs4char): ucs4char;
+  var
+   i: integer;
+  begin
+    { Assume there is no uppercase for this character }
+    ucs4_lowcase:=c;
+    for i:=1 to MAX_CASETABLE_ENTRIES do
+      begin
+        if (c = UCS4CaseTable[i].upper) then
+          begin
+           ucs4_lowcase:=UCS4CaseTable[i].lower;
+           exit;
+          end; 
+      end;
+  end;
+
+  function ucs4_iswhitespace(c: ucs4char): boolean;
+    const
+      MAX_WHITESPACE = 25;
+      whitespace: array[1..MAX_WHITESPACE] of ucs4char =
+      (
+       $0009,  { control: TAB }
+       $000A,  { control: Linefeed }
+       $000B,  { control: Vertical TAB }
+       $000C,  { control: Formfeed }
+       $000D,  { control: Carriage return }
+       $0020,  { SPACE }
+       $0085,  { control:  }       
+       $1680,  { OGHAM SPACE MARK }
+       $180E,  { MONGOLIAN VOWEL SEPARATOR }
+       $2000,  { EN QUAD..HAIR SPACE }
+       $2001,
+       $2002,
+       $2003,
+       $2004,
+       $2005,
+       $2006,
+       $2007,
+       $2008,
+       $2009,
+       $200A,
+       $2028,  { LINE SEPARATOR }
+       $2029,  { PARAGRAPH SEPARATOR }
+       $202F,  { NARROW NO-BREAK SPACE }
+       $205F,  { MEDIUM MATHEMATICAL SPACE }
+       $3000   { IDEOGRAPHIC SPACE }
+      );
+   var
+    i : integer;
+  begin
+   ucs4_iswhitespace:=false;
+   for i:=1 to MAX_WHITESPACE do
+     begin
+       if (c = whitespace[i]) then
+          ucs4_iswhitespace := true;
+     end;
+  end;
+  
+  procedure ucs4_copy(var resultstr: ucs4string; s: array of ucs4char; index: integer; count: integer);
   var
    slen: integer;
    i: integer;
   begin
-    utf32_setlength(resultstr,0);
+    ucs4_setlength(resultstr,0);
     if count = 0 then
       exit;
-    slen:=utf32_length(s);
+    slen:=ucs4_length(s);
     if index > slen then
       exit;
     if (count+index)>slen then
@@ -1398,25 +1481,25 @@ end;
             resultstr[i]:=s[i+index-1];
           end;
       end;
-    resultstr[0]:=utf32(count);
+    resultstr[0]:=ucs4char(count);
   end;
   
-  procedure utf32_delete(var s: utf32string; index: integer; count: integer);
+  procedure ucs4_delete(var s: ucs4string; index: integer; count: integer);
   begin
     if index<=0 then
       exit;
-    if (Index<=Utf32_Length(s)) and (Count>0) then
+    if (Index<=UCS4_Length(s)) and (Count>0) then
      begin
-       if Count>Utf32_length(s)-Index then
-        Count:=Utf32_length(s)-Index+1;
-       s[0]:=(Utf32_length(s)-Count);
-       if Index<=utf32_Length(s) then
-        Move(s[Index+Count],s[Index],(Utf32_Length(s)-Index+1)*sizeof(utf32));
+       if Count>UCS4_length(s)-Index then
+        Count:=UCS4_length(s)-Index+1;
+       s[0]:=(UCS4_length(s)-Count);
+       if Index<=ucs4_Length(s) then
+        Move(s[Index+Count],s[Index],(UCS4_Length(s)-Index+1)*sizeof(ucs4char));
      end;
   end;
   
 
-  procedure utf32_concat(var resultstr: utf32string;s1: utf32string; s2: array of utf32);
+  procedure ucs4_concat(var resultstr: ucs4string;s1: ucs4string; s2: array of ucs4char);
   var
     s1l, s2l : integer;
     idx: integer;
@@ -1429,126 +1512,126 @@ end;
       end
     else
       begin
-        s2l:=utf32_length(s2);
+        s2l:=ucs4_length(s2);
         idx:=1;
       end;
-    s1l:=utf32_length(s1);
+    s1l:=ucs4_length(s1);
     if s2l+s1l>255 then
       s2l:=255-s1l;
-    move(s2[idx],s1[utf32_length(s1)+1],s2l*sizeof(utf32));
-    move(s1[1],resultstr[1],(s2l+s1l)*sizeof(utf32));
-    utf32_setlength(resultstr, s2l+s1l);
+    move(s2[idx],s1[ucs4_length(s1)+1],s2l*sizeof(ucs4char));
+    move(s1[1],resultstr[1],(s2l+s1l)*sizeof(ucs4char));
+    ucs4_setlength(resultstr, s2l+s1l);
   end;
   
-  function utf32_pos(substr: utf32string; s: utf32string): integer;
+  function ucs4_pos(substr: ucs4string; s: ucs4string): integer;
   var
     i,j : integer;
     e   : boolean;
-    Substr2: utf32string;
+    Substr2: ucs4string;
   begin
     i := 0;
     j := 0;
-    e:=(utf32_length(SubStr)>0);
-    while e and (i<=utf32_Length(s)-utf32_Length(SubStr)) do
+    e:=(ucs4_length(SubStr)>0);
+    while e and (i<=ucs4_Length(s)-ucs4_Length(SubStr)) do
      begin
        inc(i);
-       utf32_Copy(Substr2,s,i,utf32_Length(Substr));
-       if (SubStr[1]=s[i]) and (utf32_equal(Substr,Substr2)) then
+       ucs4_Copy(Substr2,s,i,ucs4_Length(Substr));
+       if (SubStr[1]=s[i]) and (ucs4_equal(Substr,Substr2)) then
         begin
           j:=i;
           e:=false;
         end;
      end;
-    utf32_Pos:=j;
+    ucs4_Pos:=j;
   end;
   
-  function utf32_equal(const s1,s2: utf32string): boolean;
+  function ucs4_equal(const s1,s2: ucs4string): boolean;
     var
      i: integer;
   begin
-    utf32_equal:=false;
-    if utf32_length(s1) <> utf32_length(s2) then
+    ucs4_equal:=false;
+    if ucs4_length(s1) <> ucs4_length(s2) then
       exit;
-    for i:=1 to utf32_length(s1) do
+    for i:=1 to ucs4_length(s1) do
       begin
         if s1[i] <> s2[i] then
           exit;
       end;
-    utf32_equal:=true;
+    ucs4_equal:=true;
   end;
   
 
-  function utf32_length(s: array of utf32): integer;
+  function ucs4_length(s: array of ucs4char): integer;
   begin
-   utf32_length:=integer(s[0]);
+   ucs4_length:=integer(s[0]);
   end;
   
-  procedure utf32_setlength(var s: array of utf32; l: integer);
+  procedure ucs4_setlength(var s: array of ucs4char; l: integer);
   begin
    if l > 255 then
      l:=255;
-   s[0]:=utf32(l);
+   s[0]:=ucs4char(l);
   end;
 
-  procedure utf32_concatascii(var resultstr: utf32string;s1: utf32string; s2: string);
+  procedure ucs4_concatascii(var resultstr: ucs4string;s1: ucs4string; s2: string);
   var
-   utfstr: utf32string;
+   utfstr: ucs4string;
   begin
-    if ConvertToUTF32(s2,utfstr,'ASCII')  = UNICODE_ERR_OK then
-       utf32_concat(resultstr,s1,utfstr);
+    if ConvertToUCS4(s2,utfstr,'ASCII')  = UNICODE_ERR_OK then
+       ucs4_concat(resultstr,s1,utfstr);
   end;
 
-  function utf32_posascii(substr: string; s: utf32string): integer;
+  function ucs4_posascii(substr: string; s: ucs4string): integer;
   var
-   utfstr: utf32string;
+   utfstr: ucs4string;
   begin
-    utf32_posascii:=0;
-    if ConvertToUTF32(substr,utfstr,'ASCII')  = UNICODE_ERR_OK then
-     utf32_posascii:=utf32_pos(utfstr,s);
+    ucs4_posascii:=0;
+    if ConvertToUCS4(substr,utfstr,'ASCII')  = UNICODE_ERR_OK then
+     ucs4_posascii:=ucs4_pos(utfstr,s);
   end;
 
-  function utf32_equalascii(s1 : array of utf32; s2: string): boolean;
+  function ucs4_equalascii(s1 : array of ucs4char; s2: string): boolean;
   var
-   utfstr: utf32string;
-   s3: utf32string;
+   utfstr: ucs4string;
+   s3: ucs4string;
    i: integer;
   begin
-    utf32_equalascii:=false;
-    for i:=1 to utf32_length(s1) do
+    ucs4_equalascii:=false;
+    for i:=1 to ucs4_length(s1) do
       begin
         s3[i] := s1[i];
       end;
-    utf32_setlength(s3,utf32_length(s1));
-    if ConvertToUTF32(s2,utfstr,'ASCII')  = UNICODE_ERR_OK then
-     utf32_equalascii:=utf32_equal(utfstr,s3);
+    ucs4_setlength(s3,ucs4_length(s1));
+    if ConvertToUCS4(s2,utfstr,'ASCII')  = UNICODE_ERR_OK then
+     ucs4_equalascii:=ucs4_equal(utfstr,s3);
   end;
 
-  function utf32_issupported(s: string): boolean;
+  function ucs4_issupported(s: string): boolean;
   var
    i: integer;
   begin
     s:=upstring(s);
-    utf32_issupported := true;
+    ucs4_issupported := true;
     if (s = 'UTF-16') or (s = 'UTF-16BE') or (s = 'UTF-16LE') or
-       (s = 'UTF-32') or (s = 'UTF-32BE') or (s = 'UTF-32LE') or
+       (s = 'UCS-4') or (s = 'UCS-4BE') or (s = 'UCS-4LE') or
        (s = 'UTF-8') then
      begin
-        utf32_issupported := true;
+        ucs4_issupported := true;
         exit;
      end;
     for i:=1 to MAX_ALIAS do
     begin
       if upstring(aliaslist[i].aliasname) = s then
       begin
-         utf32_issupported := true;
+         ucs4_issupported := true;
          exit;
       end;
     end;
   end;
   
-  function utf32_isvalid(c: utf32): boolean;
+  function ucs4_isvalid(c: ucs4char): boolean;
   begin
-    utf32_isvalid := false;
+    ucs4_isvalid := false;
     { maximum unicode range }
     if (c > UNI_MAX_UTF16) then
        exit;
@@ -1562,46 +1645,46 @@ end;
     }  
     if (c and $FFFF) = $FFFE then exit;
     if (c and $FFFF) = $FFFF then exit;
-    utf32_isvalid := true;
+    ucs4_isvalid := true;
   end;
 
 
 
-  procedure UTF32_TrimLeft(var S: utf32string);
+  procedure UCS4_TrimLeft(var S: ucs4string);
   var i,l:integer;
-      outstr: utf32string;
+      outstr: ucs4string;
   begin
-    utf32_setlength(outstr,0);
-    l := utf32_length(s);
+    ucs4_setlength(outstr,0);
+    l := ucs4_length(s);
     i := 1;
-    while (i<=l) and (utf32_iswhitespace(s[i])) do
+    while (i<=l) and (ucs4_iswhitespace(s[i])) do
      inc(i);
-    utf32_copy(outstr,s, i, l);
-    move(outstr,s,sizeof(utf32string));
+    ucs4_copy(outstr,s, i, l);
+    move(outstr,s,sizeof(ucs4string));
   end ;
 
 
-  procedure UTF32_TrimRight(var S: utf32string);
+  procedure UCS4_TrimRight(var S: ucs4string);
   var l:integer;
-      outstr: utf32string;
+      outstr: ucs4string;
   begin
-    utf32_setlength(outstr,0);
-    l := utf32_length(s);
-    while (l>0) and (utf32_iswhitespace(s[l])) do
+    ucs4_setlength(outstr,0);
+    l := ucs4_length(s);
+    while (l>0) and (ucs4_iswhitespace(s[l])) do
      dec(l);
-    utf32_copy(outstr,s,1,l);
-    move(outstr,s,sizeof(utf32string));
+    ucs4_copy(outstr,s,1,l);
+    move(outstr,s,sizeof(ucs4string));
   end ;
 
 
-  function utf16_sizeencoding(c: utf16): integer;
+  function utf16_sizeencoding(c: utf16char): integer;
   begin
     utf16_sizeencoding:=2;
     if (c >= UNI_SUR_HIGH_START) and (c <= UNI_SUR_HIGH_END) then
       utf16_sizeencoding:=4;
   end;
   
-  function utf8_sizeencoding(c: utf8): integer;
+  function utf8_sizeencoding(c: utf8char): integer;
   begin
     utf8_sizeencoding:= trailingBytesForUTF8[ord(c)]+1;
   end;
@@ -1619,33 +1702,33 @@ end;
    s[0]:=ucs2char(l);
   end;
 
-  function utf32strlen(str: putf32char): integer;
+  function ucs4strlen(str: pucs4char): integer;
   var
    counter : Longint;
-   stringarray: putf32strarray;
+   stringarray: pucs4strarray;
  Begin
-   utf32strlen:=0;
+   ucs4strlen:=0;
    if not assigned(str) then
      exit;
-   stringarray := pointer(str);
+   stringarray := pucs4strarray(str);
    counter := 0;
    while stringarray^[counter] <> 0 do
      Inc(counter);
-   utf32strlen := counter;
+   ucs4strlen := counter;
  end;
  
- function utf32strpasToISO8859_1(Str: putf32char): string;
+ function ucs4strpasToISO8859_1(Str: pucs4char): string;
   var
    counter : byte;
    lstr: string;
-   stringarray: putf32strarray;
+   stringarray: pucs4strarray;
  Begin
    counter := 0;
-   utf32strpasToISO8859_1:='';
+   ucs4strpasToISO8859_1:='';
    if not assigned(str) then exit;
    stringarray := pointer(str);
    setlength(lstr,0);
-   while ((stringarray^[counter]) <> 0) and (counter < high(utf32string)) do
+   while ((stringarray^[counter]) <> 0) and (counter < high(ucs4string)) do
    begin
      Inc(counter);
      if Stringarray^[counter-1] <= 255 then
@@ -1653,21 +1736,21 @@ end;
      else
         lstr := lstr + '\u'+hexstr(Stringarray^[counter-1],8);
    end;
-   utf32strpasToISO8859_1:= lstr;
+   ucs4strpasToISO8859_1:= lstr;
  end;
  
- function utf32strpasToASCII(Str: putf32char): string;
+ function ucs4strpasToASCII(Str: pucs4char): string;
   var
    counter : byte;
    lstr: string;
-   stringarray: putf32strarray;
+   stringarray: pucs4strarray;
  Begin
    counter := 0;
-   utf32strpasToASCII:='';
+   ucs4strpasToASCII:='';
    if not assigned(str) then exit;
    stringarray := pointer(str);
    setlength(lstr,0);
-   while ((stringarray^[counter]) <> 0) and (counter < high(utf32string)) do
+   while ((stringarray^[counter]) <> 0) and (counter < high(ucs4string)) do
    begin
      Inc(counter);
      if Stringarray^[counter-1] <= 127 then
@@ -1675,44 +1758,46 @@ end;
      else
         lstr := lstr + '\u'+hexstr(Stringarray^[counter-1],8);
    end;
-   utf32strpasToASCII:= lstr;
+   ucs4strpasToASCII:= lstr;
  end;
  
  
 
- procedure utf32strpas(Str: putf32char; var res:utf32string);
+ procedure ucs4strpas(Str: pucs4char; var res:ucs4string);
   var
    counter : byte;
-   lstr: utf32string;
-   stringarray: putf32strarray;
+   lstr: ucs4string;
+   stringarray: pucs4strarray;
  Begin
    counter := 0;
    stringarray := pointer(str);
-   utf32_setlength(res,0);
-   utf32_setlength(lstr,0);
+   ucs4_setlength(res,0);
+   ucs4_setlength(lstr,0);
    if not assigned(str) then exit;
-   while ((stringarray^[counter]) <> 0) and (counter < high(utf32string)) do
+   while ((stringarray^[counter]) <> 0) and (counter < high(ucs4string)) do
    begin
      Inc(counter);
-     utf32_concat(lstr, lstr, Stringarray^[counter-1]);
+     ucs4_concat(lstr, lstr, Stringarray^[counter-1]);
    end;
-   UTF32_SetLength(lstr,counter);
+   UCS4_SetLength(lstr,counter);
    res := lstr;
  end;
  
  
- function utf32strnewstr(str: string; srctype: string): putf32char;
+ function ucs4strnewstr(str: string; srctype: string): pucs4char;
   var
    i: integer;
-   dest: putf32strarray;
+   dest: pucs4strarray;
+   destpchar: pucs4char;
    count: integer;
    Currentindex: integer;
    Outindex,totalsize: integer;
-   ch: utf32;
+   ch: ucs4char;
    ExtraBytesToRead: integer;
    p:pchararray;
   begin
-    utf32strnewstr:=nil;
+    str:=removenulls(str);
+    ucs4strnewstr:=nil;
     dest:=nil;
     p:=nil;
     { Special case: UTF-8 encoding }
@@ -1728,8 +1813,8 @@ end;
             inc(i,count);
             inc(totalsize);
           end;  
-        Getmem(dest,totalsize*sizeof(utf32)+sizeof(utf32));
-        fillchar(dest^,totalsize*sizeof(utf32)+sizeof(utf32),$55);
+        Getmem(destpchar,totalsize*sizeof(ucs4char)+sizeof(ucs4char));
+        dest:=pucs4strarray(destpchar);
         i:=1;
         OutIndex := 0;
         while (i <> length(str)) do
@@ -1743,28 +1828,28 @@ end;
             CurrentIndex := ExtraBytesToRead;
             if CurrentIndex = 3 then
             begin
-              ch:=ch + utf32(str[i]);
+              ch:=ch + ucs4char(str[i]);
               inc(i);
               ch:=ch shl 6;
               dec(CurrentIndex);
             end;
             if CurrentIndex = 2 then
             begin
-              ch:=ch + utf32(str[i]);
+              ch:=ch + ucs4char(str[i]);
               inc(i);
               ch:=ch shl 6;
               dec(CurrentIndex);
             end;
             if CurrentIndex = 1 then
             begin
-              ch:=ch + utf32(str[i]);
+              ch:=ch + ucs4char(str[i]);
               inc(i);
               ch:=ch shl 6;
               dec(CurrentIndex);
             end;
             if CurrentIndex = 0 then
             begin
-              ch:=ch + utf32(str[i]);
+              ch:=ch + ucs4char(str[i]);
               inc(i);
             end;
             ch := ch - offsetsFromUTF8[extraBytesToRead];
@@ -1785,7 +1870,8 @@ end;
     else
       begin
         { The size to allocate is the same to allocate }
-        Getmem(dest,length(str)*sizeof(utf32)+sizeof(utf32));        
+        Getmem(destpchar,length(str)*sizeof(ucs4char)+sizeof(ucs4char));
+        dest:=pucs4strarray(destpchar);
         { Search the alias type }
         for i:=1 to MAX_ALIAS do
           begin
@@ -1799,32 +1885,51 @@ end;
         for i:=0 to length(str)-1 do
           begin
             ch:=p^[str[i+1]];
-            if ch = utf32(-1) then
+            if ch = ucs4char(-1) then
               begin
                 continue;
               end;
-            dest^[i]:=utf32(ch);
+            dest^[i]:=ucs4char(ch);
           end;
         { add null character }  
         dest^[length(str)]:=0;
-        utf32strnewstr:=putf32char(dest);
+        ucs4strnewstr:=pucs4char(dest);
       end;
   end;
  
  
+ procedure ucs4removenulls(s: ucs4string; var dest: ucs4string);
+ var
+  outstr: ucs4string;
+  i,j: integer;
+ begin
+  { Allocate at least enough memory if using ansistrings }
+  ucs4_setlength(outstr,ucs4_length(s));
+  j:=1;
+  for i:=1 to ucs4_length(s) do
+    begin
+      if s[i] <> 0 then
+      begin
+        outstr[j]:=s[i];
+        inc(j);
+      end;
+    end;
+  ucs4_setlength(outstr,j-1);
+  dest:=outstr;
+ end;
  
- function utf32strnew(str: pchar; srctype: string): putf32char;
+ function ucs4strnew(str: pchar; srctype: string): pucs4char;
   var
    i: integer;
-   dest: putf32strarray;
+   dest: pucs4strarray;
    count: integer;
    Currentindex: integer;
    Outindex,totalsize: integer;
-   ch: utf32;
+   ch: ucs4char;
    ExtraBytesToRead: integer;
    p:pchararray;
   begin
-    utf32strnew:=nil;
+    ucs4strnew:=nil;
     dest:=nil;
     p:=nil;
     if not assigned(str) then exit;
@@ -1841,8 +1946,8 @@ end;
             inc(i,count);
             inc(totalsize);
           end;  
-        Getmem(dest,totalsize*sizeof(utf32)+sizeof(utf32));
-        fillchar(dest^,totalsize*sizeof(utf32)+sizeof(utf32),$55);
+        Getmem(dest,totalsize*sizeof(ucs4char)+sizeof(ucs4char));
+        fillchar(dest^,totalsize*sizeof(ucs4char)+sizeof(ucs4char),$55);
         i:=0;
         OutIndex := 0;
         while str[i]<>#0 do
@@ -1856,28 +1961,28 @@ end;
             CurrentIndex := ExtraBytesToRead;
             if CurrentIndex = 3 then
             begin
-              ch:=ch + utf32(str[i]);
+              ch:=ch + ucs4char(str[i]);
               inc(i);
               ch:=ch shl 6;
               dec(CurrentIndex);
             end;
             if CurrentIndex = 2 then
             begin
-              ch:=ch + utf32(str[i]);
+              ch:=ch + ucs4char(str[i]);
               inc(i);
               ch:=ch shl 6;
               dec(CurrentIndex);
             end;
             if CurrentIndex = 1 then
             begin
-              ch:=ch + utf32(str[i]);
+              ch:=ch + ucs4char(str[i]);
               inc(i);
               ch:=ch shl 6;
               dec(CurrentIndex);
             end;
             if CurrentIndex = 0 then
             begin
-              ch:=ch + utf32(str[i]);
+              ch:=ch + ucs4char(str[i]);
               inc(i);
             end;
             ch := ch - offsetsFromUTF8[extraBytesToRead];
@@ -1898,7 +2003,7 @@ end;
     else
       begin
         { The size to allocate is the same to allocate }
-        Getmem(dest,strlen(str)*sizeof(utf32)+sizeof(utf32));        
+        Getmem(dest,strlen(str)*sizeof(ucs4char)+sizeof(ucs4char));        
         { Search the alias type }
         for i:=1 to MAX_ALIAS do
           begin
@@ -1912,79 +2017,59 @@ end;
         for i:=0 to strlen(str)-1 do
           begin
             ch:=p^[str[i]];
-            if ch = utf32(-1) then
+            if ch = ucs4char(-1) then
               begin
                 continue;
               end;
-            dest^[i]:=utf32(ch);
+            dest^[i]:=ucs4char(ch);
           end;
         { add null character }  
         dest^[strlen(str)]:=0;
-        utf32strnew:=putf32char(dest);
+        ucs4strnew:=pucs4char(dest);
       end;
   end;
  
- function utf32strdispose(str: putf32char): putf32char;
+ function ucs4strdispose(str: pucs4char): pucs4char;
+ var
+  i: integer;
+  c: char;
  begin
-    utf32strdispose := nil;
+    ucs4strdispose := nil;
     if not assigned(str) then 
       exit;
-    { don't forget to free the null character }  
-    Freemem(str,utf32strlen(str)*sizeof(utf32)+sizeof(utf32));
+    { don't forget to free the null character }
+    Freemem(str,ucs4strlen(str)*sizeof(ucs4char)+sizeof(ucs4char));
     str:=nil;
  end;
  
 
- Function UTF32StrPCopy(Dest: Putf32char; Source: UTF32String):PUTF32Char;
+ Function UCS4StrPCopy(Dest: Pucs4char; Source: UCS4String):PUCS4Char;
    var
     counter : byte;
-    stringarray: putf32strarray;
+    stringarray: pucs4strarray;
+
   Begin
+   { remove any null characters from the string }
+   ucs4removenulls(source,source);
    stringarray:=pointer(Dest);
-   UTF32StrPCopy := nil;
+   UCS4StrPCopy := nil;
    if not assigned(Dest) then
      exit;
    { if empty pascal string  }
    { then setup and exit now }
-   if utf32_length(Source) = 0 then
+   if ucs4_length(Source) = 0 then
    Begin
      stringarray^[0] := 0;
-     UTF32StrPCopy := pointer(StringArray);
+     UCS4StrPCopy := pointer(StringArray);
      exit;
    end;
-   for counter:=1 to utf32_length(Source) do
+   for counter:=1 to ucs4_length(Source) do
    begin
      StringArray^[counter-1] := Source[counter];
    end;
    { terminate the string }
-   StringArray^[utf32_length(Source)] := 0;
-   UTF32StrPCopy:=Dest;
- end;
-
- Function UTF32StrPCopyISO8859_1(Dest: Putf32char; Source: string):PUTF32Char;
-   var
-    counter : byte;
-    stringarray: putf32strarray;
-  Begin
-   stringarray:=pointer(Dest);
-   UTF32StrPCopyISO8859_1 := nil;
-   if not assigned(Dest) then
-     exit;
-   { if empty pascal string  }
-   { then setup and exit now }
-   if length(Source) = 0 then
-   Begin
-     stringarray^[0] := 0;
-     UTF32StrPCopyISO8859_1 := pointer(StringArray);
-     exit;
-   end;
-   for counter:=1 to length(Source) do
-   begin
-     StringArray^[counter-1] := ord(Source[counter]);
-   end;
-   { terminate the string }
-   StringArray^[length(Source)] := 0;
-   UTF32StrPCopyISO8859_1:=Dest;
+   StringArray^[ucs4_length(Source)] := 0;
+   UCS4StrPCopy:=Dest;
  end;
 
 
@@ -2002,7 +2087,7 @@ end;
    lengthtoalloc: integer;
    dst: pchar;
   begin
-    lengthtoalloc:=strlen(src)+sizeof(utf8);
+    lengthtoalloc:=strlen(src)+sizeof(utf8char);
     { also copy the null character }
     Getmem(dst,lengthtoalloc);
     move(src^,dst^,lengthtoalloc);
@@ -2010,28 +2095,32 @@ end;
   end;
   
 
-  function UTF8StrNew(src: putf32char): pchar;
+  function UTF8StrNew(src: pucs4char): pchar;
   var
-   utf32stringlen: integer;
+   ucs4stringlen: integer;
    p: pchar;
-   ch: utf32;
+   ch: ucs4char;
    OutIndex,BytesToWrite,OutStringLength,StartIndex: integer;
    CurrentIndex, EndIndex: integer;
    i: integer;
-   instr: putf32strarray;
+   ResultPtr: putf8char;
+   instr: pucs4strarray;
+   sizetoalloc: integer;
   begin
-    utf32stringlen:=utf32strlen(src);
+    ucs4stringlen:=ucs4strlen(src);
+    { Let us not forget the terminating null character }
+    sizetoalloc:=ucs4stringlen*sizeof(ucs4char)+sizeof(ucs4char);
     instr:=pointer(src);
     { allocate at least the space taken up by the
       strlen*4 - because each character can take up to 4 bytes.
     }  
-    GetMem(p,utf32stringlen*sizeof(utf32));
-    fillchar(p^,utf32stringlen*sizeof(utf32),0);
+    GetMem(p,sizetoalloc);
+    fillchar(p^,sizetoalloc,0);
     OutIndex := 0;
     bytestoWrite:=0; 
     OutStringLength := 0;
     StartIndex:=0;
-    EndIndex:=utf32stringlen-1;
+    EndIndex:=ucs4stringlen-1;
       
     for i:=StartIndex to EndIndex do
      begin
@@ -2040,7 +2129,7 @@ end;
        if (ch > UNI_MAX_UTF16) then
        begin
          UTF8StrNew := nil;
-         FreeMem(p,utf32stringlen*sizeof(utf32));
+         FreeMem(p,sizetoalloc);
          exit;
        end;
      
@@ -2048,20 +2137,20 @@ end;
        if ((ch >= UNI_SUR_HIGH_START) and (ch <= UNI_SUR_LOW_END)) then
        begin
          UTF8StrNew := nil;
-         FreeMem(p,utf32stringlen*sizeof(utf32));
+         FreeMem(p,sizetoalloc);
          exit;
        end;
     
-      if (ch < utf32($80)) then
+      if (ch < ucs4char($80)) then
         bytesToWrite:=1
       else
-      if (ch < utf32($800)) then
+      if (ch < ucs4char($800)) then
         bytesToWrite:=2
       else
-      if (ch < utf32($10000)) then
+      if (ch < ucs4char($10000)) then
         bytesToWrite:=3
       else
-      if (ch < utf32($200000)) then
+      if (ch < ucs4char($200000)) then
         bytesToWrite:=4
       else
         begin
@@ -2074,50 +2163,53 @@ end;
         if CurrentIndex = 4 then
         begin
           dec(OutIndex);
-          p[outindex] := utf8((ch or byteMark) and ByteMask);
+          p[outindex] := utf8char((ch or byteMark) and ByteMask);
           ch:=ch shr 6;
           dec(CurrentIndex);
         end;
         if CurrentIndex = 3 then
         begin
           dec(OutIndex);
-          p[outindex] := utf8((ch or byteMark) and ByteMask);
+          p[outindex] := utf8char((ch or byteMark) and ByteMask);
           ch:=ch shr 6;
           dec(CurrentIndex);
         end;
         if CurrentIndex = 2 then
         begin
           dec(OutIndex);
-          p[outindex] := utf8((ch or byteMark) and ByteMask);
+          p[outindex] := utf8char((ch or byteMark) and ByteMask);
           ch:=ch shr 6;
           dec(CurrentIndex);
         end;
         if CurrentIndex = 1 then
         begin
           dec(OutIndex);
-          p[outindex] := utf8((byte(ch) or byte(FirstbyteMark[BytesToWrite])));
+          p[outindex] := utf8char((byte(ch) or byte(FirstbyteMark[BytesToWrite])));
         end;  
         inc(OutStringLength);
         Inc(OutIndex,BytesToWrite);
-      end;      
-      ReallocMem(pointer(p),OutIndex+1);
-      p[OutIndex] := #0;
-      UTF8StrNew:=p;
+      end;    
+      { Copy the values, and free the old buffer }
+      Getmem(ResultPtr,Outindex+1);
+      move(p^,ResultPtr^,Outindex);
+      FreeMem(pointer(p),sizetoalloc);
+      ResultPtr[OutIndex] := #0;
+      UTF8StrNew:=ResultPtr;
   end;
   
 
-  function utf8strlcopyutf32(src: pchar; dst: putf32char; maxlen: integer): putf32char;
+  function utf8strlcopyucs4(src: pchar; dst: pucs4char; maxlen: integer): pucs4char;
   var
-   ch: utf32;
+   ch: ucs4char;
    i: integer;
    StringLength: integer;
    Outindex: integer;
    ExtraBytesToRead: integer;
    CurrentIndex: integer;
-   stringarray: putf32strarray;
+   stringarray: pucs4strarray;
   
   begin
-    utf8strlcopyutf32:=nil;
+    utf8strlcopyucs4:=nil;
     if not assigned(src) then
       exit;
     if not assigned(dst) then
@@ -2130,7 +2222,7 @@ end;
       begin
         ch := 0;
         extrabytestoread:= trailingBytesForUTF8[ord(src[i])];
-        if (stringlength + extraBytesToRead) >= high(utf32string) then
+        if (stringlength + extraBytesToRead) >= high(ucs4string) then
           begin
             exit;
           end;
@@ -2141,28 +2233,28 @@ end;
         CurrentIndex := ExtraBytesToRead;
         if CurrentIndex = 3 then
         begin
-          ch:=ch + utf32(src[i]);
+          ch:=ch + ucs4char(src[i]);
           inc(i);
           ch:=ch shl 6;
           dec(CurrentIndex);
         end;
         if CurrentIndex = 2 then
         begin
-          ch:=ch + utf32(src[i]);
+          ch:=ch + ucs4char(src[i]);
           inc(i);
           ch:=ch shl 6;
           dec(CurrentIndex);
         end;
         if CurrentIndex = 1 then
         begin
-          ch:=ch + utf32(src[i]);
+          ch:=ch + ucs4char(src[i]);
           inc(i);
           ch:=ch shl 6;
           dec(CurrentIndex);
         end;
         if CurrentIndex = 0 then
         begin
-          ch:=ch + utf32(src[i]);
+          ch:=ch + ucs4char(src[i]);
           inc(i);
         end;
         ch := ch - offsetsFromUTF8[extraBytesToRead];
@@ -2178,13 +2270,13 @@ end;
           end;
       end;
       stringarray^[outindex] := 0;
-      utf8strlcopyutf32:=dst;
+      utf8strlcopyucs4:=dst;
   end;
   
   
   function utf8strpastoISO8859_1(src: pchar): string;
   var
-   ch: utf32;
+   ch: ucs4char;
    s: string;
    i: integer;
    StringLength: integer;
@@ -2203,35 +2295,35 @@ end;
       begin
         ch := 0;
         extrabytestoread:= trailingBytesForUTF8[ord(src[i])];
-        if (stringlength + extraBytesToRead) >= high(utf32string) then
+        if (stringlength + extraBytesToRead) >= high(ucs4string) then
           begin
             exit;
           end;
         CurrentIndex := ExtraBytesToRead;
         if CurrentIndex = 3 then
         begin
-          ch:=ch + utf32(src[i]);
+          ch:=ch + ucs4char(src[i]);
           inc(i);
           ch:=ch shl 6;
           dec(CurrentIndex);
         end;
         if CurrentIndex = 2 then
         begin
-          ch:=ch + utf32(src[i]);
+          ch:=ch + ucs4char(src[i]);
           inc(i);
           ch:=ch shl 6;
           dec(CurrentIndex);
         end;
         if CurrentIndex = 1 then
         begin
-          ch:=ch + utf32(src[i]);
+          ch:=ch + ucs4char(src[i]);
           inc(i);
           ch:=ch shl 6;
           dec(CurrentIndex);
         end;
         if CurrentIndex = 0 then
         begin
-          ch:=ch + utf32(src[i]);
+          ch:=ch + ucs4char(src[i]);
           inc(i);
         end;
         ch := ch - offsetsFromUTF8[extraBytesToRead];
@@ -2262,7 +2354,7 @@ end;
 
   function utf8strpastoascii(src: pchar): string;
   var
-   ch: utf32;
+   ch: ucs4char;
    s: string;
    i: integer;
    StringLength: integer;
@@ -2281,35 +2373,35 @@ end;
       begin
         ch := 0;
         extrabytestoread:= trailingBytesForUTF8[ord(src[i])];
-        if (stringlength + extraBytesToRead) >= high(utf32string) then
+        if (stringlength + extraBytesToRead) >= high(ucs4string) then
           begin
             exit;
           end;
         CurrentIndex := ExtraBytesToRead;
         if CurrentIndex = 3 then
         begin
-          ch:=ch + utf32(src[i]);
+          ch:=ch + ucs4char(src[i]);
           inc(i);
           ch:=ch shl 6;
           dec(CurrentIndex);
         end;
         if CurrentIndex = 2 then
         begin
-          ch:=ch + utf32(src[i]);
+          ch:=ch + ucs4char(src[i]);
           inc(i);
           ch:=ch shl 6;
           dec(CurrentIndex);
         end;
         if CurrentIndex = 1 then
         begin
-          ch:=ch + utf32(src[i]);
+          ch:=ch + ucs4char(src[i]);
           inc(i);
           ch:=ch shl 6;
           dec(CurrentIndex);
         end;
         if CurrentIndex = 0 then
         begin
-          ch:=ch + utf32(src[i]);
+          ch:=ch + ucs4char(src[i]);
           inc(i);
         end;
         ch := ch - offsetsFromUTF8[extraBytesToRead];
@@ -2353,14 +2445,14 @@ end;
                    UCS-2 null terminated string handling
 -----------------------------------------------------------------------------}
   
-  function ucs2strlcopyutf32(src: pucs2char; dst: putf32char; maxlen: integer): putf32char;
+  function ucs2strlcopyucs4(src: pucs2char; dst: pucs4char; maxlen: integer): pucs4char;
   var
    i: integer;
    Outindex: integer;
-   stringarray: putf32strarray;
+   stringarray: pucs4strarray;
    srcarray: pucs2strarray;  
   begin
-    ucs2strlcopyutf32:=nil;
+    ucs2strlcopyucs4:=nil;
     if not assigned(src) then
       exit;
     if not assigned(dst) then
@@ -2376,23 +2468,23 @@ end;
         inc(i);
       end;
       stringarray^[outindex] := 0;
-      ucs2strlcopyutf32:=dst;
+      ucs2strlcopyucs4:=dst;
   end;
   
   
-  function ucs2strnew(src: putf32char): pucs2char;
+  function ucs2strnew(src: pucs4char): pucs2char;
   var
-   ch: utf32;
+   ch: ucs4char;
    i: integer;
    StartIndex, EndIndex: integer;
-   srcarray: putf32strarray;
+   srcarray: pucs4strarray;
    sizetoalloc: integer;
    buffer: pucs2char;
    dst: pucs2strarray;
   begin
     ucs2strnew := nil;
     srcarray:=pointer(src);
-    sizetoalloc := utf32strlen(src)+sizeof(ucs2char);
+    sizetoalloc := ucs4strlen(src)+sizeof(ucs2char);
     { Check if only one character is passed as src, in that case
       this is not an UTF string, but a simple character (in other
       words, there is not a length byte.
@@ -2507,6 +2599,10 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.10  2004/08/01 05:33:02  carl
+    + more UTF-8 encoding routines
+    * small bugfix in certain occasions with UCS-4 conversion
+
   Revision 1.9  2004/07/15 01:04:12  carl
     * small bugfixes
     - remove compiler warnings
@@ -2517,7 +2613,7 @@ end.
 
   Revision 1.7  2004/07/05 02:27:32  carl
     - remove some compiler warnings
-    + UTF-32 null character string handling routines
+    + UCS-4 null character string handling routines
     + UTF-8 null character string handling routines
 
   Revision 1.6  2004/07/01 22:27:15  carl
@@ -2535,10 +2631,10 @@ end.
     - remove some warnings
 
   Revision 1.2  2004/05/06 15:27:05  carl
-     + add support for ISO8859, ASCII, CP850, CP1252 to UTF-32 conversion
+     + add support for ISO8859, ASCII, CP850, CP1252 to UCS-4 conversion
        (and vice-versa)
-     + add support for UTF-32 to UCS-2 conversion
-     * bugfixes in conversion routines for UTF-32
+     + add support for UCS-4 to UCS-2 conversion
+     * bugfixes in conversion routines for UCS-4
      + updated documentation
 
   Revision 1.1  2004/05/05 16:28:22  carl
