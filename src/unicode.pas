@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: unicode.pas,v 1.18 2004-10-13 23:25:43 carl Exp $
+    $Id: unicode.pas,v 1.19 2004-10-27 01:58:50 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Unicode related routines
@@ -248,7 +248,7 @@ type
    The memory for the buffer is allocated. Use @link(ucs4strdispose) to dispose
    of the allocated string. The string is null terminated. If the original
    string contains some null characters, those nulls are removed from
-   the resulting string.
+   the resulting string. 
 
    @param(str The string to convert, single character coded)
    @param(srctype The encoding of the string, UTF-8 is also valid)
@@ -259,7 +259,8 @@ type
    terminated string) 
    
    The memory for the buffer is allocated. Use @link(ucs4strdispose) to dispose 
-   of the allocated string. The string is null terminated.
+   of the allocated string. The string is null terminated. If str is nil, then
+   this routine returns nil and does not allocate anything.
    
    @param(str The string to convert, single character coded, or UTF-8 coded)
    @param(srctype The encoding of the string, UTF-8 is also valid)
@@ -323,7 +324,8 @@ type
    terminated string) 
    
    The memory for the buffer is allocated. Use @link(ucs2strdispose) to dispose 
-   of the allocated string. The string is null terminated.
+   of the allocated string. The string is null terminated. If src is nil,
+   this routine returns nil, and does not allocate anything.
    
    @returns(nil if the conversion cannot be represented in UCS-2 encoding,
       or nil if there was an error)
@@ -346,7 +348,8 @@ type
    terminated string) 
    
    The memory for the buffer is allocated. Use @link(utf8strdispose) to dispose 
-   of the allocated string. The string is null terminated.
+   of the allocated string. The string is null terminated. If the parameter is 
+   nil, this routine returns nil and does not allocate anything.
   }
   function utf8strnew(src: pucs4char): pchar;
   
@@ -354,6 +357,8 @@ type
    
    The memory for the buffer is allocated. Use @link(utf8strdispose) to dispose 
    of the allocated string. The string is copied from src and is null terminated.
+   If the parameter is nil, this routine returns nil and does not allocate
+   anything.
   }
   function utf8strnewutf8(src: pchar): pchar;
   
@@ -364,7 +369,7 @@ type
       @code(utf8strnew), and sets the pointer to nil. 
    
   }
-  function utf8strdispose(str: pchar): pchar;
+  function utf8strdispose(p: pchar): pchar;
   
   
   {** @abstract(Convert an UTF-8 null terminated string to an UCS-4 null terminated string)
@@ -395,6 +400,11 @@ type
   }
  function utf8strpastoASCII(src: pchar): string;
   
+  {** @abstract(Converts a null-terminated UTF-8 string to a Pascal-style 
+       UTF-8 encoded string.)
+       
+  }
+ function utf8strpas(src: pchar): string;
   
 
 {---------------------------------------------------------------------------
@@ -2146,13 +2156,13 @@ end;
  end;
 
 
-  function utf8strdispose(str: pchar): pchar;
+  function utf8strdispose(p: pchar): pchar;
   begin
     utf8strdispose := nil;
-    if not assigned(str) then 
+    if not assigned(p) then 
       exit;
-    Freemem(str,strlen(str)+1);
-    str:=nil;
+    Freemem(p,strlen(p)+1);
+    p:=nil;
   end;
   
   function utf8strnewutf8(src: pchar): pchar;
@@ -2160,6 +2170,9 @@ end;
    lengthtoalloc: integer;
    dst: pchar;
   begin
+    utf8strnewutf8:=nil;
+    if not assigned(src) then 
+      exit;
     lengthtoalloc:=strlen(src)+sizeof(utf8char);
     { also copy the null character }
     Getmem(dst,lengthtoalloc);
@@ -2180,6 +2193,9 @@ end;
    instr: pucs4strarray;
    sizetoalloc: integer;
   begin
+    utf8strnew:=nil;
+    if not assigned(src) then 
+      exit;
     ucs4stringlen:=ucs4strlen(src);
     { Let us not forget the terminating null character }
     sizetoalloc:=ucs4stringlen*sizeof(ucs4char)+sizeof(ucs4char);
@@ -2532,6 +2548,13 @@ end;
       end;
      utf8strpastoASCII:=s;
   end;
+  
+  function utf8strpas(src: pchar): string;
+  begin
+    utf8strpas:=strpas(src);
+  end;
+   
+
 
   
   function ucs2_isvalid(ch: ucs2char): boolean;
@@ -2587,6 +2610,8 @@ end;
    dst: pucs2strarray;
   begin
     ucs2strnew := nil;
+    if not assigned(src) then
+      exit;
     srcarray:=pointer(src);
     sizetoalloc := ucs4strlen(src)+sizeof(ucs2char);
     { Check if only one character is passed as src, in that case
@@ -2703,6 +2728,10 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.18  2004/10/13 23:25:43  carl
+    - remove unused variables
+    * bugfix of range check errors
+
   Revision 1.17  2004/09/16 02:32:58  carl
     * small fix in comments
 
