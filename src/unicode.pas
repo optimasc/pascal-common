@@ -1,10 +1,10 @@
 {
  ****************************************************************************
-    $Id: unicode.pas,v 1.14 2004-09-06 19:41:42 carl Exp $
+    $Id: unicode.pas,v 1.15 2004-09-06 19:50:01 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Unicode related routines
-    Partially converted from: 
+    Partially converted from (the original code is missing some stuff!): 
     http://www.unicode.org/Public/PROGRAMS/CVTUTF/
 
     See License.txt for more information on the licensing terms
@@ -12,7 +12,7 @@
     
  ****************************************************************************
 }
-{** @author(Carl Eric Codere)
+{** @author(Carl Eric Codère)
     @abstract(unicode support unit)
 
     This unit contains routines to convert
@@ -421,7 +421,13 @@ type
   {** @abstract(Returns the current length of an UTF-8 string) }
   function utf8_length(s: utf8string): integer;
   
-  {** @abstract(Returns if the specified UTF-8 string is legal or not) }
+  {** @abstract(Returns if the specified UTF-8 string is legal or not) 
+  
+      Verifies that the UTF-8 encoded strings is encoded in a legal
+      way. 
+       
+      @returns(FALSE if the string is illegal, otherwise returns TRUE) 
+  }
   function utf8_islegal(s: utf8string): boolean;
   
   {** @abstract(Set the length of an UTF-8 string) }
@@ -2703,6 +2709,10 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.14  2004/09/06 19:41:42  carl
+    * Bugfix of UTF-8 encoded values with 4 and 5 characters (the original C code of unicode is wrong!)
+    + utf8_islegal implemented to verify the validity of UTF-8 strings.
+
   Revision 1.13  2004/08/22 20:42:16  carl
     * range check error fix (memory read past end of buffer)
 
