@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: iso3166.pas,v 1.1 2004-08-19 00:24:47 carl Exp $
+    $Id: iso3166.pas,v 1.2 2004-11-21 19:53:20 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Country code unit
@@ -125,9 +125,10 @@ begin
   isvalidcountrycode:=false;
   if length(s) > 2 then
     exit;
+  s:=upstring(s);
   for i:=1 to MAX_ENTRIES do
     begin
-      if CountryInfo[i].code = upstring(s) then
+      if CountryInfo[i].code = s then
          begin
             isvalidcountrycode:=true;
             exit;
@@ -142,9 +143,10 @@ begin
   getcountryname_fr:='';
   if length(s) > 2 then
     exit;
+  s:=upstring(s);  
   for i:=1 to MAX_ENTRIES do
     begin
-      if CountryInfo[i].code = upstring(s) then
+      if CountryInfo[i].code = s then
          begin
             getcountryname_fr:=CountryInfo[i].name_fr;
             exit;
@@ -159,9 +161,10 @@ begin
   getcountryname_en:='';
   if length(s) > 2 then
     exit;
+  s:=upstring(s);  
   for i:=1 to MAX_ENTRIES do
     begin
-      if CountryInfo[i].code = upstring(s) then
+      if CountryInfo[i].code = s then
          begin
             getcountryname_en:=CountryInfo[i].name_en;
             exit;
@@ -173,5 +176,8 @@ end;
 end.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.1  2004/08/19 00:24:47  carl
+    + iso3166 country code unit
+
 }
 
