@@ -35,16 +35,15 @@ USEDELPHI=1
 
 PACKAGENAME:=common
 DOCTITLE:=Common pascal units documentation
-UNITDIRS := ./lib ./src
+UNITDIRS := ./src ./tst
 FILE:=./src/allunits.pas
 #BINFILES:=
 DOCFILES:=./docs/license.txt ./docs/changes.txt ./docs/copying ./docs/copying.fpc ./docs/readme.txt ./docs/$(PACKAGENAME).pdf ./docs/html
 #LIBFILES
 SRCFILES:=./src/*
 DATAFILES:=./tst/*.txt
-FILESTODOCUMENT:=./src/crc.pas ./src/dpautils.pas ./src/fpautils.pas ./src/locale.pas \
-	./src/tpautils.pas ./src/unicode.pas ./src/utils.pas ./src/vpautils.pas ./src/ietf.pas \
-	./src/collects.pas ./src/iso639.pas ./src/iso3166.pas ./src/dateutil.pas
+FILESTODOCUMENT:=./src/crc.pas ./src/locale.pas ./src/unicode.pas ./src/utils.pas ./src/ietf.pas \
+	./src/collects.pas ./src/iso639.pas ./src/iso3166.pas ./src/dateutil.pas ./src/fileio.pas
 TSTFILES:=./tst/*
 
 
