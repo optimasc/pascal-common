@@ -1,5 +1,5 @@
 {
-    $Id: collects.pas,v 1.3 2004-11-17 04:01:07 carl Exp $
+    $Id: collects.pas,v 1.4 2004-11-18 04:23:41 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Collections (Object style)
@@ -117,6 +117,12 @@ TYPE
       PROCEDURE Insert (Item: Pointer);                              Virtual;
    END;
    PExtendedSortedCollection = ^TExtendedSortedCollection;
+   
+   TExtendedStringCollection = OBJECT (TExtendedCollection)
+      PROCEDURE FreeItem (Item: Pointer); Virtual;
+   END;
+   PExtendedStringCollection = ^TExtendedStringCollection;
+   
 
    TExtendedSortedStringCollection = OBJECT (TExtendedSortedCollection)
       CONSTRUCTOR Init (ALimit, ADelta: Integer);
@@ -401,6 +407,18 @@ END;
 
 
 {+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++}
+{                     TExtendedStringCollection OBJECT METHODS                      }
+{+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++}
+PROCEDURE TExtendedStringCollection.FreeItem (Item: Pointer);
+var
+ p: PshortString;
+BEGIN
+   p:=PShortString(Item);
+   StringDispose(p);
+END;
+
+
+{+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++}
 {                       TExtendedSortedCollection OBJECT METHODS                    }
 {+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++}
 
@@ -582,6 +600,9 @@ end;
 End.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.3  2004/11/17 04:01:07  carl
+    + Sorted string collection object
+
   Revision 1.2  2004/07/15 01:03:10  carl
     + Added Stack object
 
