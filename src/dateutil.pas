@@ -1,5 +1,5 @@
 {
-    $Id: dateutil.pas,v 1.6 2004-11-29 03:50:24 carl Exp $
+    $Id: dateutil.pas,v 1.7 2004-12-08 04:24:42 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere (Optima SC Inc.)
 
     Date and time utility routines
@@ -902,10 +902,10 @@ begin
  DayDigits:='';
  while s[i] in ['0'..'9'] do
    begin
-     { Hmm.. invalid date/time format }
-     if i > length(s) then exit;
      DayDigits:=DayDigits+s[i];
      inc(i);
+     { Hmm.. invalid date/time format }
+     if i > length(s) then exit;
    end;
  { Maximum 2 digits for the day, as defined in RFC 822 }
  if (length(DayDigits) > 2) or (length(DayDigits) = 0) then
@@ -936,10 +936,10 @@ begin
  YearDigits:='';
  while s[i] in ['0'..'9'] do
    begin
-     { Hmm.. invalid date/time format }
-     if i > length(s) then exit;
      YearDigits:=YearDigits+s[i];
      inc(i);
+     { Hmm.. invalid date/time format }
+     if i > length(s) then exit;
    end;
  { Maximum 4 digits for the year, as defined in RFC 1123 }
  if (length(YearDigits) > 4) or (length(YearDigits) = 0) then
@@ -1008,10 +1008,10 @@ begin
       i:=2;
       while s[i] in ['0'..'9'] do
         begin
-         { Hmm.. invalid date/time format }
-         if i > length(s) then break;
          offsetstr:=offsetstr+s[i];
          inc(i);
+         { Hmm.. invalid date/time format }
+         if i > length(s) then break;
        end;
       { The string must be of the form +/-HHMM }
       if length(offsetstr) <> 5 then
@@ -1422,6 +1422,9 @@ end;
 end.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.6  2004/11/29 03:50:24  carl
+    + UNIX and FILETIME to DateTime conversion
+
   Revision 1.5  2004/11/23 03:44:53  carl
     * fixes for compilation with Virtual Pascal 2.x
 
