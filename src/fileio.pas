@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: fileio.pas,v 1.4 2004-11-19 01:37:27 carl Exp $
+    $Id: fileio.pas,v 1.5 2004-11-21 19:52:22 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Generic portable file I/O routines with debug support.
@@ -49,7 +49,7 @@ uses
     completely compatible with the standard @code(AssignFile)
     system unit routine.
 }    
-procedure FileAssign(var F: file; Name: string);
+procedure FileAssign(var F: file; const Name: string);
 
 {** @abstract(Open a file for reading or writing)
 
@@ -146,7 +146,7 @@ begin
   LastIOResult:=0;
 end;
 
-procedure FileAssign(var F: file; Name: string);
+procedure FileAssign(var F: file; const Name: string);
 var
  status: integer;
 begin
@@ -196,7 +196,7 @@ begin
  if status <> 0 then
    RunError(status and $ff);
 {$ENDIF}
- Rewrite(F);
+ Rewrite(F,1);
 {$IFDEF DEBUG}
   FRec:=FileRec(F);
   s:=strpas(FRec.name);
@@ -348,6 +348,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.4  2004/11/19 01:37:27  carl
+    + more documentation
+
   Revision 1.3  2004/11/18 21:22:55  user63
     * bugfix, wrong runtime error was generated
 
