@@ -1,0 +1,7 @@
+History of major changes in the releases:
+
+0.95:
+   + added support for ptrint (portability for 64-bit freepascal)
+   + added missing portability constants for VP and Delphi
+   + automated build process
+   + more documentation
