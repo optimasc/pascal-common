@@ -1,5 +1,5 @@
 {
-    $Id: strings.pas,v 1.4 2004-07-05 02:24:31 carl Exp $
+    $Id: strings.pas,v 1.5 2004-08-19 00:23:37 carl Exp $
     This file is part of the Free Pascal run time library.
     Copyright (c) 1999-2000 by Carl-Eric Codere,
     member of the Free Pascal development team.
@@ -380,7 +380,9 @@ Implementation
    Var
      count: Longint;
   Begin
-
+   Strscan:=nil;
+   if not assigned(Str) then
+      exit;
    count := 0;
    { As in Borland Pascal , if looking for NULL return null }
    if ch = #0 then
@@ -399,7 +401,6 @@ Implementation
      Inc(count);
    end;
    { nothing found. }
-   StrScan := nil;
  end;
 
 
@@ -610,6 +611,9 @@ Implementation
 end.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.4  2004/07/05 02:24:31  carl
+    - remove some compilation warnings
+
   Revision 1.3  2004/07/01 22:25:41  carl
     + start of ansistring support
 
