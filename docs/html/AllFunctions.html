@@ -155,11 +155,11 @@
 </tr>
 <tr class="list" valign="top"><td class="itemname" nowrap="nowrap"><a class="bold" href="unicode.html#ucs2_length">ucs2_length</a></td>
 <td><a class="bold" href="unicode.html">unicode</a></td>
-<td>&nbsp;</td>
+<td>Returns the current length of an UCS-2 string</td>
 </tr>
 <tr class="list2" valign="top"><td class="itemname" nowrap="nowrap"><a class="bold" href="unicode.html#ucs2_setlength">ucs2_setlength</a></td>
 <td><a class="bold" href="unicode.html">unicode</a></td>
-<td>&nbsp;</td>
+<td>Set the new dynamic length of an ucs-2 string</td>
 </tr>
 <tr class="list" valign="top"><td class="itemname" nowrap="nowrap"><a class="bold" href="locale.html#UNIXToDateTime">UNIXToDateTime</a></td>
 <td><a class="bold" href="locale.html">locale</a></td>
@@ -193,65 +193,89 @@
 <td><a class="bold" href="unicode.html">unicode</a></td>
 <td>Returns the number of characters that are used to encode this        character</td>
 </tr>
-<tr class="list" valign="top"><td class="itemname" nowrap="nowrap"><a class="bold" href="unicode.html#utf32_concat">utf32_concat</a></td>
+<tr class="list" valign="top"><td class="itemname" nowrap="nowrap"><a class="bold" href="unicode.html#utf32strlen">utf32strlen</a></td>
+<td><a class="bold" href="unicode.html">unicode</a></td>
+<td>Returns the number of characters in the null terminated UTF-32 string</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname" nowrap="nowrap"><a class="bold" href="unicode.html#utf32strpas">utf32strpas</a></td>
+<td><a class="bold" href="unicode.html">unicode</a></td>
+<td>Converts a null-terminated UTF-32 string to a Pascal-style UTF-32 string.</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname" nowrap="nowrap"><a class="bold" href="unicode.html#utf32strpasToISO8859_1">utf32strpasToISO8859_1</a></td>
+<td><a class="bold" href="unicode.html">unicode</a></td>
+<td>Converts a null-terminated UTF-32 string to a Pascal-style          ISO 8859-1 encoded string.</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname" nowrap="nowrap"><a class="bold" href="unicode.html#utf32strpcopy">utf32strpcopy</a></td>
+<td><a class="bold" href="unicode.html">unicode</a></td>
+<td>Copies a Pascal-style UTF-32 string to a null-terminated UTF-32 string.</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname" nowrap="nowrap"><a class="bold" href="unicode.html#utf32strpcopyascii">utf32strpcopyascii</a></td>
+<td><a class="bold" href="unicode.html">unicode</a></td>
+<td>Copies a Pascal-style string to a null-terminated UTF-32 string.</td>
+</tr>
+<tr class="list2" valign="top"><td class="itemname" nowrap="nowrap"><a class="bold" href="unicode.html#utf32_concat">utf32_concat</a></td>
 <td><a class="bold" href="unicode.html">unicode</a></td>
 <td>Concatenates two UTF-32 strings, and gives a resulting UTF-32 string</td>
 </tr>
-<tr class="list2" valign="top"><td class="itemname" nowrap="nowrap"><a class="bold" href="unicode.html#utf32_concatascii">utf32_concatascii</a></td>
+<tr class="list" valign="top"><td class="itemname" nowrap="nowrap"><a class="bold" href="unicode.html#utf32_concatascii">utf32_concatascii</a></td>
 <td><a class="bold" href="unicode.html">unicode</a></td>
 <td>Concatenates an UTF-32 string with an ASCII string, and gives        a resulting UTF-32 string</td>
 </tr>
-<tr class="list" valign="top"><td class="itemname" nowrap="nowrap"><a class="bold" href="unicode.html#utf32_copy">utf32_copy</a></td>
+<tr class="list2" valign="top"><td class="itemname" nowrap="nowrap"><a class="bold" href="unicode.html#utf32_copy">utf32_copy</a></td>
 <td><a class="bold" href="unicode.html">unicode</a></td>
 <td>Returns an utf-32 substring of an utf-32 string</td>
 </tr>
-<tr class="list2" valign="top"><td class="itemname" nowrap="nowrap"><a class="bold" href="unicode.html#utf32_delete">utf32_delete</a></td>
+<tr class="list" valign="top"><td class="itemname" nowrap="nowrap"><a class="bold" href="unicode.html#utf32_delete">utf32_delete</a></td>
 <td><a class="bold" href="unicode.html">unicode</a></td>
 <td>Deletes a substring from a string</td>
 </tr>
-<tr class="list" valign="top"><td class="itemname" nowrap="nowrap"><a class="bold" href="unicode.html#utf32_equal">utf32_equal</a></td>
+<tr class="list2" valign="top"><td class="itemname" nowrap="nowrap"><a class="bold" href="unicode.html#utf32_equal">utf32_equal</a></td>
 <td><a class="bold" href="unicode.html">unicode</a></td>
 <td>Checks if both UTF-32 strings are equal</td>
 </tr>
-<tr class="list2" valign="top"><td class="itemname" nowrap="nowrap"><a class="bold" href="unicode.html#utf32_equalascii">utf32_equalascii</a></td>
+<tr class="list" valign="top"><td class="itemname" nowrap="nowrap"><a class="bold" href="unicode.html#utf32_equalascii">utf32_equalascii</a></td>
 <td><a class="bold" href="unicode.html">unicode</a></td>
 <td>Checks if an ASCII string is equal to an UTF-32 string</td>
 </tr>
-<tr class="list" valign="top"><td class="itemname" nowrap="nowrap"><a class="bold" href="unicode.html#utf32_issupported">utf32_issupported</a></td>
+<tr class="list2" valign="top"><td class="itemname" nowrap="nowrap"><a class="bold" href="unicode.html#utf32_issupported">utf32_issupported</a></td>
 <td><a class="bold" href="unicode.html">unicode</a></td>
 <td>Checks if conversion from/to this character set format to/from UTF-32        is supported</td>
 </tr>
-<tr class="list2" valign="top"><td class="itemname" nowrap="nowrap"><a class="bold" href="unicode.html#utf32_isvalid">utf32_isvalid</a></td>
+<tr class="list" valign="top"><td class="itemname" nowrap="nowrap"><a class="bold" href="unicode.html#utf32_isvalid">utf32_isvalid</a></td>
 <td><a class="bold" href="unicode.html">unicode</a></td>
 <td>Checks if the UTF-32 character is valid</td>
 </tr>
-<tr class="list" valign="top"><td class="itemname" nowrap="nowrap"><a class="bold" href="unicode.html#utf32_iswhitespace">utf32_iswhitespace</a></td>
+<tr class="list2" valign="top"><td class="itemname" nowrap="nowrap"><a class="bold" href="unicode.html#utf32_iswhitespace">utf32_iswhitespace</a></td>
 <td><a class="bold" href="unicode.html">unicode</a></td>
 <td>Determines if the specified character is a whitespace character</td>
 </tr>
-<tr class="list2" valign="top"><td class="itemname" nowrap="nowrap"><a class="bold" href="unicode.html#utf32_length">utf32_length</a></td>
+<tr class="list" valign="top"><td class="itemname" nowrap="nowrap"><a class="bold" href="unicode.html#utf32_length">utf32_length</a></td>
 <td><a class="bold" href="unicode.html">unicode</a></td>
 <td>Returns the current length of an UTF-32 string</td>
 </tr>
-<tr class="list" valign="top"><td class="itemname" nowrap="nowrap"><a class="bold" href="unicode.html#utf32_pos">utf32_pos</a></td>
+<tr class="list2" valign="top"><td class="itemname" nowrap="nowrap"><a class="bold" href="unicode.html#utf32_pos">utf32_pos</a></td>
 <td><a class="bold" href="unicode.html">unicode</a></td>
 <td>Searches for an UTF-32 substring in an UTF-32 string</td>
 </tr>
-<tr class="list2" valign="top"><td class="itemname" nowrap="nowrap"><a class="bold" href="unicode.html#utf32_posascii">utf32_posascii</a></td>
+<tr class="list" valign="top"><td class="itemname" nowrap="nowrap"><a class="bold" href="unicode.html#utf32_posascii">utf32_posascii</a></td>
 <td><a class="bold" href="unicode.html">unicode</a></td>
 <td>Searches for an ASCII substring in an UTF-32 string</td>
 </tr>
-<tr class="list" valign="top"><td class="itemname" nowrap="nowrap"><a class="bold" href="unicode.html#utf32_setlength">utf32_setlength</a></td>
+<tr class="list2" valign="top"><td class="itemname" nowrap="nowrap"><a class="bold" href="unicode.html#utf32_setlength">utf32_setlength</a></td>
 <td><a class="bold" href="unicode.html">unicode</a></td>
 <td>Set the new dynamic length of an utf-32 string</td>
 </tr>
-<tr class="list2" valign="top"><td class="itemname" nowrap="nowrap"><a class="bold" href="unicode.html#utf32_trimleft">utf32_trimleft</a></td>
+<tr class="list" valign="top"><td class="itemname" nowrap="nowrap"><a class="bold" href="unicode.html#utf32_trimleft">utf32_trimleft</a></td>
 <td><a class="bold" href="unicode.html">unicode</a></td>
 <td>Trims leading spaces and control characters from an UTF-32 string.</td>
 </tr>
-<tr class="list" valign="top"><td class="itemname" nowrap="nowrap"><a class="bold" href="unicode.html#utf32_trimright">utf32_trimright</a></td>
+<tr class="list2" valign="top"><td class="itemname" nowrap="nowrap"><a class="bold" href="unicode.html#utf32_trimright">utf32_trimright</a></td>
 <td><a class="bold" href="unicode.html">unicode</a></td>
 <td>Trims trailing spaces and control characters from an UTF-32 string.</td>
+</tr>
+<tr class="list" valign="top"><td class="itemname" nowrap="nowrap"><a class="bold" href="unicode.html#utf8strnew">utf8strnew</a></td>
+<td><a class="bold" href="unicode.html">unicode</a></td>
+<td>Converts an UTF-32 null terminated string to an UTF-8 null      terminated string</td>
 </tr>
 <tr class="list2" valign="top"><td class="itemname" nowrap="nowrap"><a class="bold" href="unicode.html#utf8_sizeencoding">utf8_sizeencoding</a></td>
 <td><a class="bold" href="unicode.html">unicode</a></td>
@@ -274,5 +298,5 @@
 <td>Convert an octal value represented by a string to its        numerical value. If there is no error, <code>code</code> will be        equal to zero.</td>
 </tr>
 </table>
-<hr noshade="1" size="1"/><em>Generated by <a class="normal" target="_new" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8</a> on 2004-06-20 11:06:17</em>
+<hr noshade="1" size="1"/><em>Generated by <a class="normal" target="_new" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8</a> on 2004-07-04 22:07:56</em>
 </body></html>

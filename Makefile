@@ -32,10 +32,11 @@ FILE:=./src/allunits.pas
 DOCFILES:=./docs/license.txt ./docs/changes.txt ./docs/copying ./docs/copying.fpc ./docs/readme.txt ./docs/$(PACKAGENAME).pdf ./docs/html
 #LIBFILES
 SRCFILES:=./src/*
-#INCFILES:=
+INCFILES:=./src/*
 DATAFILES:=./tst/*.txt
 FILESTODOCUMENT:=./src/crc.pas ./src/dpautils.pas ./src/fpautils.pas ./src/locale.pas \
-	./src/tpautils.pas ./src/unicode.pas ./src/utils.pas ./src/vpautils.pas ./src/ietf.pas
+	./src/tpautils.pas ./src/unicode.pas ./src/utils.pas ./src/vpautils.pas ./src/ietf.pas \
+	./src/collects.pas
 
 
 

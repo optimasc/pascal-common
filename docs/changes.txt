@@ -1,7 +1,11 @@
 History of major changes in the releases:
 
-----:
+0.98:
    + Add support for GPC (basic support only)
+   + Add support for UTF-32 null terminated strings
+   + Add support for UTF-8 null terminated strings
+   * several bugfixes for FindFirst and FindNext in the DOS unit
+   + collects units
   
 0.97:
    + Add validation routines for ISO Date/Time strings
