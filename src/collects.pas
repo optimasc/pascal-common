@@ -1,5 +1,5 @@
 {
-    $Id: collects.pas,v 1.1 2004-07-05 02:38:14 carl Exp $
+    $Id: collects.pas,v 1.2 2004-07-15 01:03:10 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Collections (Object style)
@@ -43,6 +43,25 @@ CONST
 TYPE
   TItemList = Array [0..MaxCollectionSize - 1] Of Pointer;
   PItemList = ^TItemList;
+  
+    PStackItem = ^TStackItem;
+    TStackItem = record
+      next: PStackItem;
+      data: pointer;
+    end;
+
+  PStack = ^TStack;
+  TStack = object
+    constructor init;
+    destructor done;
+    procedure push(p: pointer);
+    function pop: pointer;
+    function peek: pointer;
+    function isEmpty: boolean;
+  private
+     head: PStackItem;
+  end;
+  
 TYPE
   ProcedureType = Function(Item: Pointer): Boolean;
   ForEachProc = Procedure(Item: Pointer);
@@ -453,7 +472,68 @@ BEGIN
      AtInsert(I, Item);                               { Insert the item }
 END;
 
+
+{*****************************************************************************
+                                 Stack
+*****************************************************************************}
+
+
+
+constructor TStack.init;
+begin
+  head := nil;
+end;
+
+procedure TStack.push(p: pointer);
+var s: PStackItem;
+begin
+  new(s);
+  s^.data := p;
+  s^.next := head;
+  head := s;
+end;
+
+function TStack.pop: pointer;
+var s: PStackItem;
+begin
+  pop := peek;
+  if assigned(head) then
+    begin
+      s := head^.next;
+      dispose(head);
+      head := s;
+    end
+end;
+
+function TStack.peek: pointer;
+begin
+  if not isEmpty then
+    peek := head^.data
+  else peek := NIL;
+end;
+
+function TStack.isEmpty: boolean;
+begin
+  isEmpty := head = nil;
+end;
+
+destructor TStack.done;
+var temp: PStackItem;
+begin
+  while head <> nil do
+    begin
+      temp := head^.next;
+      dispose(head);
+      head := temp;
+    end;
+end;
+
+
 End.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.1  2004/07/05 02:38:14  carl
+    + add collects unit
+    + some small changes in cases of identifiers
+
 }
