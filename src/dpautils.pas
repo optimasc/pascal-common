@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: dpautils.pas,v 1.2 2004-08-27 02:11:06 carl Exp $
+    $Id: dpautils.pas,v 1.3 2004-12-08 04:25:50 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Routines for Delphi 6/7 (Win32 target) compatibility
@@ -36,11 +36,8 @@ interface
 
 
 {$IFDEF DELPHI_COMPILER}
-uses sysutils;
+uses SysUtils;
 
-{$IFDEF LINUX}
-Error Unsupported target
-{$ENDIF}
 
   TYPE
     { The biggest integer type available to this compiler }
@@ -77,6 +74,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.2  2004/08/27 02:11:06  carl
+    + added filemodes, as defined in sysutils
+
   Revision 1.1  2004/05/05 16:28:18  carl
     Release 0.95 updates
 
