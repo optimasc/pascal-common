@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: ietf.pas,v 1.3 2004-06-20 18:49:38 carl Exp $
+    $Id: ietf.pas,v 1.4 2004-11-09 03:53:27 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Unicode related routines
@@ -32,7 +32,17 @@ uses
  gpautils
  ;
 
+{----------------- MIME related routines ----------------}
+
+
 function mime_isvalidcontenttype(s: shortstring): boolean;
+
+{------- RFC 1766 (language tags) related routines --------}
+
+function langtag_isvalid(const s: string): boolean;
+
+function langtag_split(const s: string; var primary,sub: string): boolean;
+
 
 {----------------- URN related routines ----------------}
 
@@ -41,7 +51,7 @@ function mime_isvalidcontenttype(s: shortstring): boolean;
 
     This checks the conformance of the URN address. It
     is based on IETF RFC 2141.
-    
+
     @returns(TRUE if this is a valid URN string)
 }
 function urn_isvalid(s: shortstring): boolean;
@@ -49,12 +59,12 @@ function urn_isvalid(s: shortstring): boolean;
 {function urn_split(var sig, nid, nss: string): boolean;}
 
 
-{** This routine checks that the specified NID (namespace) is 
-    either registered to IANA, or that it is an experimental 
+{** This routine checks that the specified NID (namespace) is
+    either registered to IANA, or that it is an experimental
     NID, as described in IETF RFC 2611. More assignment
     information can be obtained from:
     http://www.iana.org/assignments/urn-namespaces
-   
+
     @returns(TRUE if this is a registered or experimental NID string)
 }
 function urn_isvalidnid(nid: string): boolean;
@@ -77,7 +87,7 @@ function urn_split(urn:string; var urnidstr,nidstr,nssstr: string): boolean;
 
 implementation
 
-uses utils;
+uses utils,iso639;
 
 const
  alphaupper = ['A'..'Z'];
@@ -255,10 +265,74 @@ begin
 end;
 
 
+function langtag_split(const s: string; var primary,sub: string): boolean;
+const
+  LANGTAG_MAX_LENGTH = 17; { 8 Alpha + 8 aLPHA + SEPARATOR }
+  PRIMARY_TAG_PRIVATE = 'x';
+  PRIMARY_TAG_RESERVED= 'i';
+var
+ status: boolean;
+ index: integer;
+ i: integer;
+begin
+  primary:='';
+  sub:='';
+  langtag_split:=false;
+  if length(s) > LANGTAG_MAX_LENGTH then
+    exit;
+  { ISO 639 code, i, or x }
+  if (length(s) = 2) or (length(s) = 1) then
+    begin
+     primary:=lowstring(copy(s,1,length(s)));
+     if (primary = PRIMARY_TAG_PRIVATE) or
+         (primary = PRIMARY_TAG_RESERVED) or IsValidLangCode(primary) then
+         begin
+           langtag_split:=true;
+           exit;
+         end;
+
+    end
+  else
+    begin
+      { Is there a subtype separator ? }
+      index:=pos('-',s);
+      if index = 0 then
+         exit;
+      primary:=lowstring(copy(s,1,index-1));
+      sub:=copy(s,index+1,length(s));
+      if (primary = PRIMARY_TAG_PRIVATE) or
+         (primary = PRIMARY_TAG_RESERVED) or IsValidLangCode(primary) then
+        begin
+          { Seems to be valid - now check the subtag,
+            simply check if there is whitespace }
+          for i:=1 to length(sub) do
+            begin
+              if sub[i] in whitespace then
+                exit;
+            end;
+          langtag_split:=true;
+          exit;
+        end;
+    end;
+end;
+
+
+function langtag_isvalid(const s: string): boolean;
+var
+ primary,sub: string;
+begin
+ langtag_isvalid:=langtag_split(s,primary,sub);
+end;
+
+
+
 end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.3  2004/06/20 18:49:38  carl
+    + added  GPC support
+
   Revision 1.2  2004/06/17 11:45:48  carl
     + added documentation
 
