@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: vpautils.pas,v 1.1 2004-05-05 16:28:23 carl Exp $
+    $Id: vpautils.pas,v 1.2 2004-08-19 00:18:21 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Virtual pascal 2.1 or higher compatibility unit (Win32 or OS/2 targets)
@@ -46,14 +46,26 @@ const
  DriveSeparator = ':';
  PathSeparator = ';';
  FileNameCaseSensitive = FALSE;
+ 
+  procedure Assert(b: boolean);
+
     
 {$ENDIF}
 
 implementation
+
+ procedure Assert(b: boolean);
+ begin
+   if not b then RunError(227);
+ end;
+
 
 
 end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.1  2004/05/05 16:28:23  carl
+    Release 0.95 updates
+
 }
