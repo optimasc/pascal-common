@@ -1,5 +1,5 @@
 {
-    $Id: dateutil.pas,v 1.1 2004-09-29 00:57:46 carl Exp $
+    $Id: dateutil.pas,v 1.2 2004-10-13 23:23:50 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere (Optima SC Inc.)
 
     Date and time utility routines
@@ -19,7 +19,7 @@
     1. All string related parameters and function results use ISO 8601
     formatted date and time strings. 
     2. The internal format of TDatetime is not the same as on the Delphi
-    compilers.
+    compilers (Internally TDateTime is stored as a Julian date)
     3. The milliseconds field is only an approximation, and should not
     be considered as accurate.
 
@@ -43,9 +43,9 @@ uses
 
 type
  {** This is the Julian Day number }
- TDatetime = extended;
+ TDatetime = real;
 
- float = extended;
+ float = real;
 
 
 { Provide symbolic constants for ISO 8601-compliant day of the week values. }
@@ -996,4 +996,8 @@ end;
 end.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.1  2004/09/29 00:57:46  carl
+    + added dateutil unit
+    + added more support for parsing different ISO time/date strings
+
 }
