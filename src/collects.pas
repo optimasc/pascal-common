@@ -1,5 +1,5 @@
 {
-    $Id: collects.pas,v 1.2 2004-07-15 01:03:10 carl Exp $
+    $Id: collects.pas,v 1.3 2004-11-17 04:01:07 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Collections (Object style)
@@ -101,7 +101,7 @@ TYPE
       PROCEDURE AtPut (Index: Integer; Item: Pointer);
       PROCEDURE AtInsert (Index: Integer; Item: Pointer);
    END;
-   PCollection = ^TExtendedCollection;
+   PExtendedCollection = ^TExtendedCollection;
 
 {---------------------------------------------------------------------------}
 {          TExtendedSortedCollection OBJECT - SORTED COLLECTION ANCESTOR            }
@@ -116,10 +116,18 @@ TYPE
       FUNCTION Search (Key: Pointer; Var Index: Integer): Boolean;Virtual;
       PROCEDURE Insert (Item: Pointer);                              Virtual;
    END;
-   PSortedCollection = ^TExtendedSortedCollection;
+   PExtendedSortedCollection = ^TExtendedSortedCollection;
 
+   TExtendedSortedStringCollection = OBJECT (TExtendedSortedCollection)
+      CONSTRUCTOR Init (ALimit, ADelta: Integer);
+      FUNCTION Compare (Key1, Key2: Pointer): Integer;            Virtual;
+      PROCEDURE FreeItem (Item: Pointer); Virtual;
+   END;
+   PExtendedSortedStringCollection = ^TExtendedSortedStringCollection;
 
 Implementation
+
+uses utils;
 {+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++}
 {                       TExtendedCollection OBJECT METHODS                          }
 {+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++}
@@ -472,6 +480,48 @@ BEGIN
      AtInsert(I, Item);                               { Insert the item }
 END;
 
+{+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++}
+{                     TExtendedSortedStringCollection OBJECT METHODS                      }
+{+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++}
+
+{--TExtendedSortedStringCollection--------------------------------------------------------}
+{  Compare -> Platforms DOS/DPMI/WIN/OS2 - Checked 21Aug97 LdB              }
+{---------------------------------------------------------------------------}
+FUNCTION TExtendedSortedStringCollection.Compare (Key1, Key2: Pointer): integer;
+VAR I, J: integer; P1, P2: PShortString;
+BEGIN
+   P1 := PShortString(Key1);                               { String 1 pointer }
+   P2 := PShortString(Key2);                               { String 2 pointer }
+   If (Length(P1^)<Length(P2^)) Then J := Length(P1^)
+     Else J := Length(P2^);                           { Shortest length }
+   I := 1;                                            { First character }
+   While (I<J) AND (P1^[I]=P2^[I]) Do Inc(I);         { Scan till fail }
+   If (I=J) Then Begin                                { Possible match }
+   { * REMARK * - Bug fix   21 August 1997 }
+     If (P1^[I]<P2^[I]) Then Compare := -1 Else       { String1 < String2 }
+       If (P1^[I]>P2^[I]) Then Compare := 1 Else      { String1 > String2 }
+       If (Length(P1^)>Length(P2^)) Then Compare := 1 { String1 > String2 }
+         Else If (Length(P1^)<Length(P2^)) Then       { String1 < String2 }
+           Compare := -1 Else Compare := 0;           { String1 = String2 }
+   { * REMARK END * - Leon de Boer }
+   End Else If (P1^[I]<P2^[I]) Then Compare := -1     { String1 < String2 }
+     Else Compare := 1;                               { String1 > String2 }
+END;
+
+PROCEDURE TExtendedSortedStringCollection.FreeItem (Item: Pointer);
+var
+ p: PshortString;
+BEGIN
+   p:=PShortString(Item);
+   StringDispose(p);
+END;
+
+CONSTRUCTOR TExtendedSortedStringCollection.Init (ALimit, ADelta: Integer);
+Begin
+  Inherited Init(ALimit,ADelta);
+end;
+
+
 
 {*****************************************************************************
                                  Stack
@@ -532,6 +582,9 @@ end;
 End.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.2  2004/07/15 01:03:10  carl
+    + Added Stack object
+
   Revision 1.1  2004/07/05 02:38:14  carl
     + add collects unit
     + some small changes in cases of identifiers
