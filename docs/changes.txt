@@ -1,5 +1,16 @@
 History of major changes in the releases:
 
+1.3.0:
+   + Delphi: DOS unit for Kylix
+   + locale: MicrosoftCodePageToMIMECharset,MicrosoftLangageCodeToISOCode
+   + unicode: desttype/srctype strings MIME types are no longer case sensitive.
+   * unicode: Length was not set correctly in ConvertUCS4ToUTF8
+   * unicode: ucs4strnewstr, length was incorrect with UTF-8 conversion
+   * objects for Delphi: Major bugfix with TBufStream, some fields were
+      not initialized.
+   + dateutil: TDateInfo added (probably will be used later for the extended Date api)
+   + ietf: uri parsing/validation routines
+
 1.2.0:
    + more routines in dateutil that know about timezones 
      (extensions to base unit)
