@@ -3,15 +3,19 @@
 }
 
 { Takes as a parameter the path where the execution will take place }
+Program Testit;
 
 {$I+}
 {$ifndef tp}
 {$H-}
 {$endif}
+{$X+}
+{$T-}
 uses dpautils,
      vpautils,
      fpautils,
      tpautils,
+     gpautils,
      locale,
      ietf,
      unicode,
@@ -112,7 +116,7 @@ uses dpautils,
      BlockRead(F, utfstr[i],sizeof(utfstr[i]));
      inc(i);
    Until Eof(F);
-   utfstr[0]:=chr(i-1);
+   SetLength(utfstr,i-1);
    Close(F);
    if (ConvertToUTF32(utfstr,utf32str,'cp850') <> 0) then
       RunError(255);
@@ -134,7 +138,7 @@ uses dpautils,
    s2utf: utf32string;
    resultstr: utf32string;
    s3ascii: string;
-   utfchar: utf32;
+   utfchar: array[1..1] of utf32;
    utfstr: utf32string;
    idx: integer;
   begin
@@ -158,7 +162,7 @@ uses dpautils,
    WriteLn(s3ascii);
    if s3ascii <> s1ascii then
      RunError(255);
-   utfchar:=ord('!');
+   utfchar[1]:=ord('!');
    utf32_setlength(resultstr,0);
    utf32_copy(resultstr,s1utf,1,utf32_length(s1utf));
    utf32_concat(resultstr,s1utf,utfchar);
@@ -191,7 +195,7 @@ uses dpautils,
 
    utf32_copy(resultstr,s1utf,1,255);
    utf32_setlength(utfstr,0);
-   utfchar:=ord('o');
+   utfchar[1]:=ord('o');
    utf32_concat(utfstr,utfstr,utfchar);
    idx:=utf32_pos(utfstr,resultstr);
    utf32_delete(resultstr,idx,utf32_length(resultstr));
@@ -203,7 +207,7 @@ uses dpautils,
 
    utf32_copy(resultstr,s1utf,1,255);
    utf32_setlength(utfstr,0);
-   utfchar:=ord('l');
+   utfchar[1]:=ord('l');
    utf32_concat(utfstr,utfstr,utfchar);
    idx:=utf32_pos(utfstr,resultstr);
    utf32_delete(resultstr,idx,2);
@@ -305,22 +309,22 @@ uses dpautils,
 
   procedure testcharencoding;
   var
-   name: shortstring;
+   _name: shortstring;
   begin
-    if GetCharEncoding('',name)<>CHAR_ENCODING_UNKNOWN then
+    if GetCharEncoding('',_name)<>CHAR_ENCODING_UNKNOWN then
       RunError(255);
-    if name <> '' then
+    if _name <> '' then
       RunError(255);
-    if GetCharEncoding('ASCII',name)<>CHAR_ENCODING_BYTE then
+    if GetCharEncoding('ASCII',_name)<>CHAR_ENCODING_BYTE then
       RunError(255);
-    if name<>'US-ASCII' then
+    if _name<>'US-ASCII' then
       RunError(255);
-    GetCharEncoding('ISO-IR-84',name);
-    if name <> 'PT2' then
+    GetCharEncoding('ISO-IR-84',_name);
+    if _name <> 'PT2' then
       RunError(255);
-    if GetCharEncoding('UTF-8',name)<>CHAR_ENCODING_UTF8 then
+    if GetCharEncoding('UTF-8',_name)<>CHAR_ENCODING_UTF8 then
        RunError(255);
-    if name <> 'UTF-8' then
+    if _name <> 'UTF-8' then
       RunError(255);
   end;
 
@@ -332,7 +336,7 @@ var
   path: pathstr;
   savedpath: string;
   Dir: DirStr;
-  Name: NameStr;
+  _Name: NameStr;
   Ext: Extstr;
 Begin
   path:=paramstr(0);
@@ -345,7 +349,7 @@ Begin
       infilepath:='';
   path:=FExpand(path);
   WriteLn(Infilepath);
-  Fsplit(Path,Dir,Name,Ext);
+  Fsplit(Path,Dir,_Name,Ext);
   s:=LineEnding;
   s:=DirectorySeparator;
   s:=PathSeparator;
@@ -364,6 +368,10 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.4  2004/06/17 11:43:13  carl
+    + tests for utf-32
+    + tests for character encoding
+
   Revision 1.3  2004/05/13 23:05:19  carl
     + add tests for ietf unit
     + more tests for ISO Date/time conversion
