@@ -710,7 +710,7 @@ const
   LFNSupport = true;
   FilenamecaseSensitive = false;
   DirectorySeparator = '\';
-  DriveSeparator = ';';
+  DriveSeparator = ':';
 
 {$I fexpand.inc}
 
@@ -1040,6 +1040,9 @@ function GetProcAddress(hModule : THandle;lpProcName : pchar) : pointer;
 end.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.4  2004/07/15 01:00:31  carl
+    - remove some compiler warnings
+
   Revision 1.3  2004/07/01 22:26:26  carl
     * Bugfix with FindFirst and FindNext
 
