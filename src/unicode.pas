@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: unicode.pas,v 1.24 2004-12-08 04:25:38 carl Exp $
+    $Id: unicode.pas,v 1.25 2004-12-26 23:32:39 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Unicode related routines
@@ -310,6 +310,16 @@ type
   function ucs4strnewucs4(src: pucs4char): pucs4char;
 
 
+  {** @abstract(Converts an UCS-2 null terminated string to an UCS-4 null
+   terminated string)
+
+   The memory for the buffer is allocated. Use @link(ucs4strdispose) to dispose
+   of the allocated string. The string is null terminated. If str is nil, then
+   this routine returns nil and does not allocate anything.
+
+   @param(str The string to convert, UCS-2 encoded)
+  }
+ function ucs4strnewucs2(str: pucs2char): pucs4char;
 
 
   {** @abstract(Disposes of an UCS-4 null terminated string on the heap)
@@ -2019,6 +2029,31 @@ end;
    Until (Str1Length-oldindex) <= 0;
    UCS4StrPosISO8859_1 := nil;
  end;
+ 
+ function ucs4strnewucs2(str: pucs2char): pucs4char;
+ var
+  namelength: integer;
+  FinalName: pucs4char;
+  p1: pucs4strarray;
+  p2: pucs2strarray;
+  i: integer;
+ begin
+   ucs4strnewucs2:=nil;
+   if not assigned(str) then
+     exit;
+   namelength:=ucs2strlen(str);
+   Getmem(FinalName,(namelength+1)*sizeof(ucs4char));
+   p1:=pucs4strarray(finalname);
+   p2:=pucs2strarray(str);
+   { Convert the value to an UTF-8 string }
+   for i:=0 to (namelength-1) do
+         Begin
+           p1^[i]:=ucs4char(p2^[i]);
+   end;
+   p1^[namelength]:=0;  
+   ucs4strnewucs2:=FinalName;
+ end;
+ 
 
  function ucs4strnewstr(str: string; srctype: string): pucs4char;
   var
@@ -2052,8 +2087,8 @@ end;
       begin
         { Calculate the length to store the decoded length }
         i:=1;
-        totalsize:=0;
-        while (i <> length(str)) do
+        totalsize:=1;
+        while (i <= length(str)) do
           begin
             count:=utf8_sizeencoding(str[i]);
             { increment the pointer accordingly }
@@ -2064,7 +2099,7 @@ end;
         dest:=pucs4strarray(destpchar);
         i:=1;
         OutIndex := 0;
-        while (i <> length(str)) do
+        while (i <= length(str)) do
           begin
             ch := 0;
             extrabytestoread:= trailingBytesForUTF8[ord(str[i])];
@@ -2127,6 +2162,7 @@ end;
           end;
         { add null character }
         dest^[outindex]:=0;
+        ucs4strnewstr:=pucs4char(dest);
       end
     else
       begin
@@ -3075,30 +3111,32 @@ end;
     if not assigned(src) then
       exit;
     srcarray:=pointer(src);
-    sizetoalloc := ucs4strlen(src)+sizeof(ucs2char);
+    sizetoalloc := ucs4strlen(src)*sizeof(ucs2char)+sizeof(ucs2char);
     { Check if only one character is passed as src, in that case
       this is not an UTF string, but a simple character (in other
       words, there is not a length byte.
     }
     StartIndex:=0;
-    EndIndex:=0;
+    EndIndex:=ucs4strlen(src)-1;
     Getmem(buffer,sizetoalloc);
     fillchar(buffer^,sizetoalloc,#0);
     dst:=pucs2strarray(buffer);
-    
-  
-    for i:=StartIndex to EndIndex do
+
+    if EndIndex > 0 then
       begin
-        ch:=srcarray^[i];
-        { this character encoding cannot be represented }
-        if ch > UNI_MAX_BMP then
-          begin 
-            Freemem(buffer, sizetoalloc);
-            exit;
+          for i:=StartIndex to EndIndex do
+          begin
+              ch:=srcarray^[i];
+              { this character encoding cannot be represented }
+              if ch > UNI_MAX_BMP then
+                 begin
+                   Freemem(buffer, sizetoalloc);
+                   exit;
+                 end;
+              dst^[i]:=ucs2char(ch and UNI_MAX_BMP);
           end;
-        dst^[i]:=ucs2char(ch and UNI_MAX_BMP);
       end;
-      dst^[EndIndex]:=0;
+      dst^[EndIndex+1]:=0;
       ucs2strnew:=pucs2char(buffer);
   end;
 
@@ -3120,7 +3158,7 @@ end;
    ucs2strlen:=0;
    if not assigned(str) then
      exit;
-   stringarray := pointer(str);
+   stringarray := pucs2strarray(str);
    counter := 0;
    while stringarray^[counter] <> 0 do
      Inc(counter);
@@ -3190,6 +3228,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.24  2004/12/08 04:25:38  carl
+    * ucs4strpastoutf8 would not work on extended characters (would leave out some characters in the final string)
+
   Revision 1.23  2004/11/29 03:48:09  carl
     * ConvertUCS4ToUTF8 bugfix, was setting the wrong string length at the end.
     + destination and source string type aliases are now case-insensitive.
