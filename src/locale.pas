@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: locale.pas,v 1.8 2004-10-13 23:24:35 carl Exp $
+    $Id: locale.pas,v 1.9 2004-10-31 19:51:33 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Localization and date/time unit
@@ -220,7 +220,8 @@ begin
   GetISOTimeString := '';
   if Hour > 23 then exit;
   if Minute > 59 then exit;
-  if Second > 59 then exit;
+  { Don't  forget leap seconds! }
+  if Second > 60 then exit;
   str(hour,hourstr);
   str(minute,minutestr);
   str(second,secstr);
@@ -241,7 +242,8 @@ begin
   GetISOTimeStringBasic := '';
   if Hour > 23 then exit;
   if Minute > 59 then exit;
-  if Second > 59 then exit;
+  { Don't  forget leap seconds! }
+  if Second > 60 then exit;
   str(hour,hourstr);
   str(minute,minutestr);
   str(second,secstr);
@@ -558,7 +560,8 @@ begin
       val(secstr,secval,code);
       if code <> 0 then
         exit;
-      if (secval < 0) or (secval > 59) then
+      { 60 because of possible leap seconds }  
+      if (secval < 0) or (secval > 60) then
         exit;
     end;
   if hourstr <> '' then
@@ -701,6 +704,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.8  2004/10/13 23:24:35  carl
+    + new routines for returning basic format dates and times
+
   Revision 1.7  2004/09/29 00:57:46  carl
     + added dateutil unit
     + added more support for parsing different ISO time/date strings
