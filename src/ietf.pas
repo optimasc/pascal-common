@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: ietf.pas,v 1.5 2004-11-21 19:52:57 carl Exp $
+    $Id: ietf.pas,v 1.6 2004-12-26 23:41:22 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Unicode related routines
@@ -42,6 +42,15 @@ function mime_isvalidcontenttype(const s: shortstring): boolean;
 function langtag_isvalid(const s: string): boolean;
 
 function langtag_split(const s: string; var primary,sub: string): boolean;
+
+{----------------- URI related routines ----------------}
+const
+  {** Suggested start delimiter character for an URI, c.f. RFC  2396 }
+  URI_START_DELIMITER_CHAR = '<';
+  {** Suggested end delimiter character for an URI, c.f. RFC  2396 }
+  URI_END_DELIMITER_CHAR = '>';
+
+  URI_SCHEME_NAME_EMAIL = 'mailto:';
 
 
 {----------------- URN related routines ----------------}
@@ -329,6 +338,10 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.5  2004/11/21 19:52:57  carl
+    + some const parameters for strings
+    - remove some warnings
+
   Revision 1.4  2004/11/09 03:53:27  carl
    + IETF RFC 1766 language code parsing routines
 
