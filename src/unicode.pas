@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: unicode.pas,v 1.29 2005-03-06 20:13:50 carl Exp $
+    $Id: unicode.pas,v 1.30 2005-07-20 03:12:28 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Unicode related routines
@@ -3214,7 +3214,7 @@ end;
           begin
             if ch > 127 then
               begin
-                s:= s + '\u' + hexstr(ch,8);
+                s:= s + '\u' + hexstr(longint(ch),8);
               end
             else
                s:=s+chr(ch and $7f);
@@ -3423,6 +3423,10 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.29  2005/03/06 20:13:50  carl
+     * ucs4strpas would not work with ansistrings
+     * ucs4strpastoutf8/convertUCS4ToUTF8: bugfix with possible overflow
+
   Revision 1.28  2005/01/30 20:07:11  carl
    + routine to convert from UCS-4 to ISO-8859-1
 
