@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: locale.pas,v 1.11 2004-11-29 03:49:16 carl Exp $
+    $Id: locale.pas,v 1.12 2005-07-20 03:13:00 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Localization and date/time unit
@@ -552,7 +552,7 @@ const
 
 procedure JulianToGregorian(JulianDN:big_integer_t;var Year,Month,Day:Word);
 var
-  YYear,XYear,Temp,TempMonth : word;
+  YYear,XYear,Temp,TempMonth : longint;
 begin
   Temp:=((JulianDN-D2) shl 2)-1;
   JulianDN:=Temp div D1;
@@ -1026,6 +1026,10 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.11  2004/11/29 03:49:16  carl
+    + routines to convert Microsoft code pages and languages to MIME/IETF types
+    * Validation of ISO date and time strings also support now strict checking.
+
   Revision 1.10  2004/11/09 03:52:47  carl
     * IsValidISODateTime string would not accept simple dates as input.
     * some decoding with only minimal timezone information was not supported
