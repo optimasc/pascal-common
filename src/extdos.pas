@@ -250,10 +250,14 @@ function setfilemtime(fname: putf8char; newmtime: tdatetime): integer;
 }
 function setfilectime(fname: putf8char; newctime: tdatetime): integer;
 
-
-
+{**
+   @returns(0 on success, otherwise an error code)
+}   
 function findfirstex(path: putf8char; attr: tresourceattributes; var SearchRec:TSearchRecExt): integer;
 
+{**
+   @returns(0 on success, otherwise an error code)
+}   
 function findnextex(var SearchRec: TSearchRecExt): integer;
 
 procedure findcloseex(var SearchRec: TSearchRecExt);
@@ -332,4 +336,7 @@ implementation
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.3  2004/12/26 23:31:34  carl
+    * now empty skeleton, so it is portable
+
 }
