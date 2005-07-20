@@ -1,5 +1,5 @@
 {
-    $Id: crc.pas,v 1.4 2004-11-19 01:37:27 carl Exp $
+    $Id: crc.pas,v 1.5 2005-07-20 03:14:11 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     CRC and Chekcsum routines    
@@ -153,11 +153,6 @@ function UpdateFletcher8(InitFletcher: word; b: byte): word;
 }    
 function UpdateCRC(InitCrc: word; b: byte): word;
 
-
-
-Implementation
-
-
 const crctable32:array[0..255] of longword = (
   $00000000, $77073096, $ee0e612c, $990951ba,
   $076dc419, $706af48f, $e963a535, $9e6495a3,
@@ -299,6 +294,11 @@ CONST crctable16: ARRAY[0..255] OF WORD =
 );
 
 
+Implementation
+
+
+
+
 
 
 
@@ -378,6 +378,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.4  2004/11/19 01:37:27  carl
+    + more documentation
+
   Revision 1.3  2004/08/27 02:10:32  carl
     + support for more checksum algorithms
 
