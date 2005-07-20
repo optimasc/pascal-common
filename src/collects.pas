@@ -1,5 +1,5 @@
 {
-    $Id: collects.pas,v 1.5 2004-11-19 01:37:25 carl Exp $
+    $Id: collects.pas,v 1.6 2005-07-20 03:14:39 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Collections (Object style)
@@ -143,10 +143,23 @@ TYPE
       PROCEDURE FreeItem (Item: Pointer); Virtual;
    END;
    PExtendedSortedStringCollection = ^TExtendedSortedStringCollection;
+   
+   
+  TLongintCollection = object(TExtendedCollection)
+    procedure FreeItem(Item: pointer); virtual;
+  end;
+   
 
 Implementation
 
 uses utils;
+
+
+     procedure TLongintCollection.FreeItem(Item: pointer);
+     begin
+       { Longint's are not pointers! so no freeing of memory }
+     end;
+
 {+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++}
 {                       TExtendedCollection OBJECT METHODS                          }
 {+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++}
@@ -613,6 +626,9 @@ end;
 End.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.5  2004/11/19 01:37:25  carl
+    + more documentation
+
   Revision 1.4  2004/11/18 04:23:41  carl
     + added non-sorted string collection
 
