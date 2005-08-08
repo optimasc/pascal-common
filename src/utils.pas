@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: utils.pas,v 1.18 2005-01-06 03:20:51 carl Exp $
+    $Id: utils.pas,v 1.19 2005-08-08 12:03:52 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Common utilities
@@ -90,6 +90,18 @@ CONST
       to a string in lower case ASCII characters.
   }
   function LowString(s : string): string;
+  
+  {** This routine adds double quotes to the selected string,
+      if the string contains any space character after the string
+      has been trimmed.
+  }
+  function AddDoubleQuotes(s: string): string;
+  
+  {** This routine removes double quotes to the selected string
+  (the leading and ending double quotes only)
+      
+  }
+  function RemoveDoubleQuotes(s: string): string;
 
 
   {** @abstract(Generic stream error procedure)
@@ -263,6 +275,25 @@ uses dos;
           s[i]:=chr(ord(s[i])+ord(#$20));
       LowString := s;
     End;
+    
+  function AddDoubleQuotes(s: string): string;
+  begin
+    s:=trim(s);
+    AddDoubleQuotes:=s;
+    if pos(' ',s) > 0 then
+      AddDoubleQuotes:='"'+s+'"';
+  end;
+  
+  function RemoveDoubleQuotes(s: string): string;
+  begin
+     if s[length(s)] = '"' then
+       delete(s,length(s),1);
+     if s[1] = '"' then
+       delete(s,1,1);
+     RemoveDoubleQuotes:=s;
+  end;
+  
+    
 
 
 
@@ -883,6 +914,9 @@ end;
 end.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.18  2005/01/06 03:20:51  carl
+    * overflow error bugfix
+
   Revision 1.17  2004/11/29 03:45:55  carl
     + speed optimization of upcase (no longer calls system unit routine)
 

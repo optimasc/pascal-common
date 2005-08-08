@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: unicode.pas,v 1.30 2005-07-20 03:12:28 carl Exp $
+    $Id: unicode.pas,v 1.31 2005-08-08 12:03:49 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Unicode related routines
@@ -175,6 +175,13 @@ type
 
   {** @abstract(Concatenates two UCS-4 strings, and gives a resulting UCS-4 string) }
   procedure ucs4_concat(var resultstr: ucs4string;s1: ucs4string; const s2: array of ucs4char);
+  
+  {** @abstract(Replaces all accented characters with their base representation).
+      This routine is useful for converted multilangual strings to their ASCII
+      equivalents.
+  }
+  procedure ucs4_removeaccents(var resultstr: ucs4string;s2: ucs4string);
+  
 
   {** @abstract(Concatenates an UCS-4 string with an ASCII string, and gives
       a resulting UCS-4 string)
@@ -700,6 +707,8 @@ type
 
 { Case conversion table }
 {$i case.inc}
+{ Accented character conversion table }
+{$i canonic.inc}
 
 const
 {$i i8859_1.inc}
@@ -1603,6 +1612,30 @@ end;
           end; 
       end;
   end;
+  
+  
+  procedure ucs4_removeaccents(var resultstr: ucs4string;s2: ucs4string);
+  var
+   slen: integer;
+   i,j: integer;
+  begin
+    slen:=ucs4_length(s2);
+    ucs4_setlength(resultstr,slen);
+    for i:=1 to slen do 
+      begin
+         for j:=1 to MAX_CANONICAL_MAPPINGS do
+           begin
+             if (CanonicalMappings[j].CodePoint = s2[i]) then
+               begin
+                 s2[i] := CanonicalMappings[j].BaseChar;
+                 { There cannot be more than one match }
+                 break;
+               end;
+           end;
+      end;
+    Move(s2,ResultStr, slen*sizeof(ucs4char)+sizeof(ucs4char));  
+  end;
+  
   
   function ucs4_lowcase(c: ucs4char): ucs4char;
   var
@@ -3423,6 +3456,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.30  2005/07/20 03:12:28  carl
+   + Compilation problems fixes
+
   Revision 1.29  2005/03/06 20:13:50  carl
      * ucs4strpas would not work with ansistrings
      * ucs4strpastoutf8/convertUCS4ToUTF8: bugfix with possible overflow
