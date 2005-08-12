@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: utils.pas,v 1.19 2005-08-08 12:03:52 carl Exp $
+    $Id: utils.pas,v 1.20 2005-08-12 20:19:38 ccodere Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Common utilities
@@ -116,7 +116,11 @@ CONST
   {** @abstract(Remove all whitespace from the end of a string) }
   function TrimRight(const S: string): string;
 
-  {** @abstract(Convert a value to an ASCII hexadecimal representation) }
+  {** @abstract(Convert a value to an ASCII hexadecimal representation) 
+  
+     Convert a value to an ASCII hexadecimal representation. All ascii
+     character are returned in upper case letters.
+  }
   function hexstr(val : longint;cnt : byte) : string;
 
   {** @abstract(Convert a value to an ASCII decimal representation) 
@@ -914,6 +918,10 @@ end;
 end.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.19  2005/08/08 12:03:52  carl
+    + AddDoubleQuotes/RemoveDoubleQuotes
+    + Add support for RemoveAccents in unicode
+
   Revision 1.18  2005/01/06 03:20:51  carl
     * overflow error bugfix
 
