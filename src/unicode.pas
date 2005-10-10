@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: unicode.pas,v 1.31 2005-08-08 12:03:49 carl Exp $
+    $Id: unicode.pas,v 1.32 2005-10-10 17:11:31 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Unicode related routines
@@ -3177,6 +3177,8 @@ end;
    StringLength: integer;
    ExtraBytesToRead: integer;
    CurrentIndex: integer;
+   ResultStr: ucs4string;
+   ucs4str: ucs4string;
   begin
     i:=0;
     setlength(s,0);
@@ -3238,7 +3240,17 @@ end;
           begin
             if ch > 127 then
               begin
-                s:= s + '\u' + hexstr(ch,8);
+                { Try to remove the accented character }
+                ucs4_setlength(ucs4str,1);
+                ucs4str[1]:=ch;
+                ucs4_removeaccents(resultstr,ucs4str);
+                assert(ucs4_length(resultstr) = 1);
+                ch:=resultstr[1];
+                { Some of the characters might have been converted to ascii }
+                if ch > 127 then
+                  s:= s + '\u' + hexstr(longint(ch),8)
+                else
+                  s:=s+chr(ch and $7f);
               end
             else
                s:=s+chr(ch and $7f);
@@ -3247,7 +3259,17 @@ end;
           begin
             if ch > 127 then
               begin
-                s:= s + '\u' + hexstr(longint(ch),8);
+                { Try to remove the accented character }
+                ucs4_setlength(ucs4str,1);
+                ucs4str[1]:=ch;
+                ucs4_removeaccents(resultstr,ucs4str);
+                assert(ucs4_length(resultstr) = 1);
+                ch:=resultstr[1];
+                { Some of the characters might have been converted to ascii }
+                if ch > 127 then
+                  s:= s + '\u' + hexstr(longint(ch),8)
+                else
+                  s:=s+chr(ch and $7f);
               end
             else
                s:=s+chr(ch and $7f);
@@ -3456,6 +3478,10 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.31  2005/08/08 12:03:49  carl
+    + AddDoubleQuotes/RemoveDoubleQuotes
+    + Add support for RemoveAccents in unicode
+
   Revision 1.30  2005/07/20 03:12:28  carl
    + Compilation problems fixes
 
