@@ -1,5 +1,5 @@
 {
-    $Id: doswin32.inc,v 1.3 2005-03-21 00:22:55 carl Exp $
+    $Id: doswin32.inc,v 1.4 2005-10-10 17:44:46 carl Exp $
     Copyright (c) 2001 by members of the Free Pascal
     development team
 
@@ -491,6 +491,12 @@ const
  DriveSeparator = ':';
  LFNSupport = true;  
 begin
+  {** Remove Double quote characters **}
+  if path[length(path)] = '"' then
+   delete(path,length(path),1);
+  if path[1] = '"' then
+   delete(path,1,1);
+
   if DirectorySeparator = '/' then
   { allow backslash as slash }
     for DirEnd := 1 to Length (Path) do
@@ -899,6 +905,9 @@ end;
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.3  2005/03/21 00:22:55  carl
+    * exec/diskfree/disksize/fexpand bugfixes
+
   Revision 1.2  2005/03/06 20:14:47  carl
     * bugfix of Fexpand with path in double quotes
 
