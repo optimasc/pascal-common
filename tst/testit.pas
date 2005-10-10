@@ -477,6 +477,21 @@ begin
   ucs4strtrim(pucs4char(@utf32null3));
 end;
 
+procedure testucs4removeaccents;
+const
+  s1: string = #201'rica est la m'#232're de mon p'#232're';
+  s2: string = 'Erica est la mere de mon pere';
+var  
+  dest: Ucs4string;
+  s3:string;
+begin
+   if ConvertToUCS4(s1,dest,'ISO-8859-1')<>0 then
+     RunError(255);
+   ucs4_removeaccents(dest,dest);
+   s3:=ucs4_converttoiso8859_1(dest);
+   if s2 <>  s3 then
+     RunError(255);
+end;
 
 var
   s: string;
@@ -504,6 +519,7 @@ Begin
   s:=PathSeparator;
   b:=FileNameCaseSensitive;
   testcodepage;
+  testucs4removeaccents;
   testdate.test_unit;
   testsgml.test_unit;
   testietf.test_unit;
@@ -526,6 +542,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.17  2004/11/29 03:52:22  carl
+    + Support for new routines of dateutil
+
   Revision 1.16  2004/11/23 03:51:40  carl
     * more date testing / fixes for VP compilation
 
