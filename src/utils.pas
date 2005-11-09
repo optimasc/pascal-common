@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: utils.pas,v 1.20 2005-08-12 20:19:38 ccodere Exp $
+    $Id: utils.pas,v 1.21 2005-11-09 05:14:56 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Common utilities
@@ -54,21 +54,25 @@ CONST
      @abstract(Verifies the existence of a filename)
      This routine verifies if the file named can be
      opened or if it actually exists.
+     
+     Only works with the current active code page table.
 
      @param FName Name of the file to check
      @returns FALSE if the file cannot be opened or if it does not exist.
   }
-  Function FileExists(const FName : string): Boolean;
+  Function AnsiFileExists(const FName : string): Boolean;
   
   {** 
      @abstract(Verifies the existence of a directory)
      This routine verifies if the directory named can be
      opened or if it actually exists.
+     
+     Only works with the current active code page table.
 
      @param DName Name of the directory to check
      @returns FALSE if the directory cannot be opened or if it does not exist.
   }
-  Function DirectoryExists(const DName : string): Boolean;
+  Function AnsiDirectoryExists(const DName : string): Boolean;
   
 
   {** @abstract(Change the endian of a 32-bit value) }
@@ -211,6 +215,16 @@ CONST
   }
   function ValHexadecimal(const S:String; var code: integer):longint;
   
+  {** Cleans up a string of illegal control characters, newlines
+      and tabs. It does the following on the string:
+      
+      This only works on UTF-8/ASCII/ISO-8859 strings.
+      
+      1) Removes characters from code #0..#31 at any location
+         in the string.
+      2) Trims spaces at the begining and end of the string. }   
+  function CleanString(const s: string): string;
+  
   
   function ChangeFileExt(const FileName, Extension: string): string;
   
@@ -279,6 +293,25 @@ uses dos;
           s[i]:=chr(ord(s[i])+ord(#$20));
       LowString := s;
     End;
+    
+    
+  function CleanString(const s: string): string;
+  var
+   outstr:string;
+   i: integer;
+  begin
+    outstr:='';
+    for i:=1 to length(s) do
+      begin
+        if s[i] in [#32..#255] then
+          outstr:=outstr+s[i];
+      end;
+    { Finally remove whitespace at end and start
+      of the string }
+    CleanString:=trim(outstr);  
+  end;
+ 
+    
     
   function AddDoubleQuotes(s: string): string;
   begin
@@ -446,22 +479,21 @@ uses dos;
      Printf := LeftStr;
    End;
    
-    Function DirectoryExists(const DName : string): Boolean;
+    Function AnsiDirectoryExists(const DName : string): Boolean;
     var
        ResourceInfo: SearchRec;
        status: integer;
     begin
-      DirectoryExists:=false;
+      AnsiDirectoryExists:=false;
       findfirst(dname,Directory,ResourceInfo);
       status:=DosError;
       findclose(ResourceInfo);
       if status <> 0 then
         exit;
-      DirectoryExists:=true;  
+      AnsiDirectoryExists:=true;
     end;
 
-
-    Function FileExists(const FName: String) : Boolean;
+    Function AnsiFileExists(const FName: String) : Boolean;
      Var
       F: File;
       OldMode : Byte;
@@ -481,17 +513,18 @@ uses dos;
        FileMode := OldMode;
        value:=IOResult;
        If value <> 0 then
-         FileExists := FALSE
+         AnsiFileExists := FALSE
        else
        Begin
-         FileExists := TRUE;
+         AnsiFileExists := TRUE;
          Close(F);
        End;
 {$IFDEF IO_ON}
 {$I+}
 {$ENDIF}
      end;
-     
+
+ 
  function removenulls(const s: string): string;  
  var
   outstr: string;
@@ -918,6 +951,9 @@ end;
 end.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.20  2005/08/12 20:19:38  ccodere
+    + more documentation of hexstr()
+
   Revision 1.19  2005/08/08 12:03:52  carl
     + AddDoubleQuotes/RemoveDoubleQuotes
     + Add support for RemoveAccents in unicode
