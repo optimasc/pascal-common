@@ -203,6 +203,26 @@ function getfileattributes(fname: putf8char): tresourceattributes;
 function getfilestats(fname: putf8char; var stats: TFileStats): integer;
 
 
+{** 
+     @abstract(Verifies the existence of a directory)
+     This routine verifies if the directory named can be
+     opened or if it actually exists.
+
+     @param DName Name of the directory to check
+     @returns FALSE if the directory cannot be opened or if it does not exist.
+}
+function DirectoryExists(DName : utf8string): Boolean;
+
+{** 
+     @abstract(Verifies the existence of a filename)
+     This routine verifies if the file named can be
+     opened or if it actually exists.
+
+     @param FName Name of the file to check
+     @returns FALSE if the file cannot be opened or if it does not exist.
+}
+Function FileExists(const FName : utf8string): Boolean;
+
 
 
 {** @abstract(Change the last access time of a file) 
@@ -336,6 +356,9 @@ implementation
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.4  2005/07/20 03:13:25  carl
+   + Documentation
+
   Revision 1.3  2004/12/26 23:31:34  carl
     * now empty skeleton, so it is portable
 
