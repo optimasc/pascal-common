@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: unicode.pas,v 1.32 2005-10-10 17:11:31 carl Exp $
+    $Id: unicode.pas,v 1.33 2005-11-09 05:18:02 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Unicode related routines
@@ -90,6 +90,11 @@ type
       the compilation options.
   }
   utf8string = string;
+  {** UTF-8 string pointer declaration. This is always
+      a shortstring value.
+  }
+  putf8shortstring = ^shortstring;
+  
   {** UTF-16 string declaration. Index 0 contains the active length
       of the string in BYTES
   }
@@ -121,7 +126,7 @@ const
   
   BOM_UTF16_BE = #$FE#$FF;
   BOM_UTF16_LE = #$FF#$FE;
-
+  
 type
   ucs4strarray = array[0..MAX_UCS4_CHARS] of ucs4char;
   pucs4strarray = ^ucs4strarray;
@@ -454,6 +459,15 @@ type
    nil, this routine returns nil and does not allocate anything.
   }
   function utf8strnew(src: pucs4char): pchar;
+  
+  
+  {** @abstract(Returns the length of the string, not counting the
+   null character)
+   
+   If the pointer is nil, the value returned is zero.
+  }
+  function utf8strlen(s: putf8char): integer;
+  
 
   {** @abstract(Allocates and copies an UTF-8 null terminated string)
 
@@ -522,6 +536,8 @@ type
 
   {** @abstract(Converts a null-terminated UTF-8 string to a Pascal-style
        UTF-8 encoded string.)
+       
+       The string is empty if the pointer was nil.
 
   }
  function utf8strpas(src: pchar): string;
@@ -542,6 +558,23 @@ type
 {---------------------------------------------------------------------------
                           Other  string handling
 -----------------------------------------------------------------------------}
+
+
+    procedure utf8stringdispose(var p : putf8shortstring);
+
+
+    function utf8stringdup(const s : string) : putf8shortstring;
+
+
+  {** @abstract(Converts a null-terminated ASCII string to a Pascal-style
+       ASCII encoded string.)
+       
+       The string is empty if the pointer was nil.
+
+  }
+ function asciistrpas(src: pchar): string;
+
+
   {** @abstract(Returns the number of characters that are used to encode this
       character).
 
@@ -1592,11 +1625,28 @@ end;
       end;
   end;
 
+    procedure utf8stringdispose(var p : putf8shortstring);
+      begin
+         if assigned(p) then
+           freemem(p,length(p^)+1);
+         p:=nil;
+      end;
+
+
+    function utf8stringdup(const s : string) : putf8shortstring;
+      var
+         p : putf8shortstring;
+      begin
+         getmem(p,length(s)+1);
+         p^:=s;
+         utf8stringdup:=p;
+      end;
 
 {---------------------------------------------------------------------------
                           UCS-4 string handling
 -----------------------------------------------------------------------------}
 
+(*
   function ucs4_upcase(c: ucs4char): ucs4char;
   var
    i: integer;
@@ -1612,8 +1662,42 @@ end;
           end; 
       end;
   end;
-  
-  
+*)
+function ucs4_upcase(c: ucs4char): ucs4char;
+var
+  First: Integer;
+  Last: Integer;
+  Pivot: Integer;
+  Found: Boolean;
+begin
+  First  := 1; {Sets the first item of the range}
+  Last   := MAX_CASETABLE_ENTRIES; {Sets the last item of the range}
+  Found  := False;{ Initializes the Found flag (Not found yet)}
+  ucs4_upcase := c; {Initializes the Result}
+
+  { If First > Last then the searched item doesn't exist
+    If the item is found the loop will stop }
+  while (First <= Last) and (not Found) do
+  begin
+    { Gets the middle of the selected range }
+    Pivot := (First + Last) div 2;
+    { Compares the String in the middle with the searched one }
+    if UCS4CaseTable[Pivot].lower = c then
+    begin
+      Found  := True;
+      ucs4_upcase := UCS4CaseTable[Pivot].upper;
+    end
+    { If the Item in the middle has a bigger value than
+      the searched item, then select the first half }
+    else if UCS4CaseTable[Pivot].lower > c then
+      Last := Pivot - 1
+        { else select the second half}
+    else
+      First := Pivot + 1;
+  end;
+end;
+
+
   procedure ucs4_removeaccents(var resultstr: ucs4string;s2: ucs4string);
   var
    slen: integer;
@@ -2146,7 +2230,7 @@ end;
    Getmem(FinalName,(namelength+1)*sizeof(ucs4char));
    p1:=pucs4strarray(finalname);
    p2:=pucs2strarray(str);
-   { Convert the value to an UTF-8 string }
+   { Convert the value to an UCS-4 string }
    for i:=0 to (namelength-1) do
          Begin
            p1^[i]:=ucs4char(p2^[i]);
@@ -2622,8 +2706,7 @@ end;
       end;
    ucs4strfill:=pucs4char(outbuf);
   end;
-
-
+  
   procedure UCS4StrCheck(p: pucs4char; maxcount: integer; value: ucs4char);
   var
    inbuf: pucs4strarray;
@@ -2765,6 +2848,16 @@ end;
     Freemem(p,strlen(p)+1);
     p:=nil;
   end;
+  
+  
+  function utf8strlen(s: putf8char): integer;
+  begin
+    utf8strlen:=0;
+    if not assigned(s) then
+      exit;
+    utf8strlen:=strlen(s);  
+  end;
+  
 
   function utf8strnewutf8(src: pchar): pchar;
   var
@@ -3287,6 +3380,18 @@ end;
       end;
     utf8strpas:=strpas(src);
   end;
+  
+  
+  function asciistrpas(src: pchar): string;
+  begin
+    if src = nil then
+      begin
+        asciistrpas:='';
+        exit;
+      end;
+    asciistrpas:=strpas(src);
+  end;
+  
    
  function utf8strnewstr(str: utf8string): putf8char;
  var
@@ -3478,6 +3583,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.32  2005/10/10 17:11:31  carl
+   + When converting strings to ASCII, we try to convert to standard non-accented characters
+
   Revision 1.31  2005/08/08 12:03:49  carl
     + AddDoubleQuotes/RemoveDoubleQuotes
     + Add support for RemoveAccents in unicode
