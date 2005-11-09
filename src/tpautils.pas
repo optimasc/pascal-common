@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: tpautils.pas,v 1.6 2004-11-23 03:45:24 carl Exp $
+    $Id: tpautils.pas,v 1.7 2005-11-09 05:18:26 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Turbo Pascal/Borland Pascal 7.0 compatibility unit
@@ -101,7 +101,8 @@ implementation
 
  procedure Assert(b: boolean);
  begin
-   if not b then RunError(227);
+   if not b then
+     RunError(227);
  end;
  
  procedure ReallocMem(var P: Pointer; Size: Integer);
@@ -149,6 +150,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.6  2004/11/23 03:45:24  carl
+    + ErrOutput standard error stream support
+
   Revision 1.5  2004/10/13 23:25:05  carl
     * replace RunError by assert
 
