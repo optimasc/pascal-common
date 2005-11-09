@@ -1,6 +1,6 @@
 
 
-uses strings,shfolder;
+uses strings;
 
 const
 
@@ -40,6 +40,49 @@ const
     { Constants used with SHGetFolderPath routines }
     SHGFP_TYPE_CURRENT  = 0;   { current value for user, verify it exists }
     SHGFP_TYPE_DEFAULT  = 1;   { default value, may not exist }
+    
+  CSIDL_PROGRAMS                = $0002; { %SYSTEMDRIVE%\Program Files                                      }
+  CSIDL_PERSONAL                = $0005; { %USERPROFILE%\My Documents                                       }
+  CSIDL_FAVORITES               = $0006; { %USERPROFILE%\Favorites                                          }
+  CSIDL_STARTUP                 = $0007; { %USERPROFILE%\Start menu\Programs\Startup                        }
+  CSIDL_RECENT                  = $0008; { %USERPROFILE%\Recent                                             }
+  CSIDL_SENDTO                  = $0009; { %USERPROFILE%\Sendto                                             }
+  CSIDL_STARTMENU               = $000B; { %USERPROFILE%\Start menu                                         }
+  CSIDL_MYMUSIC                 = $000D; { %USERPROFILE%\Documents\My Music                                 }
+  CSIDL_MYVIDEO                 = $000E; { %USERPROFILE%\Documents\My Videos                                }
+  CSIDL_DESKTOPDIRECTORY        = $0010; { %USERPROFILE%\Desktop                                            }
+  CSIDL_NETHOOD                 = $0013; { %USERPROFILE%\NetHood                                            }
+  CSIDL_TEMPLATES               = $0015; { %USERPROFILE%\Templates                                          }
+  CSIDL_COMMON_STARTMENU        = $0016; { %PROFILEPATH%\All users\Start menu                               }
+  CSIDL_COMMON_PROGRAMS         = $0017; { %PROFILEPATH%\All users\Start menu\Programs                      }
+  CSIDL_COMMON_STARTUP          = $0018; { %PROFILEPATH%\All users\Start menu\Programs\Startup              }
+  CSIDL_COMMON_DESKTOPDIRECTORY = $0019; { %PROFILEPATH%\All users\Desktop                                  }
+  CSIDL_APPDATA                 = $001A; { %USERPROFILE%\Application Data (roaming)                         }
+  CSIDL_PRINTHOOD               = $001B; { %USERPROFILE%\Printhood                                          }
+  CSIDL_LOCAL_APPDATA           = $001C; { %USERPROFILE%\Local Settings\Application Data (non roaming)      }
+  CSIDL_COMMON_FAVORITES        = $001F; { %PROFILEPATH%\All users\Favorites                                }
+  CSIDL_INTERNET_CACHE          = $0020; { %USERPROFILE%\Local Settings\Temporary Internet Files            }
+  CSIDL_COOKIES                 = $0021; { %USERPROFILE%\Cookies                                            }
+  CSIDL_HISTORY                 = $0022; { %USERPROFILE%\Local settings\History                             }
+  CSIDL_COMMON_APPDATA          = $0023; { %PROFILESPATH%\All Users\Application Data                        }
+  CSIDL_WINDOWS                 = $0024; { %SYSTEMROOT%                                                     }
+  CSIDL_SYSTEM                  = $0025; { %SYSTEMROOT%\SYSTEM32 (may be system on 95/98/ME)                }
+  CSIDL_PROGRAM_FILES           = $0026; { %SYSTEMDRIVE%\Program Files                                      }
+  CSIDL_MYPICTURES              = $0027; { %USERPROFILE%\My Documents\My Pictures                           }
+  CSIDL_PROFILE                 = $0028; { %USERPROFILE%                                                    }
+  CSIDL_PROGRAM_FILES_COMMON    = $002B; { %SYSTEMDRIVE%\Program Files\Common                               }
+  CSIDL_COMMON_TEMPLATES        = $002D; { %PROFILEPATH%\All Users\Templates                                }
+  CSIDL_COMMON_DOCUMENTS        = $002E; { %PROFILEPATH%\All Users\Documents                                }
+  CSIDL_COMMON_ADMINTOOLS       = $002F; { %PROFILEPATH%\All Users\Start Menu\Programs\Administrative Tools }
+  CSIDL_ADMINTOOLS              = $0030; { %USERPROFILE%\Start Menu\Programs\Administrative Tools           }
+  CSIDL_COMMON_MUSIC            = $0035; { %PROFILEPATH%\All Users\Documents\my music                       }
+  CSIDL_COMMON_PICTURES         = $0036; { %PROFILEPATH%\All Users\Documents\my pictures                    }
+  CSIDL_COMMON_VIDEO            = $0037; { %PROFILEPATH%\All Users\Documents\my videos                      }
+  CSIDL_CDBURN_AREA             = $003B; { %USERPROFILE%\Local Settings\Application Data\Microsoft\CD Burning }
+  CSIDL_PROFILES                = $003E; { %PROFILEPATH%                                                    }
+
+  CSIDL_FLAG_CREATE             = $8000; { (force creation of requested folder if it doesn't exist yet)     }
+    
 
 
 var
@@ -80,6 +123,8 @@ type
    end;
 
    P_USER_INFO_2 = ^_USER_INFO_2;
+   
+   
 
 
   SE_OBJECT_TYPE = ( 
@@ -100,7 +145,7 @@ type
   PPSID = ^PSID;
   
 
-   tgetnamedsecurityinfo = function (pObjectName: PAnsiChar; ObjectType: SE_OBJECT_TYPE;
+   tgetnamedsecurityinfow = function (pObjectName: PWideChar; ObjectType: SE_OBJECT_TYPE;
          SecurityInfo: SECURITY_INFORMATION; ppsidOwner, ppsidGroup: PPSID; ppDacl, ppSacl: PACL;
          var ppSecurityDescriptor: PSECURITY_DESCRIPTOR): DWORD; stdcall;
    tlookupaccountsidw = function (lpSystemName: PWideChar; Sid: PSID;
@@ -112,7 +157,9 @@ type
   
    TFindFirstFileW = function(lpFileName: PWideChar; var lpFindFileData: TWIN32FindDataW): THandle; stdcall;
    TFindNextFileW = function(hFindFile: THandle; var lpFindFileData: TWIN32FindDataW): BOOL; stdcall;
-     
+   TCreateFileW = function (lpFileName: PWideChar; dwDesiredAccess, dwShareMode: Integer;
+      lpSecurityAttributes: Pointer; dwCreationDisposition, dwFlagsAndAttributes: Integer;
+      hTemplateFile: Integer): Integer; stdcall;
      
    ASSOCF = DWORD;
    
@@ -146,6 +193,7 @@ WINSHLWAPI HRESULT WINAPI AssocQueryStringW(ASSOCF,ASSOCSTR,LPCWSTR,LPCWSTR,LPWS
 var
  PFindFirstFileW: TFindFirstFileW;
  PFindNextFileW: TFindNextFileW;
+ PCreateFileW: TCreateFileW;
      
 {**************************************************************************}
 
@@ -283,6 +331,8 @@ end;
 
 
 function getfileatime(fname: putf8char; var atime: TDateTime): integer;
+const
+  FILE_READ_ATTRIBUTES = $080;
 var
   ResultVal: BOOL;
 {$IFNDEF FPC}  
@@ -293,6 +343,9 @@ var
   F: File;
   status: integer;
   FileTimeInfo: SYSTEMTIME;
+  security : TSecurityAttributes;
+  ucs4str: pucs4char;
+  ucs2str: pucs2char;
 begin
   atime:=0;
   FileAssign(F,fname);
@@ -302,8 +355,17 @@ begin
       getfileatime:=status;
       exit;
     end;
-  FileReset(F,fmOpenRead);
-  status:=FileIOResult;
+  security.nLength := Sizeof(TSecurityAttributes);
+  security.bInheritHandle:=true;
+  security.lpSecurityDescriptor:=nil;
+  
+  { Convert the string to a UCS-2 character string }
+  ucs4str:=ucs4strnew(fname,'UTF-8');
+  ucs2str:=ucs2strnew(ucs4str);
+  filerec(f).handle:=PCreateFileW (pwidechar(ucs2str),FILE_READ_ATTRIBUTES,FILE_SHARE_READ,@security,OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL,0);
+  ucs2strdispose(ucs2str);
+  ucs4strdispose(ucs4str);
+  status:=GetLastError;
   if status <> 0 then
     begin
       getfileatime:=status;
@@ -313,7 +375,7 @@ begin
   if (LastAccessTime.dwLowDateTime = 0) and (LastAccessTime.dwHighDateTime = 0) then
     begin
       getfileatime:=EXTDOS_STATUS_UNSUPPORTED;
-      FileClose(F);
+      CloseHandle(filerec(F).handle);
       exit;
     end;
 
@@ -335,7 +397,8 @@ begin
   else
     status:=GetLastError;
   getfileatime:=status;
-  FileClose(F);
+  CloseHandle(filerec(F).handle);
+  {FileClose(F);}
 end;
 
 
@@ -451,7 +514,7 @@ end;
 
 function getfileowner(fname: putf8char): utf8string;
 var
-  PGetNamedSecurityInfo: tgetnamedsecurityinfo;
+  PGetNamedSecurityInfoW: tgetnamedsecurityinfoW;
   PLookupAccountSidw: tlookupaccountsidw;
   sidOwner: PSID;
   ppSecurityDescriptor: PSECURITY_DESCRIPTOR;
@@ -463,17 +526,24 @@ var
   FinalUserName: array[0..MAX_UNICODE_BUFSIZE-1] of ucs4char;
   peUse: SID_NAME_USE;
   resultval: BOOL;
+  ucs4str: pucs4char;
+  ucs2str: pucs2char;
   p: pointer;
   s: string;
   i: integer;
 begin
   getfileowner:='';
   if not assigned(pointer(AdvApi32Handle)) then exit;
-  p:=(GetProcAddress(AdvApi32Handle,'GetNamedSecurityInfoA'));
-  PGetNamedSecurityInfo:=tgetnamedsecurityinfo(p);
+  p:=(GetProcAddress(AdvApi32Handle,'GetNamedSecurityInfoW'));
+  PGetNamedSecurityInfoW:=tgetnamedsecurityinfoW(p);
   if not assigned(p) then exit;
   ppSecurityDescriptor:=nil;
-  status:=PGetNamedSecurityInfo(fname, SE_FILE_OBJECT, OWNER_SECURITY_INFORMATION,@sidOwner,nil,nil,nil,ppSecurityDescriptor);
+  ucs4str:=ucs4strnew(fname,'UTF-8');
+  ucs2str:=ucs2strnew(ucs4str);
+  status:=PGetNamedSecurityInfoW(pwidechar(ucs2str), SE_FILE_OBJECT, OWNER_SECURITY_INFORMATION,@sidOwner,nil,nil,nil,ppSecurityDescriptor);
+  ucs2strdispose(ucs2str);
+  ucs4strdispose(ucs4str);
+  
   if status = ERROR_SUCCESS then
     begin
        AccountNameLen:= MAX_UNICODE_BUFSIZE;
@@ -523,6 +593,8 @@ var
   status: integer;
   FileTimeInfo: SYSTEMTIME;
   security : TSecurityAttributes;
+  ucs4str: pucs4char;
+  ucs2str: pucs2char;
 begin
   FileAssign(F,fname);
   status:=FileIOResult;
@@ -537,7 +609,13 @@ begin
   security.nLength := Sizeof(TSecurityAttributes);
   security.bInheritHandle:=true;
   security.lpSecurityDescriptor:=nil;
-  filerec(f).handle:=CreateFile(fname,FILE_WRITE_ATTRIBUTES,FILE_SHARE_READ,@security,OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL,0);
+
+  ucs4str:=ucs4strnew(fname,'UTF-8');
+  ucs2str:=ucs2strnew(ucs4str);
+  filerec(f).handle:=PCreateFileW(pwidechar(ucs2str),FILE_WRITE_ATTRIBUTES,FILE_SHARE_READ,@security,OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL,0);
+  ucs2strdispose(ucs2str);
+  ucs4strdispose(ucs4str);
+  
   { handle -1 is returned sometimes !! (PM) }
   if (filerec(f).handle=0) or (filerec(f).handle=-1) then
     begin
@@ -803,6 +881,66 @@ begin
 end;
 
 
+function DirectoryExists(DName : utf8string): Boolean;
+var
+ utf: putf8char;
+ searchinfo: TSearchRecExt;
+ Volume: boolean;
+ status: integer;
+begin
+  Volume:=false;
+  DirectoryExists:=false;
+  { Special handling for volume }
+  if (length(dname) = 3) and (dname[2] = ':') then
+    begin
+      Volume:=true;
+      Dname:=dname+'*';
+    end
+  else
+    begin
+      if Dname[length(Dname)] = DirectorySeparator then
+        delete(DName,length(DName),1);
+    end;
+  utf:=utf8strnewstr(dname);
+  if not volume then
+     status:=FindFirstEx(utf,[attr_directory],SearchInfo)
+  else
+     status:=FindFirstEx(utf,[attr_any],SearchInfo);
+  if status = 0 then
+    begin
+      DirectoryExists:=true;
+    end;
+  FindCloseEx(SearchInfo);  
+  utf8strdispose(utf);
+end;
+
+
+function FileExists(const FName : utf8string): Boolean;
+var
+ utf: putf8char;
+ searchinfo: TSearchRecExt;
+ status: integer;
+begin
+  FileExists:=false;
+  utf:=utf8strnewstr(fname);
+  status:=FindFirstEx(utf,[attr_any],SearchInfo);
+  if status = 0 then
+    begin
+      if not
+         (
+         (attr_directory in SearchInfo.stats.Attributes) or
+         (attr_directory in SearchInfo.stats.Attributes)
+         )
+         then
+         FileExists:=true;
+    end;
+  FindCloseEx(SearchInfo);  
+  utf8strdispose(utf);
+end;
+
+
+
+
 function getuserfullname(account: utf8string): utf8string;
 var
  p: pointer;
@@ -884,7 +1022,7 @@ begin
   While
    ((F.W32FindData.dwFileAttributes and F.IncludeAttr)=0) and (not (attr_any in F.SearchAttr)) do
    begin
-     if not PFindNextFileW (F.FindHandle,{$ifdef fpc}@{$endif}F.W32FindData) then
+     if not PFindNextFileW (F.FindHandle,F.W32FindData) then
       begin
         FindMatch:=GetLastError;
         exit;
@@ -900,7 +1038,8 @@ begin
 
   { Convert to Unicode }
   ucs4str:=ucs4strnewucs2(@F.W32FindData.cFileName);
-  s:=f.stats.dirstr+ucs4strpastoUTF8(ucs4str);
+  f.stats.name:=ucs4strpastoUTF8(ucs4str);
+  s:=f.stats.dirstr+f.stats.name;
   FSplit(s,dir,name,ext);
   GetShellAssociationInfo(ext,f.stats.association,f.stats.comment);
   Getmem(p,length(s)+1);
@@ -943,7 +1082,6 @@ begin
               FileTimeInfo.wHour, FileTimeInfo.wMinute, FileTimeInfo.wSecond,
               FileTimeInfo.wMilliseconds,f.stats.atime);
     end;
-  f.stats.name:=ucs4strpastoUTF8(ucs4str);
   ucs4strdispose(ucs4str);
 end;
 
@@ -976,7 +1114,7 @@ begin
   { Convert the string to a UCS-2 character string }
   ucs4str:=ucs4strnew(path,'UTF-8');
   ucs2str:=ucs2strnew(ucs4str);
-  SearchRec.FindHandle:=PFindFirstFileW ({$IFNDEF FPC}pwidechar{$ENDIF}(ucs2str),SearchRec.W32FindData);
+  SearchRec.FindHandle:=PFindFirstFileW (pwidechar(ucs2str),SearchRec.W32FindData);
   ucs2strdispose(ucs2str);
   ucs4strdispose(ucs4str);
   If longint(SearchRec.FindHandle)=longint(Invalid_Handle_value) then
@@ -992,7 +1130,7 @@ function findnextex(var SearchRec: TSearchRecExt): integer;
 begin
 { no error }
   findnextEx:=0;
-  if not PFindNextFileW (SearchRec.FindHandle,{$ifdef fpc}@{$endif}SearchRec.W32FindData) then
+  if not PFindNextFileW (SearchRec.FindHandle,SearchRec.W32FindData) then
    begin
      FindNextEx:=GetLastError;
      exit;
@@ -1140,6 +1278,10 @@ Begin
            if not assigned(p) then
              found:=false;
            PFindNextFileW:=tfindnextfilew(p);
+           p:=(GetProcAddress(UnicowsHandle,'CreateFileW'));
+           if not assigned(p) then
+             found:=false;
+           PCreateFileW:=tcreatefilew(p);
          end;
     end
   else
@@ -1154,12 +1296,19 @@ Begin
        if not assigned(p) then
          found:=false;
        PFindNextFileW:=tfindnextfilew(p);
+       p:=(GetProcAddress(Kernel32Handle,'CreateFileW'));
+       if not assigned(p) then
+         found:=false;
+       PCreateFileW:=tcreatefilew(p);
     end;
   assert(found);  
 end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.2  2005/03/06 20:16:03  carl
+    + support for unicode searches in Win95/Win98/WinMe with unicows
+
   Revision 1.1  2004/12/26 23:34:37  carl
     + Win32 support for extdos unit
 
