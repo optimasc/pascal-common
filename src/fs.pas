@@ -24,6 +24,7 @@ end;
 
 TPOSIXFileSystem = object
   function isValidFilename(s: ucs4string): boolean;
+  function GetMaxFilenameLength: integer;
 end;
 
 TOS2FileSystem = object
@@ -245,6 +246,13 @@ const
       end;
     isValidFilename:=true;
   end;
+  
+  
+ function TPOSIXFileSystem.GetMaxFilenameLength: integer;
+ begin
+   GetMaxFilenameLength:=MAX_POSIX_FILENAME_LENGTH;
+ end;
+  
 
   {***************************************************************************************************}
   {                               Amiga filesystems (FFS/OFS)                                         }
@@ -433,6 +441,10 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.1  2005/08/08 12:03:44  carl
+    + AddDoubleQuotes/RemoveDoubleQuotes
+    + Add support for RemoveAccents in unicode
+
 }
 
 
