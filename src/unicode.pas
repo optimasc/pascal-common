@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: unicode.pas,v 1.33 2005-11-09 05:18:02 carl Exp $
+    $Id: unicode.pas,v 1.34 2005-11-13 21:38:47 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Unicode related routines
@@ -230,6 +230,17 @@ type
         if a character could not be converted)
   }
     function ucs4_converttoiso8859_1(s: ucs4string): string;
+
+  {** @abstract(Converts an UCS-4 string to an UTF-8 string)
+
+     If there is an error (such as reserved special
+     characters), returns an empty string
+
+      @param(s The UCS-4 string to convert)
+      @returns(The converted string)
+  }
+  function ucs4_converttoutf8(src: ucs4string): utf8string;
+
   
 
 {---------------------------------------------------------------------------
@@ -1976,6 +1987,18 @@ end;
   end;
   
   
+  function ucs4_converttoutf8(src: ucs4string): utf8string;
+  var
+   p: pucs4char;
+  begin
+    Getmem(p,ucs4_length(src)*sizeof(ucs4char)+sizeof(ucs4char));
+    ucs4strpcopy(p,src);
+    ucs4_converttoutf8:=ucs4strpastoutf8(p);
+    ucs4strdispose(p);
+  end;
+  
+  
+  
   function ucs4_isvalid(c: ucs4char): boolean;
   begin
     ucs4_isvalid := false;
@@ -3583,6 +3606,10 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.33  2005/11/09 05:18:02  carl
+    + utf8strlen
+    + binary search for ucs4_upcase (50-100% speed gain)
+
   Revision 1.32  2005/10/10 17:11:31  carl
    + When converting strings to ASCII, we try to convert to standard non-accented characters
 
