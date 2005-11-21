@@ -348,7 +348,7 @@ var
   ucs2str: pucs2char;
 begin
   atime:=0;
-  FileAssign(F,fname);
+  FileAssign(F,utf8strpas(fname));
   status:=FileIOResult;
   if status <> 0 then
     begin
@@ -415,7 +415,7 @@ var
   FileTimeInfo: SYSTEMTIME;
 begin
   ctime:=0;
-  FileAssign(F,fname);
+  FileAssign(F,utf8strpas(fname));
   status:=FileIOResult;
   if status <> 0 then
     begin
@@ -470,7 +470,7 @@ var
   FileTimeInfo: SYSTEMTIME;
 begin
   mtime:=0;
-  FileAssign(F,fname);
+  FileAssign(F,utf8strpas(fname));
   status:=FileIOResult;
   if status <> 0 then
     begin
@@ -596,7 +596,7 @@ var
   ucs4str: pucs4char;
   ucs2str: pucs2char;
 begin
-  FileAssign(F,fname);
+  FileAssign(F,utf8strpas(fname));
   status:=FileIOResult;
   if status <> 0 then
     begin
@@ -665,7 +665,7 @@ var
   status: integer;
   FileTimeInfo: SYSTEMTIME;
 begin
-  FileAssign(F,fname);
+  FileAssign(F,utf8strpas(fname));
   status:=FileIOResult;
   if status <> 0 then
     begin
@@ -717,7 +717,7 @@ var
   status: integer;
   FileTimeInfo: SYSTEMTIME;
 begin
-  FileAssign(F,fname);
+  FileAssign(F,utf8strpas(fname));
   status:=FileIOResult;
   if status <> 0 then
     begin
@@ -776,7 +776,7 @@ var
  s: string;
 begin
   fillchar(stats,sizeof(stats),#0);
-  FileAssign(F,fname);
+  FileAssign(F,utf8strpas(fname));
   status:=FileIOResult;
   if status <> 0 then
     begin
@@ -862,7 +862,7 @@ var
  F: File;
  status: integer;
 begin
-  FileAssign(F,fname);
+  FileAssign(F,utf8strpas(fname));
   status:=FileIOResult;
   if status <> 0 then
     begin
@@ -948,10 +948,7 @@ var
  ucs4accountname: pucs4char;
  ui: P_USER_INFO_2;
  pnetusergetinfo: tnetusergetinfo;
- namelength: integer;
- FinalName: pucs2char;
  UCS4FinalName: pucs4char;
- i: integer;
 begin
   getuserfullname:='';
   if not assigned(pointer(NetApi32Handle)) then exit;
@@ -1008,7 +1005,6 @@ end;
 function FindMatch(var f:TSearchRecExt): integer;
 var
  FileTimeInfo: SYSTEMTIME;
- lengthtocopy: integer;
  p: pchar;
  s:string;
  dir:dirstr;
@@ -1096,8 +1092,6 @@ var
  ucs2str: pucs2char;
 begin
   s:=strpas(path);
-  { no error }
-  findfirstex:=0;
   SearchRec.stats.name:=strpas(path);
   SearchRec.stats.Attributes:=attr;
   lattr:=ExtAttrToWinAttr(attr);
@@ -1128,8 +1122,6 @@ end;
 
 function findnextex(var SearchRec: TSearchRecExt): integer;
 begin
-{ no error }
-  findnextEx:=0;
   if not PFindNextFileW (SearchRec.FindHandle,SearchRec.W32FindData) then
    begin
      FindNextEx:=GetLastError;
@@ -1306,6 +1298,11 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.3  2005/11/09 05:16:36  carl
+    + More support for unicode function
+    * setfileatime was wrong
+    + DirectoryExists and FileExists
+
   Revision 1.2  2005/03/06 20:16:03  carl
     + support for unicode searches in Win95/Win98/WinMe with unicows
 
