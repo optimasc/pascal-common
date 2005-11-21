@@ -1,5 +1,5 @@
 {
-    $Id: strings.pas,v 1.5 2004-08-19 00:23:37 carl Exp $
+    $Id: strings.pas,v 1.6 2005-11-21 00:17:39 carl Exp $
     This file is part of the Free Pascal run time library.
     Copyright (c) 1999-2000 by Carl-Eric Codere,
     member of the Free Pascal development team.
@@ -217,20 +217,9 @@ Implementation
 
 
  Function strpas(Str: pchar): string;
- { only 255 first characters are actually copied. }
-  var
-   counter : byte;
-   lstr: string;
  Begin
-   counter := 0;
-   lstr := '';
-   while (ord(Str[counter]) <> 0) and (counter < 255) do
-   begin
-     Inc(counter);
-     lstr:=lstr+char(Str[counter-1]);
-   end;
-   SetLength(lstr,counter);
-   strpas := lstr;
+   SetLength(Result,strlen(str));
+   Move(Str^,Result[1],Length(Result));
  end;
 
  Function StrEnd(Str: PChar): PChar;
@@ -262,18 +251,14 @@ Implementation
 
  function StrCat(Dest,Source: PChar): PChar;
  var
-  counter: Longint;
+  SourceLength: Longint;
   PEnd: PChar;
  begin
    PEnd := StrEnd(Dest);
-   counter := 0;
-   while (Source[counter] <> #0) do
-   begin
-     PEnd[counter] := char(Source[counter]);
-     Inc(counter);
-   end;
+   SourceLength:=StrLen(Source);
+   move(Source^,Pend^,SourceLength);
+   PEnd[SourceLength]:=#0;
    { terminate the string }
-   PEnd[counter] := #0;
    StrCat := Dest;
  end;
 
@@ -467,8 +452,6 @@ Implementation
 
 
    Function StrPCopy(Dest: PChar; Source: String):PChar;
-   var
-    counter : byte;
   Begin
    { if empty pascal string  }
    { then setup and exit now }
@@ -478,10 +461,7 @@ Implementation
      StrPCopy := Dest;
      exit;
    end;
-   for counter:=1 to length(Source) do
-   begin
-     Dest[counter-1] := Source[counter];
-   end;
+   Move(Source[1],Dest^,length(Source));
    { terminate the string }
    Dest[length(Source)] := #0;
    StrPCopy:=Dest;
@@ -611,6 +591,9 @@ Implementation
 end.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.5  2004/08/19 00:23:37  carl
+    + strscan returns nil on a nil pointer parameter
+
   Revision 1.4  2004/07/05 02:24:31  carl
     - remove some compilation warnings
 

@@ -1,5 +1,5 @@
 {
-    $Id: doswin32.inc,v 1.4 2005-10-10 17:44:46 carl Exp $
+    $Id: doswin32.inc,v 1.5 2005-11-21 00:17:36 carl Exp $
     Copyright (c) 2001 by members of the Free Pascal
     development team
 
@@ -192,11 +192,9 @@ procedure exec(const path : pathstr;const comline : comstr);
 var
   SI: TStartupInfo;
   PI: TProcessInformation;
-  l    : Longint;
   CommandLine : array[0..1023] of char;
   AppParam : array[0..255] of char;
   pathlocal : string;
-  Proc: THandle;
   lw: longword;
 begin
   DosError := 0;
@@ -905,6 +903,9 @@ end;
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.4  2005/10/10 17:44:46  carl
+    * Bugfix with double quote characters in Find routines
+
   Revision 1.3  2005/03/21 00:22:55  carl
     * exec/diskfree/disksize/fexpand bugfixes
 

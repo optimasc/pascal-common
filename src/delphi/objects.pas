@@ -1229,7 +1229,7 @@ BEGIN
      Begin                        { Check status okay }
      If (Handle = InvalidHandle) Then 
         Begin                      { File not open }
-          FileAssign(FileInfo,FName);
+          FileAssign(FileInfo,StrPas(FName));
           { Handle the mode }
           if OpenMode =stCreate then
             Begin
@@ -2748,6 +2748,9 @@ END;
 END.
 {
    $Log: not supported by cvs2svn $
+   Revision 1.7  2005/01/06 03:20:13  carl
+     * serious bugfix with uninitialized variable.
+
    Revision 1.6  2004/12/09 00:51:12  carl
      * start fixing for kylix compilation
 
