@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: utils.pas,v 1.21 2005-11-09 05:14:56 carl Exp $
+    $Id: utils.pas,v 1.22 2005-11-21 00:18:15 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Common utilities
@@ -72,7 +72,7 @@ CONST
      @param DName Name of the directory to check
      @returns FALSE if the directory cannot be opened or if it does not exist.
   }
-  Function AnsiDirectoryExists(const DName : string): Boolean;
+  Function AnsiDirectoryExists(DName : string): Boolean;
   
 
   {** @abstract(Change the endian of a 32-bit value) }
@@ -479,19 +479,36 @@ uses dos;
      Printf := LeftStr;
    End;
    
-    Function AnsiDirectoryExists(const DName : string): Boolean;
-    var
-       ResourceInfo: SearchRec;
-       status: integer;
+function AnsiDirectoryExists(DName : string): Boolean;
+var
+ searchinfo: SearchRec;
+ Volume: boolean;
+ status: integer;
+begin
+  Volume:=false;
+  AnsiDirectoryExists:=false;
+  { Special handling for volume }
+  if (length(dname) = 3) and (dname[2] = ':') then
     begin
-      AnsiDirectoryExists:=false;
-      findfirst(dname,Directory,ResourceInfo);
-      status:=DosError;
-      findclose(ResourceInfo);
-      if status <> 0 then
-        exit;
+      Volume:=true;
+      Dname:=dname+'*';
+    end
+  else
+    begin
+      if (length(Dname)>0) and (Dname[length(Dname)] = DirectorySeparator) then
+        delete(DName,length(DName),1);
+    end;
+  if not volume then
+     FindFirst(Dname,Directory,SearchInfo)
+  else
+     FindFirst(Dname,AnyFile,SearchInfo);
+  status:=DosError;   
+  if status = 0 then
+    begin
       AnsiDirectoryExists:=true;
     end;
+  FindClose(SearchInfo);  
+end;
 
     Function AnsiFileExists(const FName: String) : Boolean;
      Var
@@ -951,6 +968,9 @@ end;
 end.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.21  2005/11/09 05:14:56  carl
+    * Renamed FileExists and DirectoryExists to AnsiFileExists and AnsiDirectoryExists
+
   Revision 1.20  2005/08/12 20:19:38  ccodere
     + more documentation of hexstr()
 

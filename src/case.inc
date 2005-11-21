@@ -1,7 +1,8 @@
-{ File Generated on 2004-08-14 automatically }
+{ File Generated on 2005-11-16 automatically }
 { and encoded in the ISO-8859-1 character set}
 const
-  MAX_CASETABLE_ENTRIES =766;
+  MAX_CASETABLE_ENTRIES =905;
+  MAX_CASETABLE_UCS2_ENTRIES =865;
 type
   TCaseFoldingInfo = record
     lower: ucs4char;
@@ -868,6 +869,18 @@ const
    upper: $0232
   ),
   (
+   lower: $023C;
+   upper: $023B
+  ),
+  (
+   lower: $019A;
+   upper: $023D
+  ),
+  (
+   lower: $0294;
+   upper: $0241
+  ),
+  (
    lower: $03B9;
    upper: $0345
   ),
@@ -1572,6 +1585,10 @@ const
    upper: $04F4
   ),
   (
+   lower: $04F7;
+   upper: $04F6
+  ),
+  (
    lower: $04F9;
    upper: $04F8
   ),
@@ -1758,6 +1775,158 @@ const
   (
    lower: $0586;
    upper: $0556
+  ),
+  (
+   lower: $2D00;
+   upper: $10A0
+  ),
+  (
+   lower: $2D01;
+   upper: $10A1
+  ),
+  (
+   lower: $2D02;
+   upper: $10A2
+  ),
+  (
+   lower: $2D03;
+   upper: $10A3
+  ),
+  (
+   lower: $2D04;
+   upper: $10A4
+  ),
+  (
+   lower: $2D05;
+   upper: $10A5
+  ),
+  (
+   lower: $2D06;
+   upper: $10A6
+  ),
+  (
+   lower: $2D07;
+   upper: $10A7
+  ),
+  (
+   lower: $2D08;
+   upper: $10A8
+  ),
+  (
+   lower: $2D09;
+   upper: $10A9
+  ),
+  (
+   lower: $2D0A;
+   upper: $10AA
+  ),
+  (
+   lower: $2D0B;
+   upper: $10AB
+  ),
+  (
+   lower: $2D0C;
+   upper: $10AC
+  ),
+  (
+   lower: $2D0D;
+   upper: $10AD
+  ),
+  (
+   lower: $2D0E;
+   upper: $10AE
+  ),
+  (
+   lower: $2D0F;
+   upper: $10AF
+  ),
+  (
+   lower: $2D10;
+   upper: $10B0
+  ),
+  (
+   lower: $2D11;
+   upper: $10B1
+  ),
+  (
+   lower: $2D12;
+   upper: $10B2
+  ),
+  (
+   lower: $2D13;
+   upper: $10B3
+  ),
+  (
+   lower: $2D14;
+   upper: $10B4
+  ),
+  (
+   lower: $2D15;
+   upper: $10B5
+  ),
+  (
+   lower: $2D16;
+   upper: $10B6
+  ),
+  (
+   lower: $2D17;
+   upper: $10B7
+  ),
+  (
+   lower: $2D18;
+   upper: $10B8
+  ),
+  (
+   lower: $2D19;
+   upper: $10B9
+  ),
+  (
+   lower: $2D1A;
+   upper: $10BA
+  ),
+  (
+   lower: $2D1B;
+   upper: $10BB
+  ),
+  (
+   lower: $2D1C;
+   upper: $10BC
+  ),
+  (
+   lower: $2D1D;
+   upper: $10BD
+  ),
+  (
+   lower: $2D1E;
+   upper: $10BE
+  ),
+  (
+   lower: $2D1F;
+   upper: $10BF
+  ),
+  (
+   lower: $2D20;
+   upper: $10C0
+  ),
+  (
+   lower: $2D21;
+   upper: $10C1
+  ),
+  (
+   lower: $2D22;
+   upper: $10C2
+  ),
+  (
+   lower: $2D23;
+   upper: $10C3
+  ),
+  (
+   lower: $2D24;
+   upper: $10C4
+  ),
+  (
+   lower: $2D25;
+   upper: $10C5
   ),
   (
    lower: $1E01;
@@ -2810,6 +2979,394 @@ const
   (
    lower: $24E9;
    upper: $24CF
+  ),
+  (
+   lower: $2C30;
+   upper: $2C00
+  ),
+  (
+   lower: $2C31;
+   upper: $2C01
+  ),
+  (
+   lower: $2C32;
+   upper: $2C02
+  ),
+  (
+   lower: $2C33;
+   upper: $2C03
+  ),
+  (
+   lower: $2C34;
+   upper: $2C04
+  ),
+  (
+   lower: $2C35;
+   upper: $2C05
+  ),
+  (
+   lower: $2C36;
+   upper: $2C06
+  ),
+  (
+   lower: $2C37;
+   upper: $2C07
+  ),
+  (
+   lower: $2C38;
+   upper: $2C08
+  ),
+  (
+   lower: $2C39;
+   upper: $2C09
+  ),
+  (
+   lower: $2C3A;
+   upper: $2C0A
+  ),
+  (
+   lower: $2C3B;
+   upper: $2C0B
+  ),
+  (
+   lower: $2C3C;
+   upper: $2C0C
+  ),
+  (
+   lower: $2C3D;
+   upper: $2C0D
+  ),
+  (
+   lower: $2C3E;
+   upper: $2C0E
+  ),
+  (
+   lower: $2C3F;
+   upper: $2C0F
+  ),
+  (
+   lower: $2C40;
+   upper: $2C10
+  ),
+  (
+   lower: $2C41;
+   upper: $2C11
+  ),
+  (
+   lower: $2C42;
+   upper: $2C12
+  ),
+  (
+   lower: $2C43;
+   upper: $2C13
+  ),
+  (
+   lower: $2C44;
+   upper: $2C14
+  ),
+  (
+   lower: $2C45;
+   upper: $2C15
+  ),
+  (
+   lower: $2C46;
+   upper: $2C16
+  ),
+  (
+   lower: $2C47;
+   upper: $2C17
+  ),
+  (
+   lower: $2C48;
+   upper: $2C18
+  ),
+  (
+   lower: $2C49;
+   upper: $2C19
+  ),
+  (
+   lower: $2C4A;
+   upper: $2C1A
+  ),
+  (
+   lower: $2C4B;
+   upper: $2C1B
+  ),
+  (
+   lower: $2C4C;
+   upper: $2C1C
+  ),
+  (
+   lower: $2C4D;
+   upper: $2C1D
+  ),
+  (
+   lower: $2C4E;
+   upper: $2C1E
+  ),
+  (
+   lower: $2C4F;
+   upper: $2C1F
+  ),
+  (
+   lower: $2C50;
+   upper: $2C20
+  ),
+  (
+   lower: $2C51;
+   upper: $2C21
+  ),
+  (
+   lower: $2C52;
+   upper: $2C22
+  ),
+  (
+   lower: $2C53;
+   upper: $2C23
+  ),
+  (
+   lower: $2C54;
+   upper: $2C24
+  ),
+  (
+   lower: $2C55;
+   upper: $2C25
+  ),
+  (
+   lower: $2C56;
+   upper: $2C26
+  ),
+  (
+   lower: $2C57;
+   upper: $2C27
+  ),
+  (
+   lower: $2C58;
+   upper: $2C28
+  ),
+  (
+   lower: $2C59;
+   upper: $2C29
+  ),
+  (
+   lower: $2C5A;
+   upper: $2C2A
+  ),
+  (
+   lower: $2C5B;
+   upper: $2C2B
+  ),
+  (
+   lower: $2C5C;
+   upper: $2C2C
+  ),
+  (
+   lower: $2C5D;
+   upper: $2C2D
+  ),
+  (
+   lower: $2C5E;
+   upper: $2C2E
+  ),
+  (
+   lower: $2C81;
+   upper: $2C80
+  ),
+  (
+   lower: $2C83;
+   upper: $2C82
+  ),
+  (
+   lower: $2C85;
+   upper: $2C84
+  ),
+  (
+   lower: $2C87;
+   upper: $2C86
+  ),
+  (
+   lower: $2C89;
+   upper: $2C88
+  ),
+  (
+   lower: $2C8B;
+   upper: $2C8A
+  ),
+  (
+   lower: $2C8D;
+   upper: $2C8C
+  ),
+  (
+   lower: $2C8F;
+   upper: $2C8E
+  ),
+  (
+   lower: $2C91;
+   upper: $2C90
+  ),
+  (
+   lower: $2C93;
+   upper: $2C92
+  ),
+  (
+   lower: $2C95;
+   upper: $2C94
+  ),
+  (
+   lower: $2C97;
+   upper: $2C96
+  ),
+  (
+   lower: $2C99;
+   upper: $2C98
+  ),
+  (
+   lower: $2C9B;
+   upper: $2C9A
+  ),
+  (
+   lower: $2C9D;
+   upper: $2C9C
+  ),
+  (
+   lower: $2C9F;
+   upper: $2C9E
+  ),
+  (
+   lower: $2CA1;
+   upper: $2CA0
+  ),
+  (
+   lower: $2CA3;
+   upper: $2CA2
+  ),
+  (
+   lower: $2CA5;
+   upper: $2CA4
+  ),
+  (
+   lower: $2CA7;
+   upper: $2CA6
+  ),
+  (
+   lower: $2CA9;
+   upper: $2CA8
+  ),
+  (
+   lower: $2CAB;
+   upper: $2CAA
+  ),
+  (
+   lower: $2CAD;
+   upper: $2CAC
+  ),
+  (
+   lower: $2CAF;
+   upper: $2CAE
+  ),
+  (
+   lower: $2CB1;
+   upper: $2CB0
+  ),
+  (
+   lower: $2CB3;
+   upper: $2CB2
+  ),
+  (
+   lower: $2CB5;
+   upper: $2CB4
+  ),
+  (
+   lower: $2CB7;
+   upper: $2CB6
+  ),
+  (
+   lower: $2CB9;
+   upper: $2CB8
+  ),
+  (
+   lower: $2CBB;
+   upper: $2CBA
+  ),
+  (
+   lower: $2CBD;
+   upper: $2CBC
+  ),
+  (
+   lower: $2CBF;
+   upper: $2CBE
+  ),
+  (
+   lower: $2CC1;
+   upper: $2CC0
+  ),
+  (
+   lower: $2CC3;
+   upper: $2CC2
+  ),
+  (
+   lower: $2CC5;
+   upper: $2CC4
+  ),
+  (
+   lower: $2CC7;
+   upper: $2CC6
+  ),
+  (
+   lower: $2CC9;
+   upper: $2CC8
+  ),
+  (
+   lower: $2CCB;
+   upper: $2CCA
+  ),
+  (
+   lower: $2CCD;
+   upper: $2CCC
+  ),
+  (
+   lower: $2CCF;
+   upper: $2CCE
+  ),
+  (
+   lower: $2CD1;
+   upper: $2CD0
+  ),
+  (
+   lower: $2CD3;
+   upper: $2CD2
+  ),
+  (
+   lower: $2CD5;
+   upper: $2CD4
+  ),
+  (
+   lower: $2CD7;
+   upper: $2CD6
+  ),
+  (
+   lower: $2CD9;
+   upper: $2CD8
+  ),
+  (
+   lower: $2CDB;
+   upper: $2CDA
+  ),
+  (
+   lower: $2CDD;
+   upper: $2CDC
+  ),
+  (
+   lower: $2CDF;
+   upper: $2CDE
+  ),
+  (
+   lower: $2CE1;
+   upper: $2CE0
+  ),
+  (
+   lower: $2CE3;
+   upper: $2CE2
   ),
   (
    lower: $FF41;

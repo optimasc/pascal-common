@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: unicode.pas,v 1.34 2005-11-13 21:38:47 carl Exp $
+    $Id: unicode.pas,v 1.35 2005-11-21 00:18:14 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Unicode related routines
@@ -59,7 +59,7 @@ uses
 
 const
   {** Gives the number of characters that can be contained in a string }
-  MAX_STRING_LENGTH = 512;  
+  MAX_STRING_LENGTH = 1024;  
 
 type
 
@@ -411,6 +411,14 @@ type
       are NOT valid with this routine.
   }
   function ucs2_isvalid(ch: ucs2char): boolean;
+  
+  {** @abstract(Converts a character to an uppercase character) 
+  
+      This routine only supports the simple form case folding
+      algorithm (e.g full form is not supported).
+  }
+  function ucs2_upcase(c: ucs2char): ucs2char;
+  
 
 {---------------------------------------------------------------------------
                    UCS-2 null terminated string handling
@@ -584,6 +592,18 @@ type
 
   }
  function asciistrpas(src: pchar): string;
+ 
+ function asciistrnew(src: pchar): pchar;
+  
+ function asciistrnewstr(const str: string): pchar;
+ 
+ function ansistrpas(src: pchar): string;
+ 
+ function ansistrnew(src: pchar): pchar;
+  
+ function ansistrnewstr(const str: string): pchar;
+
+ function ansistrdispose(p: pchar): pchar;
 
 
   {** @abstract(Returns the number of characters that are used to encode this
@@ -1331,6 +1351,7 @@ const
    l: longint;
    p: pchararray;
    currentindex: integer;
+   strlength: integer;
   begin
     ConvertToUCS4:=UNICODE_ERR_OK;
     source:=removenulls(source);
@@ -1355,8 +1376,9 @@ const
         ConvertToUCS4:=UNICODE_ERR_NOTFOUND;  
         exit;
       end;
-    currentindex:=1;  
-    for i:=1 to length(source) do
+    currentindex:=1;
+    strlength:=length(source);
+    for i:=1 to strlength do
       begin
         l:=p^[source[i]];
         if l = -1 then
@@ -1418,13 +1440,15 @@ function ConvertUTF8ToUCS4(src: utf8string; var dst: ucs4string): integer;
    StringLength: integer;
    Outindex: integer;
    ExtraBytesToRead: integer;
-   CurrentIndex: integer;
+   idx: integer;
+   strlength: integer;
   begin
     i:=1;
     stringlength := 0;
     OutIndex := 1;
     ConvertUTF8ToUCS4:=UNICODE_ERR_OK;
-    while i <= utf8_length(src) do
+    strlength:=utf8_length(src);
+    while i <= strlength do
       begin
         ch := 0;
         extrabytestoread:= trailingBytesForUTF8[ord(src[i])];
@@ -1438,47 +1462,14 @@ function ConvertUTF8ToUCS4(src: utf8string; var dst: ucs4string): integer;
             ConvertUTF8ToUCS4:=UNICODE_ERR_SOURCEILLEGAL;
             exit;
           end;}
-        CurrentIndex := ExtraBytesToRead;
-        if CurrentIndex = 5 then
-        begin
-          ch:=ch + ucs4char(src[i]);
-          inc(i);
-          ch:=ch shl 6;
-          dec(CurrentIndex);
-        end;
-        if CurrentIndex = 4 then
-        begin
-          ch:=ch + ucs4char(src[i]);
-          inc(i);
-          ch:=ch shl 6;
-          dec(CurrentIndex);
-        end;
-        if CurrentIndex = 3 then
-        begin
-          ch:=ch + ucs4char(src[i]);
-          inc(i);
-          ch:=ch shl 6;
-          dec(CurrentIndex);
-        end;
-        if CurrentIndex = 2 then
-        begin
-          ch:=ch + ucs4char(src[i]);
-          inc(i);
-          ch:=ch shl 6;
-          dec(CurrentIndex);
-        end;
-        if CurrentIndex = 1 then
-        begin
-          ch:=ch + ucs4char(src[i]);
-          inc(i);
-          ch:=ch shl 6;
-          dec(CurrentIndex);
-        end;
-        if CurrentIndex = 0 then
-        begin
-          ch:=ch + ucs4char(src[i]);
-          inc(i);
-        end;
+        for idx:=ExtraBytesToRead downto 1 do
+          begin
+            ch:=ch + ucs4char(src[i]);
+            inc(i);
+            ch:=ch shl 6;
+          end;
+        ch:=ch + ucs4char(src[i]);
+        inc(i);
         ch := ch - offsetsFromUTF8[extraBytesToRead];
         if (ch <= UNI_MAX_UTF32) then
           begin
@@ -1657,46 +1648,27 @@ end;
                           UCS-4 string handling
 -----------------------------------------------------------------------------}
 
-(*
-  function ucs4_upcase(c: ucs4char): ucs4char;
-  var
-   i: integer;
-  begin
-    { Assume there is no uppercase for this character }
-    ucs4_upcase:=c;
-    for i:=1 to MAX_CASETABLE_ENTRIES do
-      begin
-        if (c = UCS4CaseTable[i].lower) then
-          begin
-           ucs4_upcase:=UCS4CaseTable[i].upper;
-           exit;
-          end; 
-      end;
-  end;
-*)
 function ucs4_upcase(c: ucs4char): ucs4char;
 var
   First: Integer;
   Last: Integer;
   Pivot: Integer;
-  Found: Boolean;
 begin
   First  := 1; {Sets the first item of the range}
   Last   := MAX_CASETABLE_ENTRIES; {Sets the last item of the range}
-  Found  := False;{ Initializes the Found flag (Not found yet)}
   ucs4_upcase := c; {Initializes the Result}
 
   { If First > Last then the searched item doesn't exist
     If the item is found the loop will stop }
-  while (First <= Last) and (not Found) do
+  while (First <= Last) do
   begin
     { Gets the middle of the selected range }
     Pivot := (First + Last) div 2;
     { Compares the String in the middle with the searched one }
     if UCS4CaseTable[Pivot].lower = c then
     begin
-      Found  := True;
       ucs4_upcase := UCS4CaseTable[Pivot].upper;
+      exit;
     end
     { If the Item in the middle has a bigger value than
       the searched item, then select the first half }
@@ -1748,47 +1720,69 @@ end;
       end;
   end;
 
-  function ucs4_iswhitespace(c: ucs4char): boolean;
-    const
-      MAX_WHITESPACE = 25;
-      whitespace: array[1..MAX_WHITESPACE] of ucs4char =
-      (
-       $0009,  { control: TAB }
-       $000A,  { control: Linefeed }
-       $000B,  { control: Vertical TAB }
-       $000C,  { control: Formfeed }
-       $000D,  { control: Carriage return }
-       $0020,  { SPACE }
-       $0085,  { control:  }       
-       $1680,  { OGHAM SPACE MARK }
-       $180E,  { MONGOLIAN VOWEL SEPARATOR }
-       $2000,  { EN QUAD..HAIR SPACE }
-       $2001,
-       $2002,
-       $2003,
-       $2004,
-       $2005,
-       $2006,
-       $2007,
-       $2008,
-       $2009,
-       $200A,
-       $2028,  { LINE SEPARATOR }
-       $2029,  { PARAGRAPH SEPARATOR }
-       $202F,  { NARROW NO-BREAK SPACE }
-       $205F,  { MEDIUM MATHEMATICAL SPACE }
-       $3000   { IDEOGRAPHIC SPACE }
-      );
-   var
-    i : integer;
+
+function ucs4_iswhitespace(c: ucs4char): boolean;
+ const
+   MAX_WHITESPACE = 25;
+   whitespace: array[1..MAX_WHITESPACE] of ucs4char =
+   (
+    $0009,  { control: TAB }
+    $000A,  { control: Linefeed }
+    $000B,  { control: Vertical TAB }
+    $000C,  { control: Formfeed }
+    $000D,  { control: Carriage return }
+    $0020,  { SPACE }
+    $0085,  { control:  }       
+    $1680,  { OGHAM SPACE MARK }
+    $180E,  { MONGOLIAN VOWEL SEPARATOR }
+    $2000,  { EN QUAD..HAIR SPACE }
+    $2001,
+    $2002,
+    $2003,
+    $2004,
+    $2005,
+    $2006,
+    $2007,
+    $2008,
+    $2009,
+    $200A,
+    $2028,  { LINE SEPARATOR }
+    $2029,  { PARAGRAPH SEPARATOR }
+    $202F,  { NARROW NO-BREAK SPACE }
+    $205F,  { MEDIUM MATHEMATICAL SPACE }
+    $3000   { IDEOGRAPHIC SPACE }
+   );
+var
+  First: Integer;
+  Last: Integer;
+  Pivot: Integer;
+begin
+  First  := 1; {Sets the first item of the range}
+  Last   := MAX_WHITESPACE; {Sets the last item of the range}
+  ucs4_iswhitespace := false; {Initializes the Result}
+
+  { If First > Last then the searched item doesn't exist
+    If the item is found the loop will stop }
+  while (First <= Last) do
   begin
-   ucs4_iswhitespace:=false;
-   for i:=1 to MAX_WHITESPACE do
-     begin
-       if (c = whitespace[i]) then
-          ucs4_iswhitespace := true;
-     end;
+    { Gets the middle of the selected range }
+    Pivot := (First + Last) div 2;
+    { Compares the String in the middle with the searched one }
+    if whitespace[Pivot] = c then
+    begin
+      ucs4_iswhitespace := true;
+      break;
+    end
+    { If the Item in the middle has a bigger value than
+      the searched item, then select the first half }
+    else if whitespace[Pivot] > c then
+      Last := Pivot - 1
+        { else select the second half}
+    else
+      First := Pivot + 1;
   end;
+end;
+
   
   procedure ucs4_copy(var resultstr: ucs4string; const s: array of ucs4char; index: integer; count: integer);
   var
@@ -2076,6 +2070,40 @@ end;
      l:=MAX_STRING_LENGTH;
    s[0]:=ucs2char(l);
   end;
+  
+  
+function ucs2_upcase(c: ucs2char): ucs2char;
+var
+  First: Integer;
+  Last: Integer;
+  Pivot: Integer;
+begin
+  First  := 1; {Sets the first item of the range}
+  Last   := MAX_CASETABLE_UCS2_ENTRIES; {Sets the last item of the range}
+  ucs2_upcase := c; {Initializes the Result}
+
+  { If First > Last then the searched item doesn't exist
+    If the item is found the loop will stop }
+  while (First <= Last) do
+  begin
+    { Gets the middle of the selected range }
+    Pivot := (First + Last) div 2;
+    { Compares the String in the middle with the searched one }
+    if UCS4CaseTable[Pivot].lower = c then
+    begin
+      ucs2_upcase := UCS4CaseTable[Pivot].upper;
+      exit;
+    end
+    { If the Item in the middle has a bigger value than
+      the searched item, then select the first half }
+    else if UCS4CaseTable[Pivot].lower > c then
+      Last := Pivot - 1
+        { else select the second half}
+    else
+      First := Pivot + 1;
+  end;
+end;
+  
 
 {---------------------------------------------------------------------------
                    UCS-4 null terminated string handling
@@ -2180,7 +2208,6 @@ end;
    str1 := pointer(s);
    Str1Length := UCS4StrLen(s);
    Str2Length := StrLen(Str2);
-   found := true;
    oldindex := 0;
 
    { If the search string is greater than the string to be searched }
@@ -2255,8 +2282,8 @@ end;
    p2:=pucs2strarray(str);
    { Convert the value to an UCS-4 string }
    for i:=0 to (namelength-1) do
-         Begin
-           p1^[i]:=ucs4char(p2^[i]);
+   Begin
+     p1^[i]:=ucs4char(p2^[i]);
    end;
    p1^[namelength]:=0;  
    ucs4strnewucs2:=FinalName;
@@ -2269,12 +2296,14 @@ end;
    dest: pucs4strarray;
    destpchar: pucs4char;
    count: integer;
-   Currentindex: integer;
    Outindex,totalsize: integer;
+   CurrentIndex: integer;
    ch: ucs4char;
    ExtraBytesToRead: integer;
    p:pchararray;
    l: longint;
+   strlength: integer;
+   idx: integer;
   begin
     str:=removenulls(str);
     ucs4strnewstr:=nil;
@@ -2296,7 +2325,8 @@ end;
         { Calculate the length to store the decoded length }
         i:=1;
         totalsize:=0;
-        while (i <= length(str)) do
+        strlength:=length(str);
+        while (i <= strlength) do
           begin
             count:=utf8_sizeencoding(str[i]);
             { increment the pointer accordingly }
@@ -2307,7 +2337,7 @@ end;
         dest:=pucs4strarray(destpchar);
         i:=1;
         OutIndex := 0;
-        while (i <= length(str)) do
+        while (i <= strlength) do
           begin
             ch := 0;
             extrabytestoread:= trailingBytesForUTF8[ord(str[i])];
@@ -2315,47 +2345,14 @@ end;
               begin
                 exit;
               end;}
-            CurrentIndex := ExtraBytesToRead;
-            if CurrentIndex = 5 then
-            begin
-              ch:=ch + ucs4char(str[i]);
-              inc(i);
-              ch:=ch shl 6;
-              dec(CurrentIndex);
-            end;
-            if CurrentIndex = 4 then
-            begin
-              ch:=ch + ucs4char(str[i]);
-              inc(i);
-              ch:=ch shl 6;
-              dec(CurrentIndex);
-            end;
-            if CurrentIndex = 3 then
-            begin
-              ch:=ch + ucs4char(str[i]);
-              inc(i);
-              ch:=ch shl 6;
-              dec(CurrentIndex);
-            end;
-            if CurrentIndex = 2 then
-            begin
-              ch:=ch + ucs4char(str[i]);
-              inc(i);
-              ch:=ch shl 6;
-              dec(CurrentIndex);
-            end;
-            if CurrentIndex = 1 then
-            begin
-              ch:=ch + ucs4char(str[i]);
-              inc(i);
-              ch:=ch shl 6;
-              dec(CurrentIndex);
-            end;
-            if CurrentIndex = 0 then
-            begin
-              ch:=ch + ucs4char(str[i]);
-              inc(i);
-            end;
+            for idx:=ExtraBytesToRead downto 1 do
+              begin
+                ch:=ch + ucs4char(str[i]);
+                inc(i);
+                ch:=ch shl 6;
+              end;
+            ch:=ch + ucs4char(str[i]);
+            inc(i);
             ch := ch - offsetsFromUTF8[extraBytesToRead];
             if (ch <= UNI_MAX_UTF32) then
               begin
@@ -2467,6 +2464,7 @@ end;
    p:pchararray;
    l: longint;
    endindex: integer;
+   idx: integer;
   begin
     ucs4strnew:=nil;
     dest:=nil;
@@ -2507,47 +2505,14 @@ end;
               begin
                 exit;
               end;}
-            CurrentIndex := ExtraBytesToRead;
-            if CurrentIndex = 5 then
-            begin
-              ch:=ch + ucs4char(str[i]);
-              inc(i);
-              ch:=ch shl 6;
-              dec(CurrentIndex);
-            end;
-            if CurrentIndex = 4 then
-            begin
-              ch:=ch + ucs4char(str[i]);
-              inc(i);
-              ch:=ch shl 6;
-              dec(CurrentIndex);
-            end;
-            if CurrentIndex = 3 then
-            begin
-              ch:=ch + ucs4char(str[i]);
-              inc(i);
-              ch:=ch shl 6;
-              dec(CurrentIndex);
-            end;
-            if CurrentIndex = 2 then
-            begin
-              ch:=ch + ucs4char(str[i]);
-              inc(i);
-              ch:=ch shl 6;
-              dec(CurrentIndex);
-            end;
-            if CurrentIndex = 1 then
-            begin
-              ch:=ch + ucs4char(str[i]);
-              inc(i);
-              ch:=ch shl 6;
-              dec(CurrentIndex);
-            end;
-            if CurrentIndex = 0 then
-            begin
-              ch:=ch + ucs4char(str[i]);
-              inc(i);
-            end;
+            for idx:=ExtraBytesToRead downto 1 do
+              begin
+                ch:=ch + ucs4char(str[i]);
+                inc(i);
+                ch:=ch shl 6;
+              end;
+            ch:=ch + ucs4char(str[i]);
+            inc(i);
             ch := ch - offsetsFromUTF8[extraBytesToRead];
             if (ch <= UNI_MAX_UTF32) then
               begin
@@ -2774,6 +2739,7 @@ end;
    EndIndex: integer;
    outstr: utf8string;
    inbuf: pucs4strarray;
+   idx: integer;
   begin
     OutIndex := 1;
     OutStringLength := 0;
@@ -2824,36 +2790,18 @@ end;
           convertUCS4ToUTF8:=UNICODE_ERR_LENGTH_EXCEED;
           exit;
         end;}
-        CurrentIndex := BytesToWrite;
-        if CurrentIndex = 4 then
-        begin
-          dec(OutIndex);
-          outstr[outindex] := utf8char((ch or byteMark) and ByteMask);
-          ch:=ch shr 6;
-          dec(CurrentIndex);
-        end;
-        if CurrentIndex = 3 then
-        begin
-          dec(OutIndex);
-          outstr[outindex] := utf8char((ch or byteMark) and ByteMask);
-          ch:=ch shr 6;
-          dec(CurrentIndex);
-        end;
-        if CurrentIndex = 2 then
-        begin
-          dec(OutIndex);
-          outstr[outindex] := utf8char((ch or byteMark) and ByteMask);
-          ch:=ch shr 6;
-          dec(CurrentIndex);
-        end;
-        if CurrentIndex = 1 then
-        begin
-          dec(OutIndex);
-          outstr[outindex] := utf8char((byte(ch) or byte(FirstbyteMark[BytesToWrite])));
-        end;  
-        inc(OutStringLength,BytesToWrite);
-        Inc(OutIndex,BytesToWrite);
-      end;      
+      CurrentIndex := BytesToWrite-1;
+      for idx:=CurrentIndex downto 1 do
+         begin
+           dec(OutIndex);
+           outstr[outindex] := utf8char((ch or byteMark) and ByteMask);
+           ch:=ch shr 6;
+         end;
+      dec(OutIndex);
+      outstr[outindex] := utf8char((byte(ch) or byte(FirstbyteMark[BytesToWrite])));
+      inc(OutStringLength,BytesToWrite);
+      Inc(OutIndex,BytesToWrite);
+    end;      
       utf8_setlength(outstr,OutStringLength);
       ucs4strpastoutf8:=outstr;
   end;
@@ -2891,6 +2839,8 @@ end;
     if not assigned(src) then
       exit;
     lengthtoalloc:=strlen(src)+sizeof(utf8char);
+    if lengthtoalloc = sizeof(char) then
+      exit;
     { also copy the null character }
     Getmem(dst,lengthtoalloc);
     move(src^,dst^,lengthtoalloc);
@@ -2903,6 +2853,7 @@ end;
    ucs4stringlen: integer;
    p: pchar;
    ch: ucs4char;
+   idx: integer;
    OutIndex,BytesToWrite,StartIndex: integer;
    CurrentIndex, EndIndex: integer;
    i: integer;
@@ -2945,53 +2896,35 @@ end;
          exit;
        end;
 
-      if (ch < ucs4char($80)) then
+       if (ch < ucs4char($80)) then
         bytesToWrite:=1
-      else
-      if (ch < ucs4char($800)) then
+       else
+       if (ch < ucs4char($800)) then
         bytesToWrite:=2
-      else
-      if (ch < ucs4char($10000)) then
+       else
+       if (ch < ucs4char($10000)) then
         bytesToWrite:=3
-      else
-      if (ch < ucs4char($200000)) then
+       else
+       if (ch < ucs4char($200000)) then
         bytesToWrite:=4
-      else
+       else
         begin
           ch:=UNI_REPLACEMENT_CHAR;
           bytesToWrite:=2;
         end;
-      Inc(outindex,BytesToWrite);
+       Inc(outindex,BytesToWrite);
 
-        CurrentIndex := BytesToWrite;
-        if CurrentIndex = 4 then
-        begin
-          dec(OutIndex);
-          p[outindex] := utf8char((ch or byteMark) and ByteMask);
-          ch:=ch shr 6;
-          dec(CurrentIndex);
-        end;
-        if CurrentIndex = 3 then
-        begin
-          dec(OutIndex);
-          p[outindex] := utf8char((ch or byteMark) and ByteMask);
-          ch:=ch shr 6;
-          dec(CurrentIndex);
-        end;
-        if CurrentIndex = 2 then
-        begin
-          dec(OutIndex);
-          p[outindex] := utf8char((ch or byteMark) and ByteMask);
-          ch:=ch shr 6;
-          dec(CurrentIndex);
-        end;
-        if CurrentIndex = 1 then
-        begin
-          dec(OutIndex);
-          p[outindex] := utf8char((byte(ch) or byte(FirstbyteMark[BytesToWrite])));
-        end;
-        Inc(OutIndex,BytesToWrite);
-      end;
+       CurrentIndex := BytesToWrite-1;
+       for idx:=CurrentIndex downto 1 do
+         begin
+           dec(OutIndex);
+           p[outindex] := utf8char((ch or byteMark) and ByteMask);
+           ch:=ch shr 6;
+         end;
+       dec(OutIndex);
+       p[outindex] := utf8char((byte(ch) or byte(FirstbyteMark[BytesToWrite])));
+       Inc(OutIndex,BytesToWrite);
+     end;
       { Copy the values, and free the old buffer }
       Getmem(ResultPtr,Outindex+1);
       move(p^,ResultPtr^,Outindex);
@@ -3098,9 +3031,9 @@ end;
    i: integer;
    StringLength: integer;
    ExtraBytesToRead: integer;
-   CurrentIndex: integer;
    p: pchararray;
    j: char;
+   idx: integer;
    found: boolean;
   begin
     setlength(s,0);
@@ -3135,47 +3068,16 @@ end;
           begin
             exit;
           end;
-        CurrentIndex := ExtraBytesToRead;
-        if CurrentIndex = 5 then
-        begin
-          ch:=ch + ucs4char(src[i]);
-          inc(i);
-          ch:=ch shl 6;
-          dec(CurrentIndex);
-        end;
-        if CurrentIndex = 4 then
-        begin
-          ch:=ch + ucs4char(src[i]);
-          inc(i);
-          ch:=ch shl 6;
-          dec(CurrentIndex);
-        end;
-        if CurrentIndex = 3 then
-        begin
-          ch:=ch + ucs4char(src[i]);
-          inc(i);
-          ch:=ch shl 6;
-          dec(CurrentIndex);
-        end;
-        if CurrentIndex = 2 then
-        begin
-          ch:=ch + ucs4char(src[i]);
-          inc(i);
-          ch:=ch shl 6;
-          dec(CurrentIndex);
-        end;
-        if CurrentIndex = 1 then
-        begin
-          ch:=ch + ucs4char(src[i]);
-          inc(i);
-          ch:=ch shl 6;
-          dec(CurrentIndex);
-        end;
-        if CurrentIndex = 0 then
-        begin
-          ch:=ch + ucs4char(src[i]);
-          inc(i);
-        end;
+          
+        for idx:=ExtraBytesToRead downto 1 do
+          begin
+            ch:=ch + ucs4char(src[i]);
+            inc(i);
+            ch:=ch shl 6;
+          end;
+        ch:=ch + ucs4char(src[i]);
+        inc(i);
+        
         ch := ch - offsetsFromUTF8[extraBytesToRead];
         { search the table for the character by reverse lookup }
         found:=false;
@@ -3203,8 +3105,8 @@ end;
    s: string;
    i: integer;
    StringLength: integer;
+   idx: integer;
    ExtraBytesToRead: integer;
-   CurrentIndex: integer;
   begin
     i:=0;
     setlength(s,0);
@@ -3220,47 +3122,14 @@ end;
           begin
             exit;
           end;
-        CurrentIndex := ExtraBytesToRead;
-        if CurrentIndex = 5 then
-        begin
-          ch:=ch + ucs4char(src[i]);
-          inc(i);
-          ch:=ch shl 6;
-          dec(CurrentIndex);
-        end;
-        if CurrentIndex = 4 then
-        begin
-          ch:=ch + ucs4char(src[i]);
-          inc(i);
-          ch:=ch shl 6;
-          dec(CurrentIndex);
-        end;
-        if CurrentIndex = 3 then
-        begin
-          ch:=ch + ucs4char(src[i]);
-          inc(i);
-          ch:=ch shl 6;
-          dec(CurrentIndex);
-        end;
-        if CurrentIndex = 2 then
-        begin
-          ch:=ch + ucs4char(src[i]);
-          inc(i);
-          ch:=ch shl 6;
-          dec(CurrentIndex);
-        end;
-        if CurrentIndex = 1 then
-        begin
-          ch:=ch + ucs4char(src[i]);
-          inc(i);
-          ch:=ch shl 6;
-          dec(CurrentIndex);
-        end;
-        if CurrentIndex = 0 then
-        begin
-          ch:=ch + ucs4char(src[i]);
-          inc(i);
-        end;
+        for idx:=ExtraBytesToRead downto 1 do
+          begin
+            ch:=ch + ucs4char(src[i]);
+            inc(i);
+            ch:=ch shl 6;
+          end;
+        ch:=ch + ucs4char(src[i]);
+        inc(i);
         ch := ch - offsetsFromUTF8[extraBytesToRead];
         if (ch <= UNI_MAX_UTF32) then
           begin
@@ -3290,9 +3159,9 @@ end;
    ch: ucs4char;
    s: string;
    i: integer;
+   idx: integer;
    StringLength: integer;
    ExtraBytesToRead: integer;
-   CurrentIndex: integer;
    ResultStr: ucs4string;
    ucs4str: ucs4string;
   begin
@@ -3310,47 +3179,15 @@ end;
           begin
             exit;
           end;
-        CurrentIndex := ExtraBytesToRead;
-        if CurrentIndex = 5 then
-        begin
-          ch:=ch + ucs4char(src[i]);
-          inc(i);
-          ch:=ch shl 6;
-          dec(CurrentIndex);
-        end;
-        if CurrentIndex = 4 then
-        begin
-          ch:=ch + ucs4char(src[i]);
-          inc(i);
-          ch:=ch shl 6;
-          dec(CurrentIndex);
-        end;
-        if CurrentIndex = 3 then
-        begin
-          ch:=ch + ucs4char(src[i]);
-          inc(i);
-          ch:=ch shl 6;
-          dec(CurrentIndex);
-        end;
-        if CurrentIndex = 2 then
-        begin
-          ch:=ch + ucs4char(src[i]);
-          inc(i);
-          ch:=ch shl 6;
-          dec(CurrentIndex);
-        end;
-        if CurrentIndex = 1 then
-        begin
-          ch:=ch + ucs4char(src[i]);
-          inc(i);
-          ch:=ch shl 6;
-          dec(CurrentIndex);
-        end;
-        if CurrentIndex = 0 then
-        begin
-          ch:=ch + ucs4char(src[i]);
-          inc(i);
-        end;
+        for idx:=ExtraBytesToRead downto 1 do
+          begin
+            ch:=ch + ucs4char(src[i]);
+            inc(i);
+            ch:=ch shl 6;
+          end;
+        ch:=ch + ucs4char(src[i]);
+        inc(i);
+        
         ch := ch - offsetsFromUTF8[extraBytesToRead];
         if (ch <= UNI_MAX_UTF32) then
           begin
@@ -3393,7 +3230,7 @@ end;
       end;
      utf8strpastoASCII:=s;
   end;
-  
+
   function utf8strpas(src: pchar): string;
   begin
     if src = nil then
@@ -3405,6 +3242,23 @@ end;
   end;
   
   
+  function asciistrnew(src: pchar): pchar;
+  var
+   lengthtoalloc: integer;
+   dst: pchar;
+  begin
+    asciistrnew:=nil;
+    if not assigned(src) then
+      exit;
+    lengthtoalloc:=strlen(src)+sizeof(utf8char);
+    if lengthtoalloc = sizeof(char) then
+      exit;
+    { also copy the null character }
+    Getmem(dst,lengthtoalloc);
+    move(src^,dst^,lengthtoalloc);
+    asciistrnew:=dst;
+  end;
+  
   function asciistrpas(src: pchar): string;
   begin
     if src = nil then
@@ -3414,6 +3268,77 @@ end;
       end;
     asciistrpas:=strpas(src);
   end;
+  
+  
+ function asciistrnewstr(const str: string): pchar;
+ var
+  p: putf8char;
+ begin
+   asciistrnewstr:=nil;
+   p:=nil;
+   if utf8_length(str) > 0 then
+     begin
+        getmem(p,utf8_length(str)+sizeof(utf8char));
+        strpcopy(p,str);
+        asciistrnewstr:=p;
+     end;
+ end;
+  
+  
+  
+ function ansistrnewstr(const str: string): pchar;
+ var
+  p: putf8char;
+ begin
+   ansistrnewstr:=nil;
+   p:=nil;
+   if utf8_length(str) > 0 then
+     begin
+        getmem(p,utf8_length(str)+sizeof(utf8char));
+        strpcopy(p,str);
+        ansistrnewstr:=p;
+     end;
+ end;
+  
+  
+  function ansistrnew(src: pchar): pchar;
+  var
+   lengthtoalloc: integer;
+   dst: pchar;
+  begin
+    ansistrnew:=nil;
+    if not assigned(src) then
+      exit;
+    lengthtoalloc:=strlen(src)+sizeof(utf8char);
+    if lengthtoalloc = sizeof(char) then
+      exit;
+    { also copy the null character }
+    Getmem(dst,lengthtoalloc);
+    move(src^,dst^,lengthtoalloc);
+    ansistrnew:=dst;
+  end;
+  
+  
+  function ansistrpas(src: pchar): string;
+  begin
+    if src = nil then
+      begin
+        ansistrpas:='';
+        exit;
+      end;
+    ansistrpas:=strpas(src);
+  end;
+  
+  
+  function ansistrdispose(p: pchar): pchar;
+  begin
+    ansistrdispose := nil;
+    if not assigned(p) then
+      exit;
+    Freemem(p,strlen(p)+1);
+    p:=nil;
+  end;
+  
   
    
  function utf8strnewstr(str: utf8string): putf8char;
@@ -3523,7 +3448,7 @@ end;
     ucs2strdispose := nil;
     if not assigned(str) then 
       exit;
-    Freemem(str,ucs2strlen(str)+sizeof(ucs2char));
+    Freemem(str,ucs2strlen(str)*sizeof(ucs2char)+sizeof(ucs2char));
     str:=nil;
   end;
   
@@ -3606,6 +3531,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.34  2005/11/13 21:38:47  carl
+    + ucs4_converttoutf8 added
+
   Revision 1.33  2005/11/09 05:18:02  carl
     + utf8strlen
     + binary search for ucs4_upcase (50-100% speed gain)

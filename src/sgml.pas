@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: sgml.pas,v 1.5 2005-01-30 20:07:31 carl Exp $
+    $Id: sgml.pas,v 1.6 2005-11-21 00:18:13 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere (Optima SC Inc.)
 
     SGML related utility routines
@@ -224,6 +224,7 @@ function SGMLGetDTDInfo(s: string; var top_element,availability,fpi: string): bo
 var
  idx: integer;
  i: integer;
+ strlength: integer;
 begin
   SGMLGetDTDInfo:=false;
   idx:=pos(DOCTYPE_STR,s);
@@ -239,7 +240,8 @@ begin
           s:=trimright(s);
           top_element:='';
           i:=1;
-          while (i < length(s)) and not (s[i] in space_character) do
+          strlength:=length(s);
+          while (i < strlength) and not (s[i] in space_character) do
             begin
               top_element:=top_element+s[i];
               inc(i);
@@ -253,7 +255,8 @@ begin
           s:=trimright(s);
           availability:='';
           i:=1;
-          while ( i < length(s)) and not (s[i] in space_character) do
+          strlength:=length(s);
+          while ( i < strlength) and not (s[i] in space_character) do
             begin
               availability:=availability+s[i];
               inc(i);
@@ -287,12 +290,14 @@ end;
    i: integer;
    { this is the character which started the quote }
    c: char;
+   strlength: integer;
   begin
     SGMLGetQuotedValue := '';
     i:=1;
     c:=#0;
     resultstr:='';
-    while i <= length(s) do
+    strlength:=length(s);
+    while i <= strlength do
     begin
      if (c = #0) and (s[i] = '''') then
        c:=''''
@@ -322,11 +327,13 @@ end;
    i: integer;
    { this is the character which started the quote }
    c: ucs4char;
+   strlength: integer;
   begin
     ucs4_setlength(resultstr,0);
     i:=1;
     c:=ucs4char(#0);
-    while i <= ucs4_length(s) do
+    strlength:=ucs4_length(s);
+    while i <= strlength do
     begin
      if (c = 0) and (char(s[i]) = '''') then
        c:=ucs4char('''')
@@ -399,13 +406,15 @@ var
  code: integer;
  value: longint;
  found: boolean;
+ strlength: integer;
 begin
   SGMLEntitiesToISO8859_1:=s;
   SetLength(outstr,0);
   SetLength(entitystr,0);
   i:=1;
   inentity:=false;
-  while i <= length(s) do
+  strlength:=length(s);
+  while i <= strlength do
   begin
     case s[i] of
     '&':
@@ -512,12 +521,14 @@ var
  value: longint;
  found: boolean;
  c: ucs4char;
+ strlength: integer;
 begin
   UCS4_SetLength(outstr,0);
   UCS4_SetLength(entitystr,0);
   i:=1;
   inentity:=false;
-  while i <= ucs4_length(instr) do
+  strlength:=ucs4_length(instr);
+  while i <= strlength do
   begin
     case char(instr[i]) of
     '&':
@@ -615,6 +626,9 @@ end;
 end.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.5  2005/01/30 20:07:31  carl
+   * optimize for speed
+
   Revision 1.4  2004/11/29 03:45:03  carl
     + UCS-4 string version of SGML routinrd.
 

@@ -1,5 +1,5 @@
 {
-    $Id: dateutil.pas,v 1.8 2004-12-26 23:31:01 carl Exp $
+    $Id: dateutil.pas,v 1.9 2005-11-21 00:18:12 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere (Optima SC Inc.)
 
     Date and time utility routines
@@ -912,7 +912,6 @@ begin
    exit;
  { Now delete those digits }
  delete(s,1,i-1);
- i:=1;
  { Now we should have the 'month' string }
  s:=trim(s);
  found:=false;
@@ -1424,6 +1423,9 @@ end;
 end.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.8  2004/12/26 23:31:01  carl
+    * Today would return a truncated date
+
   Revision 1.7  2004/12/08 04:24:42  carl
     * range check error bugfixes
 
