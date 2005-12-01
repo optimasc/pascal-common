@@ -1,873 +1,1083 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.1 Strict//EN" "http://www.w3.org/TR/REC-html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/1999/REC-html401-19991224/loose.dtd">
 <html>
 <head>
-<meta name="GENERATOR" content="PasDoc 0.8.8.3"/>
+<meta name="GENERATOR" content="PasDoc 0.8.8.3">
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
 <title>Common pascal units documentation: All Functions and Procedures</title>
-<link rel="StyleSheet" href="pasdoc.css"/>
+<link rel="StyleSheet" type="text/css" href="pasdoc.css">
 </head>
 <body bgcolor="#ffffff" text="#000000" link="#0000ff" vlink="#800080" alink="#FF0000">
-<h1>All Functions and Procedures</h1>
-<table cellspacing="2" cellpadding="4" width="100%">
-<tr class="listheader"><th class="listheader">Name</th><th class="listheader">Unit</th><th class="listheader">Description</th></tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="utils.html#boolstr">boolstr</a></td>
-<td><a class="normal" href="utils.html">utils</a></td>
-<td width="100%">Convert a boolean value to an ASCII representation</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="utils.html#ChangeFileExt">ChangeFileExt</a></td>
-<td><a class="normal" href="utils.html">utils</a></td>
-<td>&nbsp;</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="utils.html#CompareByte">CompareByte</a></td>
-<td><a class="normal" href="utils.html">utils</a></td>
-<td>&nbsp;</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="unicode.html#ConvertFromUCS4">ConvertFromUCS4</a></td>
-<td><a class="normal" href="unicode.html">unicode</a></td>
-<td>Convert an UCS-4 string to a single byte encoded string</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="unicode.html#ConvertToUCS4">ConvertToUCS4</a></td>
-<td><a class="normal" href="unicode.html">unicode</a></td>
-<td>Convert a byte encoded string to an UCS-4 string</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="unicode.html#ConvertUCS2ToUCS4">ConvertUCS2ToUCS4</a></td>
-<td><a class="normal" href="unicode.html">unicode</a></td>
-<td>Convert an UCS-2 string to an UCS-4 string</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="unicode.html#ConvertUCS4ToUCS2">ConvertUCS4ToUCS2</a></td>
-<td><a class="normal" href="unicode.html">unicode</a></td>
-<td>Convert an UCS-4 string to an UCS-2 string</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="unicode.html#ConvertUCS4toUTF16">ConvertUCS4toUTF16</a></td>
-<td><a class="normal" href="unicode.html">unicode</a></td>
-<td>Convert an UCS-4 string to an UTF-16 string</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="unicode.html#convertUCS4toUTF8">convertUCS4toUTF8</a></td>
-<td><a class="normal" href="unicode.html">unicode</a></td>
-<td>Convert an UCS-4 string to an UTF-8 string</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="unicode.html#ConvertUTF16ToUCS4">ConvertUTF16ToUCS4</a></td>
-<td><a class="normal" href="unicode.html">unicode</a></td>
-<td>Convert an UTF-16 string to an UCS-4 string</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="unicode.html#ConvertUTF8ToUCS4">ConvertUTF8ToUCS4</a></td>
-<td><a class="normal" href="unicode.html">unicode</a></td>
-<td>Convert an UTF-8 string to an UCS-4 string</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="dateutil.html#CurrentYear">CurrentYear</a></td>
-<td><a class="normal" href="dateutil.html">dateutil</a></td>
-<td>Returns the current year</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="dateutil.html#Date">Date</a></td>
-<td><a class="normal" href="dateutil.html">dateutil</a></td>
-<td>Returns the current date, with the time value equal to midnight.</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="dateutil.html#DateOf">DateOf</a></td>
-<td><a class="normal" href="dateutil.html">dateutil</a></td>
-<td>Strips the time portion from a TDateTime value.</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="dateutil.html#DateTimeToStr">DateTimeToStr</a></td>
-<td><a class="normal" href="dateutil.html">dateutil</a></td>
-<td>Converts a TDateTime value to a string in standard ISO 8601 format.</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="dateutil.html#DateTimeToStrExt">DateTimeToStrExt</a></td>
-<td><a class="normal" href="dateutil.html">dateutil</a></td>
-<td>&nbsp;</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="dateutil.html#DateToStr">DateToStr</a></td>
-<td><a class="normal" href="dateutil.html">dateutil</a></td>
-<td>Converts a TDatetime value to a string in ISO 8601 format</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="dateutil.html#DayOf">DayOf</a></td>
-<td><a class="normal" href="dateutil.html">dateutil</a></td>
-<td>Returns the day of the month represented by a TDateTime value.</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="dateutil.html#DaysBetween">DaysBetween</a></td>
-<td><a class="normal" href="dateutil.html">dateutil</a></td>
-<td>Returns the number of days between two specified TDateTime values.</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="dateutil.html#DecodeDate">DecodeDate</a></td>
-<td><a class="normal" href="dateutil.html">dateutil</a></td>
-<td>Returns Year, Month, and Day values for a TDateTime value.</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="dateutil.html#DecodeDateTime">DecodeDateTime</a></td>
-<td><a class="normal" href="dateutil.html">dateutil</a></td>
-<td>Returns Year, Month, Day, Hour, Minute, Second, and Millisecond values for a TDateTime.</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="dateutil.html#DecodeTime">DecodeTime</a></td>
-<td><a class="normal" href="dateutil.html">dateutil</a></td>
-<td>Breaks a TDateTime value into hours, minutes, seconds, and milliseconds.</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="utils.html#decstr">decstr</a></td>
-<td><a class="normal" href="utils.html">utils</a></td>
-<td>Convert a value to an ASCII decimal representation</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="utils.html#decstrunsigned">decstrunsigned</a></td>
-<td><a class="normal" href="utils.html">utils</a></td>
-<td>Convert a value to an ASCII decimal representation</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="utils.html#DirectoryExists">DirectoryExists</a></td>
-<td><a class="normal" href="utils.html">utils</a></td>
-<td>Verifies the existence of a directory</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="utils.html#EscapeToPascal">EscapeToPascal</a></td>
-<td><a class="normal" href="utils.html">utils</a></td>
-<td>Converts a C style string (containing escape characters), to
-      a pascal style string. Returns the converted string. If there
-      is no error in the conversion, <code>code</code> will be equal to
-      zero.</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="fileio.html#FileAssign">FileAssign</a></td>
-<td><a class="normal" href="fileio.html">fileio</a></td>
-<td>Assign a filename to a file</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="fileio.html#FileBlockRead">FileBlockRead</a></td>
-<td><a class="normal" href="fileio.html">fileio</a></td>
-<td>Read data from a file</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="fileio.html#FileBlockWrite">FileBlockWrite</a></td>
-<td><a class="normal" href="fileio.html">fileio</a></td>
-<td>Write data to a file</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="fileio.html#FileClose">FileClose</a></td>
-<td><a class="normal" href="fileio.html">fileio</a></td>
-<td>Close a previously opened file</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="utils.html#FileExists">FileExists</a></td>
-<td><a class="normal" href="utils.html">utils</a></td>
-<td>Verifies the existence of a filename</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="fileio.html#FileGetPos">FileGetPos</a></td>
-<td><a class="normal" href="fileio.html">fileio</a></td>
-<td>Return the current file pointer position</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="fileio.html#FileGetSize">FileGetSize</a></td>
-<td><a class="normal" href="fileio.html">fileio</a></td>
-<td>Get the size of a file in bytes</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="fileio.html#FileIOResult">FileIOResult</a></td>
-<td><a class="normal" href="fileio.html">fileio</a></td>
-<td>Return the result of the last I/O operation</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="fileio.html#FileReset">FileReset</a></td>
-<td><a class="normal" href="fileio.html">fileio</a></td>
-<td>Open a file for reading or writing</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="fileio.html#FileRewrite">FileRewrite</a></td>
-<td><a class="normal" href="fileio.html">fileio</a></td>
-<td>Open/Overwrite a file</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="fileio.html#FileSeek">FileSeek</a></td>
-<td><a class="normal" href="fileio.html">fileio</a></td>
-<td>Change the file pointer position of an opened file</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="fileio.html#FileTruncate">FileTruncate</a></td>
-<td><a class="normal" href="fileio.html">fileio</a></td>
-<td>Truncate a file at the current file position</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="ietf.html#file_pathsplit">file_pathsplit</a></td>
-<td><a class="normal" href="ietf.html">ietf</a></td>
-<td>Splits a path string returned by uri_split into its
-    individual components for the file URI.</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="utils.html#FillTo">FillTo</a></td>
-<td><a class="normal" href="utils.html">utils</a></td>
-<td>&nbsp;</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="utils.html#fillwithzero">fillwithzero</a></td>
-<td><a class="normal" href="utils.html">utils</a></td>
-<td>&nbsp;</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="locale.html#GetCharEncoding">GetCharEncoding</a></td>
-<td><a class="normal" href="locale.html">locale</a></td>
-<td>Using a registered ALIAS name for a specific character encoding,
-    return the common or MIME name associated with this character set, 
-    and indicate the type of stream format used. The type of stream 
-    format used can be one of the <code>CHAR_ENCODING_XXXX</code> constants.</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="iso3166.html#getcountryname_en">getcountryname_en</a></td>
-<td><a class="normal" href="iso3166.html">iso3166</a></td>
-<td>&nbsp;</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="iso3166.html#getcountryname_fr">getcountryname_fr</a></td>
-<td><a class="normal" href="iso3166.html">iso3166</a></td>
-<td>&nbsp;</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="dateutil.html#GetCurrentDate">GetCurrentDate</a></td>
-<td><a class="normal" href="dateutil.html">dateutil</a></td>
-<td>Returns the current date set in the operating system</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="dateutil.html#GetCurrentTime">GetCurrentTime</a></td>
-<td><a class="normal" href="dateutil.html">dateutil</a></td>
-<td>Returns the current time set in the operating system</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="locale.html#GetISODateString">GetISODateString</a></td>
-<td><a class="normal" href="locale.html">locale</a></td>
-<td>Returns the extended format representation of a date as recommended
-    by ISO 8601 (Gregorian Calendar).</p><p>Returns an empty string if there is an error. The extended
-    representation separates each member (year,month,day) with a dash
-    character (-).</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="locale.html#GetISODateStringBasic">GetISODateStringBasic</a></td>
-<td><a class="normal" href="locale.html">locale</a></td>
-<td>Returns the basic format representation of a date as recommended
-    by ISO 8601 (Gregorian Calendar).</p><p>Returns an empty string if there is an error.</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="locale.html#GetISODateTimeString">GetISODateTimeString</a></td>
-<td><a class="normal" href="locale.html">locale</a></td>
-<td>&nbsp;</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="locale.html#GetISOTimeString">GetISOTimeString</a></td>
-<td><a class="normal" href="locale.html">locale</a></td>
-<td>Returns the extended format representation of a time as recommended
-    by ISO 8601 (Gregorian Calendar).</p><p>Returns an empty string if there is an error. The extended
-    representation separates each member (hour,minute,second) with a colon
-    (:).</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="locale.html#GetISOTimeStringBasic">GetISOTimeStringBasic</a></td>
-<td><a class="normal" href="locale.html">locale</a></td>
-<td>Returns the basic format representation of a time as recommended
-    by ISO 8601 (Gregorian Calendar).</p><p>Returns an empty string if there is an error. The extended
-    representation separates each member (hour,minute,second) with a colon
-    (:).</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="iso639.html#getlangcode_en">getlangcode_en</a></td>
-<td><a class="normal" href="iso639.html">iso639</a></td>
-<td>This routine returns the 2 character code related
-    to the english name of the language. The search is
-    not case  (according to ISO 639-1). If there is
-    no 2 character language code for this language, or
-    if the language name is not found, the routine 
-    returns an empty string.</p><p>The language name string should be encoded according to
-    ISO-8859-1.</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="iso639.html#getlangcode_fr">getlangcode_fr</a></td>
-<td><a class="normal" href="iso639.html">iso639</a></td>
-<td>This routine returns the 2 character code related
-    to the french name of the language. The search is
-    not case  (according to ISO 639-1). If there is
-    no 2 character language code for this language, or
-    if the language name is not found, the routine 
-    returns an empty string.</p><p>The language name string should be encoded according to
-    ISO-8859-1.</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="iso639.html#getlangname_en">getlangname_en</a></td>
-<td><a class="normal" href="iso639.html">iso639</a></td>
-<td>This routine returns the language name in english
-  for the specified language code. The language code
-  IS case insensitive and can be either 2 or 3 characters
-  in length (according to ISO 639-1 and ISO 639-2 respectively).</p><p>The returned string is encoded according to
-  ISO-8859-1.If there are alternate names for
-  the language, only the first alternate 
-  name is returned.</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="iso639.html#getlangname_fr">getlangname_fr</a></td>
-<td><a class="normal" href="iso639.html">iso639</a></td>
-<td>This routine returns the language name in french 
-  for the specified language code. The language code
-  IS case insensitive and can be either 2 or 3 characters
-  in length (according to ISO 639-1 and ISO 639-2 respectively)</p><p>The returned string is encoded according to
-  ISO-8859-1. If there are alternate names for
-  the language, only the first alternate 
-  name is returned.</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="dateutil.html#GetTime">GetTime</a></td>
-<td><a class="normal" href="dateutil.html">dateutil</a></td>
-<td>Returns the current time.</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="utils.html#hexstr">hexstr</a></td>
-<td><a class="normal" href="utils.html">utils</a></td>
-<td>Convert a value to an ASCII hexadecimal representation</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="dateutil.html#HourOf">HourOf</a></td>
-<td><a class="normal" href="dateutil.html">dateutil</a></td>
-<td>Returns the hour of the day represented by a TDateTime value.</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="ietf.html#http_pathsplit">http_pathsplit</a></td>
-<td><a class="normal" href="ietf.html">ietf</a></td>
-<td>Splits a path string returned by uri_split into its
-    individual components for the http URI.</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="dateutil.html#IncDay">IncDay</a></td>
-<td><a class="normal" href="dateutil.html">dateutil</a></td>
-<td>Returns a date shifted by a specified number of days.</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="dateutil.html#IncHour">IncHour</a></td>
-<td><a class="normal" href="dateutil.html">dateutil</a></td>
-<td>Returns a date/time value shifted by a specified number of hours.</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="dateutil.html#IncMilliSecond">IncMilliSecond</a></td>
-<td><a class="normal" href="dateutil.html">dateutil</a></td>
-<td>Returns a date/time value shifted by a specified number of milliseconds.</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="dateutil.html#IncMinute">IncMinute</a></td>
-<td><a class="normal" href="dateutil.html">dateutil</a></td>
-<td>Returns a date/time value shifted by a specified number of minutes.</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="dateutil.html#IncSecond">IncSecond</a></td>
-<td><a class="normal" href="dateutil.html">dateutil</a></td>
-<td>Returns a date/time value shifted by a specified number of seconds.</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="dateutil.html#IncWeek">IncWeek</a></td>
-<td><a class="normal" href="dateutil.html">dateutil</a></td>
-<td>Returns a date shifted by a specified number of weeks.</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="dateutil.html#IsPM">IsPM</a></td>
-<td><a class="normal" href="dateutil.html">dateutil</a></td>
-<td>Indicates whether the time portion of a specified TDateTime value occurs after noon.</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="iso3166.html#isvalidcountrycode">isvalidcountrycode</a></td>
-<td><a class="normal" href="iso3166.html">iso3166</a></td>
-<td>Verifies if the 2 letter country code is valid</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="dateutil.html#IsValidDate">IsValidDate</a></td>
-<td><a class="normal" href="dateutil.html">dateutil</a></td>
-<td>Indicates whether a specified year, month, and day represent a valid date.</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="dateutil.html#IsValidDateTime">IsValidDateTime</a></td>
-<td><a class="normal" href="dateutil.html">dateutil</a></td>
-<td>Indicates whether a specified year, month, day, hour, minute, second, and millisecond represent a valid date and time.</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="locale.html#IsValidISODateString">IsValidISODateString</a></td>
-<td><a class="normal" href="locale.html">locale</a></td>
-<td>Verifies if the date is in a valid ISO 8601 format</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="locale.html#IsValidISODateTimeString">IsValidISODateTimeString</a></td>
-<td><a class="normal" href="locale.html">locale</a></td>
-<td>Verifies if the date and time is in a valid ISO 8601 format</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="locale.html#IsValidISOTimeString">IsValidISOTimeString</a></td>
-<td><a class="normal" href="locale.html">locale</a></td>
-<td>Verifies if the time is in a valid ISO 8601 format</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="iso639.html#isvalidlangcode">isvalidlangcode</a></td>
-<td><a class="normal" href="iso639.html">iso639</a></td>
-<td>Verifies if the 2 or 3 letter language code is valid</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="dateutil.html#IsValidTime">IsValidTime</a></td>
-<td><a class="normal" href="dateutil.html">dateutil</a></td>
-<td>Indicates whether a specified hour, minute, second, and millisecond represent a valid date and time.</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="ietf.html#langtag_isvalid">langtag_isvalid</a></td>
-<td><a class="normal" href="ietf.html">ietf</a></td>
-<td>&nbsp;</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="ietf.html#langtag_split">langtag_split</a></td>
-<td><a class="normal" href="ietf.html">ietf</a></td>
-<td>&nbsp;</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="utils.html#LowString">LowString</a></td>
-<td><a class="normal" href="utils.html">utils</a></td>
-<td>Convert a string to lowercase ASCII</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="locale.html#MicrosoftCodePageToMIMECharset">MicrosoftCodePageToMIMECharset</a></td>
-<td><a class="normal" href="locale.html">locale</a></td>
-<td>Using a code page identifier (as defined by Microsoft and OS/2)
-    return the resulting IANA encoding alias string</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="locale.html#MicrosoftLangageCodeToISOCode">MicrosoftLangageCodeToISOCode</a></td>
-<td><a class="normal" href="locale.html">locale</a></td>
-<td>Using a code page identifier (as defined by Microsoft and OS/2)
-    return the resulting IANA encoding alias string</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="ietf.html#mime_isvalidcontenttype">mime_isvalidcontenttype</a></td>
-<td><a class="normal" href="ietf.html">ietf</a></td>
-<td>&nbsp;</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="dateutil.html#MinuteOf">MinuteOf</a></td>
-<td><a class="normal" href="dateutil.html">dateutil</a></td>
-<td>Returns the minute of the hour represented by a TDateTime value.</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="dateutil.html#MonthOf">MonthOf</a></td>
-<td><a class="normal" href="dateutil.html">dateutil</a></td>
-<td>Returns the month of the year represented by a TDateTime value.</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="dateutil.html#Now">Now</a></td>
-<td><a class="normal" href="dateutil.html">dateutil</a></td>
-<td>Returns the current date and time.</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="utils.html#Printf">Printf</a></td>
-<td><a class="normal" href="utils.html">utils</a></td>
-<td>Format a string and print it out to the console</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="utils.html#removenulls">removenulls</a></td>
-<td><a class="normal" href="utils.html">utils</a></td>
-<td>Remove all null characters from a string.</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="dateutil.html#SameDate">SameDate</a></td>
-<td><a class="normal" href="dateutil.html">dateutil</a></td>
-<td>Indicates whether two TDateTime values represent the same year, month, and day.</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="dateutil.html#SameDateTime">SameDateTime</a></td>
-<td><a class="normal" href="dateutil.html">dateutil</a></td>
-<td>Indicates whether two TDateTime values represent the same year, month, day, hour, minute, second, and millisecond.</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="dateutil.html#SameTime">SameTime</a></td>
-<td><a class="normal" href="dateutil.html">dateutil</a></td>
-<td>Indicates whether two TDateTime values represent the same time of day, ignoring the date portion.</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="dateutil.html#SecondOf">SecondOf</a></td>
-<td><a class="normal" href="dateutil.html">dateutil</a></td>
-<td>Returns the second of the minute represented by a TDateTime value.</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="utils.html#StreamErrorProcedure">StreamErrorProcedure</a></td>
-<td><a class="normal" href="utils.html">utils</a></td>
-<td>Generic stream error procedure</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="utils.html#stringdispose">stringdispose</a></td>
-<td><a class="normal" href="utils.html">utils</a></td>
-<td>&nbsp;</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="utils.html#stringdup">stringdup</a></td>
-<td><a class="normal" href="utils.html">utils</a></td>
-<td>&nbsp;</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="utils.html#SwapLong">SwapLong</a></td>
-<td><a class="normal" href="utils.html">utils</a></td>
-<td>Change the endian of a 32-bit value</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="utils.html#SwapWord">SwapWord</a></td>
-<td><a class="normal" href="utils.html">utils</a></td>
-<td>Change the endian of a 16-bit value</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="dateutil.html#Time">Time</a></td>
-<td><a class="normal" href="dateutil.html">dateutil</a></td>
-<td>Returns the current time.</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="dateutil.html#TimeOf">TimeOf</a></td>
-<td><a class="normal" href="dateutil.html">dateutil</a></td>
-<td>Strips the date portion from a TDatetime value</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="dateutil.html#TimeToStr">TimeToStr</a></td>
-<td><a class="normal" href="dateutil.html">dateutil</a></td>
-<td>Returns a string that represents a TDateTime value.</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="dateutil.html#Today">Today</a></td>
-<td><a class="normal" href="dateutil.html">dateutil</a></td>
-<td>Returns a TDateTime value that represents the current date.</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="utils.html#Trim">Trim</a></td>
-<td><a class="normal" href="utils.html">utils</a></td>
-<td>Trim removes leading and trailing spaces and control 
-     characters from the given string S</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="utils.html#TrimLeft">TrimLeft</a></td>
-<td><a class="normal" href="utils.html">utils</a></td>
-<td>Remove all whitespace from the start of a string</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="utils.html#TrimRight">TrimRight</a></td>
-<td><a class="normal" href="utils.html">utils</a></td>
-<td>Remove all whitespace from the end of a string</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="dateutil.html#TryEncodeDate">TryEncodeDate</a></td>
-<td><a class="normal" href="dateutil.html">dateutil</a></td>
-<td>Returns a TDateTime value that represents a specified Year, Month, and Day.</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="dateutil.html#TryEncodeDateAndTimeToStr">TryEncodeDateAndTimeToStr</a></td>
-<td><a class="normal" href="dateutil.html">dateutil</a></td>
-<td>This routine encodes a complete date and time to its string
-    representation. The encoded string conforms to the ISO 8601
-    complete representation extended format (YYYY-MM-DDTHH:MM:SS[Z]).</p><p>The year value is required, while all other fields are optional.
-    The other fields can be set to EMPTY_DATETIME_FIELD to indicate that 
-    they are empty. It also adds the UTC marker if required and if it
-    is set and time information is present.</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="dateutil.html#TryEncodeDateTime">TryEncodeDateTime</a></td>
-<td><a class="normal" href="dateutil.html">dateutil</a></td>
-<td>Returns a TDateTime that represents a specified year, month, day, hour, minute, second, and millisecond.</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="dateutil.html#TryEncodeTime">TryEncodeTime</a></td>
-<td><a class="normal" href="dateutil.html">dateutil</a></td>
-<td>Returns a TDateTime value for a specified Hour, Min, Sec, and MSec.</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="dateutil.html#TryFileTimeToDateTimeExt">TryFileTimeToDateTimeExt</a></td>
-<td><a class="normal" href="dateutil.html">dateutil</a></td>
-<td>&nbsp;</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="dateutil.html#TryStrToDate">TryStrToDate</a></td>
-<td><a class="normal" href="dateutil.html">dateutil</a></td>
-<td>Converts a string to a TDateTime value, with a Boolean success code.</p><p>In the case where the date does not contain the full representation
-    of a date (for examples, YYYY or YYYY-MM), then the missing values
-    will be set to 1 to be legal.</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="dateutil.html#TryStrToDateTime">TryStrToDateTime</a></td>
-<td><a class="normal" href="dateutil.html">dateutil</a></td>
-<td>Converts a string to a TDateTime value with a Boolean success code.</p><p>Supported formats:
-    1) Format of Complete Representation for calendar dates
-    (as specified in ISO 8601), which should include the Time
-    designator character.
-    2) Format: 'YYYY-MM-DD HH:mm:ss [GMT|UTC|UT]'
-    3) Openoffice 1.1.x HTML date format: 'YYYYMMDD;HHmmssuu'
-    4) Adobe PDF 'D:YYYYMMDDHHMMSSOHH'mm'' format</p><p>The returned value will be according to UTC if timezone
-    information is uncluded, otherwise, it will be left as is.
-    To determine if the value was actually converted to UTC,
-    use TryStrToDateTimeExt.</p><p>In the case where the date does not contain the full representation
-    of a date (for examples, YYYY or YYYY-MM), then the missing values
-    will be set to 1 to be legal.</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="dateutil.html#TryStrToDateTimeExt">TryStrToDateTimeExt</a></td>
-<td><a class="normal" href="dateutil.html">dateutil</a></td>
-<td>Converts a string to a TDateTime value with a Boolean success code.
-    This routine also gives information if the value was successfully
-    converted to UTC time or not (if no timezone information was
-    available in the string then the utc value will be false).</p><p>Supported formats:
-    1) Format of Complete Representation for calendar dates
-    (as specified in ISO 8601), which should include the Time
-    designator character.
-    3) Format: 'YYYY-MM-DD HH:mm:ss [GMT|UTC|UT]'
-    4) Openoffice 1.1.x HTML date format: 'YYYYMMDD;HHmmssuu'
-    5) Adobe PDF 'D:YYYYMMDDHHMMSSOHH'mm'' format</p><p>The returned value will be according to UTC if timezone
-    information is specified.</p><p>In the case where the date does not contain the full representation
-    of a date (for examples, YYYY or YYYY-MM), then the missing values
-    will be set to 1 to be legal.</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="dateutil.html#TryStrToTime">TryStrToTime</a></td>
-<td><a class="normal" href="dateutil.html">dateutil</a></td>
-<td>Converts a string to a TDateTime value with an error default,</p><p>Supported formats:
-    1) ISO 8601 time format (complete representation) with
-       optional timezone designators.
-    2) Format: 'HH:mm:ss [GMT|UTC|UT]'
-    3) Openoffice 1.1.x HTML time format: 'HHmmssuu'
-    4) Adobe PDF 'D:YYYYMMDDHHMMSSOHH'mm'' format</p><p>The returned value will be according to UTC
-    if timezone information is specified. The Date field is
-    truncated and is equal to zero upon return.</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="dateutil.html#TryUNIXToDateTimeExt">TryUNIXToDateTimeExt</a></td>
-<td><a class="normal" href="dateutil.html">dateutil</a></td>
-<td>&nbsp;</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="unicode.html#ucs2strdispose">ucs2strdispose</a></td>
-<td><a class="normal" href="unicode.html">unicode</a></td>
-<td>Disposes of an UCS-2 null terminated string on the heap</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="unicode.html#ucs2strlcopyucs4">ucs2strlcopyucs4</a></td>
-<td><a class="normal" href="unicode.html">unicode</a></td>
-<td>Convert an UCS-2 null terminated string to an UCS-4 null terminated string</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="unicode.html#ucs2strlen">ucs2strlen</a></td>
-<td><a class="normal" href="unicode.html">unicode</a></td>
-<td>Returns the number of characters in the null terminated UCS-2 string</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="unicode.html#ucs2strnew">ucs2strnew</a></td>
-<td><a class="normal" href="unicode.html">unicode</a></td>
-<td>Converts an UCS-4 null terminated string to an UCS-2 null
-   terminated string</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="unicode.html#ucs2_isvalid">ucs2_isvalid</a></td>
-<td><a class="normal" href="unicode.html">unicode</a></td>
-<td>Checks if the UCS-2 character is valid</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="unicode.html#ucs2_length">ucs2_length</a></td>
-<td><a class="normal" href="unicode.html">unicode</a></td>
-<td>Returns the current length of an UCS-2 string</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="unicode.html#ucs2_setlength">ucs2_setlength</a></td>
-<td><a class="normal" href="unicode.html">unicode</a></td>
-<td>Set the new dynamic length of an ucs-2 string</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="unicode.html#ucs4strcheck">ucs4strcheck</a></td>
-<td><a class="normal" href="unicode.html">unicode</a></td>
-<td>This routine checks the validity of an UCS-4 null terminated string.
-      It first skips to the null character, and if maxcount is greater than
-      the index, verifies that the values in memory are of value VALUE.</p><p>Otherwise, returns an ERROR. This routine is used with UCS4StrFill.</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="unicode.html#ucs4strdispose">ucs4strdispose</a></td>
-<td><a class="normal" href="unicode.html">unicode</a></td>
-<td>Disposes of an UCS-4 null terminated string on the heap</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="unicode.html#ucs4strfill">ucs4strfill</a></td>
-<td><a class="normal" href="unicode.html">unicode</a></td>
-<td>Fills a memory region consisting of ucs-4 characters
-     with the specified UCS-4 character.</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="unicode.html#ucs4strlen">ucs4strlen</a></td>
-<td><a class="normal" href="unicode.html">unicode</a></td>
-<td>Returns the number of characters in the null terminated UCS-4 string</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="unicode.html#ucs4strnew">ucs4strnew</a></td>
-<td><a class="normal" href="unicode.html">unicode</a></td>
-<td>Converts a null terminated string to an UCS-4 null
-   terminated string</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="unicode.html#ucs4strnewstr">ucs4strnewstr</a></td>
-<td><a class="normal" href="unicode.html">unicode</a></td>
-<td>Converts a pascal string to an UCS-4 null
-   terminated string</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="unicode.html#ucs4strnewucs2">ucs4strnewucs2</a></td>
-<td><a class="normal" href="unicode.html">unicode</a></td>
-<td>Converts an UCS-2 null terminated string to an UCS-4 null
-   terminated string</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="unicode.html#ucs4strnewucs4">ucs4strnewucs4</a></td>
-<td><a class="normal" href="unicode.html">unicode</a></td>
-<td>Allocates and copies an UCS-4 null terminated string</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="unicode.html#ucs4strpas">ucs4strpas</a></td>
-<td><a class="normal" href="unicode.html">unicode</a></td>
-<td>Converts a null-terminated UCS-4 string to a Pascal-style UCS-4 string.</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="unicode.html#ucs4strpastoASCII">ucs4strpastoASCII</a></td>
-<td><a class="normal" href="unicode.html">unicode</a></td>
-<td>Converts a null-terminated UCS-4 string to a Pascal-style 
-       ASCII encoded string.</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="unicode.html#ucs4strpastoISO8859_1">ucs4strpastoISO8859_1</a></td>
-<td><a class="normal" href="unicode.html">unicode</a></td>
-<td>Converts a null-terminated UCS-4 string to a Pascal-style 
-       ISO 8859-1 encoded string.</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="unicode.html#ucs4strpastoUTF8">ucs4strpastoUTF8</a></td>
-<td><a class="normal" href="unicode.html">unicode</a></td>
-<td>Converts a null-terminated UCS-4 string to a Pascal-style 
-       UTF-8 encoded string.</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="unicode.html#ucs4strpcopy">ucs4strpcopy</a></td>
-<td><a class="normal" href="unicode.html">unicode</a></td>
-<td>Copies a Pascal-style UCS-4 string to a null-terminated UCS-4 string.</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="unicode.html#ucs4StrPosISO8859_1">ucs4StrPosISO8859_1</a></td>
-<td><a class="normal" href="unicode.html">unicode</a></td>
-<td>Returns a pointer to the first occurence of an ISO-8859-1
-     encoded null terminated string in a UCS-4 encoded
-     null terminated string.</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="unicode.html#ucs4strtrim">ucs4strtrim</a></td>
-<td><a class="normal" href="unicode.html">unicode</a></td>
-<td>Allocates a new UCS-4 null terminated string, and copies
-     the existing string, avoid a copy of the whitespace at
-     the start and end of the string</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="unicode.html#ucs4_concat">ucs4_concat</a></td>
-<td><a class="normal" href="unicode.html">unicode</a></td>
-<td>Concatenates two UCS-4 strings, and gives a resulting UCS-4 string</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="unicode.html#ucs4_concatascii">ucs4_concatascii</a></td>
-<td><a class="normal" href="unicode.html">unicode</a></td>
-<td>Concatenates an UCS-4 string with an ASCII string, and gives
-      a resulting UCS-4 string</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="unicode.html#ucs4_converttoiso8859_1">ucs4_converttoiso8859_1</a></td>
-<td><a class="normal" href="unicode.html">unicode</a></td>
-<td>Converts an UCS-4 string to an ISO-8859-1 string</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="unicode.html#ucs4_copy">ucs4_copy</a></td>
-<td><a class="normal" href="unicode.html">unicode</a></td>
-<td>Returns an UCS-4 substring of an UCS-4 string</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="unicode.html#ucs4_delete">ucs4_delete</a></td>
-<td><a class="normal" href="unicode.html">unicode</a></td>
-<td>Deletes a substring from a string</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="unicode.html#ucs4_equal">ucs4_equal</a></td>
-<td><a class="normal" href="unicode.html">unicode</a></td>
-<td>Checks if both UCS-4 strings are equal</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="unicode.html#ucs4_equalascii">ucs4_equalascii</a></td>
-<td><a class="normal" href="unicode.html">unicode</a></td>
-<td>Checks if an ASCII string is equal to an UCS-4 string</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="unicode.html#ucs4_issupported">ucs4_issupported</a></td>
-<td><a class="normal" href="unicode.html">unicode</a></td>
-<td>Checks if conversion from/to this character set format to/from UCS-4
-      is supported</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="unicode.html#ucs4_isvalid">ucs4_isvalid</a></td>
-<td><a class="normal" href="unicode.html">unicode</a></td>
-<td>Checks if the UCS-4 character is valid</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="unicode.html#ucs4_iswhitespace">ucs4_iswhitespace</a></td>
-<td><a class="normal" href="unicode.html">unicode</a></td>
-<td>Determines if the specified character is a whitespace character</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="unicode.html#ucs4_length">ucs4_length</a></td>
-<td><a class="normal" href="unicode.html">unicode</a></td>
-<td>Returns the current length of an UCS-4 string</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="unicode.html#ucs4_lowcase">ucs4_lowcase</a></td>
-<td><a class="normal" href="unicode.html">unicode</a></td>
-<td>Converts a character to a lowercase character</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="unicode.html#ucs4_pos">ucs4_pos</a></td>
-<td><a class="normal" href="unicode.html">unicode</a></td>
-<td>Searches for an UCS-4 substring in an UCS-4 string</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="unicode.html#ucs4_posascii">ucs4_posascii</a></td>
-<td><a class="normal" href="unicode.html">unicode</a></td>
-<td>Searches for an ASCII substring in an UCS-4 string</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="unicode.html#ucs4_setlength">ucs4_setlength</a></td>
-<td><a class="normal" href="unicode.html">unicode</a></td>
-<td>Set the new dynamic length of an UCS-4 string</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="unicode.html#ucs4_trim">ucs4_trim</a></td>
-<td><a class="normal" href="unicode.html">unicode</a></td>
-<td>Trims trailing and leading spaces and control characters from an UCS-4 string.</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="unicode.html#ucs4_trimleft">ucs4_trimleft</a></td>
-<td><a class="normal" href="unicode.html">unicode</a></td>
-<td>Trims leading spaces and control characters from an UCS-4 string.</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="unicode.html#ucs4_trimright">ucs4_trimright</a></td>
-<td><a class="normal" href="unicode.html">unicode</a></td>
-<td>Trims trailing spaces and control characters from an UCS-4 string.</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="unicode.html#ucs4_upcase">ucs4_upcase</a></td>
-<td><a class="normal" href="unicode.html">unicode</a></td>
-<td>Converts a character to an uppercase character</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="locale.html#UNIXToDateTime">UNIXToDateTime</a></td>
-<td><a class="normal" href="locale.html">locale</a></td>
-<td>Converts a UNIX styled time (the number of seconds since 1970)
-    to a standard date and time representation.</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="crc.html#UpdateAdler32">UpdateAdler32</a></td>
-<td><a class="normal" href="crc.html">crc</a></td>
-<td>Calculates an Adler-32 checksum value</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="crc.html#UpdateCRC">UpdateCRC</a></td>
-<td><a class="normal" href="crc.html">crc</a></td>
-<td>Calculates a standard 16-bit CRC</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="crc.html#UpdateCrc16">UpdateCrc16</a></td>
-<td><a class="normal" href="crc.html">crc</a></td>
-<td>Calculates a CRC-16 CCITT value</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="crc.html#UpdateCrc32">UpdateCrc32</a></td>
-<td><a class="normal" href="crc.html">crc</a></td>
-<td>Calculates a CRC-32 CCITT value</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="crc.html#UpdateFletcher8">UpdateFletcher8</a></td>
-<td><a class="normal" href="crc.html">crc</a></td>
-<td>Calculates an 8-bit fletcher checksum value</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="utils.html#UpString">UpString</a></td>
-<td><a class="normal" href="utils.html">utils</a></td>
-<td>Convert a string to uppercase ASCII</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="ietf.html#uri_split">uri_split</a></td>
-<td><a class="normal" href="ietf.html">ietf</a></td>
-<td>Extract information from an URI string</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="ietf.html#urn_isvalid">urn_isvalid</a></td>
-<td><a class="normal" href="ietf.html">ietf</a></td>
-<td>Verifies the validity of a complete URN string</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="ietf.html#urn_isvalidnid">urn_isvalidnid</a></td>
-<td><a class="normal" href="ietf.html">ietf</a></td>
-<td>This routine checks that the specified NID (namespace) is
-    either registered to IANA, or that it is an experimental
-    NID, as described in IETF RFC 2611. More assignment
-    information can be obtained from:
-    <a class="normal" target="_new" href="http://www.iana.org/assignments/urn-namespaces">http://www.iana.org/assignments/urn-namespaces</a></td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="ietf.html#urn_pathsplit">urn_pathsplit</a></td>
-<td><a class="normal" href="ietf.html">ietf</a></td>
-<td>Splits a path string returned by uri_split into its
-    individual components for URN.</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="ietf.html#urn_split">urn_split</a></td>
-<td><a class="normal" href="ietf.html">ietf</a></td>
-<td>Splits an URN string in its separate components</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="unicode.html#utf16_length">utf16_length</a></td>
-<td><a class="normal" href="unicode.html">unicode</a></td>
-<td>Returns the current length of an UTF-16 string</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="unicode.html#utf16_setlength">utf16_setlength</a></td>
-<td><a class="normal" href="unicode.html">unicode</a></td>
-<td>Set the length of an UTF-16 string</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="unicode.html#utf16_sizeencoding">utf16_sizeencoding</a></td>
-<td><a class="normal" href="unicode.html">unicode</a></td>
-<td>Returns the number of characters that are used to encode this
-      character</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="unicode.html#utf8strdispose">utf8strdispose</a></td>
-<td><a class="normal" href="unicode.html">unicode</a></td>
-<td>Disposes of an UTF-8 null terminated string on the heap</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="unicode.html#utf8strlcopyucs4">utf8strlcopyucs4</a></td>
-<td><a class="normal" href="unicode.html">unicode</a></td>
-<td>Convert an UTF-8 null terminated string to an UCS-4 null terminated string</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="unicode.html#utf8strnew">utf8strnew</a></td>
-<td><a class="normal" href="unicode.html">unicode</a></td>
-<td>Converts an UCS-4 null terminated string to an UTF-8 null
-   terminated string</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="unicode.html#utf8strnewstr">utf8strnewstr</a></td>
-<td><a class="normal" href="unicode.html">unicode</a></td>
-<td>Converts an UTF-8 string to a null terminated UTF-8 string.</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="unicode.html#utf8strnewutf8">utf8strnewutf8</a></td>
-<td><a class="normal" href="unicode.html">unicode</a></td>
-<td>Allocates and copies an UTF-8 null terminated string</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="unicode.html#utf8strpas">utf8strpas</a></td>
-<td><a class="normal" href="unicode.html">unicode</a></td>
-<td>Converts a null-terminated UTF-8 string to a Pascal-style
-       UTF-8 encoded string.</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="unicode.html#utf8strpastoASCII">utf8strpastoASCII</a></td>
-<td><a class="normal" href="unicode.html">unicode</a></td>
-<td>Converts a null-terminated UTF-8 string to a Pascal-style
-       ASCII encoded string.</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="unicode.html#utf8strpastoISO8859_1">utf8strpastoISO8859_1</a></td>
-<td><a class="normal" href="unicode.html">unicode</a></td>
-<td>Converts a null-terminated UTF-8 string to a Pascal-style
-       ISO 8859-1 encoded string.</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="unicode.html#utf8strpastostring">utf8strpastostring</a></td>
-<td><a class="normal" href="unicode.html">unicode</a></td>
-<td>Converts an UTF-8 null terminated string to a string 
-      encoded to a different code page</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="unicode.html#utf8_islegal">utf8_islegal</a></td>
-<td><a class="normal" href="unicode.html">unicode</a></td>
-<td>Returns if the specified UTF-8 string is legal or not</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="unicode.html#utf8_length">utf8_length</a></td>
-<td><a class="normal" href="unicode.html">unicode</a></td>
-<td>Returns the current length of an UTF-8 string</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="unicode.html#utf8_setlength">utf8_setlength</a></td>
-<td><a class="normal" href="unicode.html">unicode</a></td>
-<td>Set the length of an UTF-8 string</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="unicode.html#utf8_sizeencoding">utf8_sizeencoding</a></td>
-<td><a class="normal" href="unicode.html">unicode</a></td>
-<td>Returns the number of characters that are used to encode this
-      character</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="utils.html#ValBinary">ValBinary</a></td>
-<td><a class="normal" href="utils.html">utils</a></td>
-<td>Convert a binary value represented by a string to its
-      numerical value. If there is no error, <code>code</code> will be
-      equal to zero.</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="utils.html#ValDecimal">ValDecimal</a></td>
-<td><a class="normal" href="utils.html">utils</a></td>
-<td>Convert a decimal value represented by a string to its
-      numerical value. If there is no error, <code>code</code> will be
-      equal to zero.</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="utils.html#ValHexadecimal">ValHexadecimal</a></td>
-<td><a class="normal" href="utils.html">utils</a></td>
-<td>Convert an hexadecimal value represented by a string to its
-      numerical value. If there is no error, <code>code</code> will be
-      equal to zero.</td>
-</tr>
-<tr class="list2" valign="top"><td nowrap="nowrap"><a class="normal" href="utils.html#ValOctal">ValOctal</a></td>
-<td><a class="normal" href="utils.html">utils</a></td>
-<td>Convert an octal value represented by a string to its
-      numerical value. If there is no error, <code>code</code> will be
-      equal to zero.</td>
-</tr>
-<tr class="list" valign="top"><td nowrap="nowrap"><a class="normal" href="dateutil.html#YearOf">YearOf</a></td>
-<td><a class="normal" href="dateutil.html">dateutil</a></td>
-<td>Returns the year represented by a TDateTime value.</td>
+<h1 class="allitems">All Functions and Procedures</h1>
+<table class="itemstable">
+<tr class="listheader">
+<th class="itemname">Name</th>
+<th class="itemunit">Unit</th>
+<th class="itemdesc">Description</th>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="utils.html#AddDoubleQuotes">AddDoubleQuotes</a></td>
+<td class="itemunit"><a class="bold"  href="utils.html">utils</a></td>
+<td class="itemdesc">This routine adds double quotes to the selected string, if the string contains any space character after the string has been trimmed.</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="utils.html#AnsiDirectoryExists">AnsiDirectoryExists</a></td>
+<td class="itemunit"><a class="bold"  href="utils.html">utils</a></td>
+<td class="itemdesc">Verifies the existence of a directory</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="utils.html#AnsiFileExists">AnsiFileExists</a></td>
+<td class="itemunit"><a class="bold"  href="utils.html">utils</a></td>
+<td class="itemdesc">Verifies the existence of a filename</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="unicode.html#ansistrdispose">ansistrdispose</a></td>
+<td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
+<td class="itemdesc">&nbsp;</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="unicode.html#ansistrnew">ansistrnew</a></td>
+<td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
+<td class="itemdesc">Allocates and copies an ISO-8859-1 null-terminated string from a null-terminated string</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="unicode.html#ansistrnewstr">ansistrnewstr</a></td>
+<td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
+<td class="itemdesc">&nbsp;</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="unicode.html#ansistrpas">ansistrpas</a></td>
+<td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
+<td class="itemdesc">Converts a null-terminated ISO-8859-1 string to a Pascal-style ASCII encoded string.</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="unicode.html#asciistrnew">asciistrnew</a></td>
+<td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
+<td class="itemdesc">Allocates and copies an ascii null-terminated string from a null-terminated string</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="unicode.html#asciistrnewstr">asciistrnewstr</a></td>
+<td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
+<td class="itemdesc">&nbsp;</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="unicode.html#asciistrpas">asciistrpas</a></td>
+<td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
+<td class="itemdesc">Converts a null-terminated ASCII string to a Pascal-style ASCII encoded string.</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="utils.html#boolstr">boolstr</a></td>
+<td class="itemunit"><a class="bold"  href="utils.html">utils</a></td>
+<td class="itemdesc">Convert a boolean value to an ASCII representation</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="utils.html#ChangeFileExt">ChangeFileExt</a></td>
+<td class="itemunit"><a class="bold"  href="utils.html">utils</a></td>
+<td class="itemdesc">&nbsp;</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="utils.html#CleanString">CleanString</a></td>
+<td class="itemunit"><a class="bold"  href="utils.html">utils</a></td>
+<td class="itemdesc">Cleans up a string of illegal control characters, newlines and tabs. It does the following on the string:
+
+<p>This only works on UTF-8/ASCII/ISO-8859 strings.
+
+<p>1) Removes characters from code #0..#31 at any location in the string. 2) Trims spaces at the begining and end of the string.</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="utils.html#CompareByte">CompareByte</a></td>
+<td class="itemunit"><a class="bold"  href="utils.html">utils</a></td>
+<td class="itemdesc">&nbsp;</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="unicode.html#ConvertFromUCS4">ConvertFromUCS4</a></td>
+<td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
+<td class="itemdesc">Convert an UCS-4 string to a single byte encoded string</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="unicode.html#ConvertToUCS4">ConvertToUCS4</a></td>
+<td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
+<td class="itemdesc">Convert a byte encoded string to an UCS-4 string</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="unicode.html#ConvertUCS2ToUCS4">ConvertUCS2ToUCS4</a></td>
+<td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
+<td class="itemdesc">Convert an UCS-2 string to an UCS-4 string</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="unicode.html#ConvertUCS4ToUCS2">ConvertUCS4ToUCS2</a></td>
+<td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
+<td class="itemdesc">Convert an UCS-4 string to an UCS-2 string</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="unicode.html#ConvertUCS4toUTF16">ConvertUCS4toUTF16</a></td>
+<td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
+<td class="itemdesc">Convert an UCS-4 string to an UTF-16 string</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="unicode.html#convertUCS4toUTF8">convertUCS4toUTF8</a></td>
+<td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
+<td class="itemdesc">Convert an UCS-4 string to an UTF-8 string</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="unicode.html#ConvertUTF16ToUCS4">ConvertUTF16ToUCS4</a></td>
+<td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
+<td class="itemdesc">Convert an UTF-16 string to an UCS-4 string</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="unicode.html#ConvertUTF8ToUCS4">ConvertUTF8ToUCS4</a></td>
+<td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
+<td class="itemdesc">Convert an UTF-8 string to an UCS-4 string</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="dateutil.html#CurrentYear">CurrentYear</a></td>
+<td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
+<td class="itemdesc">Returns the current year</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="dateutil.html#Date">Date</a></td>
+<td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
+<td class="itemdesc">Returns the current date, with the time value equal to midnight.</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="dateutil.html#DateOf">DateOf</a></td>
+<td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
+<td class="itemdesc">Strips the time portion from a TDateTime value.</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="dateutil.html#DateTimeToStr">DateTimeToStr</a></td>
+<td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
+<td class="itemdesc">Converts a TDateTime value to a string in standard ISO 8601 format.</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="dateutil.html#DateTimeToStrExt">DateTimeToStrExt</a></td>
+<td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
+<td class="itemdesc">&nbsp;</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="dateutil.html#DateToStr">DateToStr</a></td>
+<td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
+<td class="itemdesc">Converts a TDatetime value to a string in ISO 8601 format</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="dateutil.html#DayOf">DayOf</a></td>
+<td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
+<td class="itemdesc">Returns the day of the month represented by a TDateTime value.</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="dateutil.html#DaysBetween">DaysBetween</a></td>
+<td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
+<td class="itemdesc">Returns the number of days between two specified TDateTime values.</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="dateutil.html#DecodeDate">DecodeDate</a></td>
+<td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
+<td class="itemdesc">Returns Year, Month, and Day values for a TDateTime value.</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="dateutil.html#DecodeDateTime">DecodeDateTime</a></td>
+<td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
+<td class="itemdesc">Returns Year, Month, Day, Hour, Minute, Second, and Millisecond values for a TDateTime.</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="dateutil.html#DecodeTime">DecodeTime</a></td>
+<td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
+<td class="itemdesc">Breaks a TDateTime value into hours, minutes, seconds, and milliseconds.</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="utils.html#decstr">decstr</a></td>
+<td class="itemunit"><a class="bold"  href="utils.html">utils</a></td>
+<td class="itemdesc">Convert a value to an ASCII decimal representation</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="utils.html#decstrunsigned">decstrunsigned</a></td>
+<td class="itemunit"><a class="bold"  href="utils.html">utils</a></td>
+<td class="itemdesc">Convert a value to an ASCII decimal representation</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="utils.html#EscapeToPascal">EscapeToPascal</a></td>
+<td class="itemunit"><a class="bold"  href="utils.html">utils</a></td>
+<td class="itemdesc">Converts a C style string (containing escape characters), to a pascal style string. Returns the converted string. If there is no error in the conversion, <code>code</code> will be equal to zero.
+
+<p> </td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="fileio.html#FileAssign">FileAssign</a></td>
+<td class="itemunit"><a class="bold"  href="fileio.html">fileio</a></td>
+<td class="itemdesc">Assign a filename to a file</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="fileio.html#FileBlockRead">FileBlockRead</a></td>
+<td class="itemunit"><a class="bold"  href="fileio.html">fileio</a></td>
+<td class="itemdesc">Read data from a file</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="fileio.html#FileBlockWrite">FileBlockWrite</a></td>
+<td class="itemunit"><a class="bold"  href="fileio.html">fileio</a></td>
+<td class="itemdesc">Write data to a file</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="fileio.html#FileClose">FileClose</a></td>
+<td class="itemunit"><a class="bold"  href="fileio.html">fileio</a></td>
+<td class="itemdesc">Close a previously opened file</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="fileio.html#FileGetPos">FileGetPos</a></td>
+<td class="itemunit"><a class="bold"  href="fileio.html">fileio</a></td>
+<td class="itemdesc">Return the current file pointer position</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="fileio.html#FileGetSize">FileGetSize</a></td>
+<td class="itemunit"><a class="bold"  href="fileio.html">fileio</a></td>
+<td class="itemdesc">Get the size of a file in bytes</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="fileio.html#FileIOResult">FileIOResult</a></td>
+<td class="itemunit"><a class="bold"  href="fileio.html">fileio</a></td>
+<td class="itemdesc">Return the result of the last I/O operation</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="fileio.html#FileReset">FileReset</a></td>
+<td class="itemunit"><a class="bold"  href="fileio.html">fileio</a></td>
+<td class="itemdesc">Open a file for reading or writing</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="fileio.html#FileRewrite">FileRewrite</a></td>
+<td class="itemunit"><a class="bold"  href="fileio.html">fileio</a></td>
+<td class="itemdesc">Open/Overwrite a file</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="fileio.html#FileSeek">FileSeek</a></td>
+<td class="itemunit"><a class="bold"  href="fileio.html">fileio</a></td>
+<td class="itemdesc">Change the file pointer position of an opened file</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="fileio.html#FileTruncate">FileTruncate</a></td>
+<td class="itemunit"><a class="bold"  href="fileio.html">fileio</a></td>
+<td class="itemdesc">Truncate a file at the current file position</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="ietf.html#file_pathsplit">file_pathsplit</a></td>
+<td class="itemunit"><a class="bold"  href="ietf.html">ietf</a></td>
+<td class="itemdesc">Splits a path string returned by uri_split into its individual components for the file URI.</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="utils.html#FillTo">FillTo</a></td>
+<td class="itemunit"><a class="bold"  href="utils.html">utils</a></td>
+<td class="itemdesc">&nbsp;</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="utils.html#fillwithzero">fillwithzero</a></td>
+<td class="itemunit"><a class="bold"  href="utils.html">utils</a></td>
+<td class="itemdesc">&nbsp;</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="locale.html#GetCharEncoding">GetCharEncoding</a></td>
+<td class="itemunit"><a class="bold"  href="locale.html">locale</a></td>
+<td class="itemdesc">Using a registered ALIAS name for a specific character encoding, return the common or MIME name associated with this character set, and indicate the type of stream format used. The type of stream format used can be one of the <code>CHAR_ENCODING_XXXX</code> constants.</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="iso3166.html#getcountryname_en">getcountryname_en</a></td>
+<td class="itemunit"><a class="bold"  href="iso3166.html">iso3166</a></td>
+<td class="itemdesc">&nbsp;</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="iso3166.html#getcountryname_fr">getcountryname_fr</a></td>
+<td class="itemunit"><a class="bold"  href="iso3166.html">iso3166</a></td>
+<td class="itemdesc">&nbsp;</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="dateutil.html#GetCurrentDate">GetCurrentDate</a></td>
+<td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
+<td class="itemdesc">Returns the current date set in the operating system</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="dateutil.html#GetCurrentTime">GetCurrentTime</a></td>
+<td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
+<td class="itemdesc">Returns the current time set in the operating system</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="locale.html#GetISODateString">GetISODateString</a></td>
+<td class="itemunit"><a class="bold"  href="locale.html">locale</a></td>
+<td class="itemdesc">Returns the extended format representation of a date as recommended by ISO 8601 (Gregorian Calendar).
+
+<p>Returns an empty string if there is an error. The extended representation separates each member (year,month,day) with a dash character (-).
+
+<p>  </td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="locale.html#GetISODateStringBasic">GetISODateStringBasic</a></td>
+<td class="itemunit"><a class="bold"  href="locale.html">locale</a></td>
+<td class="itemdesc">Returns the basic format representation of a date as recommended by ISO 8601 (Gregorian Calendar).
+
+<p>Returns an empty string if there is an error.
+
+<p>  </td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="locale.html#GetISODateTimeString">GetISODateTimeString</a></td>
+<td class="itemunit"><a class="bold"  href="locale.html">locale</a></td>
+<td class="itemdesc">&nbsp;</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="locale.html#GetISOTimeString">GetISOTimeString</a></td>
+<td class="itemunit"><a class="bold"  href="locale.html">locale</a></td>
+<td class="itemdesc">Returns the extended format representation of a time as recommended by ISO 8601 (Gregorian Calendar).
+
+<p>Returns an empty string if there is an error. The extended representation separates each member (hour,minute,second) with a colon (:).</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="locale.html#GetISOTimeStringBasic">GetISOTimeStringBasic</a></td>
+<td class="itemunit"><a class="bold"  href="locale.html">locale</a></td>
+<td class="itemdesc">Returns the basic format representation of a time as recommended by ISO 8601 (Gregorian Calendar).
+
+<p>Returns an empty string if there is an error. The extended representation separates each member (hour,minute,second) with a colon (:).</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="iso639.html#getlangcode_en">getlangcode_en</a></td>
+<td class="itemunit"><a class="bold"  href="iso639.html">iso639</a></td>
+<td class="itemdesc">This routine returns the 2 character code related to the english name of the language. The search is not case (according to ISO 639-1). If there is no 2 character language code for this language, or if the language name is not found, the routine returns an empty string.
+
+<p>The language name string should be encoded according to ISO-8859-1.
+
+<p> </td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="iso639.html#getlangcode_fr">getlangcode_fr</a></td>
+<td class="itemunit"><a class="bold"  href="iso639.html">iso639</a></td>
+<td class="itemdesc">This routine returns the 2 character code related to the french name of the language. The search is not case (according to ISO 639-1). If there is no 2 character language code for this language, or if the language name is not found, the routine returns an empty string.
+
+<p>The language name string should be encoded according to ISO-8859-1.
+
+<p> </td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="iso639.html#getlangname_en">getlangname_en</a></td>
+<td class="itemunit"><a class="bold"  href="iso639.html">iso639</a></td>
+<td class="itemdesc">This routine returns the language name in english for the specified language code. The language code IS case insensitive and can be either 2 or 3 characters in length (according to ISO 639-1 and ISO 639-2 respectively).
+
+<p>The returned string is encoded according to ISO-8859-1.If there are alternate names for the language, only the first alternate name is returned.
+
+<p></td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="iso639.html#getlangname_fr">getlangname_fr</a></td>
+<td class="itemunit"><a class="bold"  href="iso639.html">iso639</a></td>
+<td class="itemdesc">This routine returns the language name in french for the specified language code. The language code IS case insensitive and can be either 2 or 3 characters in length (according to ISO 639-1 and ISO 639-2 respectively)
+
+<p>The returned string is encoded according to ISO-8859-1. If there are alternate names for the language, only the first alternate name is returned.
+
+<p></td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="dateutil.html#GetTime">GetTime</a></td>
+<td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
+<td class="itemdesc">Returns the current time.</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="utils.html#hexstr">hexstr</a></td>
+<td class="itemunit"><a class="bold"  href="utils.html">utils</a></td>
+<td class="itemdesc">Convert a value to an ASCII hexadecimal representation</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="dateutil.html#HourOf">HourOf</a></td>
+<td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
+<td class="itemdesc">Returns the hour of the day represented by a TDateTime value.</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="ietf.html#http_pathsplit">http_pathsplit</a></td>
+<td class="itemunit"><a class="bold"  href="ietf.html">ietf</a></td>
+<td class="itemdesc">Splits a path string returned by uri_split into its individual components for the http URI.</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="dateutil.html#IncDay">IncDay</a></td>
+<td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
+<td class="itemdesc">Returns a date shifted by a specified number of days.</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="dateutil.html#IncHour">IncHour</a></td>
+<td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
+<td class="itemdesc">Returns a date/time value shifted by a specified number of hours.</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="dateutil.html#IncMilliSecond">IncMilliSecond</a></td>
+<td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
+<td class="itemdesc">Returns a date/time value shifted by a specified number of milliseconds.</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="dateutil.html#IncMinute">IncMinute</a></td>
+<td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
+<td class="itemdesc">Returns a date/time value shifted by a specified number of minutes.</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="dateutil.html#IncSecond">IncSecond</a></td>
+<td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
+<td class="itemdesc">Returns a date/time value shifted by a specified number of seconds.</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="dateutil.html#IncWeek">IncWeek</a></td>
+<td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
+<td class="itemdesc">Returns a date shifted by a specified number of weeks.</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="dateutil.html#IsPM">IsPM</a></td>
+<td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
+<td class="itemdesc">Indicates whether the time portion of a specified TDateTime value occurs after noon.</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="iso3166.html#isvalidcountrycode">isvalidcountrycode</a></td>
+<td class="itemunit"><a class="bold"  href="iso3166.html">iso3166</a></td>
+<td class="itemdesc">Verifies if the 2 letter country code is valid</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="dateutil.html#IsValidDate">IsValidDate</a></td>
+<td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
+<td class="itemdesc">Indicates whether a specified year, month, and day represent a valid date.</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="dateutil.html#IsValidDateTime">IsValidDateTime</a></td>
+<td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
+<td class="itemdesc">Indicates whether a specified year, month, day, hour, minute, second, and millisecond represent a valid date and time.</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="locale.html#IsValidISODateString">IsValidISODateString</a></td>
+<td class="itemunit"><a class="bold"  href="locale.html">locale</a></td>
+<td class="itemdesc">Verifies if the date is in a valid ISO 8601 format</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="locale.html#IsValidISODateTimeString">IsValidISODateTimeString</a></td>
+<td class="itemunit"><a class="bold"  href="locale.html">locale</a></td>
+<td class="itemdesc">Verifies if the date and time is in a valid ISO 8601 format</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="locale.html#IsValidISOTimeString">IsValidISOTimeString</a></td>
+<td class="itemunit"><a class="bold"  href="locale.html">locale</a></td>
+<td class="itemdesc">Verifies if the time is in a valid ISO 8601 format</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="iso639.html#isvalidlangcode">isvalidlangcode</a></td>
+<td class="itemunit"><a class="bold"  href="iso639.html">iso639</a></td>
+<td class="itemdesc">Verifies if the 2 or 3 letter language code is valid</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="dateutil.html#IsValidTime">IsValidTime</a></td>
+<td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
+<td class="itemdesc">Indicates whether a specified hour, minute, second, and millisecond represent a valid date and time.</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="ietf.html#langtag_isvalid">langtag_isvalid</a></td>
+<td class="itemunit"><a class="bold"  href="ietf.html">ietf</a></td>
+<td class="itemdesc">&nbsp;</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="ietf.html#langtag_split">langtag_split</a></td>
+<td class="itemunit"><a class="bold"  href="ietf.html">ietf</a></td>
+<td class="itemdesc">&nbsp;</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="utils.html#LowString">LowString</a></td>
+<td class="itemunit"><a class="bold"  href="utils.html">utils</a></td>
+<td class="itemdesc">Convert a string to lowercase ASCII</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="locale.html#MicrosoftCodePageToMIMECharset">MicrosoftCodePageToMIMECharset</a></td>
+<td class="itemunit"><a class="bold"  href="locale.html">locale</a></td>
+<td class="itemdesc">Using a code page identifier (as defined by Microsoft and OS/2) return the resulting IANA encoding alias string</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="locale.html#MicrosoftLangageCodeToISOCode">MicrosoftLangageCodeToISOCode</a></td>
+<td class="itemunit"><a class="bold"  href="locale.html">locale</a></td>
+<td class="itemdesc">Using a code page identifier (as defined by Microsoft and OS/2) return the resulting IANA encoding alias string</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="ietf.html#mime_isvalidcontenttype">mime_isvalidcontenttype</a></td>
+<td class="itemunit"><a class="bold"  href="ietf.html">ietf</a></td>
+<td class="itemdesc">&nbsp;</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="dateutil.html#MinuteOf">MinuteOf</a></td>
+<td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
+<td class="itemdesc">Returns the minute of the hour represented by a TDateTime value.</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="dateutil.html#MonthOf">MonthOf</a></td>
+<td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
+<td class="itemdesc">Returns the month of the year represented by a TDateTime value.</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="dateutil.html#Now">Now</a></td>
+<td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
+<td class="itemdesc">Returns the current date and time.</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="utils.html#Printf">Printf</a></td>
+<td class="itemunit"><a class="bold"  href="utils.html">utils</a></td>
+<td class="itemdesc">Format a string and print it out to the console</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="utils.html#RemoveDoubleQuotes">RemoveDoubleQuotes</a></td>
+<td class="itemunit"><a class="bold"  href="utils.html">utils</a></td>
+<td class="itemdesc">This routine removes double quotes to the selected string (the leading and ending double quotes only)</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="utils.html#removenulls">removenulls</a></td>
+<td class="itemunit"><a class="bold"  href="utils.html">utils</a></td>
+<td class="itemdesc">Remove all null characters from a string.</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="dateutil.html#SameDate">SameDate</a></td>
+<td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
+<td class="itemdesc">Indicates whether two TDateTime values represent the same year, month, and day.</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="dateutil.html#SameDateTime">SameDateTime</a></td>
+<td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
+<td class="itemdesc">Indicates whether two TDateTime values represent the same year, month, day, hour, minute, second, and millisecond.</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="dateutil.html#SameTime">SameTime</a></td>
+<td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
+<td class="itemdesc">Indicates whether two TDateTime values represent the same time of day, ignoring the date portion.</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="dateutil.html#SecondOf">SecondOf</a></td>
+<td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
+<td class="itemdesc">Returns the second of the minute represented by a TDateTime value.</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="utils.html#StreamErrorProcedure">StreamErrorProcedure</a></td>
+<td class="itemunit"><a class="bold"  href="utils.html">utils</a></td>
+<td class="itemdesc">Generic stream error procedure</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="utils.html#stringdispose">stringdispose</a></td>
+<td class="itemunit"><a class="bold"  href="utils.html">utils</a></td>
+<td class="itemdesc">&nbsp;</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="utils.html#stringdup">stringdup</a></td>
+<td class="itemunit"><a class="bold"  href="utils.html">utils</a></td>
+<td class="itemdesc">&nbsp;</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="utils.html#SwapLong">SwapLong</a></td>
+<td class="itemunit"><a class="bold"  href="utils.html">utils</a></td>
+<td class="itemdesc">Change the endian of a 32-bit value</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="utils.html#SwapWord">SwapWord</a></td>
+<td class="itemunit"><a class="bold"  href="utils.html">utils</a></td>
+<td class="itemdesc">Change the endian of a 16-bit value</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="dateutil.html#Time">Time</a></td>
+<td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
+<td class="itemdesc">Returns the current time.</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="dateutil.html#TimeOf">TimeOf</a></td>
+<td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
+<td class="itemdesc">Strips the date portion from a TDatetime value</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="dateutil.html#TimeToStr">TimeToStr</a></td>
+<td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
+<td class="itemdesc">Returns a string that represents a TDateTime value.</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="dateutil.html#Today">Today</a></td>
+<td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
+<td class="itemdesc">Returns a TDateTime value that represents the current date.</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="utils.html#Trim">Trim</a></td>
+<td class="itemunit"><a class="bold"  href="utils.html">utils</a></td>
+<td class="itemdesc">Trim removes leading and trailing spaces and control characters from the given string S</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="utils.html#TrimLeft">TrimLeft</a></td>
+<td class="itemunit"><a class="bold"  href="utils.html">utils</a></td>
+<td class="itemdesc">Remove all whitespace from the start of a string</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="utils.html#TrimRight">TrimRight</a></td>
+<td class="itemunit"><a class="bold"  href="utils.html">utils</a></td>
+<td class="itemdesc">Remove all whitespace from the end of a string</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="dateutil.html#TryEncodeDate">TryEncodeDate</a></td>
+<td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
+<td class="itemdesc">Returns a TDateTime value that represents a specified Year, Month, and Day.</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="dateutil.html#TryEncodeDateAndTimeToStr">TryEncodeDateAndTimeToStr</a></td>
+<td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
+<td class="itemdesc">This routine encodes a complete date and time to its string representation. The encoded string conforms to the ISO 8601 complete representation extended format (YYYY-MM-DDTHH:MM:SS[Z]).
+
+<p>The year value is required, while all other fields are optional. The other fields can be set to EMPTY_DATETIME_FIELD to indicate that they are empty. It also adds the UTC marker if required and if it is set and time information is present.</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="dateutil.html#TryEncodeDateTime">TryEncodeDateTime</a></td>
+<td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
+<td class="itemdesc">Returns a TDateTime that represents a specified year, month, day, hour, minute, second, and millisecond.</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="dateutil.html#TryEncodeTime">TryEncodeTime</a></td>
+<td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
+<td class="itemdesc">Returns a TDateTime value for a specified Hour, Min, Sec, and MSec.</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="dateutil.html#TryFileTimeToDateTimeExt">TryFileTimeToDateTimeExt</a></td>
+<td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
+<td class="itemdesc">&nbsp;</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="dateutil.html#TryStrToDate">TryStrToDate</a></td>
+<td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
+<td class="itemdesc">Converts a string to a TDateTime value, with a Boolean success code.
+
+<p>In the case where the date does not contain the full representation of a date (for examples, YYYY or YYYY-MM), then the missing values will be set to 1 to be legal.</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="dateutil.html#TryStrToDateTime">TryStrToDateTime</a></td>
+<td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
+<td class="itemdesc">Converts a string to a TDateTime value with a Boolean success code.
+
+<p>Supported formats: 1) Format of Complete Representation for calendar dates (as specified in ISO 8601), which should include the Time designator character. 2) Format: 'YYYY-MM-DD HH:mm:ss [GMT|UTC|UT]' 3) Openoffice 1.1.x HTML date format: 'YYYYMMDD;HHmmssuu' 4) Adobe PDF 'D:YYYYMMDDHHMMSSOHH'mm'' format
+
+<p>The returned value will be according to UTC if timezone information is uncluded, otherwise, it will be left as is. To determine if the value was actually converted to UTC, use TryStrToDateTimeExt.
+
+<p>In the case where the date does not contain the full representation of a date (for examples, YYYY or YYYY-MM), then the missing values will be set to 1 to be legal.</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="dateutil.html#TryStrToDateTimeExt">TryStrToDateTimeExt</a></td>
+<td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
+<td class="itemdesc">Converts a string to a TDateTime value with a Boolean success code. This routine also gives information if the value was successfully converted to UTC time or not (if no timezone information was available in the string then the utc value will be false).
+
+<p>Supported formats: 1) Format of Complete Representation for calendar dates (as specified in ISO 8601), which should include the Time designator character. 3) Format: 'YYYY-MM-DD HH:mm:ss [GMT|UTC|UT]' 4) Openoffice 1.1.x HTML date format: 'YYYYMMDD;HHmmssuu' 5) Adobe PDF 'D:YYYYMMDDHHMMSSOHH'mm'' format
+
+<p>The returned value will be according to UTC if timezone information is specified.
+
+<p>In the case where the date does not contain the full representation of a date (for examples, YYYY or YYYY-MM), then the missing values will be set to 1 to be legal.</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="dateutil.html#TryStrToTime">TryStrToTime</a></td>
+<td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
+<td class="itemdesc">Converts a string to a TDateTime value with an error default,
+
+<p>Supported formats: 1) ISO 8601 time format (complete representation) with optional timezone designators. 2) Format: 'HH:mm:ss [GMT|UTC|UT]' 3) Openoffice 1.1.x HTML time format: 'HHmmssuu' 4) Adobe PDF 'D:YYYYMMDDHHMMSSOHH'mm'' format
+
+<p>The returned value will be according to UTC if timezone information is specified. The Date field is truncated and is equal to zero upon return.</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="dateutil.html#TryUNIXToDateTimeExt">TryUNIXToDateTimeExt</a></td>
+<td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
+<td class="itemdesc">&nbsp;</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="unicode.html#ucs2strdispose">ucs2strdispose</a></td>
+<td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
+<td class="itemdesc">Disposes of an UCS-2 null terminated string on the heap</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="unicode.html#ucs2strlcopyucs4">ucs2strlcopyucs4</a></td>
+<td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
+<td class="itemdesc">Convert an UCS-2 null terminated string to an UCS-4 null terminated string</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="unicode.html#ucs2strlen">ucs2strlen</a></td>
+<td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
+<td class="itemdesc">Returns the number of characters in the null terminated UCS-2 string</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="unicode.html#ucs2strnew">ucs2strnew</a></td>
+<td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
+<td class="itemdesc">Converts an UCS-4 null terminated string to an UCS-2 null terminated string</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="unicode.html#ucs2_isvalid">ucs2_isvalid</a></td>
+<td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
+<td class="itemdesc">Checks if the UCS-2 character is valid</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="unicode.html#ucs2_length">ucs2_length</a></td>
+<td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
+<td class="itemdesc">Returns the current length of an UCS-2 string</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="unicode.html#ucs2_setlength">ucs2_setlength</a></td>
+<td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
+<td class="itemdesc">Set the new dynamic length of an ucs-2 string</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="unicode.html#ucs2_upcase">ucs2_upcase</a></td>
+<td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
+<td class="itemdesc">Converts a character to an uppercase character</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="unicode.html#ucs4strcheck">ucs4strcheck</a></td>
+<td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
+<td class="itemdesc">This routine checks the validity of an UCS-4 null terminated string. It first skips to the null character, and if maxcount is greater than the index, verifies that the values in memory are of value VALUE.
+
+<p>Otherwise, returns an ERROR. This routine is used with UCS4StrFill.</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="unicode.html#ucs4strdispose">ucs4strdispose</a></td>
+<td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
+<td class="itemdesc">Disposes of an UCS-4 null terminated string on the heap</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="unicode.html#ucs4strfill">ucs4strfill</a></td>
+<td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
+<td class="itemdesc">Fills a memory region consisting of ucs-4 characters with the specified UCS-4 character.</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="unicode.html#ucs4strlen">ucs4strlen</a></td>
+<td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
+<td class="itemdesc">Returns the number of characters in the null terminated UCS-4 string</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="unicode.html#ucs4strnew">ucs4strnew</a></td>
+<td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
+<td class="itemdesc">Converts a null terminated string to an UCS-4 null terminated string</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="unicode.html#ucs4strnewstr">ucs4strnewstr</a></td>
+<td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
+<td class="itemdesc">Converts a pascal string to an UCS-4 null terminated string</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="unicode.html#ucs4strnewucs2">ucs4strnewucs2</a></td>
+<td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
+<td class="itemdesc">Converts an UCS-2 null terminated string to an UCS-4 null terminated string</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="unicode.html#ucs4strnewucs4">ucs4strnewucs4</a></td>
+<td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
+<td class="itemdesc">Allocates and copies an UCS-4 null terminated string</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="unicode.html#ucs4strpas">ucs4strpas</a></td>
+<td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
+<td class="itemdesc">Converts a null-terminated UCS-4 string to a Pascal-style UCS-4 string.</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="unicode.html#ucs4strpastoASCII">ucs4strpastoASCII</a></td>
+<td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
+<td class="itemdesc">Converts a null-terminated UCS-4 string to a Pascal-style ASCII encoded string.</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="unicode.html#ucs4strpastoISO8859_1">ucs4strpastoISO8859_1</a></td>
+<td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
+<td class="itemdesc">Converts a null-terminated UCS-4 string to a Pascal-style ISO 8859-1 encoded string.</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="unicode.html#ucs4strpastoUTF8">ucs4strpastoUTF8</a></td>
+<td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
+<td class="itemdesc">Converts a null-terminated UCS-4 string to a Pascal-style UTF-8 encoded string.</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="unicode.html#ucs4strpcopy">ucs4strpcopy</a></td>
+<td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
+<td class="itemdesc">Copies a Pascal-style UCS-4 string to a null-terminated UCS-4 string.</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="unicode.html#ucs4StrPosISO8859_1">ucs4StrPosISO8859_1</a></td>
+<td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
+<td class="itemdesc">Returns a pointer to the first occurence of an ISO-8859-1 encoded null terminated string in a UCS-4 encoded null terminated string.</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="unicode.html#ucs4strtrim">ucs4strtrim</a></td>
+<td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
+<td class="itemdesc">Allocates a new UCS-4 null terminated string, and copies the existing string, avoid a copy of the whitespace at the start and end of the string</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="unicode.html#ucs4_concat">ucs4_concat</a></td>
+<td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
+<td class="itemdesc">Concatenates two UCS-4 strings, and gives a resulting UCS-4 string</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="unicode.html#ucs4_concatascii">ucs4_concatascii</a></td>
+<td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
+<td class="itemdesc">Concatenates an UCS-4 string with an ASCII string, and gives a resulting UCS-4 string</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="unicode.html#ucs4_converttoiso8859_1">ucs4_converttoiso8859_1</a></td>
+<td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
+<td class="itemdesc">Converts an UCS-4 string to an ISO-8859-1 string</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="unicode.html#ucs4_converttoutf8">ucs4_converttoutf8</a></td>
+<td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
+<td class="itemdesc">Converts an UCS-4 string to an UTF-8 string</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="unicode.html#ucs4_copy">ucs4_copy</a></td>
+<td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
+<td class="itemdesc">Returns an UCS-4 substring of an UCS-4 string</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="unicode.html#ucs4_delete">ucs4_delete</a></td>
+<td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
+<td class="itemdesc">Deletes a substring from a string</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="unicode.html#ucs4_equal">ucs4_equal</a></td>
+<td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
+<td class="itemdesc">Checks if both UCS-4 strings are equal</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="unicode.html#ucs4_equalascii">ucs4_equalascii</a></td>
+<td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
+<td class="itemdesc">Checks if an ASCII string is equal to an UCS-4 string </td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="unicode.html#ucs4_issupported">ucs4_issupported</a></td>
+<td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
+<td class="itemdesc">Checks if conversion from/to this character set format to/from UCS-4 is supported</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="unicode.html#ucs4_isvalid">ucs4_isvalid</a></td>
+<td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
+<td class="itemdesc">Checks if the UCS-4 character is valid</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="unicode.html#ucs4_iswhitespace">ucs4_iswhitespace</a></td>
+<td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
+<td class="itemdesc">Determines if the specified character is a whitespace character</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="unicode.html#ucs4_length">ucs4_length</a></td>
+<td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
+<td class="itemdesc">Returns the current length of an UCS-4 string</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="unicode.html#ucs4_lowcase">ucs4_lowcase</a></td>
+<td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
+<td class="itemdesc">Converts a character to a lowercase character</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="unicode.html#ucs4_pos">ucs4_pos</a></td>
+<td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
+<td class="itemdesc">Searches for an UCS-4 substring in an UCS-4 string</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="unicode.html#ucs4_posascii">ucs4_posascii</a></td>
+<td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
+<td class="itemdesc">Searches for an ASCII substring in an UCS-4 string</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="unicode.html#ucs4_removeaccents">ucs4_removeaccents</a></td>
+<td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
+<td class="itemdesc">Replaces all accented characters with their base representation</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="unicode.html#ucs4_setlength">ucs4_setlength</a></td>
+<td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
+<td class="itemdesc">Set the new dynamic length of an UCS-4 string</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="unicode.html#ucs4_trim">ucs4_trim</a></td>
+<td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
+<td class="itemdesc">Trims trailing and leading spaces and control characters from an UCS-4 string.</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="unicode.html#ucs4_trimleft">ucs4_trimleft</a></td>
+<td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
+<td class="itemdesc">Trims leading spaces and control characters from an UCS-4 string.</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="unicode.html#ucs4_trimright">ucs4_trimright</a></td>
+<td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
+<td class="itemdesc">Trims trailing spaces and control characters from an UCS-4 string.</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="unicode.html#ucs4_upcase">ucs4_upcase</a></td>
+<td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
+<td class="itemdesc">Converts a character to an uppercase character</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="locale.html#UNIXToDateTime">UNIXToDateTime</a></td>
+<td class="itemunit"><a class="bold"  href="locale.html">locale</a></td>
+<td class="itemdesc">Converts a UNIX styled time (the number of seconds since 1970) to a standard date and time representation.</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="crc.html#UpdateAdler32">UpdateAdler32</a></td>
+<td class="itemunit"><a class="bold"  href="crc.html">crc</a></td>
+<td class="itemdesc">Calculates an Adler-32 checksum value</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="crc.html#UpdateCRC">UpdateCRC</a></td>
+<td class="itemunit"><a class="bold"  href="crc.html">crc</a></td>
+<td class="itemdesc">Calculates a standard 16-bit CRC</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="crc.html#UpdateCrc16">UpdateCrc16</a></td>
+<td class="itemunit"><a class="bold"  href="crc.html">crc</a></td>
+<td class="itemdesc">Calculates a CRC-16 CCITT value</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="crc.html#UpdateCrc32">UpdateCrc32</a></td>
+<td class="itemunit"><a class="bold"  href="crc.html">crc</a></td>
+<td class="itemdesc">Calculates a CRC-32 CCITT value</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="crc.html#UpdateFletcher8">UpdateFletcher8</a></td>
+<td class="itemunit"><a class="bold"  href="crc.html">crc</a></td>
+<td class="itemdesc">Calculates an 8-bit fletcher checksum value</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="utils.html#UpString">UpString</a></td>
+<td class="itemunit"><a class="bold"  href="utils.html">utils</a></td>
+<td class="itemdesc">Convert a string to uppercase ASCII</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="ietf.html#uri_split">uri_split</a></td>
+<td class="itemunit"><a class="bold"  href="ietf.html">ietf</a></td>
+<td class="itemdesc">Extract information from an URI string</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="ietf.html#urn_isvalid">urn_isvalid</a></td>
+<td class="itemunit"><a class="bold"  href="ietf.html">ietf</a></td>
+<td class="itemdesc">Verifies the validity of a complete URN string</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="ietf.html#urn_isvalidnid">urn_isvalidnid</a></td>
+<td class="itemunit"><a class="bold"  href="ietf.html">ietf</a></td>
+<td class="itemdesc">This routine checks that the specified NID (namespace) is either registered to IANA, or that it is an experimental NID, as described in IETF RFC 2611. More assignment information can be obtained from: <a  target="_parent" href="http://www.iana.org/assignments/urn-namespaces">http://www.iana.org/assignments/urn-namespaces</a>
+
+<p></td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="ietf.html#urn_pathsplit">urn_pathsplit</a></td>
+<td class="itemunit"><a class="bold"  href="ietf.html">ietf</a></td>
+<td class="itemdesc">Splits a path string returned by uri_split into its individual components for URN.</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="ietf.html#urn_split">urn_split</a></td>
+<td class="itemunit"><a class="bold"  href="ietf.html">ietf</a></td>
+<td class="itemdesc">Splits an URN string in its separate components</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="unicode.html#utf16_length">utf16_length</a></td>
+<td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
+<td class="itemdesc">Returns the current length of an UTF-16 string</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="unicode.html#utf16_setlength">utf16_setlength</a></td>
+<td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
+<td class="itemdesc">Set the length of an UTF-16 string</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="unicode.html#utf16_sizeencoding">utf16_sizeencoding</a></td>
+<td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
+<td class="itemdesc">Returns the number of characters that are used to encode this character</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="unicode.html#utf8strdispose">utf8strdispose</a></td>
+<td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
+<td class="itemdesc">Disposes of an UTF-8 null terminated string on the heap</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="unicode.html#utf8stringdispose">utf8stringdispose</a></td>
+<td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
+<td class="itemdesc">&nbsp;</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="unicode.html#utf8stringdup">utf8stringdup</a></td>
+<td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
+<td class="itemdesc">&nbsp;</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="unicode.html#utf8strlcopyucs4">utf8strlcopyucs4</a></td>
+<td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
+<td class="itemdesc">Convert an UTF-8 null terminated string to an UCS-4 null terminated string</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="unicode.html#utf8strlen">utf8strlen</a></td>
+<td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
+<td class="itemdesc">Returns the length of the string, not counting the null character</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="unicode.html#utf8strnew">utf8strnew</a></td>
+<td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
+<td class="itemdesc">Converts an UCS-4 null terminated string to an UTF-8 null terminated string</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="unicode.html#utf8strnewstr">utf8strnewstr</a></td>
+<td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
+<td class="itemdesc">Converts an UTF-8 string to a null terminated UTF-8 string.</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="unicode.html#utf8strnewutf8">utf8strnewutf8</a></td>
+<td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
+<td class="itemdesc">Allocates and copies an UTF-8 null terminated string</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="unicode.html#utf8strpas">utf8strpas</a></td>
+<td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
+<td class="itemdesc">Converts a null-terminated UTF-8 string to a Pascal-style UTF-8 encoded string.</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="unicode.html#utf8strpastoASCII">utf8strpastoASCII</a></td>
+<td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
+<td class="itemdesc">Converts a null-terminated UTF-8 string to a Pascal-style ASCII encoded string.</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="unicode.html#utf8strpastoISO8859_1">utf8strpastoISO8859_1</a></td>
+<td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
+<td class="itemdesc">Converts a null-terminated UTF-8 string to a Pascal-style ISO 8859-1 encoded string.</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="unicode.html#utf8strpastostring">utf8strpastostring</a></td>
+<td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
+<td class="itemdesc">Converts an UTF-8 null terminated string to a string encoded to a different code page</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="unicode.html#utf8_islegal">utf8_islegal</a></td>
+<td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
+<td class="itemdesc">Returns if the specified UTF-8 string is legal or not</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="unicode.html#utf8_length">utf8_length</a></td>
+<td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
+<td class="itemdesc">Returns the current length of an UTF-8 string</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="unicode.html#utf8_setlength">utf8_setlength</a></td>
+<td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
+<td class="itemdesc">Set the length of an UTF-8 string</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="unicode.html#utf8_sizeencoding">utf8_sizeencoding</a></td>
+<td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
+<td class="itemdesc">Returns the number of characters that are used to encode this character</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="utils.html#ValBinary">ValBinary</a></td>
+<td class="itemunit"><a class="bold"  href="utils.html">utils</a></td>
+<td class="itemdesc">Convert a binary value represented by a string to its numerical value. If there is no error, <code>code</code> will be equal to zero.</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="utils.html#ValDecimal">ValDecimal</a></td>
+<td class="itemunit"><a class="bold"  href="utils.html">utils</a></td>
+<td class="itemdesc">Convert a decimal value represented by a string to its numerical value. If there is no error, <code>code</code> will be equal to zero.</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="utils.html#ValHexadecimal">ValHexadecimal</a></td>
+<td class="itemunit"><a class="bold"  href="utils.html">utils</a></td>
+<td class="itemdesc">Convert an hexadecimal value represented by a string to its numerical value. If there is no error, <code>code</code> will be equal to zero.</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="utils.html#ValOctal">ValOctal</a></td>
+<td class="itemunit"><a class="bold"  href="utils.html">utils</a></td>
+<td class="itemdesc">Convert an octal value represented by a string to its numerical value. If there is no error, <code>code</code> will be equal to zero.</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="dateutil.html#YearOf">YearOf</a></td>
+<td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
+<td class="itemdesc">Returns the year represented by a TDateTime value.</td>
 </tr>
 </table>
-<hr noshade="1" size="1"/><em>Generated by <a class="normal" target="_new" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8.3</a> on 2005-03-20 19:03:40</em>
+<hr noshade size="1"><span class="appinfo"><em>Generated by <a  target="_parent" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8.3</a> on 2005-11-30 20:11:30</em>
+</span>
 </body></html>

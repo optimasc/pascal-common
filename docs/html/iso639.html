@@ -1,129 +1,131 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.1 Strict//EN" "http://www.w3.org/TR/REC-html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/1999/REC-html401-19991224/loose.dtd">
 <html>
 <head>
-<meta name="GENERATOR" content="PasDoc 0.8.8.3"/>
+<meta name="GENERATOR" content="PasDoc 0.8.8.3">
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
 <title>Common pascal units documentation: iso639</title>
-<link rel="StyleSheet" href="pasdoc.css"/>
+<link rel="StyleSheet" type="text/css" href="pasdoc.css">
 </head>
 <body bgcolor="#ffffff" text="#000000" link="#0000ff" vlink="#800080" alink="#FF0000">
-<h1>Unit iso639</h1>
-<table class="sections"><tr>
-<td><a class="normal" href="#@Description">Description</a></td><td>uses</td><td>Classes, Interfaces and Objects</td><td><a class="normal" href="#@FuncsProcs">Functions and Procedures</a></td><td>Types</td><td>Constants</td><td>Variables</td></tr></table>
-<a name="@Description"></a><h2>Description</h2>
-Language code unit<p>This unit is used to check the language codes
-    as well as return information on the country,
-    according to ISO 639-1 and ISO 639-2.</p><p>The database was taken from the following site:
-    <a class="normal" target="_new" href="http://www.loc.gov/standards/iso639-2/ISO-639-2_values_8bits.txt">http://www.loc.gov/standards/iso639-2/ISO-639-2_values_8bits.txt</a></p>
-<a name="@FuncsProcs"></a><h2>Functions and Procedures</h2>
-<h3>Overview</h3>
-<table cellspacing="2" cellpadding="4" width="100%">
-<tr class="list" valign="top"><td width="100%"><code>function <a class="normal" href="#isvalidlangcode"><b>isvalidlangcode</b></a>(s: shortstring): boolean;</code></td>
+<h1 class="unit">Unit iso639</h1>
+<table class="sections">
+<tr>
+<td><a class="section"  href="#@Description">Description</a></td><td>uses</td><td>Classes, Interfaces, Objects and Records</td><td><a class="section"  href="#@FuncsProcs">Functions and Procedures</a></td><td>Types</td><td>Constants</td><td>Variables</td></tr></table>
+<a name="@Description"></a><h2 class="description">Description</h2>
+<p>
+Language code unit</p>
+<p>
+  This unit is used to check the language codes as well as return information on the country, according to ISO 639-1 and ISO 639-2.
+
+<p>The database was taken from the following site: <a  target="_parent" href="http://www.loc.gov/standards/iso639-2/ISO-639-2_values_8bits.txt">http://www.loc.gov/standards/iso639-2/ISO-639-2_values_8bits.txt</a></p>
+<a name="@Uses"></a><h2 class="overview">Overview</h2>
+<a name="@FuncsProcs"></a><h3 class="summary">Functions and Procedures</h3>
+<table class="summary">
+<tr class="list">
+<td class="itemcode"><code>function <b><a   href="iso639.html#isvalidlangcode">isvalidlangcode</a></b>(s: shortstring): boolean;</code></td>
 </tr>
-<tr class="list2" valign="top"><td><code>function <a class="normal" href="#getlangname_fr"><b>getlangname_fr</b></a>(s: shortstring): shortstring;</code></td>
+<tr class="list2">
+<td class="itemcode"><code>function <b><a   href="iso639.html#getlangname_fr">getlangname_fr</a></b>(s: shortstring): shortstring;</code></td>
 </tr>
-<tr class="list" valign="top"><td><code>function <a class="normal" href="#getlangname_en"><b>getlangname_en</b></a>(s: shortstring): shortstring;</code></td>
+<tr class="list">
+<td class="itemcode"><code>function <b><a   href="iso639.html#getlangname_en">getlangname_en</a></b>(s: shortstring): shortstring;</code></td>
 </tr>
-<tr class="list2" valign="top"><td><code>function <a class="normal" href="#getlangcode_en"><b>getlangcode_en</b></a>(name: shortstring): shortstring;</code></td>
+<tr class="list2">
+<td class="itemcode"><code>function <b><a   href="iso639.html#getlangcode_en">getlangcode_en</a></b>(name: shortstring): shortstring;</code></td>
 </tr>
-<tr class="list" valign="top"><td><code>function <a class="normal" href="#getlangcode_fr"><b>getlangcode_fr</b></a>(name: shortstring): shortstring;</code></td>
+<tr class="list">
+<td class="itemcode"><code>function <b><a   href="iso639.html#getlangcode_fr">getlangcode_fr</a></b>(name: shortstring): shortstring;</code></td>
 </tr>
 </table>
-<h3>Description</h3>
-<table cellspacing="2" cellpadding="4" width="100%">
-<tr class="list" valign="top"><td width="100%"><a name="getlangcode_en"></a><code>function <b>getlangcode_en</b>(name: shortstring): shortstring;</code></td>
+<h2 class="description">Description</h2>
+<h3 class="detail">Functions and Procedures</h3>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="isvalidlangcode"></a><code>function <b>isvalidlangcode</b>(s: shortstring): boolean;</code></td>
 </tr>
 </table>
-<p><p>This routine returns the 2 character code related
-    to the english name of the language. The search is
-    not case  (according to ISO 639-1). If there is
-    no 2 character language code for this language, or
-    if the language name is not found, the routine 
-    returns an empty string.</p><p>The language name string should be encoded according to
-    ISO-8859-1.</p>
-</p>
-<h6>parameters</h6>
+<p>
+Verifies if the 2 or 3 letter language code is valid</p>
+<p>
+ This routine checks if the two or three letter language code is valid (as defined in ISO 639, part 1 and part 2 respectively). The language code IS case sensitive and should be in lower case.
+
+<p> </p>
+<h6 class="parameters">parameters</h6>
 <dl class="parameters">
-<dt class="parameters">
-name</dt>
-<dd class="parameters">
-The name of the language</dd>
+<dt>s</dt>
+<dd>The two or three digit language code</dd>
 </dl>
-<h6>returns</h6>
-<p class="return">The 2 character language code</p><table cellspacing="2" cellpadding="4" width="100%">
-<tr class="list" valign="top"><td width="100%"><a name="getlangcode_fr"></a><code>function <b>getlangcode_fr</b>(name: shortstring): shortstring;</code></td>
+<h6 class="return">returns</h6>
+<p class="return">TRUE if the language code is valid, otherwise returns FALSE</p><table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="getlangname_fr"></a><code>function <b>getlangname_fr</b>(s: shortstring): shortstring;</code></td>
 </tr>
 </table>
-<p><p>This routine returns the 2 character code related
-    to the french name of the language. The search is
-    not case  (according to ISO 639-1). If there is
-    no 2 character language code for this language, or
-    if the language name is not found, the routine 
-    returns an empty string.</p><p>The language name string should be encoded according to
-    ISO-8859-1.</p>
-</p>
-<h6>parameters</h6>
+<p>
+This routine returns the language name in french for the specified language code. The language code IS case insensitive and can be either 2 or 3 characters in length (according to ISO 639-1 and ISO 639-2 respectively)
+
+<p>The returned string is encoded according to ISO-8859-1. If there are alternate names for the language, only the first alternate name is returned.
+
+<p></p>
+<h6 class="parameters">parameters</h6>
 <dl class="parameters">
-<dt class="parameters">
-name</dt>
-<dd class="parameters">
-The name of the language</dd>
+<dt>s</dt>
+<dd>The two or three digit language code</dd>
 </dl>
-<h6>returns</h6>
-<p class="return">The 2 character language code</p><table cellspacing="2" cellpadding="4" width="100%">
-<tr class="list" valign="top"><td width="100%"><a name="getlangname_en"></a><code>function <b>getlangname_en</b>(s: shortstring): shortstring;</code></td>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="getlangname_en"></a><code>function <b>getlangname_en</b>(s: shortstring): shortstring;</code></td>
 </tr>
 </table>
-<p><p>This routine returns the language name in english
-  for the specified language code. The language code
-  IS case insensitive and can be either 2 or 3 characters
-  in length (according to ISO 639-1 and ISO 639-2 respectively).</p><p>The returned string is encoded according to
-  ISO-8859-1.If there are alternate names for
-  the language, only the first alternate 
-  name is returned.</p>
-</p>
-<h6>parameters</h6>
+<p>
+This routine returns the language name in english for the specified language code. The language code IS case insensitive and can be either 2 or 3 characters in length (according to ISO 639-1 and ISO 639-2 respectively).
+
+<p>The returned string is encoded according to ISO-8859-1.If there are alternate names for the language, only the first alternate name is returned.
+
+<p></p>
+<h6 class="parameters">parameters</h6>
 <dl class="parameters">
-<dt class="parameters">
-s</dt>
-<dd class="parameters">
-The two or three digit language code</dd>
+<dt>s</dt>
+<dd>The two or three digit language code</dd>
 </dl>
-<table cellspacing="2" cellpadding="4" width="100%">
-<tr class="list" valign="top"><td width="100%"><a name="getlangname_fr"></a><code>function <b>getlangname_fr</b>(s: shortstring): shortstring;</code></td>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="getlangcode_en"></a><code>function <b>getlangcode_en</b>(name: shortstring): shortstring;</code></td>
 </tr>
 </table>
-<p><p>This routine returns the language name in french 
-  for the specified language code. The language code
-  IS case insensitive and can be either 2 or 3 characters
-  in length (according to ISO 639-1 and ISO 639-2 respectively)</p><p>The returned string is encoded according to
-  ISO-8859-1. If there are alternate names for
-  the language, only the first alternate 
-  name is returned.</p>
-</p>
-<h6>parameters</h6>
+<p>
+This routine returns the 2 character code related to the english name of the language. The search is not case (according to ISO 639-1). If there is no 2 character language code for this language, or if the language name is not found, the routine returns an empty string.
+
+<p>The language name string should be encoded according to ISO-8859-1.
+
+<p> </p>
+<h6 class="parameters">parameters</h6>
 <dl class="parameters">
-<dt class="parameters">
-s</dt>
-<dd class="parameters">
-The two or three digit language code</dd>
+<dt>name</dt>
+<dd>The name of the language</dd>
 </dl>
-<table cellspacing="2" cellpadding="4" width="100%">
-<tr class="list" valign="top"><td width="100%"><a name="isvalidlangcode"></a><code>function <b>isvalidlangcode</b>(s: shortstring): boolean;</code></td>
+<h6 class="return">returns</h6>
+<p class="return">The 2 character language code</p><table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="getlangcode_fr"></a><code>function <b>getlangcode_fr</b>(name: shortstring): shortstring;</code></td>
 </tr>
 </table>
-<p>Verifies if the 2 or 3 letter language code is valid<p>This routine checks if the two or three letter language code is
-    valid (as defined in ISO 639, part 1 and part 2 respectively). 
-    The language  code IS case sensitive and should be in lower case.</p>
-</p>
-<h6>parameters</h6>
+<p>
+This routine returns the 2 character code related to the french name of the language. The search is not case (according to ISO 639-1). If there is no 2 character language code for this language, or if the language name is not found, the routine returns an empty string.
+
+<p>The language name string should be encoded according to ISO-8859-1.
+
+<p> </p>
+<h6 class="parameters">parameters</h6>
 <dl class="parameters">
-<dt class="parameters">
-s</dt>
-<dd class="parameters">
-The two or three digit language code</dd>
+<dt>name</dt>
+<dd>The name of the language</dd>
 </dl>
-<h6>returns</h6>
-<p class="return">TRUE if the language code is valid, otherwise returns FALSE</p><a name="@Types"></a><a name="@Constants"></a><a name="@Variables"></a><h2>Author</h2>
-<p>Carl Eric Codere</p>
-<hr noshade="1" size="1"/><em>Generated by <a class="normal" target="_new" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8.3</a> on 2005-03-20 19:03:40</em>
+<h6 class="return">returns</h6>
+<p class="return">The 2 character language code</p><h2 class="authors">Author</h2>
+<ul class="authors">
+<li>Carl Eric Codere</li>
+</ul>
+<hr noshade size="1"><span class="appinfo"><em>Generated by <a  target="_parent" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8.3</a> on 2005-11-30 20:11:30</em>
+</span>
 </body></html>

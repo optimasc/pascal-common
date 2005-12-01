@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: unicode.pas,v 1.35 2005-11-21 00:18:14 carl Exp $
+    $Id: unicode.pas,v 1.36 2005-12-01 01:48:43 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Unicode related routines
@@ -588,17 +588,35 @@ type
   {** @abstract(Converts a null-terminated ASCII string to a Pascal-style
        ASCII encoded string.)
        
-       The string is empty if the pointer was nil.
+       The returned string shall be empty if the pointer was nil.
 
   }
  function asciistrpas(src: pchar): string;
  
+ {** @abstract(Allocates and copies an ascii null-terminated string
+      from a null-terminated string)
+      
+     The value returned is nil, if the src pointer was also nil. 
+      
+ }
  function asciistrnew(src: pchar): pchar;
   
  function asciistrnewstr(const str: string): pchar;
  
+  {** @abstract(Converts a null-terminated ISO-8859-1 string to a Pascal-style
+       ASCII encoded string.)
+       
+       The returned string shall be empty if the pointer was nil.
+
+  }
  function ansistrpas(src: pchar): string;
  
+ {** @abstract(Allocates and copies an ISO-8859-1 null-terminated string
+      from a null-terminated string)
+      
+     The value returned is nil, if the src pointer was also nil. 
+      
+ }
  function ansistrnew(src: pchar): pchar;
   
  function ansistrnewstr(const str: string): pchar;
@@ -607,7 +625,7 @@ type
 
 
   {** @abstract(Returns the number of characters that are used to encode this
-      character).
+      character)
 
       Actually checks if this is a high-surrogate value, if not returns 1,
       indicating that the character is encoded a single @code(utf16) character,
@@ -617,7 +635,7 @@ type
   function utf16_sizeencoding(c: utf16char): integer;
 
   {** @abstract(Returns the number of characters that are used to encode this
-      character).
+      character)
 
   }
   function utf8_sizeencoding(c: utf8char): integer;
@@ -3531,6 +3549,11 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.35  2005/11/21 00:18:14  carl
+    - remove some compilation warnings/hints
+    + speed optimizations
+    + recreated case.inc file from latest unicode casefolding standard
+
   Revision 1.34  2005/11/13 21:38:47  carl
     + ucs4_converttoutf8 added
 
