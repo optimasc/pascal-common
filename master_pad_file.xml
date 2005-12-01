@@ -35,8 +35,8 @@
 	<Program_Info>
 		<Program_Name>Portable pascal units</Program_Name>
 		<Program_Version />
-		<Program_Release_Month>03</Program_Release_Month>
-		<Program_Release_Day>20</Program_Release_Day>
+		<Program_Release_Month>11</Program_Release_Month>
+		<Program_Release_Day>30</Program_Release_Day>
 		<Program_Release_Year>2005</Program_Release_Year>
 		<Program_Cost_Dollars>0</Program_Cost_Dollars>
 		<Program_Cost_Other_Code />
@@ -100,7 +100,7 @@
 	</Web_Info>
 	<Permissions>
 		<Distribution_Permissions />
-		<EULA>Copyright (c) 2004 Optima SC Inc. All rights reserved.
+		<EULA>Copyright (c) 2005 Optima SC Inc. All rights reserved.
 
 Redistribution and use in source and binary forms, 
 with or without modification in commercial and 
