@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: unicode.pas,v 1.36 2005-12-01 01:48:43 carl Exp $
+    $Id: unicode.pas,v 1.37 2006-01-09 04:49:45 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Unicode related routines
@@ -59,7 +59,7 @@ uses
 
 const
   {** Gives the number of characters that can be contained in a string }
-  MAX_STRING_LENGTH = 1024;  
+  MAX_STRING_LENGTH = 512;  
 
 type
 
@@ -173,13 +173,13 @@ type
   procedure ucs4_trim(var s: ucs4string);
 
   {** @abstract(Returns an UCS-4 substring of an UCS-4 string) }
-  procedure ucs4_copy(var resultstr: ucs4string; const s: array of ucs4char; index: integer; count: integer);
+  procedure ucs4_copy(var resultstr: ucs4string; const s: ucs4string; index: integer; count: integer);
 
   {** @abstract(Deletes a substring from a string) }
   procedure ucs4_delete(var s: ucs4string; index: integer; count: integer);
 
   {** @abstract(Concatenates two UCS-4 strings, and gives a resulting UCS-4 string) }
-  procedure ucs4_concat(var resultstr: ucs4string;s1: ucs4string; const s2: array of ucs4char);
+  procedure ucs4_concat(var resultstr: ucs4string;const s1: ucs4string; const s2: array of ucs4char);
   
   {** @abstract(Replaces all accented characters with their base representation).
       This routine is useful for converted multilangual strings to their ASCII
@@ -191,16 +191,16 @@ type
   {** @abstract(Concatenates an UCS-4 string with an ASCII string, and gives
       a resulting UCS-4 string)
   }    
-  procedure ucs4_concatascii(var resultstr: ucs4string;s1: ucs4string; s2: string);
+  procedure ucs4_concatascii(var resultstr: ucs4string;const s1: ucs4string; const s2: string);
 
   {** @abstract(Searches for an ASCII substring in an UCS-4 string) }
-  function ucs4_posascii(substr: string; s: ucs4string): integer;
+  function ucs4_posascii(const substr: string; const s: ucs4string): integer;
 
   {** @abstract(Checks if an ASCII string is equal to an UCS-4 string ) }
-  function ucs4_equalascii(s1 : array of ucs4char; s2: string): boolean;
+  function ucs4_equalascii(const s1 : array of ucs4char; s2: string): boolean;
 
   {** @abstract(Searches for an UCS-4 substring in an UCS-4 string) }
-  function ucs4_pos(substr: ucs4string; const s: ucs4string): integer;
+  function ucs4_pos(const substr: ucs4string; const s: ucs4string): integer;
 
   {** @abstract(Checks if both UCS-4 strings are equal) }
   function ucs4_equal(const s1,s2: ucs4string): boolean;
@@ -229,7 +229,7 @@ type
       @returns(The converted string with possible escape characters
         if a character could not be converted)
   }
-    function ucs4_converttoiso8859_1(s: ucs4string): string;
+    function ucs4_converttoiso8859_1(const s: ucs4string): string;
 
   {** @abstract(Converts an UCS-4 string to an UTF-8 string)
 
@@ -239,7 +239,7 @@ type
       @param(s The UCS-4 string to convert)
       @returns(The converted string)
   }
-  function ucs4_converttoutf8(src: ucs4string): utf8string;
+  function ucs4_converttoutf8(const src: ucs4string): utf8string;
 
   
 
@@ -583,7 +583,8 @@ type
 
 
     function utf8stringdup(const s : string) : putf8shortstring;
-
+    
+    
 
   {** @abstract(Converts a null-terminated ASCII string to a Pascal-style
        ASCII encoded string.)
@@ -1068,35 +1069,35 @@ const
   MAX_ALIAS = 26;
 
 const
-  { This list must be in uppercase characters! }
+  { This list must be in uppercase characters }
   aliaslist: array[1..MAX_ALIAS] of taliasinfo =
   (
+    (aliasname: 'ASCII';table: @ASCIItoUTF32),
     (aliasname: 'ISO-8859-1';table: @i8859_1toUTF32),
-    (aliasname: 'ISO_8859-1';table: @i8859_1toUTF32),
-    (aliasname: 'LATIN1';    table: @i8859_1toUTF32),
-    (aliasname: 'CP819';     table: @i8859_1toUTF32),
+    (aliasname: 'CP850';table: @cp850toUTF32),
+    (aliasname: 'WINDOWS-1252';table: @cp1252toUTF32),
+    (aliasname: 'ATARI';table: @AtariSTtoUTF32),
+    (aliasname: 'CP367';table: @ASCIItoUTF32),
+    (aliasname: 'CP437';table: @cp437toUTF32),
+    (aliasname: 'CP819';table: @i8859_1toUTF32),
+    (aliasname: 'IBM367';table: @ASCIItoUTF32),
+    (aliasname: 'IBM437';table: @cp437toUTF32),
     (aliasname: 'IBM819';    table: @i8859_1toUTF32),
+    (aliasname: 'IBM850';table: @cp850toUTF32),
+    (aliasname: 'ISO646-US';table: @ASCIItoUTF32),
+    (aliasname: 'ISO_8859-1';table: @i8859_1toUTF32),
     (aliasname: 'ISO-8859-2';table: @i8859_2toUTF32),
     (aliasname: 'ISO_8859-2';table: @i8859_2toUTF32),
-    (aliasname: 'LATIN2';    table: @i8859_2toUTF32),
     (aliasname: 'ISO-8859-5';table: @i8859_5toUTF32),
     (aliasname: 'ISO_8859-5';table: @i8859_5toUTF32),
     (aliasname: 'ISO-8859-16';table: @i8859_16toUTF32),
     (aliasname: 'ISO_8859-16';table: @i8859_16toUTF32),
+    (aliasname: 'LATIN1';    table: @i8859_1toUTF32),
+    (aliasname: 'LATIN2';    table: @i8859_2toUTF32),
     (aliasname: 'LATIN10';   table: @i8859_16toUTF32),
-    (aliasname: 'WINDOWS-1252';table: @cp1252toUTF32),
-    (aliasname: 'IBM437';table: @cp437toUTF32),
-    (aliasname: 'CP437';table: @cp437toUTF32),
-    (aliasname: 'IBM850';table: @cp850toUTF32),
-    (aliasname: 'CP850';table: @cp850toUTF32),
     (aliasname: 'MACINTOSH';table: @RomantoUTF32),
     (aliasname: 'MACROMAN';table: @RomantoUTF32),
-    (aliasname: 'ATARI';table: @AtariSTtoUTF32),
-    (aliasname: 'ASCII';table: @ASCIItoUTF32),
-    (aliasname: 'US-ASCII';table: @ASCIItoUTF32),
-    (aliasname: 'IBM367';table: @ASCIItoUTF32),
-    (aliasname: 'CP367';table: @ASCIItoUTF32),
-    (aliasname: 'ISO646-US';table: @ASCIItoUTF32)
+    (aliasname: 'US-ASCII';table: @ASCIItoUTF32)
   );
 
 const
@@ -1328,39 +1329,55 @@ const
     ConvertFromUCS4:=UNICODE_ERR_OK;  
     p:=nil;
     desttype:=upstring(desttype);
-        for i:=1 to MAX_ALIAS do
-          begin
-            if aliaslist[i].aliasname = desttype then
+    for i:=1 to MAX_ALIAS do
+      begin
+        if aliaslist[i].aliasname = desttype then
+         begin
+           p:=aliaslist[i].table;
+           break;
+         end;
+      end;
+    if not assigned(p) then
+     begin
+       ConvertFromUCS4:=UNICODE_ERR_NOTFOUND;  
+       exit;
+     end;
+    { for each character in the UCS-4 string ... }  
+    sourcelength:=ucs4_length(source);
+    { Check if this is an ISO-8859-1 conversion }
+    if (pointer(p) = @i8859_1toUTF32) then
+      begin
+          for i:=1 to sourcelength do
+            begin
+              if (source[i] > ucs4char(high(char))) then
+                begin
+                 dest:=dest+'\u'+hexstr(longint(source[i]),8);
+                 ConvertFromUCS4:=UNICODE_ERR_INCOMPLETE_CONVERSION;
+                 continue;
+                end;
+              dest:=dest+char(source[i]);
+            end;
+         exit;                    
+      end;
+    for i:=1 to sourcelength do
+      begin
+         found:=false;
+         { search the table by reverse lookup }
+         for j:=#0 to high(char) do 
+          begin     
+            if ucs4char(source[i]) = ucs4char(p^[j]) then
               begin
-                p:=aliaslist[i].table;
+               dest:=dest+j;
+               found:=true;
+               break;
               end;
           end;
-        if not assigned(p) then
+         if not found then
           begin
-            ConvertFromUCS4:=UNICODE_ERR_NOTFOUND;  
-            exit;
+            dest:=dest+'\u'+hexstr(longint(source[i]),8);
+            ConvertFromUCS4:=UNICODE_ERR_INCOMPLETE_CONVERSION;
           end;
-        { for each character in the UCS-4 string ... }  
-        sourcelength:=ucs4_length(source);
-        for i:=1 to sourcelength do
-            begin
-              found:=false;
-              { search the table by reverse lookup }
-              for j:=#0 to high(char) do 
-                begin     
-                  if ucs4char(source[i]) = ucs4char(p^[j]) then
-                    begin
-                      dest:=dest+j;
-                      found:=true;
-                      break;
-                    end;
-                end;
-              if not found then
-                begin
-                  dest:=dest+'\u'+hexstr(longint(source[i]),8);
-                  ConvertFromUCS4:=UNICODE_ERR_INCOMPLETE_CONVERSION;
-                end;
-            end;
+      end;
   end;
   
   function ConvertToUCS4(source: string; var dest: ucs4string; srctype: string): integer;
@@ -1387,6 +1404,7 @@ const
         if aliaslist[i].aliasname = srctype then
           begin
             p:=aliaslist[i].table;
+            break;
           end;
       end;
     if not assigned(p) then
@@ -1802,10 +1820,9 @@ begin
 end;
 
   
-  procedure ucs4_copy(var resultstr: ucs4string; const s: array of ucs4char; index: integer; count: integer);
+  procedure ucs4_copy(var resultstr: ucs4string; const s: ucs4string; index: integer; count: integer);
   var
    slen: integer;
-   i: integer;
   begin
     ucs4_setlength(resultstr,0);
     if count = 0 then
@@ -1816,14 +1833,15 @@ end;
     if (count+index)>slen then
       count:=slen-index+1;
     { don't forget the length character }
-    if count <> 0 then
+    Move(s[index],resultstr[1],count*sizeof(ucs4char));
+(*    if count <> 0 then
       begin
         for i:=1 to count do
           begin
             resultstr[i]:=s[i+index-1];
           end;
-      end;
-    resultstr[0]:=ucs4char(count);
+      end;*)
+    ucs4_setlength(resultstr,count);
   end;
   
   procedure ucs4_delete(var s: ucs4string; index: integer; count: integer);
@@ -1841,32 +1859,33 @@ end;
   end;
   
 
-  procedure ucs4_concat(var resultstr: ucs4string;s1: ucs4string; const s2: array of ucs4char);
+  procedure ucs4_concat(var resultstr: ucs4string;const s1: ucs4string; const s2: array of ucs4char);
   var
     s1l, s2l : integer;
-    idx: integer;
   begin
     { if only one character must be moved }
     if high(s2) = 0 then
       begin
         s2l:=1;
-        idx:=0;
-      end
-    else
-      begin
-        s2l:=ucs4_length(s2);
-        idx:=1;
+        s1l:=ucs4_length(s1);
+        if (s2l+s1l)>MAX_STRING_LENGTH then
+          exit;
+        move(s1[1],resultstr[1],s1l*sizeof(ucs4char));
+        resultstr[s1l+1]:=s2[0];
+        ucs4_setlength(resultstr, s2l+s1l);
+        exit;
       end;
+    s2l:=ucs4_length(s2);
     s1l:=ucs4_length(s1);
     if (s2l+s1l)>MAX_STRING_LENGTH then
       s2l:=MAX_STRING_LENGTH-s1l;
+    move(s1[1],resultstr[1],s1l*sizeof(ucs4char));
     if s2l <> 0 then
-      move(s2[idx],s1[ucs4_length(s1)+1],s2l*sizeof(ucs4char));
-    move(s1[1],resultstr[1],(s2l+s1l)*sizeof(ucs4char));
+      move(s2[1],resultstr[s1l+1],s2l*sizeof(ucs4char));
     ucs4_setlength(resultstr, s2l+s1l);
   end;
-  
-  function ucs4_pos(substr: ucs4string; const s: ucs4string): integer;
+
+  function ucs4_pos(const substr: ucs4string; const s: ucs4string): integer;
   var
     i,j : integer;
     e   : boolean;
@@ -1918,7 +1937,7 @@ end;
    s[0]:=ucs4char(l);
   end;
 
-  procedure ucs4_concatascii(var resultstr: ucs4string;s1: ucs4string; s2: string);
+  procedure ucs4_concatascii(var resultstr: ucs4string;const s1: ucs4string; const s2: string);
   var
    utfstr: ucs4string;
   begin
@@ -1926,7 +1945,7 @@ end;
        ucs4_concat(resultstr,s1,utfstr);
   end;
 
-  function ucs4_posascii(substr: string; s: ucs4string): integer;
+  function ucs4_posascii(const substr: string; const s: ucs4string): integer;
   var
    utfstr: ucs4string;
   begin
@@ -1935,7 +1954,7 @@ end;
      ucs4_posascii:=ucs4_pos(utfstr,s);
   end;
 
-  function ucs4_equalascii(s1 : array of ucs4char; s2: string): boolean;
+  function ucs4_equalascii(const s1 : array of ucs4char; s2: string): boolean;
   var
    utfstr: ucs4string;
    s3: ucs4string;
@@ -1976,7 +1995,7 @@ end;
     end;
   end;
   
-  function ucs4_converttoiso8859_1(s: ucs4string): string;
+  function ucs4_converttoiso8859_1(const s: ucs4string): string;
   var
    resultstr: string;
    i: integer;
@@ -1999,7 +2018,7 @@ end;
   end;
   
   
-  function ucs4_converttoutf8(src: ucs4string): utf8string;
+  function ucs4_converttoutf8(const src: ucs4string): utf8string;
   var
    p: pucs4char;
   begin
@@ -2396,6 +2415,7 @@ end;
             if aliaslist[i].aliasname = srctype then
               begin
                 p:=aliaslist[i].table;
+                break;
               end;
           end;
         if not assigned(p) then
@@ -2483,14 +2503,16 @@ end;
    l: longint;
    endindex: integer;
    idx: integer;
+   stringlength: integer;
   begin
     ucs4strnew:=nil;
     dest:=nil;
     srctype:=upstring(srctype);
     p:=nil;
     if not assigned(str) then exit;
+    stringlength:=strlen(str);
     { Just a simple null character to add }
-    if strlen(str) = 0 then
+    if stringlength = 0 then
       begin
         { Just set a size for the null character }
         Getmem(dest,sizeof(ucs4char));
@@ -2512,7 +2534,7 @@ end;
             inc(totalsize);
           end;  
         Getmem(dest,totalsize*sizeof(ucs4char)+sizeof(ucs4char));
-        fillchar(dest^,totalsize*sizeof(ucs4char)+sizeof(ucs4char),$55);
+{        fillchar(dest^,totalsize*sizeof(ucs4char)+sizeof(ucs4char),$55);}
         i:=0;
         OutIndex := 0;
         while str[i]<>#0 do
@@ -2555,13 +2577,14 @@ end;
             if aliaslist[i].aliasname = srctype then
               begin
                 p:=aliaslist[i].table;
+                break;
               end;
           end;
         if not assigned(p) then
             exit;
         { Count the number of characters to allocate }    
         totalsize:=0;
-        count:=strlen(str)-1;
+        count:=stringlength-1;
         for i:=0 to count do
           begin
             l:=p^[str[i]];
@@ -2575,7 +2598,7 @@ end;
         Getmem(dest,totalsize*sizeof(ucs4char)+sizeof(ucs4char));        
         CurrentIndex:=0;
         { Now actually copy the data }  
-        endindex:=strlen(str)-1;
+        endindex:=stringlength-1;
         for i:=0 to endindex do
           begin
             l:=p^[str[i]];
@@ -2638,10 +2661,6 @@ end;
  end;
 
   function ucs4strtrim(const p: pucs4char): pucs4char;
-{$IFDEF DEBUG}
-  const
-    TEST_VALUE = $ff;
-{$ENDIF}
   var
    i: integer;
    lastindex: integer;
@@ -2656,24 +2675,15 @@ end;
     lastindex := ucs4strlen(p)+1;
     allocsize:=lastindex*sizeof(ucs4char);
     Getmem(outbuf,allocsize);
-{$IFDEF DEBUG}
-    UCS4StrFill(pucs4char(outbuf),lastindex,TEST_VALUE);
-{$ENDIF}
     inbuf:=pucs4strarray(p);
     i := 0;
     while (i<=lastindex) and (ucs4_iswhitespace(inbuf^[i])) do
       inc(i);
     move(inbuf^[i],outbuf^,(lastindex-i)*sizeof(ucs4char));
-{$IFDEF DEBUG}
-    UCS4StrCheck(pucs4char(outbuf),lastindex,TEST_VALUE);
-{$ENDIF}
 
     lastindex := ucs4strlen(pucs4char(outbuf))+1;
     allocsize1:=lastindex*sizeof(ucs4char);
     Getmem(outbuf1,allocsize1);
-{$IFDEF DEBUG}
-    UCS4StrFill(pucs4char(outbuf1),lastindex,TEST_VALUE);
-{$ENDIF}
     inbuf:=pucs4strarray(outbuf);
     { No null character, and forget to decrease because index starts at zero }
     i:=ucs4strlen(pucs4char(outbuf))-1;
@@ -2689,9 +2699,6 @@ end;
         { add the null character }
         outbuf1^[0]:=0;
 
-{$IFDEF DEBUG}
-    UCS4StrCheck(pucs4char(outbuf1),lastindex,TEST_VALUE);
-{$ENDIF}
     ucs4strtrim:=ucs4strnewucs4(pucs4char(outbuf1));
     Freemem(outbuf,allocsize);
     Freemem(outbuf1,allocsize1);
@@ -2890,10 +2897,12 @@ end;
       strlen*4 - because each character can take up to 4 bytes.
     }  
     GetMem(p,sizetoalloc);
-    fillchar(p^,sizetoalloc,0);
+{    fillchar(p^,sizetoalloc,0);}
+    p[0]:=#0;
     OutIndex := 0;
     StartIndex:=0;
     EndIndex:=ucs4stringlen-1;
+    p[EndIndex+1]:=#0;
 
     for i:=StartIndex to EndIndex do
      begin
@@ -3071,6 +3080,7 @@ end;
       if aliaslist[i].aliasname = desttype then
         begin
           p:=aliaslist[i].table;
+          break;
         end;
      end;
     i:=0;
@@ -3440,8 +3450,9 @@ end;
     StartIndex:=0;
     EndIndex:=ucs4strlen(src)-1;
     Getmem(buffer,sizetoalloc);
-    fillchar(buffer^,sizetoalloc,#0);
+{    fillchar(buffer^,sizetoalloc,#0);}
     dst:=pucs2strarray(buffer);
+    dst^[0]:=0;
 
     if EndIndex > 0 then
       begin
@@ -3549,6 +3560,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.36  2005/12/01 01:48:43  carl
+    + Updated before release
+
   Revision 1.35  2005/11/21 00:18:14  carl
     - remove some compilation warnings/hints
     + speed optimizations
