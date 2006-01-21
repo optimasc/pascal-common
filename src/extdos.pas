@@ -224,6 +224,22 @@ function DirectoryExists(DName : utf8string): Boolean;
 Function FileExists(const FName : utf8string): Boolean;
 
 
+{**
+   @abstract(Returns the current active directory)
+   
+   @param(DirStr The current directory for the process)
+   @return(true on success, otherwise false)
+}
+function GetCurrentDirectory(var DirStr: utf8string): boolean;
+
+{**
+   @abstract(Sets the current active directory)
+   
+   @param(DirStr The current directory to select for the process)
+   @return(true on success, otherwise false)
+}
+function SetCurrentDirectory(const DirStr: utf8string): boolean;
+
 
 {** @abstract(Change the last access time of a file) 
 
@@ -356,6 +372,9 @@ implementation
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.5  2005/11/09 05:15:34  carl
+    + DirectoryExists and FileExists added
+
   Revision 1.4  2005/07/20 03:13:25  carl
    + Documentation
 

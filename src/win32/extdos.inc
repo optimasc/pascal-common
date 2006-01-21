@@ -160,6 +160,9 @@ type
    TCreateFileW = function (lpFileName: PWideChar; dwDesiredAccess, dwShareMode: Integer;
       lpSecurityAttributes: Pointer; dwCreationDisposition, dwFlagsAndAttributes: Integer;
       hTemplateFile: Integer): Integer; stdcall;
+      
+   TGetCurrentDirectoryW = function(nBufferLength: DWORD; lpBuffer: PWideChar): DWORD; stdcall;
+   TSetCurrentDirectoryW = function(lpPathName: PWideChar): BOOL; stdcall;
      
    ASSOCF = DWORD;
    
@@ -194,6 +197,8 @@ var
  PFindFirstFileW: TFindFirstFileW;
  PFindNextFileW: TFindNextFileW;
  PCreateFileW: TCreateFileW;
+ PGetCurrentDirectoryW: TGetCurrentDirectoryW;
+ PSetCurrentDirectoryW: TSetCurrentDirectoryW;
      
 {**************************************************************************}
 
@@ -995,7 +1000,50 @@ begin
   GetFileAttributes:=outattributes;
 end;
 
+function GetCurrentDirectory(var DirStr: utf8string): boolean;
+var
+ ucs4str: pucs4char;
+ ucs2str: pucs2char;
+ resultval: DWORD;
+begin
+  GetCurrentDirectory:=false;
+  DirStr:='';
+  GetMem(ucs2str,MAX_PATH*sizeof(ucs2char));
+  if assigned(ucs2str) then
+    begin
+      resultval:=PGetCurrentDirectoryW(MAX_PATH,pwidechar(ucs2str));
+      if resultval <= (MAX_PATH) then
+        begin
+            GetcurrentDirectory:=true;
+            ucs4str:=ucs4strnewucs2(ucs2str);
+            DirStr:=ucs4strpastoutf8(ucs4str);
+            ucs4strdispose(ucs4str);
+        end;
+    end;
+  FreeMem(ucs2str,MAX_PATH*sizeof(ucs2char));
+end;
 
+function SetCurrentDirectory(const DirStr: utf8string): boolean;
+var
+ ucs4str: pucs4char;
+ ucs2str: pucs2char;
+ resultval: bool;
+begin
+  SetCurrentDirectory:=false;
+  ucs4str:=ucs4strnewstr(DirStr,'UTF-8');
+  if assigned(ucs4str) then
+    begin
+      ucs2str:=ucs2strnew(ucs4str);
+      if assigned(ucs2str) then
+        begin
+          resultval:=PSetCurrentDirectoryW(pwidechar(ucs2str));
+          if resultval then
+            SetcurrentDirectory:=true;
+          ucs2strdispose(ucs2str);
+        end;
+      ucs4strdispose(ucs4str);
+    end;
+end;
 
 {**********************************************************************}
 {                      FindFirstEx/FindNextExt                         }
@@ -1274,6 +1322,14 @@ Begin
            if not assigned(p) then
              found:=false;
            PCreateFileW:=tcreatefilew(p);
+           p:=(GetProcAddress(UnicowsHandle,'GetCurrentDirectoryW'));
+           if not assigned(p) then
+             found:=false;
+           PGetCurrentDirectoryW:=tgetcurrentdirectoryw(p);
+           p:=(GetProcAddress(UnicowsHandle,'SetCurrentDirectoryW'));
+           if not assigned(p) then
+             found:=false;
+           PSetCurrentDirectoryW:=tsetcurrentdirectoryw(p);
          end;
     end
   else
@@ -1292,12 +1348,23 @@ Begin
        if not assigned(p) then
          found:=false;
        PCreateFileW:=tcreatefilew(p);
+       p:=(GetProcAddress(Kernel32Handle,'GetCurrentDirectoryW'));
+       if not assigned(p) then
+         found:=false;
+       PGetCurrentDirectoryW:=tgetcurrentdirectoryw(p);
+       p:=(GetProcAddress(Kernel32Handle,'SetCurrentDirectoryW'));
+       if not assigned(p) then
+         found:=false;
+       PSetCurrentDirectoryW:=tsetcurrentdirectoryw(p);
     end;
   assert(found);  
 end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.4  2005/11/21 00:16:57  carl
+    * Bugfix with passing pchar to a string parameter (Delphi did not complain, but it would crash!)
+
   Revision 1.3  2005/11/09 05:16:36  carl
     + More support for unicode function
     * setfileatime was wrong
