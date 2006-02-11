@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: ietf.pas,v 1.8 2005-01-08 21:37:45 carl Exp $
+    $Id: ietf.pas,v 1.9 2006-02-11 16:54:50 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Unicode related routines
@@ -56,7 +56,7 @@ const
  {** @abstract(Extract information from an URI string)
  
 
-     Given an URI complete specification string, extract
+     Given an URI complete absolute specification string, extract
      and return the scheme, authority, path and query
      components of the URI. The exact definition of
      these terms is specified in IETF RFC 2396.
@@ -492,7 +492,7 @@ end;
    path:='';
    authority:='';
    query:='';
-   uri_split:=true;
+   uri_split:=false;
    present_path:=false;
    present_authority:=false;
    { Verify if there is a scheme present }
@@ -603,6 +603,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.8  2005/01/08 21:37:45  carl
+    + better comments
+
   Revision 1.7  2005/01/06 03:25:51  carl
     + uri validation and splitting routines, compatible with URL parsing
 
