@@ -1,6 +1,12 @@
 {** This unit implements routines to work with
     BER-TLV structures. All offsets from the
     are based on indexes that start from 0.
+    
+    Currently has the following limitations:
+       - Supports data length of up to 4 Gbytes
+         (length encoding on 1,2 3 or 4 bytes in
+          long or short form only, indefinite form
+          is not supported).
     }
 unit TLV;
 
@@ -32,6 +38,14 @@ function appendTLV(const srcBuffer: array of byte; tag: integer; var dstBuffer: 
       TLV structure)
 }
 function getValueLength(const srcBuffer: array of byte): integer;
+
+{** Returns the value part of a TLV strcture currently pointed
+    to by srcBuffer. 
+    
+    @param(srcBuffer Should point to a valid TLV structure buffer)
+    @retrns(Number of bytes copied, or -1 if there was an error
+      in the operation)
+}    
 
 function getValue(const srcBuffer: array of byte; const dstBuffer: array of byte; dstLength: integer): integer;
 
@@ -97,17 +111,77 @@ begin
   { Only single byte for length }
   if srcBuffer[i] and $80 = 0 then
     begin
+      getValueLength:=ValueLength;
       exit;
     end;
-  for i:=1 to ValueLength do
+  { Encoding follows according to the number of bytes }  
+  case ValueLength of 
+  { Length is encoded on an unsigned byte }
+  1: begin
+       Inc(i);
+       getValueLength:=srcBuffer[i];
+       exit;
+     end;
+  { Length is encoded on a word, big-endian }   
+  2: begin
+       getValueLength:=0;
+       inc(i);
+       getValueLength:=srcBuffer[i] shl 8;
+       inc(i);
+       getValueLength:=getValueLength or srcBuffer[i];
+       exit;
+     end;
+  { 3 bytes encoding }   
+  3: begin
+       getValueLength:=0;
+       inc(i);
+       getValueLength:=srcBuffer[i] shl 16;
+       inc(i);
+       getValueLength:=srcBuffer[i] shl 8;
+       inc(i);
+       getValueLength:=getValueLength or srcBuffer[i];
+       exit;
+     end;
+  { Length is encoded on a longword big-endian }   
+  4: begin
+       getValueLength:=0;
+       inc(i);
+       getValueLength:=srcBuffer[i] shl 24;
+       inc(i);
+       getValueLength:=srcBuffer[i] shl 16;
+       inc(i);
+       getValueLength:=srcBuffer[i] shl 8;
+       inc(i);
+       getValueLength:=getValueLength or srcBuffer[i];
+       exit;
+     end;
+  else
     begin
-{!!!!}
+      { Currently unsupported }
+      exit;
     end;
   getValueLength:=ValueLength;
 end;
 
 function getValue(const srcBuffer: array of byte; const dstBuffer: array of byte; dstLength: integer): integer;
+var
+  tagLength: integer;
+  lengthLength: integer;
 begin
+  getValue:=-1;
+  tagLength:=getTagLength(srcBuffer)
+  LengthLength:=getLengthLegth(srcBuffer);
+  if (tagLength = -1) or (lengthLength = -1) then
+    exit;
+  getValue:=getValueLength(srcBuffer);
+  { Out of bounds? }
+  if High(dstBuffer) > getValue then
+    begin
+       getValue:=-1;
+       exit;
+    end; 
+  { Copy the data }
+  Move(srcBuffer[tagLength+LengthLength],dstBuffer,getValue);
 end;
 
 function getTag(const srcBuffer: array of byte): integer;
@@ -154,20 +228,12 @@ var
 begin
   getLengthLength:=-1;
   i:=getTagLength(srcBuffer);
-  LengthLength:=0;
-  while i <= High(srcBuffer) do
-  begin
-        if srcBuffer[i] and $80 = $80 then
-          begin
-            Inc(i);
-            inc(LengthLength);
-          end
-        else
-          begin
-           Inc(LengthLength);
-           break;
-          end;
-  end;
+  LengthLength:=1;
+  if srcBuffer[i] and $80 = $80 then
+   begin
+     Inc(i);
+     LengthLength:=srcBuffer[i]+1;
+   end
   getLengthLength:=LengthLength;
 end;
 
