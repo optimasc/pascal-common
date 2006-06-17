@@ -1,5 +1,5 @@
 {
-    $Id: strings.pas,v 1.6 2005-11-21 00:17:39 carl Exp $
+    $Id: strings.pas,v 1.7 2006-06-17 18:10:15 carl Exp $
     This file is part of the Free Pascal run time library.
     Copyright (c) 1999-2000 by Carl-Eric Codere,
     member of the Free Pascal development team.
@@ -203,15 +203,12 @@ procedure StrDispose(P: PChar);
 
 Implementation
 
+uses sysutils;
+
 
  function strlen(Str : pchar) : Longint;
-  var
-   counter : Longint;
  Begin
-   counter := 0;
-   while Str[counter] <> #0 do
-     Inc(counter);
-   strlen := counter;
+   StrLen:=Sysutils.strlen(str);
  end;
 
 
@@ -223,29 +220,14 @@ Implementation
  end;
 
  Function StrEnd(Str: PChar): PChar;
- var
-  counter: Longint;
  begin
-   counter := 0;
-   while Str[counter] <> #0 do
-      Inc(counter);
-   StrEnd := @(Str[Counter]);
+   StrEnd:=SysUtils.StrEnd(Str);
  end;
 
 
  Function StrCopy(Dest, Source:PChar): PChar;
- var
-   counter : Longint;
  Begin
-   counter := 0;
-   while Source[counter] <> #0 do
-   begin
-     Dest[counter] := char(Source[counter]);
-     Inc(counter);
-   end;
-   { terminate the string }
-   Dest[counter] := #0;
-   StrCopy := Dest;
+   StrCopy:=SysUtils.StrCopy(Dest,Source);
  end;
 
 
@@ -263,130 +245,26 @@ Implementation
  end;
 
  function StrUpper(Str: PChar): PChar;
- var
-  counter: Longint;
  begin
-   counter := 0;
-   while (Str[counter] <> #0) do
-   begin
-     if Str[Counter] in [#97..#122,#128..#255] then
-        Str[counter] := Upcase(Str[counter]);
-     Inc(counter);
-   end;
-   StrUpper := Str;
+   StrUpper:=SysUtils.StrUpper(Str);
  end;
 
  function StrLower(Str: PChar): PChar;
- var
-  counter: Longint;
  begin
-   counter := 0;
-   while (Str[counter] <> #0) do
-   begin
-     if Str[counter] in [#65..#90] then
-        Str[Counter] := chr(ord(Str[Counter]) + 32);
-     Inc(counter);
-   end;
-   StrLower := Str;
+   StrLower := Sysutils.StrLower(Str);
  end;
 
 
   function StrPos(Str1,Str2: PChar): PChar;
- var
-  count: Longint;
-  oldindex: Longint;
-  found: boolean;
-  Str1Length: Longint;
-  Str2Length: Longint;
-  ll: Longint;
- Begin
-
-   Str1Length := StrLen(Str1);
-   Str2Length := StrLen(Str2);
-   oldindex := 0;
-
-   { If the search string is greater than the string to be searched }
-   { it is certain that we will not find it.                        }
-   { Furthermore looking for a null will simply give out a pointer, }
-   { to the null character of str1 as in Borland Pascal.            }
-   if (Str2Length > Str1Length) or (Str2[0] = #0) then
-   begin
-     StrPos := nil;
-     exit;
-   end;
-
-   Repeat
-     { Find first matching character of Str2 in Str1 }
-     { put index of this character in oldindex       }
-     for count:= oldindex to Str1Length-1 do
-     begin
-        if Str2[0] = Str1[count] then
-        begin
-           oldindex := count;
-           break;
-        end;
-        { nothing found - exit routine }
-        if count = Str1Length-1 then
-        begin
-           StrPos := nil;
-           exit;
-        end;
-     end;
-
-     found := true;
-     { Compare the character strings }
-     { and check if they match.      }
-     for ll := 0 to Str2Length-1 do
-     begin
-       { no match, stop iteration }
-        if (Str2[ll] <> Str1[ll+oldindex]) then
-        begin
-           found := false;
-           break;
-        end;
-     end;
-     { Not found, the index will no point at next character }
-     if not found then
-       Inc(oldindex);
-     { There was a match }
-     if found then
-     begin
-        StrPos := @(Str1[oldindex]);
-        exit;
-     end;
-   { If we have gone through the whole string to search }
-   { then exit routine.                                 }
-   Until (Str1Length-oldindex) <= 0;
-   StrPos := nil;
- end;
+  Begin
+   StrPos:=SysUtils.StrPos(Str1,Str2);
+  end;
 
 
  function StrScan(Str: PChar; Ch: Char): PChar;
-   Var
-     count: Longint;
   Begin
-   Strscan:=nil;
-   if not assigned(Str) then
-      exit;
-   count := 0;
-   { As in Borland Pascal , if looking for NULL return null }
-   if ch = #0 then
-   begin
-     StrScan := @(Str[StrLen(Str)]);
-     exit;
+    Strscan:=SysUtils.StrScan(Str,Ch);
    end;
-   { Find first matching character of Ch in Str }
-   while Str[count] <> #0 do
-   begin
-     if Ch = Str[count] then
-      begin
-          StrScan := @(Str[count]);
-          exit;
-      end;
-     Inc(count);
-   end;
-   { nothing found. }
- end;
 
 
 
@@ -427,28 +305,15 @@ Implementation
          len:=strlen(p)+1;
          getmem(tmp,len);
          if tmp<>nil then
-           strmove(tmp,p,len);
+            move(p^,tmp^,len);
          StrNew := tmp;
       end;
 
 
   Function StrECopy(Dest, Source: PChar): PChar;
- { Equivalent to the following:                                          }
- {  strcopy(Dest,Source);                                                }
- {  StrECopy := StrEnd(Dest);                                            }
- var
-   counter : Longint;
- Begin
-   counter := 0;
-   while Source[counter] <> #0 do
-   begin
-     Dest[counter] := char(Source[counter]);
-     Inc(counter);
-   end;
-   { terminate the string }
-   Dest[counter] := #0;
-   StrECopy:=@(Dest[counter]);
- end;
+  Begin
+   StrECopy:=Sysutils.StrECopy(Dest,Source);
+  end;
 
 
    Function StrPCopy(Dest: PChar; Source: String):PChar;
@@ -493,57 +358,19 @@ Implementation
 
 
  Function StrLCopy(Dest,Source: PChar; MaxLen: Longint): PChar;
-  var
-   counter: Longint;
  Begin
-   counter := 0;
-   { To be compatible with BP, on a null string, put two nulls }
-   If Source[0] = #0 then
-   Begin
-     Dest[0]:=Source[0];
-     Inc(counter);
-   end;
-   while (Source[counter] <> #0)  and (counter < MaxLen) do
-   Begin
-      Dest[counter] := char(Source[counter]);
-      Inc(counter);
-   end;
-   { terminate the string }
-   Dest[counter] := #0;
-   StrLCopy := Dest;
+   StrLCopy:=Sysutils.StrLCopy(Dest,Source,MaxLen);
  end;
 
 
  function StrComp(Str1, Str2 : PChar): Integer;
-     var
-      counter: Longint;
-     Begin
-        counter := 0;
-       While str1[counter] = str2[counter] do
-       Begin
-         if (str2[counter] = #0) or (str1[counter] = #0) then
-            break;
-         Inc(counter);
-       end;
-       StrComp := ord(str1[counter]) - ord(str2[counter]);
-     end;
-
+ begin
+   StrComp:=SysUtils.StrComp(Str1,Str2);
+ end;
+ 
      function StrIComp(Str1, Str2 : PChar): Integer;
-     var
-      counter: Longint;
-      c1, c2: char;
      Begin
-       counter := 0;
-       c1 := upcase(str1[counter]);
-       c2 := upcase(str2[counter]);
-       While c1 = c2 do
-       Begin
-         if (c1 = #0) or (c2 = #0) then break;
-         Inc(counter);
-         c1 := upcase(str1[counter]);
-         c2 := upcase(str2[counter]);
-      end;
-       StrIComp := ord(c1) - ord(c2);
+       StrIComp:=Sysutils.StrIComp(Str1,Str2);
      end;
 
 
@@ -591,6 +418,10 @@ Implementation
 end.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.6  2005/11/21 00:17:39  carl
+    - remove some compilation warnings/hints
+    + speed optimizations
+
   Revision 1.5  2004/08/19 00:23:37  carl
     + strscan returns nil on a nil pointer parameter
 
