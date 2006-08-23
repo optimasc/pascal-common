@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: iso3166.pas,v 1.2 2004-11-21 19:53:20 carl Exp $
+    $Id: iso3166.pas,v 1.3 2006-08-23 00:50:40 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Country code unit
@@ -72,7 +72,7 @@ implementation
 { Inactive country codes }
 const
   { CURRENTLY THIS TABLE IS NEVER SEARCHED! }
-  InactiveCOuntryIndo : array[1..7] of TCountryInfo = 
+  InactiveCountryIndo : array[1..7] of TCountryInfo = 
   (
     (
      name_fr: 'BIRMANIE';
@@ -176,6 +176,9 @@ end;
 end.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.2  2004/11/21 19:53:20  carl
+    * speed optimizations
+
   Revision 1.1  2004/08/19 00:24:47  carl
     + iso3166 country code unit
 
