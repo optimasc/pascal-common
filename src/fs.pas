@@ -11,47 +11,78 @@ uses unicode;
 
 type
 
+{** FAT12/FAT16 MS-DOS compatible filesystem 
+    validation object }
 TDOSFileSystem = object
+  {** Verifies if the filename specified is compatible
+      with this type of filesystem }
   function isValidFilename(s: ucs4string): boolean;
 { function isValidPathName(s: ucs4string): boolean;  }
 {  function renameFileName(fname: ucs2string): utf8string;}
 end;
 
+{** NTFS compatible filesystem validation object }
 TWin32FileSystem = object
+  {** Verifies if the filename specified is compatible
+      with this type of filesystem }
   function isValidFilename(s: ucs4string): boolean;
 end;
 
 
+{** Base POSIX-1995 filesystem validation object.  }
 TPOSIXFileSystem = object
+  {** Verifies if the filename specified is compatible
+      with this type of filesystem }
   function isValidFilename(s: ucs4string): boolean;
   function GetMaxFilenameLength: integer;
 end;
 
+{** HPFS compatible filesystem validation object }
 TOS2FileSystem = object
+  {** Verifies if the filename specified is compatible
+      with this type of filesystem }
   function isValidFilename(s: ucs4string): boolean;
 end;
 
+{** FFS compatible filesystem validation object }
 TAmigaFFSFileSystem = object
+  {** Verifies if the filename specified is compatible
+      with this type of filesystem }
   function isValidFilename(s: ucs4string): boolean;
 end;
 
+{** ISO 9660 Level 1 compatible filesystem validation object }
 TISO9660Level1FileSystem = object
+  {** Verifies if the filename specified is compatible
+      with this type of filesystem }
   function isValidFilename(s: ucs4string): boolean;
 end;
 
+{** ISO 9660 Level 2 compatible filesystem validation object }
 TISO9660Level2Filesystem = object
+  {** Verifies if the filename specified is compatible
+      with this type of filesystem }
   function isValidFilename(s: ucs4string): boolean;
 end;
 
+{** UDF compatible filesystem validation object }
 TUDFFilesystem = object
+  {** Verifies if the filename specified is compatible
+      with this type of filesystem }
   function isValidFilename(s: ucs4string): boolean;
 end;
 
+{** CD-ROM Joliet extensions compatible filesystem validation object }
 TJolietFileSystem = object
+  {** Verifies if the filename specified is compatible
+      with this type of filesystem }
   function isValidFilename(s: ucs4string): boolean;
 end;
 
+{** MacOS HFS+ compatible filesystem validation object }
 THFSPlusFileSystem = object
+  {** Verifies if the filename specified is compatible
+      with this type of filesystem }
   function isValidFilename(s: ucs4string): boolean;
 end;
 
@@ -441,6 +472,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.2  2005/11/09 05:18:57  carl
+    + GetMaxFileNameLength added
+
   Revision 1.1  2005/08/08 12:03:44  carl
     + AddDoubleQuotes/RemoveDoubleQuotes
     + Add support for RemoveAccents in unicode
