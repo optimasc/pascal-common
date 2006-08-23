@@ -1,5 +1,12 @@
 History of major changes in the releases:
 
+1.3.3:
+   + Filesystem validation routines
+   * Speed optimizations
+   + Added GetCurrentDirectory/SetCurrentDirectory in extdos
+   * IETF: uri_split bugfix
+   * strings: Speed optimisations
+
 1.3.2:
    * Routine to replace unicode accented characters to their base equivalent  
    + ucs4_upcase 200% speed improvement

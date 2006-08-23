@@ -52,28 +52,28 @@ unicode support unit</p>
 <td class="itemcode"><code>procedure <b><a   href="unicode.html#ucs4_trim">ucs4_trim</a></b>(var s: <a   href="unicode.html#ucs4string">ucs4string</a>);</code></td>
 </tr>
 <tr class="list">
-<td class="itemcode"><code>procedure <b><a   href="unicode.html#ucs4_copy">ucs4_copy</a></b>(var resultstr: <a   href="unicode.html#ucs4string">ucs4string</a>; const s: array of <a   href="unicode.html#ucs4char">ucs4char</a>; index: integer; count: integer);</code></td>
+<td class="itemcode"><code>procedure <b><a   href="unicode.html#ucs4_copy">ucs4_copy</a></b>(var resultstr: <a   href="unicode.html#ucs4string">ucs4string</a>; const s: <a   href="unicode.html#ucs4string">ucs4string</a>; index: integer; count: integer);</code></td>
 </tr>
 <tr class="list2">
 <td class="itemcode"><code>procedure <b><a   href="unicode.html#ucs4_delete">ucs4_delete</a></b>(var s: <a   href="unicode.html#ucs4string">ucs4string</a>; index: integer; count: integer);</code></td>
 </tr>
 <tr class="list">
-<td class="itemcode"><code>procedure <b><a   href="unicode.html#ucs4_concat">ucs4_concat</a></b>(var resultstr: <a   href="unicode.html#ucs4string">ucs4string</a>;s1: <a   href="unicode.html#ucs4string">ucs4string</a>; const s2: array of <a   href="unicode.html#ucs4char">ucs4char</a>);</code></td>
+<td class="itemcode"><code>procedure <b><a   href="unicode.html#ucs4_concat">ucs4_concat</a></b>(var resultstr: <a   href="unicode.html#ucs4string">ucs4string</a>;const s1: <a   href="unicode.html#ucs4string">ucs4string</a>; const s2: array of <a   href="unicode.html#ucs4char">ucs4char</a>);</code></td>
 </tr>
 <tr class="list2">
 <td class="itemcode"><code>procedure <b><a   href="unicode.html#ucs4_removeaccents">ucs4_removeaccents</a></b>(var resultstr: <a   href="unicode.html#ucs4string">ucs4string</a>;s2: <a   href="unicode.html#ucs4string">ucs4string</a>);</code></td>
 </tr>
 <tr class="list">
-<td class="itemcode"><code>procedure <b><a   href="unicode.html#ucs4_concatascii">ucs4_concatascii</a></b>(var resultstr: <a   href="unicode.html#ucs4string">ucs4string</a>;s1: <a   href="unicode.html#ucs4string">ucs4string</a>; s2: string);</code></td>
+<td class="itemcode"><code>procedure <b><a   href="unicode.html#ucs4_concatascii">ucs4_concatascii</a></b>(var resultstr: <a   href="unicode.html#ucs4string">ucs4string</a>;const s1: <a   href="unicode.html#ucs4string">ucs4string</a>; const s2: string);</code></td>
 </tr>
 <tr class="list2">
-<td class="itemcode"><code>function <b><a   href="unicode.html#ucs4_posascii">ucs4_posascii</a></b>(substr: string; s: <a   href="unicode.html#ucs4string">ucs4string</a>): integer;</code></td>
+<td class="itemcode"><code>function <b><a   href="unicode.html#ucs4_posascii">ucs4_posascii</a></b>(const substr: string; const s: <a   href="unicode.html#ucs4string">ucs4string</a>): integer;</code></td>
 </tr>
 <tr class="list">
-<td class="itemcode"><code>function <b><a   href="unicode.html#ucs4_equalascii">ucs4_equalascii</a></b>(s1 : array of <a   href="unicode.html#ucs4char">ucs4char</a>; s2: string): boolean;</code></td>
+<td class="itemcode"><code>function <b><a   href="unicode.html#ucs4_equalascii">ucs4_equalascii</a></b>(const s1 : array of <a   href="unicode.html#ucs4char">ucs4char</a>; s2: string): boolean;</code></td>
 </tr>
 <tr class="list2">
-<td class="itemcode"><code>function <b><a   href="unicode.html#ucs4_pos">ucs4_pos</a></b>(substr: <a   href="unicode.html#ucs4string">ucs4string</a>; const s: <a   href="unicode.html#ucs4string">ucs4string</a>): integer;</code></td>
+<td class="itemcode"><code>function <b><a   href="unicode.html#ucs4_pos">ucs4_pos</a></b>(const substr: <a   href="unicode.html#ucs4string">ucs4string</a>; const s: <a   href="unicode.html#ucs4string">ucs4string</a>): integer;</code></td>
 </tr>
 <tr class="list">
 <td class="itemcode"><code>function <b><a   href="unicode.html#ucs4_equal">ucs4_equal</a></b>(const s1,s2: <a   href="unicode.html#ucs4string">ucs4string</a>): boolean;</code></td>
@@ -85,10 +85,10 @@ unicode support unit</p>
 <td class="itemcode"><code>function <b><a   href="unicode.html#ucs4_issupported">ucs4_issupported</a></b>(s: string): boolean;</code></td>
 </tr>
 <tr class="list2">
-<td class="itemcode"><code>function <b><a   href="unicode.html#ucs4_converttoiso8859_1">ucs4_converttoiso8859_1</a></b>(s: <a   href="unicode.html#ucs4string">ucs4string</a>): string;</code></td>
+<td class="itemcode"><code>function <b><a   href="unicode.html#ucs4_converttoiso8859_1">ucs4_converttoiso8859_1</a></b>(const s: <a   href="unicode.html#ucs4string">ucs4string</a>): string;</code></td>
 </tr>
 <tr class="list">
-<td class="itemcode"><code>function <b><a   href="unicode.html#ucs4_converttoutf8">ucs4_converttoutf8</a></b>(src: <a   href="unicode.html#ucs4string">ucs4string</a>): <a   href="unicode.html#utf8string">utf8string</a>;</code></td>
+<td class="itemcode"><code>function <b><a   href="unicode.html#ucs4_converttoutf8">ucs4_converttoutf8</a></b>(const src: <a   href="unicode.html#ucs4string">ucs4string</a>): <a   href="unicode.html#utf8string">utf8string</a>;</code></td>
 </tr>
 <tr class="list2">
 <td class="itemcode"><code>function <b><a   href="unicode.html#ucs4strlen">ucs4strlen</a></b>(str: <a   href="unicode.html#pucs4char">pucs4char</a>): integer;</code></td>
@@ -316,7 +316,7 @@ unicode support unit</p>
 <a name="@Constants"></a><h3 class="summary">Constants</h3>
 <table class="summary">
 <tr class="list">
-<td class="itemcode"><code><b><a   href="unicode.html#MAX_STRING_LENGTH">MAX_STRING_LENGTH</a></b> = 1024;</code></td>
+<td class="itemcode"><code><b><a   href="unicode.html#MAX_STRING_LENGTH">MAX_STRING_LENGTH</a></b> = 512;</code></td>
 </tr>
 <tr class="list2">
 <td class="itemcode"><code><b><a   href="unicode.html#MAX_UCS4_CHARS">MAX_UCS4_CHARS</a></b> = high(smallint) div (sizeof(<a   href="unicode.html#ucs4char">ucs4char</a>));</code></td>
@@ -423,7 +423,7 @@ Trims trailing spaces and control characters from an UCS-4 string.</p>
 Trims trailing and leading spaces and control characters from an UCS-4 string.</p>
 <table class="detail">
 <tr class="list">
-<td class="itemcode"><a name="ucs4_copy"></a><code>procedure <b>ucs4_copy</b>(var resultstr: <a   href="unicode.html#ucs4string">ucs4string</a>; const s: array of <a   href="unicode.html#ucs4char">ucs4char</a>; index: integer; count: integer);</code></td>
+<td class="itemcode"><a name="ucs4_copy"></a><code>procedure <b>ucs4_copy</b>(var resultstr: <a   href="unicode.html#ucs4string">ucs4string</a>; const s: <a   href="unicode.html#ucs4string">ucs4string</a>; index: integer; count: integer);</code></td>
 </tr>
 </table>
 <p>
@@ -437,7 +437,7 @@ Returns an UCS-4 substring of an UCS-4 string</p>
 Deletes a substring from a string</p>
 <table class="detail">
 <tr class="list">
-<td class="itemcode"><a name="ucs4_concat"></a><code>procedure <b>ucs4_concat</b>(var resultstr: <a   href="unicode.html#ucs4string">ucs4string</a>;s1: <a   href="unicode.html#ucs4string">ucs4string</a>; const s2: array of <a   href="unicode.html#ucs4char">ucs4char</a>);</code></td>
+<td class="itemcode"><a name="ucs4_concat"></a><code>procedure <b>ucs4_concat</b>(var resultstr: <a   href="unicode.html#ucs4string">ucs4string</a>;const s1: <a   href="unicode.html#ucs4string">ucs4string</a>; const s2: array of <a   href="unicode.html#ucs4char">ucs4char</a>);</code></td>
 </tr>
 </table>
 <p>
@@ -453,28 +453,28 @@ Replaces all accented characters with their base representation</p>
 . This routine is useful for converted multilangual strings to their ASCII equivalents.</p>
 <table class="detail">
 <tr class="list">
-<td class="itemcode"><a name="ucs4_concatascii"></a><code>procedure <b>ucs4_concatascii</b>(var resultstr: <a   href="unicode.html#ucs4string">ucs4string</a>;s1: <a   href="unicode.html#ucs4string">ucs4string</a>; s2: string);</code></td>
+<td class="itemcode"><a name="ucs4_concatascii"></a><code>procedure <b>ucs4_concatascii</b>(var resultstr: <a   href="unicode.html#ucs4string">ucs4string</a>;const s1: <a   href="unicode.html#ucs4string">ucs4string</a>; const s2: string);</code></td>
 </tr>
 </table>
 <p>
 Concatenates an UCS-4 string with an ASCII string, and gives a resulting UCS-4 string</p>
 <table class="detail">
 <tr class="list">
-<td class="itemcode"><a name="ucs4_posascii"></a><code>function <b>ucs4_posascii</b>(substr: string; s: <a   href="unicode.html#ucs4string">ucs4string</a>): integer;</code></td>
+<td class="itemcode"><a name="ucs4_posascii"></a><code>function <b>ucs4_posascii</b>(const substr: string; const s: <a   href="unicode.html#ucs4string">ucs4string</a>): integer;</code></td>
 </tr>
 </table>
 <p>
 Searches for an ASCII substring in an UCS-4 string</p>
 <table class="detail">
 <tr class="list">
-<td class="itemcode"><a name="ucs4_equalascii"></a><code>function <b>ucs4_equalascii</b>(s1 : array of <a   href="unicode.html#ucs4char">ucs4char</a>; s2: string): boolean;</code></td>
+<td class="itemcode"><a name="ucs4_equalascii"></a><code>function <b>ucs4_equalascii</b>(const s1 : array of <a   href="unicode.html#ucs4char">ucs4char</a>; s2: string): boolean;</code></td>
 </tr>
 </table>
 <p>
 Checks if an ASCII string is equal to an UCS-4 string </p>
 <table class="detail">
 <tr class="list">
-<td class="itemcode"><a name="ucs4_pos"></a><code>function <b>ucs4_pos</b>(substr: <a   href="unicode.html#ucs4string">ucs4string</a>; const s: <a   href="unicode.html#ucs4string">ucs4string</a>): integer;</code></td>
+<td class="itemcode"><a name="ucs4_pos"></a><code>function <b>ucs4_pos</b>(const substr: <a   href="unicode.html#ucs4string">ucs4string</a>; const s: <a   href="unicode.html#ucs4string">ucs4string</a>): integer;</code></td>
 </tr>
 </table>
 <p>
@@ -516,7 +516,7 @@ Checks if conversion from/to this character set format to/from UCS-4 is supporte
 <h6 class="return">returns</h6>
 <p class="return">true if conversion to/from UCS-4 is supported with this character set, otherwise FALSE</p><table class="detail">
 <tr class="list">
-<td class="itemcode"><a name="ucs4_converttoiso8859_1"></a><code>function <b>ucs4_converttoiso8859_1</b>(s: <a   href="unicode.html#ucs4string">ucs4string</a>): string;</code></td>
+<td class="itemcode"><a name="ucs4_converttoiso8859_1"></a><code>function <b>ucs4_converttoiso8859_1</b>(const s: <a   href="unicode.html#ucs4string">ucs4string</a>): string;</code></td>
 </tr>
 </table>
 <p>
@@ -533,7 +533,7 @@ Converts an UCS-4 string to an ISO-8859-1 string</p>
 <h6 class="return">returns</h6>
 <p class="return">The converted string with possible escape characters if a character could not be converted</p><table class="detail">
 <tr class="list">
-<td class="itemcode"><a name="ucs4_converttoutf8"></a><code>function <b>ucs4_converttoutf8</b>(src: <a   href="unicode.html#ucs4string">ucs4string</a>): <a   href="unicode.html#utf8string">utf8string</a>;</code></td>
+<td class="itemcode"><a name="ucs4_converttoutf8"></a><code>function <b>ucs4_converttoutf8</b>(const src: <a   href="unicode.html#ucs4string">ucs4string</a>): <a   href="unicode.html#utf8string">utf8string</a>;</code></td>
 </tr>
 </table>
 <p>
@@ -1345,7 +1345,7 @@ UTF-16 string declaration. Index 0 contains the active length of the string in B
 &nbsp;<h3 class="detail">Constants</h3>
 <table class="detail">
 <tr class="list">
-<td class="itemcode"><a name="MAX_STRING_LENGTH"></a><code><b>MAX_STRING_LENGTH</b> = 1024;</code></td>
+<td class="itemcode"><a name="MAX_STRING_LENGTH"></a><code><b>MAX_STRING_LENGTH</b> = 512;</code></td>
 </tr>
 </table>
 <p>
@@ -1434,6 +1434,6 @@ Byte order mark: UCS-4 little endian encoding signature</p>
 <ul class="authors">
 <li>Carl Eric Codère</li>
 </ul>
-<hr noshade size="1"><span class="appinfo"><em>Generated by <a  target="_parent" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8.3</a> on 2005-11-30 20:11:30</em>
+<hr noshade size="1"><span class="appinfo"><em>Generated by <a  target="_parent" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8.3</a> on 2006-08-22 21:08:51</em>
 </span>
 </body></html>
