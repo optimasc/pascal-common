@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: sgml.pas,v 1.6 2005-11-21 00:18:13 carl Exp $
+    $Id: sgml.pas,v 1.7 2006-08-23 00:50:02 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere (Optima SC Inc.)
 
     SGML related utility routines
@@ -32,16 +32,23 @@ uses
  unicode;
 
  
-
+const
+  {** No error }
+  SGML_STATUS_OK = 0;   
+  {** Malformed SGML Element }
+  SGML_STATUS_MALFORMED = 1;
+  {** No DTD Presence in SGML }
+  SGML_STATUS_NO_DTD = 2;
 
 {** Parses a DOCTYPE declaration for validity and if it is valid, returns
     the top_element tag, the availability information as well as the
     public identifier (registration information). The returned FPI is not
     in double quotes.
 
-    @returns(true if this is a valid DTD declaration)
+    @returns(SGML_STATUS_OK = no error, SGML_STATUS_MALFORMED = malformed DTD, 
+       SGML_STATUS_NO_DTD = no DTD)
 }
-function SGMLGetDTDInfo(s: string; var top_element,availability,fpi: string): boolean;
+function SGMLGetDTDInfo(s: string; var top_element,availability,fpi: string): integer;
 
 {** Parses and returns the name of an attribute as well as
     its value. Works with both SGML and XML syntax, assumes
@@ -220,17 +227,26 @@ const
   );    
   
 
-function SGMLGetDTDInfo(s: string; var top_element,availability,fpi: string): boolean;
+function SGMLGetDTDInfo(s: string; var top_element,availability,fpi: string): integer;
 var
  idx: integer;
  i: integer;
  strlength: integer;
 begin
-  SGMLGetDTDInfo:=false;
+  SGMLGetDTDInfo:=SGML_STATUS_NO_DTD;
   idx:=pos(DOCTYPE_STR,s);
   if idx = 1 then
+      SGMLGetDTDInfo:=SGML_STATUS_OK
+  else
+  if pos(DOCTYPE_STR,upstring(s))=1 then
     begin
-      SGMLGetDTDInfo:=true;
+      idx:=pos(DOCTYPE_STR,upstring(s));
+      s:=upstring(s);
+  { Check it is malformed }
+      SGMLGetDTDInfo:=SGML_STATUS_MALFORMED;
+     end;
+  if idx = 1 then
+    begin
       s:=copy(s,1,pos('>',s));
       if length(s) > 0 then
         begin
@@ -626,6 +642,11 @@ end;
 end.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.6  2005/11/21 00:18:13  carl
+    - remove some compilation warnings/hints
+    + speed optimizations
+    + recreated case.inc file from latest unicode casefolding standard
+
   Revision 1.5  2005/01/30 20:07:31  carl
    * optimize for speed
 
