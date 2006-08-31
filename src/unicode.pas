@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: unicode.pas,v 1.37 2006-01-09 04:49:45 carl Exp $
+    $Id: unicode.pas,v 1.38 2006-08-31 03:03:55 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Unicode related routines
@@ -23,12 +23,14 @@
     MAX_STRING_LENGTH characters. Null terminated unicode strings are
     limited by the compiler and integer type size.
 
-    Since all these encoding are variable length,
-    except the UCS-4 (which is equivalent to UTF-32 according to
-    ISO 10646:2003) and UCS-2 encoding, to parse through characters,
-    every string should be converted to UCS-4 or UCS-2 before being used.
+    Since all these encoding are variable length, except the UCS-4 
+    (which is equivalent to UTF-32 according to ISO 10646:2003) and UCS-2 
+    encoding, to parse through characters, every string should be converted 
+    to UCS-4 or UCS-2 before being used.
 
     The principal encoding scheme for this unit is UCS-4.
+    
+    Unicode tables are based on Unicode 4.1
 
 }
 {$T-}
@@ -368,15 +370,19 @@ type
      null terminated string.
 
  }
- function ucs4StrPosISO8859_1(S: pucs4char; Str2: PChar): pucs4char;
+ function ucs4strposISO8859_1(S: pucs4char; Str2: PChar): pucs4char;
 
- {** Allocates a new UCS-4 null terminated string, and copies
-     the existing string, avoid a copy of the whitespace at
+ {** @abstract(Allocate and copy trimmed an UCS-4 null terminated string)
+     
+     Allocates a new UCS-4 null terminated string, and copies
+     the existing string, avoiding a copy of the whitespace at
      the start and end of the string
  }
  function ucs4strtrim(const p: pucs4char): pucs4char;
 
- {** Fills a memory region consisting of ucs-4 characters
+ {** @abstract(Fills an UCS-4 null terminated string with the specified UCS-4 character)
+     
+     Fills a memory region consisting of ucs-4 characters
      with the specified UCS-4 character.
  }
  function ucs4strfill(var p: pucs4char; count: integer; value: ucs4char): pucs4char;
@@ -386,7 +392,7 @@ type
       It first skips to the null character, and if maxcount is greater than
       the index, verifies that the values in memory are of value VALUE.
 
-      Otherwise, returns an ERROR. This routine is used with UCS4StrFill.
+      Otherwise, returns an ERROR. This routine is used with ucs4strfill.
   }
   procedure ucs4strcheck(p: pucs4char; maxcount: integer; value: ucs4char);
 
@@ -579,10 +585,24 @@ type
 -----------------------------------------------------------------------------}
 
 
-    procedure utf8stringdispose(var p : putf8shortstring);
+  
+  {** @abstract(Frees an UTF-8 string that was allocated
+       with @link(utf8strdispose))
+       
+      Verifies if the pointer is different than nil before
+      freeing it.
+  }      
+  procedure utf8stringdispose(var p : putf8shortstring);
 
 
-    function utf8stringdup(const s : string) : putf8shortstring;
+  
+  {** @abstract(Allocates and copies an UTF-8 string to a pointer 
+        to an UTF-8 string).
+        
+      Even if the length of the string is of zero bytes, the
+      string will still be allocated and returned.
+  }        
+  function utf8stringdup(const s : string) : putf8shortstring;
     
     
 
@@ -602,6 +622,12 @@ type
  }
  function asciistrnew(src: pchar): pchar;
   
+ {** @abstract(Allocates and copies an ascii  string
+      to a null-terminated string)
+      
+     The value returned is nil, if the length of str = 0.
+      
+ }
  function asciistrnewstr(const str: string): pchar;
  
   {** @abstract(Converts a null-terminated ISO-8859-1 string to a Pascal-style
@@ -620,8 +646,19 @@ type
  }
  function ansistrnew(src: pchar): pchar;
   
+ {** @abstract(Allocates and copies an ansi string
+      to a null-terminated string)
+      
+     The value returned is nil, if the length of str = 0.
+      
+ }
  function ansistrnewstr(const str: string): pchar;
 
+ {** @abstract(Disposes of an ansi null-terminated string)
+      
+     Does nothing if the pointer passed is already nil.
+      
+ }
  function ansistrdispose(p: pchar): pchar;
 
 
@@ -1229,6 +1266,7 @@ const
       if Outindex > High(utf8string) then
         begin
           convertUCS4ToUTF8:=UNICODE_ERR_LENGTH_EXCEED;
+          utf8_setlength(outstr,0);
           exit;
         end;
 {$ENDIF}        
@@ -2809,12 +2847,13 @@ end;
           bytesToWrite:=2;
         end;
       Inc(outindex,BytesToWrite);
-{      
+{$IFNDEF ANSISTRINGS}      
       if Outindex > High(utf8string) then
         begin
-          convertUCS4ToUTF8:=UNICODE_ERR_LENGTH_EXCEED;
+          ucs4strpastoutf8:=outstr;
           exit;
-        end;}
+        end;
+{$ENDIF}        
       CurrentIndex := BytesToWrite-1;
       for idx:=CurrentIndex downto 1 do
          begin
@@ -3560,6 +3599,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.37  2006/01/09 04:49:45  carl
+    + Speed optimizations
+
   Revision 1.36  2005/12/01 01:48:43  carl
     + Updated before release
 
