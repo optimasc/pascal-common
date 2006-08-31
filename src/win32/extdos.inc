@@ -908,14 +908,22 @@ begin
     end;
   utf:=utf8strnewstr(dname);
   if not volume then
-     status:=FindFirstEx(utf,[attr_directory],SearchInfo)
-  else
-     status:=FindFirstEx(utf,[attr_any],SearchInfo);
-  if status = 0 then
     begin
-      DirectoryExists:=true;
+     status:=FindFirstEx(utf,[attr_directory],SearchInfo);
+     if (status = 0) and ((attr_directory in SearchInfo.stats.Attributes)) then
+       begin
+          DirectoryExists:=true;
+       end;
+    end
+  else
+    begin
+       status:=FindFirstEx(utf,[attr_any],SearchInfo);
+       if status = 0 then
+         begin
+          DirectoryExists:=true;
+         end;
     end;
-  FindCloseEx(SearchInfo);  
+  FindCloseEx(SearchInfo);
   utf8strdispose(utf);
 end;
 
@@ -1362,6 +1370,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.5  2006/01/21 22:32:26  carl
+    + GetCurrentDirectory/SetCurrentDirectory
+
   Revision 1.4  2005/11/21 00:16:57  carl
     * Bugfix with passing pchar to a string parameter (Delphi did not complain, but it would crash!)
 
