@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: utils.pas,v 1.22 2005-11-21 00:18:15 carl Exp $
+    $Id: utils.pas,v 1.23 2006-08-31 03:02:33 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Common utilities
@@ -95,15 +95,17 @@ CONST
   }
   function LowString(s : string): string;
   
-  {** This routine adds double quotes to the selected string,
-      if the string contains any space character after the string
-      has been trimmed.
+  {** @abstract(Trims and adds double quotes to the string if 
+       it contains spaces).
+       
   }
   function AddDoubleQuotes(s: string): string;
   
-  {** This routine removes double quotes to the selected string
-  (the leading and ending double quotes only)
-      
+  {** @abstract(Removes the leading and ending double quotes from 
+     a string)
+
+     If there is no double quotes at the beginning or end of the
+     string, it returns the unmodified string.
   }
   function RemoveDoubleQuotes(s: string): string;
 
@@ -503,7 +505,7 @@ begin
   else
      FindFirst(Dname,AnyFile,SearchInfo);
   status:=DosError;   
-  if status = 0 then
+  if (status = 0) and (SearchInfo.attr and Directory = Directory) then
     begin
       AnsiDirectoryExists:=true;
     end;
@@ -520,6 +522,9 @@ end;
 {$DEFINE IO_ON}
 {$I-}
 {$ENDIF}
+       AnsiFileExists:=false;
+       if length(FName) = 0 then
+         exit;
        value:=IOResult;
        { Bug, would not detect read only files }
        { therefore try in read only mode       }
@@ -968,6 +973,11 @@ end;
 end.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.22  2005/11/21 00:18:15  carl
+    - remove some compilation warnings/hints
+    + speed optimizations
+    + recreated case.inc file from latest unicode casefolding standard
+
   Revision 1.21  2005/11/09 05:14:56  carl
     * Renamed FileExists and DirectoryExists to AnsiFileExists and AnsiDirectoryExists
 

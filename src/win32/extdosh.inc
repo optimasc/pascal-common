@@ -42,9 +42,11 @@ type
 
 
 type
+  {** @abstract(Returned by @link(FindFirstEx) and @link(FindNextEx)) }
   TSearchRecExt = record
+    {** File statistics }
     Stats: TFileStats;
-    {** Operating system specific data *}
+    {** Operating system specific data }
     FindHandle  : THandle;
     W32FindData : TWin32FindDataW;
     IncludeAttr : longint;

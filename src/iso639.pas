@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: iso639.pas,v 1.3 2004-11-21 19:54:25 carl Exp $
+    $Id: iso639.pas,v 1.4 2006-08-31 03:05:18 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Language code unit
@@ -20,6 +20,8 @@
     
     The database was taken from the following site:
     http://www.loc.gov/standards/iso639-2/ISO-639-2_values_8bits.txt
+    
+    The database used is from 2004-10-19.
 }
 unit iso639;
 
@@ -36,6 +38,7 @@ uses
 
 
 {** @abstract(Verifies if the 2 or 3 letter language code is valid)
+
     This routine checks if the two or three letter language code is
     valid (as defined in ISO 639, part 1 and part 2 respectively). 
     The language  code IS case sensitive and should be in lower case.
@@ -45,14 +48,13 @@ uses
 }
 function isvalidlangcode(s: shortstring): boolean;
 
-{** This routine returns the language name in french 
-  for the specified language code. The language code
-  IS case insensitive and can be either 2 or 3 characters
+{** @abstract(Returns the language name in french for the specified language code.) 
+
+  The language code IS case insensitive and can be either 2 or 3 characters
   in length (according to ISO 639-1 and ISO 639-2 respectively)
   
-  The returned string is encoded according to
-  ISO-8859-1. If there are alternate names for
-  the language, only the first alternate 
+  The returned string is encoded according to ISO-8859-1. If there are alternate 
+  names for the language, only the first alternate 
   name is returned.
   
   @param(s The two or three digit language code)
@@ -60,25 +62,26 @@ function isvalidlangcode(s: shortstring): boolean;
 }
 function getlangname_fr(s: shortstring): shortstring;
 
-{** This routine returns the language name in english
-  for the specified language code. The language code
-  IS case insensitive and can be either 2 or 3 characters
-  in length (according to ISO 639-1 and ISO 639-2 respectively).
+{** @abstract(Returns the language name in english for the specified language code.) 
+
+  The language code IS case insensitive and can be either 2 or 3 characters
+  in length (according to ISO 639-1 and ISO 639-2 respectively)
   
-  The returned string is encoded according to
-  ISO-8859-1.If there are alternate names for
-  the language, only the first alternate 
+  The returned string is encoded according to ISO-8859-1. If there are alternate 
+  names for the language, only the first alternate 
   name is returned.
   
   @param(s The two or three digit language code)
+  
 }
 function getlangname_en(s: shortstring): shortstring;
 
 
-{** This routine returns the 2 character code related
-    to the english name of the language. The search is
-    not case  (according to ISO 639-1). If there is
-    no 2 character language code for this language, or
+{** @abstract(Returns the 2 character code related to the english name of the language.) 
+    
+    
+    The search is not case sensitive (according to ISO 639-1). 
+    If there is no 2 character language code for this language, or
     if the language name is not found, the routine 
     returns an empty string.
   
@@ -90,10 +93,11 @@ function getlangname_en(s: shortstring): shortstring;
 }
 function getlangcode_en(name: shortstring): shortstring;
 
-{** This routine returns the 2 character code related
-    to the french name of the language. The search is
-    not case  (according to ISO 639-1). If there is
-    no 2 character language code for this language, or
+{** @abstract(Returns the 2 character code related to the french name of the language.) 
+    
+    
+    The search is not case sensitive (according to ISO 639-1). 
+    If there is no 2 character language code for this language, or
     if the language name is not found, the routine 
     returns an empty string.
   
@@ -335,6 +339,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.3  2004/11/21 19:54:25  carl
+    * 10-25% speed optimizations (change some parameter types to const, code folding)
+
   Revision 1.2  2004/11/15 03:34:03  carl
     * alternate names are now individually parsed
 

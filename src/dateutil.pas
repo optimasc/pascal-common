@@ -1,5 +1,5 @@
 {
-    $Id: dateutil.pas,v 1.9 2005-11-21 00:18:12 carl Exp $
+    $Id: dateutil.pas,v 1.10 2006-08-31 03:08:05 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere (Optima SC Inc.)
 
     Date and time utility routines
@@ -50,7 +50,7 @@ type
  TDatetime = real;
  {** Useful structure that contains additional information on a date and time }
  TDateInfo = record
-   {** Actual date and time value *}
+   {** Actual date and time value }
    DateTime: TDateTime;
    {** Is this value local or according to UTC? }
    UTC: boolean;
@@ -74,125 +74,142 @@ const
   DaySaturday = 6;
   DaySunday = 7;
 
-{** Returns the current year }
+{** @abstract(Returns the current year) }
 function CurrentYear: word;
 
-{** Returns the current date, with the time value equal to midnight. }
+{** @abstract(Returns the current date, with the time value equal to midnight.) }
 function Date: TDatetime;
 
-{** Strips the time portion from a TDateTime value.}
+{** @abstract(Strips the time portion from a TDateTime value.)}
 function DateOf(const AValue: TDateTime): TDateTime;
 
-{** Converts a TDateTime value to a string in standard ISO 8601 format.}
+{** @abstract(Converts a TDateTime value to a string in extended ISO 8601 date and time representation.)
+
+    Returns the extended format representation of a date and time as recommended
+    by ISO 8601 (Gregorian Calendar). The extended format ISO 8601 representation
+    is of the form: YYYY-MM-DDThh:mm:ss
+}
 function DateTimeToStr(DateTime: TDateTime): string; 
 
-{** Converts a TDatetime value to a string in ISO 8601 format }
+{** @abstract(Converts a TDateTime value to a string in extended ISO 8601 date representation.)
+
+    Returns the extended format representation of a date as recommended
+    by ISO 8601 (Gregorian Calendar). The extended format ISO 8601 representation
+    is of the form: YYYY-MM-DD
+}
 function DateToStr(date: TDatetime): string;
 
-{** Returns the day of the month represented by a TDateTime value.}
+{** @abstract(Returns the day of the month represented by a TDateTime value.)}
 function DayOf(const AValue: TDateTime): Word;
 
-{** Returns the number of days between two specified TDateTime values.}
+{** @abstract(Returns the number of days between two specified TDateTime values.)}
 function DaysBetween(const ANow, AThen: TDateTime): integer;
 
-{** Returns Year, Month, and Day values for a TDateTime value. }
+{** @abstract(Returns Year, Month, and Day values for a TDateTime value.) }
 procedure DecodeDate(Date: TDateTime; var Year, Month, Day: Word);
 
-{** Returns Year, Month, Day, Hour, Minute, Second, and Millisecond values for a TDateTime. }
+{** @abstract(Returns Year, Month, Day, Hour, Minute, Second, and Millisecond values for a TDateTime.) }
 procedure DecodeDateTime(const AValue: TDateTime; var Year, Month, Day, Hour, Minute, Second, MilliSecond: Word);
 
-{** Breaks a TDateTime value into hours, minutes, seconds, and milliseconds.}
+{** @abstract(Breaks a TDateTime value into hours, minutes, seconds, and milliseconds.)}
 procedure DecodeTime(Time: TDateTime; var Hour, Min, Sec, MSec: Word);
 
-{** Returns the hour of the day represented by a TDateTime value.}
+{** @abstract(Returns the hour of the day represented by a TDateTime value.)}
 function HourOf(const AValue: TDateTime): Word;
 
-{** Returns a date shifted by a specified number of days.}
+{** @abstract(Returns a date shifted by a specified number of days.)}
 function IncDay(const AValue: TDateTime; const ANumberOfDays: Integer): TDateTime;
 
-{** Returns a date/time value shifted by a specified number of hours. }
+{** @abstract(Returns a date/time value shifted by a specified number of hours.) }
 function IncHour(const AValue: TDateTime; const ANumberOfHours: longint): TDateTime;
 
-{** Returns a date/time value shifted by a specified number of milliseconds.}
+{** @abstract(Returns a date/time value shifted by a specified number of milliseconds.)}
 function IncMilliSecond(const AValue: TDateTime; const ANumberOfMilliSeconds: big_integer_t): TDateTime;
 
-{** Returns a date/time value shifted by a specified number of minutes. }
+{** @abstract(Returns a date/time value shifted by a specified number of minutes.) }
 function IncMinute(const AValue: TDateTime; const ANumberOfMinutes: big_integer_t): TDateTime;
 
-{** Returns a date/time value shifted by a specified number of seconds.}
+{** @abstract(Returns a date/time value shifted by a specified number of seconds.)}
 function IncSecond(const AValue: TDateTime; const ANumberOfSeconds: big_integer_t): TDateTime;
 
-{** Returns a date shifted by a specified number of weeks.}
+{** @abstract(Returns a date shifted by a specified number of weeks.)}
 function IncWeek(const AValue: TDateTime; const ANumberOfWeeks: Integer): TDateTime;
 
-{**Indicates whether the time portion of a specified TDateTime value occurs after noon.}
+{** @abstract(Indicates whether the time portion of a specified TDateTime value occurs after noon.)}
 function IsPM(const AValue: TDateTime): Boolean;
 
-{** Indicates whether a specified year, month, and day represent a valid date. }
+{** @abstract(Indicates whether a specified year, month, and day represent a valid date.) }
 function IsValidDate(const AYear, AMonth, ADay: Word): Boolean;
 
-{** Indicates whether a specified year, month, day, hour, minute, second, and millisecond represent a valid date and time. }
+{** @abstract(Indicates whether a specified year, month, day, hour, minute, second, and millisecond represent a valid date and time.) }
 function IsValidDateTime(const AYear, AMonth, ADay, AHour, AMinute, ASecond, AMilliSecond: Word): Boolean;
 
-{** Indicates whether a specified hour, minute, second, and millisecond represent a valid date and time. }
+{** @abstract(Indicates whether a specified hour, minute, second, and millisecond represent a valid date and time.) }
 function IsValidTime(const AHour, AMinute, ASecond, AMilliSecond: Word): Boolean;
 
 
-{** Returns the minute of the hour represented by a TDateTime value.}
+{** @abstract(Returns the minute of the hour represented by a TDateTime value.)}
 function MinuteOf(const AValue: TDateTime): Word;
 
-{** Returns the month of the year represented by a TDateTime value.}
+{** @abstract(Returns the month of the year represented by a TDateTime value.)}
 function MonthOf(const AValue: TDateTime): Word;
 
-{** Returns the current date and time.}
+{** @abstract(Returns the current date and time.)}
 function Now: TDateTime;
 
 
-{** Indicates whether two TDateTime values represent the same year, month, and day.}
+{** @abstract(Indicates whether two TDateTime values represent the same year, month, and day.)}
 function SameDate(const A, B: TDateTime): Boolean;
 
-{** Indicates whether two TDateTime values represent the same year, month, day, hour, minute, second, and millisecond.}
+{** @abstract(Indicates whether two TDateTime values represent the same year, month, day, hour, minute, second, and millisecond.)}
 function SameDateTime(const A, B: TDateTime): Boolean;
 
-{** Indicates whether two TDateTime values represent the same time of day, ignoring the date portion.}
+{** @abstract(Indicates whether two TDateTime values represent the same time of day, ignoring the date portion.)}
 function SameTime(const A, B: TDateTime): Boolean;
 
-{** Returns the second of the minute represented by a TDateTime value.}
+{** @abstract(Returns the second of the minute represented by a TDateTime value.)}
 function SecondOf(const AValue: TDateTime): Word;
 
-{** Returns the current time.}
+{** @abstract(Returns the current time.)}
 function Time: TDateTime;
-{** Returns the current time.}
+{** @abstract(Returns the current time.)}
 function GetTime: TDateTime;
 
-{** Strips the date portion from a TDatetime value }
+{** @abstract(Strips the date portion from a TDatetime value) }
 function TimeOf(const AValue: TDateTime): TDatetime;
 
-{** Returns a string that represents a TDateTime value.}
+{** @abstract(Converts a TDateTime value to a string in extended ISO 8601 time representation.)
+
+    Returns the extended format representation of a time as recommended
+    by ISO 8601 (Gregorian Calendar). The extended format ISO 8601 representation
+    is of the form: hh:mm:ss.
+}
 function TimeToStr(Time: TDateTime): string;
 
-{** Returns a TDateTime value that represents the current date. }
+{** @abstract(Returns a TDateTime value that represents the current date.) }
 function Today: TDateTime;
 
-{** Returns a TDateTime value that represents a specified Year, Month, and Day.}
+{** @abstract(Returns a TDateTime value that represents a specified Year, Month, and Day.)}
 function TryEncodeDate(Year, Month, Day: Word; var Date: TDateTime): Boolean;
 
-{** Returns a TDateTime value for a specified Hour, Min, Sec, and MSec. }
+{** @abstract(Returns a TDateTime value for a specified Hour, Min, Sec, and MSec.) }
 function TryEncodeTime(Hour, Min, Sec, MSec: Word; var Time: TDateTime): Boolean;
 
-{** Returns a TDateTime that represents a specified year, month, day, hour, minute, second, and millisecond. }
+{** @abstract(Returns a TDateTime that represents a specified year, month, day, hour, minute, second, and millisecond.) }
 function TryEncodeDateTime(const AYear, AMonth, ADay, AHour, AMinute, ASecond, AMilliSecond: Word;
    var AValue: TDateTime): Boolean;
 
-{** Converts a string to a TDateTime value, with a Boolean success code.
+{** @abstract(Converts a string of date in ISO 8601 to a TDateTime value, with a Boolean success code.)
 
     In the case where the date does not contain the full representation
     of a date (for examples, YYYY or YYYY-MM), then the missing values
-    will be set to 1 to be legal.
+    will be set to 1 to be legal. 
+    
+    Most legal dates for Dates of ISO 8601 are supported by this routine.
 }
 function TryStrToDate(const S: string; var Value: TDateTime): Boolean;
 
-{** Converts a string to a TDateTime value with a Boolean success code.
+{** @abstract(Converts a string date-time representation to a TDateTime value with a Boolean success code.)
 
     Supported formats:
     1) Format of Complete Representation for calendar dates
@@ -214,7 +231,7 @@ function TryStrToDate(const S: string; var Value: TDateTime): Boolean;
 }
 function TryStrToDateTime(const S: string; var Value: TDateTime): Boolean;
 
-{** Converts a string to a TDateTime value with an error default,
+{** @abstract(Converts a string time to a TDateTime value with an error default)
 
     Supported formats:
     1) ISO 8601 time format (complete representation) with
@@ -229,7 +246,7 @@ function TryStrToDateTime(const S: string; var Value: TDateTime): Boolean;
 }
 function TryStrToTime(const S: string; var Value: TDateTime): Boolean;
 
-{** Returns the year represented by a TDateTime value.}
+{** @abstract(Returns the year represented by a TDateTime value.)}
 function YearOf(const AValue: TDateTime): Word;
 
 {$i dateexth.inc}
@@ -1423,6 +1440,11 @@ end;
 end.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.9  2005/11/21 00:18:12  carl
+    - remove some compilation warnings/hints
+    + speed optimizations
+    + recreated case.inc file from latest unicode casefolding standard
+
   Revision 1.8  2004/12/26 23:31:01  carl
     * Today would return a truncated date
 

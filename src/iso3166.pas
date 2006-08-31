@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: iso3166.pas,v 1.3 2006-08-23 00:50:40 carl Exp $
+    $Id: iso3166.pas,v 1.4 2006-08-31 03:05:36 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Country code unit
@@ -21,6 +21,8 @@
     The lists were converted from the semicolon delimited
     version available here:
     http://www.iso.org/iso/en/prods-services/iso3166ma/    
+    
+    The version used is based on version of 2004-04-26.
 }
 unit iso3166;
 
@@ -46,19 +48,20 @@ uses
 }
 function isvalidcountrycode(s: shortstring): boolean;
 
-{ This routine returns the country name in french 
-  for the specified country code. The country code
-  is case insensitive.
+{** @abstract(Returns the country name in french 
+  according to its country code.)
+
+  The country code is case-insensitive.
   
   The returned string is encoded according to
   ISO-8859-1.
-  
 }
 function getcountryname_fr(s: shortstring): shortstring;
 
-{ This routine returns the country name in english
-  for the specified country code. The country code
-  is case-insensitive.
+{** @abstract(Returns the country name in english 
+  according to its country code.)
+
+  The country code is case-insensitive.
   
   The returned string is encoded according to
   ISO-8859-1.
@@ -176,6 +179,9 @@ end;
 end.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.3  2006/08/23 00:50:40  carl
+  * Small change in names
+
   Revision 1.2  2004/11/21 19:53:20  carl
     * speed optimizations
 

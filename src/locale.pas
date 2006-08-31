@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: locale.pas,v 1.12 2005-07-20 03:13:00 carl Exp $
+    $Id: locale.pas,v 1.13 2006-08-31 03:05:02 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Localization and date/time unit
@@ -130,6 +130,12 @@ function GetISOTimeStringBasic(Hour, Minute, Second: Word; UTC: Boolean):
   shortstring;
 
 
+{** Returns the extended format representation of a date and time as recommended
+    by ISO 8601 (Gregorian Calendar). The extended format ISO 8601 representation
+    is of the form: YYYY-MM-DDTHH:mm:ss[Timezone offset]
+
+    Returns an empty string if there is an error.
+}
 function GetISODateTimeString(Year, Month, Day, Hour, Minute, Second: Word; UTC:
   Boolean): shortstring;
 
@@ -147,11 +153,16 @@ procedure UNIXToDateTime(epoch: big_integer_t; var year, month, day, hour, minut
 function GetCharEncoding(alias: string; var _name: string): integer;
 
 {** Using a code page identifier (as defined by Microsoft and OS/2)
-    return the resulting IANA encoding alias string }    
+    return the resulting IANA encoding alias string 
+    
+    @param(cp Codepage)
+    @return(IANA String representation of the character encoding)
+}    
 function MicrosoftCodePageToMIMECharset(cp: word): string;
 
-{** Using a code page identifier (as defined by Microsoft and OS/2)
-    return the resulting IANA encoding alias string }    
+{** Using a Microsoft language identifier (as defined by Microsoft and OS/2)
+    return the resulting ISO 639-2 language code identifier.
+}    
 function MicrosoftLangageCodeToISOCode(langcode: integer): string;
 
 
@@ -1026,6 +1037,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.12  2005/07/20 03:13:00  carl
+   * Range check error bugfix
+
   Revision 1.11  2004/11/29 03:49:16  carl
     + routines to convert Microsoft code pages and languages to MIME/IETF types
     * Validation of ISO date and time strings also support now strict checking.

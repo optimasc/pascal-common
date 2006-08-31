@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: sgml.pas,v 1.7 2006-08-23 00:50:02 carl Exp $
+    $Id: sgml.pas,v 1.8 2006-08-31 03:04:46 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere (Optima SC Inc.)
 
     SGML related utility routines
@@ -40,11 +40,14 @@ const
   {** No DTD Presence in SGML }
   SGML_STATUS_NO_DTD = 2;
 
-{** Parses a DOCTYPE declaration for validity and if it is valid, returns
+{** @abstract(Verifies a DOCTYPE declaration)
+
+    Parses a DOCTYPE declaration for validity and if it is valid, returns
     the top_element tag, the availability information as well as the
     public identifier (registration information). The returned FPI is not
     in double quotes.
 
+    @param(s Full DOCTYPE Declaration)
     @returns(SGML_STATUS_OK = no error, SGML_STATUS_MALFORMED = malformed DTD, 
        SGML_STATUS_NO_DTD = no DTD)
 }
@@ -642,6 +645,9 @@ end;
 end.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.7  2006/08/23 00:50:02  carl
+  * Modified SGMLGetDTDInfo() to return better error status
+
   Revision 1.6  2005/11/21 00:18:13  carl
     - remove some compilation warnings/hints
     + speed optimizations

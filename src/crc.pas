@@ -1,5 +1,5 @@
 {
-    $Id: crc.pas,v 1.5 2005-07-20 03:14:11 carl Exp $
+    $Id: crc.pas,v 1.6 2006-08-31 03:07:36 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     CRC and Chekcsum routines    
@@ -153,6 +153,7 @@ function UpdateFletcher8(InitFletcher: word; b: byte): word;
 }    
 function UpdateCRC(InitCrc: word; b: byte): word;
 
+{** @exclude }
 const crctable32:array[0..255] of longword = (
   $00000000, $77073096, $ee0e612c, $990951ba,
   $076dc419, $706af48f, $e963a535, $9e6495a3,
@@ -221,6 +222,7 @@ const crctable32:array[0..255] of longword = (
 );
 
 (* crctab calculated by Mark G. Mendel, Network Systems Corporation *)
+{** @exclude }
 CONST crctable16ccitt: ARRAY[0..255] OF WORD = 
 (
     $0000,  $1021,  $2042,  $3063,  $4084,  $50a5,  $60c6,  $70e7,
@@ -257,6 +259,7 @@ CONST crctable16ccitt: ARRAY[0..255] OF WORD =
     $6e17,  $7e36,  $4e55,  $5e74,  $2e93,  $3eb2,  $0ed1,  $1ef0
 );
 
+{** @exclude }
 CONST crctable16: ARRAY[0..255] OF WORD = 
 (
     $00000,$0C0C1,$0C181,$00140,$0C301,$003C0,$00280,$0C241,
@@ -378,6 +381,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.5  2005/07/20 03:14:11  carl
+   * Make the CRC tables public
+
   Revision 1.4  2004/11/19 01:37:27  carl
     + more documentation
 

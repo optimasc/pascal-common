@@ -22,7 +22,8 @@ type
 {procedure DecodeDateExt(Date: TDateTime; var Year, Month, Day: integer);}
 
 
-{** Converts a string to a TDateTime value with a Boolean success code.
+{** @abstract(Converts a string to a TDateTime value with a Boolean success code.)
+
     This routine also gives information if the value was successfully
     converted to UTC time or not (if no timezone information was
     available in the string then the utc value will be false).
@@ -69,7 +70,15 @@ function TryEncodeDateAndTimeToStr(const Year, Month, Day, Hour, Minute, Second,
 }    
 {function EncodeDateAndTimeToStrExt(const Year, Month, Day, Hour, Minute, Second, MilliSecond: 
   integer; UTC: boolean):string;}
-  
+
+
+{** @abstract(Converts a TDateTime value to a string in extended ISO 8601 date and time representation.)
+
+    Returns the extended format representation of a date and time as recommended
+    by ISO 8601 (Gregorian Calendar). The extended format ISO 8601 representation
+    is of the form: YYYY-MM-DDThh:mm:ss[Z]. Sets the timezone designator
+    if required.
+}
 function DateTimeToStrExt(DateTime: TDateTime; utc: boolean): string; 
 
 
@@ -83,7 +92,7 @@ procedure GetCurrentDate(var Year,Month,Day,DayOfWeek: integer);
 }
 procedure GetCurrentTime(var Hour,Minute,Second,Sec100: integer);
 
-{ @abstract(Converts a UNIX time_t to a DateTime)
+{** @abstract(Converts a UNIX time_t to a TDateTime)
 
   This routine converts a UNIX time_t format time into a
   TDateTime format. The time_t is always according to UTC,
@@ -95,10 +104,10 @@ procedure GetCurrentTime(var Hour,Minute,Second,Sec100: integer);
 }
 function TryUNIXToDateTimeExt(unixtime: big_integer_t; var DateTime: TDateTime; var UTC: boolean): boolean;
 
-{ @abstract(Converts a Win32 FILETIME to a DateTime)
+{** @abstract(Converts a Win32 FILETIME to a TDateTime)
 
   This routine converts a 64-bit FILETIME format time into a
-  TDateTime format. The time_t is always according to UTC,
+  TDateTime format. The value is always according to UTC,
   so the UTC value shall always return TRUE. Because floating
   point values are used, the precision of the returned timestamp
   will be +/- 2 seconds.
@@ -109,6 +118,9 @@ function TryFileTimeToDateTimeExt(ftime: tfiletime; var DateTime: TDateTime; var
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.3  2004/11/29 03:50:24  carl
+    + UNIX and FILETIME to DateTime conversion
+
   Revision 1.2  2004/11/23 03:44:53  carl
     * fixes for compilation with Virtual Pascal 2.x
 
