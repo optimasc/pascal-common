@@ -42,7 +42,7 @@ DOCFILES:=./docs/license.txt ./docs/changes.txt ./docs/copying ./docs/copying.fp
 #LIBFILES
 SRCFILES:=./src/*
 DATAFILES:=./tst/*.txt
-FILESTODOCUMENT:=./src/crc.pas ./src/locale.pas ./src/unicode.pas ./src/utils.pas ./src/ietf.pas \
+FILESTODOCUMENT:=./src/crc.pas ./src/locale.pas ./src/unicode.pas ./src/utils.pas ./src/ietf.pas ./src/extdos.pas \
 	./src/collects.pas ./src/iso639.pas ./src/iso3166.pas ./src/dateutil.pas ./src/fileio.pas ./src/fs.pas
 TSTFILES:=./tst/*
 DOWNLOAD_URL:=http://www.optimasc.com/products/utilities/
