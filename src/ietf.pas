@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: ietf.pas,v 1.9 2006-02-11 16:54:50 carl Exp $
+    $Id: ietf.pas,v 1.10 2006-08-31 03:06:56 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Unicode related routines
@@ -34,7 +34,16 @@ uses
 
 {----------------- MIME related routines ----------------}
 
-
+{** abstract(Validates the syntax of a MIME type) 
+    
+    This routine is used to validate if MIME content type
+    signature consists of a constructed valid syntax. It
+    does not validate if the MIME type is assigned or if
+    it actually exists or not.
+    
+    @param(s MIME type signature to verify)
+    @return(TRUE if the signature has valid syntax)
+}
 function mime_isvalidcontenttype(const s: shortstring): boolean;
 
 {------- RFC 1766 (language tags) related routines --------}
@@ -45,16 +54,17 @@ function langtag_split(const s: string; var primary,sub: string): boolean;
 
 {----------------- URI related routines ----------------}
 const
-  {** Suggested start delimiter character for an URI, c.f. RFC  2396 }
+  {** @exclude Suggested start delimiter character for an URI, c.f. RFC  2396 }
   URI_START_DELIMITER_CHAR = '<';
-  {** Suggested end delimiter character for an URI, c.f. RFC  2396 }
+  {** @exclude Suggested end delimiter character for an URI, c.f. RFC  2396 }
   URI_END_DELIMITER_CHAR = '>';
+  {** @exclude }
   URI_SCHEME_NAME_EMAIL = 'mailto';
+  {** @exclude }
   URI_SCHEME_SEPARATOR = ':';
   
 
  {** @abstract(Extract information from an URI string)
- 
 
      Given an URI complete absolute specification string, extract
      and return the scheme, authority, path and query
@@ -100,7 +110,7 @@ function urn_isvalidnid(nid: string): boolean;
 
     @param(urn Complete URN string to separate)
     @param(urnidstr Signature URN:)
-    @param(nidstr Namespace identifier NID
+    @param(nidstr Namespace identifier NID)
     @param(nssstr Namespace specific string NSS)
     @returns(TRUE if the operation was successfull, or
       FALSE if the URN is malformed)
@@ -109,7 +119,7 @@ function urn_split(urn:string; var urnidstr,nidstr,nssstr: string): boolean;
 
 {** Splits a path string returned by uri_split into its
     individual components for URN. }
- function urn_pathsplit(path: string; var namespace, nss: string): boolean;
+function urn_pathsplit(path: string; var namespace, nss: string): boolean;
 
 
 {** Splits a path string returned by uri_split into its
@@ -134,7 +144,7 @@ const
  control    = [#00..#$1F,#$7F];
 
 const
- NID_MAX_REG = 21;
+ NID_MAX_REG = 33;
  NID_IANA: array[1..NID_MAX_REG] of string[16] =
  (
   'IETF',
@@ -153,11 +163,23 @@ const
   'FIPA',
   'SWIFT',
   'LIBERTY',
+  'IPTC',
+  'UUID',
+  'UCI',
+  'CLEI',
+  'TVA',
+  'FDC', 
+  'ISAN', 
+  'NZL', 
+  'OMA', 
+  'IVIS', 
+  'S1000D',
   'URN-1',
   'URN-2',
   'URN-3',
   'URN-4',
-  'URN-5'
+  'URN-5',
+  'URN-6'
  );
 
 
@@ -603,6 +625,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.9  2006/02/11 16:54:50  carl
+    * Bugfix with URI validation
+
   Revision 1.8  2005/01/08 21:37:45  carl
     + better comments
 
