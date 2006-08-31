@@ -1,3 +1,28 @@
+{
+ ****************************************************************************
+    $Id: extdos.pas,v 1.7 2006-08-31 03:08:31 carl Exp $
+    Copyright (c) 2004-2006 by Carl Eric Codere
+
+    Extended Operating system routines
+
+    See License.txt for more information on the licensing terms
+    for this source code.
+    
+ ****************************************************************************
+}
+{** @author(Carl Eric Codère)
+    @abstract(Extended Operating system routines)
+
+    Routines that extend the capabilities of the 
+    pascal DOS unit. It supports more information extraction
+    from the operating system.
+    
+    Everything string returned and input is/should be encoded
+    in UTF-8 format.
+    
+    Currently this unit is only supported on the Win32 platform.
+
+}
 unit extdos;
 
 interface
@@ -31,6 +56,7 @@ const
   EXTDOS_STATUS_DATE_UNSUPPORTED = -3;
 
 type
+  {** @abstract(Possible attributes of a resource) }
   tresourceattribute =
    (
      { Any attribute, including no attributes, FOR FIND routines only }
@@ -67,15 +93,18 @@ type
 
 
 
-  {** Information on file associations for the shell }
+  {** @abstract(Information on file associations for the shell) }
   TFileAssociation = record
+    {** Application name associated with this resource }
     appname: utf8string;
+    {** Application executable and parameters to use on this type of resource }
     exename: utf8string;
   end;
 
 
   tresourceattributes = set of tresourceattribute;
 
+  {** Statistics for a resource on disk. as returned by @link(getfilestats) }
   TFileStats = record
     {** Name of the resource on disk }
     name: utf8string;
@@ -91,18 +120,18 @@ type
     atime: TDateTime;
     {** Number of links to resource }
     nlink: integer;
-    {** Attributes for this file *}
+    {** Attributes for this file }
     attributes: tresourceattributes;
-    {** association for this file (operating system) *}
+    {** association for this file (operating system) }
     association: tfileassociation;
-    {** number of parallel streams for this resource *}
+    {** number of parallel streams for this resource }
     streamcount: integer;
-    {** number of file accesses since file's creation *}
+    {** number of file accesses since file's creation }
     accesses: integer;
     {** indicates if the times are in UTC format,
         this is always true, unless the filesystem
         does not support this information.
-    *}
+    }
     utc: boolean;
     {** Device where this file resides, this value
         is represented as an hexadecimal null terminated
@@ -113,12 +142,15 @@ type
     ino: array[0..127] of char;
     {** Comment associated with this file type (as stored by the operating system) }
     comment: utf8string;
-    {** Directory where this file is located *}
+    {** Directory where this file is located }
     dirstr: utf8string;
   end;
   
-  
+{$IFNDEF PASDOC}  
 {$i extdosh.inc}  
+{$ELSE}
+{$i win32\extdosh.inc}  
+{$ENDIF}
 
 
 
@@ -136,7 +168,7 @@ type
     @param(fname The filename to access (UTF-8 encoded))
     @returns(The account name on success, otherwise an empty string)
 }    
-function getfileowner(fname: putf8char): utf8string;
+function GetFileOwner(fname: putf8char): utf8string;
 
 {** @abstract(Returns the last access date and time of a file)
 
@@ -149,7 +181,7 @@ function getfileowner(fname: putf8char): utf8string;
    @param(atime The file access date in UTC/GMT format)
    @returns(0 on success, otherwise an error code)
 }
-function getfileatime(fname: putf8char; var atime: TDateTime): integer;
+function GetFileATime(fname: putf8char; var atime: TDateTime): integer;
 
 {** @abstract(Returns the last modification date and time of a file) 
 
@@ -162,7 +194,7 @@ function getfileatime(fname: putf8char; var atime: TDateTime): integer;
    @param(atime The file modification date in UTC/GMT format)
    @returns(0 on success, otherwise an error code)
 }
-function getfilemtime(fname: putf8char; var mtime: TDateTime): integer;
+function GetFileMTime(fname: putf8char; var mtime: TDateTime): integer;
 
 {** @abstract(Returns the creation date and time of a file) 
 
@@ -175,21 +207,21 @@ function getfilemtime(fname: putf8char; var mtime: TDateTime): integer;
    @param(atime The file creation date in UTC/GMT format)
    @returns(0 on success, otherwise an error code)
 }
-function getfilectime(fname: putf8char; var ctime: TDateTime): integer;
+function GetFileCTime(fname: putf8char; var ctime: TDateTime): integer;
 
 {** @abstract(Returns the size of a file).
 
    @returns(If error returns big_integer_t(-1), otherwise
      the size of the file is returned.)
 }
-function getfilesize(fname: putf8char): big_integer_t;
+function GetFilesize(fname: putf8char): big_integer_t;
 
 {** @abstract(Returns the attributes of a file).
 
    @returns(If error returns big_integer_t(-1), otherwise
      the size of the file is returned.)
 }
-function getfileattributes(fname: putf8char): tresourceattributes;
+function GetFileAttributes(fname: putf8char): tresourceattributes;
 
 
 
@@ -200,7 +232,7 @@ function getfileattributes(fname: putf8char): tresourceattributes;
 
    @returns(0 if no error, otherwise, an error code)
 }
-function getfilestats(fname: putf8char; var stats: TFileStats): integer;
+function GetFilestats(fname: putf8char; var stats: TFileStats): integer;
 
 
 {** 
@@ -254,7 +286,7 @@ function SetCurrentDirectory(const DirStr: utf8string): boolean;
    @param(atime The new access time)
    @returns(0 on success, otherwise an error code)
 }
-function setfileatime(fname: putf8char; newatime: tdatetime): integer;
+function SetFileATime(fname: putf8char; newatime: tdatetime): integer;
 
 {** @abstract(Change the modification time of a file) 
 
@@ -269,7 +301,7 @@ function setfileatime(fname: putf8char; newatime: tdatetime): integer;
    @param(mtime The new modification time)
    @returns(0 on success, otherwise an error code)
 }
-function setfilemtime(fname: putf8char; newmtime: tdatetime): integer;
+function SetFileMTime(fname: putf8char; newmtime: tdatetime): integer;
 
 {** @abstract(Change the creation time of a file) 
 
@@ -284,19 +316,28 @@ function setfilemtime(fname: putf8char; newmtime: tdatetime): integer;
    @param(mtime The new modification time)
    @returns(0 on success, otherwise an error code)
 }
-function setfilectime(fname: putf8char; newctime: tdatetime): integer;
+function SetFileCTime(fname: putf8char; newctime: tdatetime): integer;
 
-{**
+{** @abstract(Searches the specified directory for the first entry
+     matching the specified file name and set of attributes.)
+     
    @returns(0 on success, otherwise an error code)
 }   
-function findfirstex(path: putf8char; attr: tresourceattributes; var SearchRec:TSearchRecExt): integer;
+function FindFirstEx(path: putf8char; attr: tresourceattributes; var SearchRec:TSearchRecExt): integer;
 
-{**
+{** @abstract(Returns the next entry that matches the name and
+      name specified in a previous call to @link(FindFirstEx).)
+
    @returns(0 on success, otherwise an error code)
 }   
-function findnextex(var SearchRec: TSearchRecExt): integer;
+function FindNextEx(var SearchRec: TSearchRecExt): integer;
 
-procedure findcloseex(var SearchRec: TSearchRecExt);
+{** @abstract(Closes the search and frees the resources
+      previously allocated by a call to  @link(FindFirstEx).)
+
+   @returns(0 on success, otherwise an error code)
+}   
+procedure FindCloseEx(var SearchRec: TSearchRecExt);
 
 
 
@@ -313,9 +354,9 @@ procedure findcloseex(var SearchRec: TSearchRecExt);
     
     @param(fname The account name)
     @returns(The full name of the user, or an empty string
-      upon error or if unknown or unsupported.
+      upon error or if unknown or unsupported.)
 }    
-function getuserfullname(account: utf8string): utf8string;
+function GetUserFullName(account: utf8string): utf8string;
 
 {** @abstract(Returns the path of the current
         user's application data configuration directory)
@@ -368,10 +409,17 @@ function GetLoginHomeDirectory: utf8string;
 
 implementation
 
-{$i extdos.inc}
+{$IFNDEF PASDOC}  
+{$i extdos.inc}  
+{$ELSE}
+{$i win32\extdos.inc}  
+{$ENDIF}
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.6  2006/01/21 22:32:18  carl
+    + GetCurrentDirectory/SetCurrentDirectory
+
   Revision 1.5  2005/11/09 05:15:34  carl
     + DirectoryExists and FileExists added
 
