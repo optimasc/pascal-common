@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: fileio.pas,v 1.5 2004-11-21 19:52:22 carl Exp $
+    $Id: fileio.pas,v 1.6 2006-08-31 03:07:28 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Generic portable file I/O routines with debug support.
@@ -156,6 +156,7 @@ begin
    RunError(status and $ff);
 {$ENDIF}
   Assign(F,name);
+  LastIOResult:=IOResult;
 end;
 
 procedure FileReset(var F: file; mode: integer);
@@ -348,6 +349,10 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.5  2004/11/21 19:52:22  carl
+    * bugfix with FileReset, record size was 128, which is wrong, set to 1
+    + const parameters for filenames
+
   Revision 1.4  2004/11/19 01:37:27  carl
     + more documentation
 
