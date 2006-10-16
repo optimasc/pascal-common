@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: extdos.pas,v 1.7 2006-08-31 03:08:31 carl Exp $
+    $Id: extdos.pas,v 1.8 2006-10-16 22:21:51 carl Exp $
     Copyright (c) 2004-2006 by Carl Eric Codere
 
     Extended Operating system routines
@@ -38,6 +38,9 @@ uses
    dateutil,
 {$IFDEF WIN32}
    windows,
+{$ENDIF}
+{$IFDEF UNIX}
+   posix,
 {$ENDIF}
    fileio,
    dos;
@@ -417,6 +420,10 @@ implementation
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.7  2006/08/31 03:08:31  carl
+  + Better documentation
+  * Change case of some routines so they are consistent with other routines of this unit
+
   Revision 1.6  2006/01/21 22:32:18  carl
     + GetCurrentDirectory/SetCurrentDirectory
 

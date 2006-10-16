@@ -16,6 +16,9 @@ uses
   iso3166,
   ietf,
   sgml,
+{$IFDEF LINUX}
+  posix,
+{$ENDIF}
   utils;
   
 
