@@ -1,0 +1,136 @@
+{
+    $Id: posixh.tem,v 1.1 2006-10-16 22:26:07 carl Exp $
+
+ **********************************************************************}
+
+{***********************************************************************}
+{                       POSIX TYPE DEFINITIONS                          }
+{***********************************************************************}
+
+type
+    { the following type definitions are compiler dependant }
+    { and system dependant                                  }
+
+    cint  =        { minimum range is : 32-bit                   }
+    cuint =        { minimum range is : 32-bit                   }
+
+
+    dev_t  =              { used for device numbers      }
+    gid_t  =              { used for group IDs           }
+    ino_t  =              { used for file serial numbers }
+    mode_t =              { used for file attributes     }
+    nlink_t  =            { used for link counts         }
+    off_t  =              { used for file sizes          }
+    pid_t  =              { used as process identifier   }
+    size_t =              { as definied in the C standard }
+    ssize_t =             { used by function for returning number of bytes }
+    uid_t =               { used for user ID type        }
+    time_t =              { used for returning the time (C standard)  }
+
+{***********************************************************************}
+{                         POSIX STRUCTURES                              }
+{***********************************************************************}
+CONST
+
+     _POSIX_VERSION = 199506L;
+     
+     
+    _UTSNAME_LENGTH = ;
+    _UTSNAME_NODENAME_LENGTH = ;
+
+TYPE
+   { system information services }
+   utsname = packed record   { don't forget to verify the alignment }
+   end;
+
+  { file characteristics services }
+   stat = packed record { verify the alignment of the members }
+   end;
+
+  { directory services }
+   pdirent = ^dirent;
+   dirent = packed record    { directory entry record - verify alignment }
+   end;
+
+   pdir = ^dir;
+   dir = packed record
+   end;
+
+   { Password structure }
+   ppasswd = ^passwd;
+   passwd = packed record
+   end;
+   
+   { Filetime modification buffer }
+   utimbuf = packed record
+   end;
+   
+   { Flock structure }
+   pflock = ^flock;
+   flock = packed record;
+   end;
+
+{***********************************************************************}
+{                  POSIX CONSTANT ROUTINE DEFINITIONS                   }
+{***********************************************************************}
+CONST
+    { access routine - these maybe OR'ed together }
+    F_OK        =  ;   { test for existence of file }
+    R_OK        =  ;   { test for read permission on file }
+    W_OK        =  ;   { test for write permission on file }
+    X_OK        =  ;   { test for execute or search permission }
+    { seek routine }
+    SEEK_SET    =  ;    { seek from beginning of file }
+    SEEK_CUR    =  ;    { seek from current position  }
+    SEEK_END    =  ;    { seek from end of file       }
+    { open routine                                 }
+    { File access modes for `open' and `fcntl'.    }
+    O_RDONLY    =  ;	{ Open read-only.  }
+    O_WRONLY    =  ;	{ Open write-only. }
+    O_RDWR      =  ;	{ Open read/write. }
+    { Bits OR'd into the second argument to open.  }
+    O_CREAT     =  ;	{ Create file if it doesn't exist.  }
+    O_EXCL      =  ;	{ Fail if file already exists.      }
+    O_TRUNC     =  ;	{ Truncate file to zero length.     }
+    O_NOCTTY    =  ;	{ Don't assign a controlling terminal. }
+    { File status flags for `open' and `fcntl'.  }
+    O_APPEND    =  ;	{ Writes append to the file.        }
+    O_NONBLOCK	=  ;	{ Non-blocking I/O.                 }
+
+    { mode_t possible values                                 }
+    S_IRUSR =   ;           { Read permission for owner   }
+    S_IWUSR =   ;           { Write permission for owner  }
+    S_IXUSR =   ;           { Exec  permission for owner  }
+    S_IRGRP =   ;           { Read permission for group   }
+    S_IWGRP =   ;           { Write permission for group  }
+    S_IXGRP =   ;           { Exec permission for group   }
+    S_IROTH =   ;           { Read permission for world   }
+    S_IWOTH =   ;           { Write permission for world  }
+    S_IXOTH =   ;           { Exec permission for world   }
+
+    { Used for waitpid }
+    WNOHANG   = ;               { don't block waiting               }
+    WUNTRACED = ;               { report status of stopped children }
+
+    { POSIX limits, used for buffer and stack allocation }
+    ARG_MAX =           { Maximum number of argument size     }
+    NAME_MAX =          { Maximum number of bytes in filename }
+    PATH_MAX =          { Maximum number of bytes in pathname }
+    
+    F_LOCK =            { Lock a section for exclusive use.   }
+    F_TEST =            { Test section for locks by other processes. }
+    F_TLOCK =           { Test and lock a section for exclusive use. }
+    F_ULOCK =           { Unlock locked sections.                    }
+    
+    
+    {*************************************************************************}
+    {                               SIGNALS                                   }
+    {*************************************************************************}
+    
+    {$i signal.inc}
+
+
+{
+  $Log: not supported by cvs2svn $
+
+}

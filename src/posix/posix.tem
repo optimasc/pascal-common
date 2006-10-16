@@ -1,0 +1,178 @@
+{
+    $Id: posix.tem,v 1.1 2006-10-16 22:26:05 carl Exp $
+
+    Implements POSIX 1003.1-2001 conforming interface
+
+ ****************************************************************************
+}
+unit posix;
+
+interface
+
+
+  {$i posixh.inc}
+  
+  {$Linklib c}
+
+{   var
+     Errno : cint; external name 'errno';}
+
+
+    { dirent.h }
+    function opendir(const dirname : pchar): pdir; cdecl; external name 'opendir';
+    function readdir(dirp : pdir) : pdirent;cdecl; external name 'readdir';
+    function closedir(dirp : pdir): cint; cdecl; external name 'closedir';
+    
+    { fcntl.h }
+    function open(const path: pchar; flags : cint; mode: mode_t):cint; cdecl; external name 'open';
+    function fcntl(fildes: cint; cmd: cint; lock: pflock): cint;
+    
+    { grp.h }
+{    getgrgid()
+    getgrnam()}
+    
+    { pwd.h }
+    function getpwuid(uid: uid_t): ppasswd;
+    function getpwnam(conat name: pchar): ppasswd;
+    
+    { signal.h }    
+    function sigaction(sig: cint; var act : sigactionrec; var oact : sigactionrec): cint; cdecl; external name 'sigaction';
+    function sigemptyset(var sigset_t set):cint;
+    function sigfillset(var sigset_t set):cint;
+    function sigaddset(var sigset_t set; signo: cint): cint;
+    function sigdelset(var sigset_t set; signo: cint): cint;
+    function sigismember(const sigset_t set; signo: cint): cint;
+    function sigprocmask(how: cint; const set: psigset_t; var oset: sigset_t): cint;
+    function sigpending(var set: sigset_t): cint;
+    function sigsuspend(const sigmask: psigset_t): cint;
+    function sigwait(const sigmask: psigset_t; var sig: cint): cint;
+    
+    { stat.h }
+    function fstat(fd : cint; var sb : stat): cint; cdecl; external name 'fstat';
+    function stat(const path: pchar; var buf : stat): cint; cdecl; external name 'stat';
+    function chmod(const path: pchar; mode: mode_t): cint;
+    function chown(const path: pchar; owner: uid_t; group: gid_t);
+    function umask(cmask: mode_t): mode_t;
+    
+    { sys/times.h }
+    function times(): clock_t;
+    
+    { sys/utsname.h }
+    function uname(var name: utsname): cint; cdecl; external name 'uname';
+    
+    { sys/types.h }
+    function fork : pid_t; cdecl; external name 'fork';
+    function kill(pid_t pid, int sig): cint;
+    function getpid: pid_t;
+    function getppid: pid_t;
+    function getuid: uid_t;
+    function geteuid: uid_t;
+    function getgid: gid_t;
+    function getegid: gid_t;
+    function setuid(uid: uid_t): cint;
+    function setgid(gid: gid_t): cint;
+    
+    { time.h }
+    function time(var tloc:time_t): time_t; cdecl; external name 'time';
+    
+    { wait.h }
+    function wait(var stat_loc: cint): pid_t;
+    function waitpid(pid : pid_t; var stat_loc : cint; options: cint): pid_t; cdecl; external name 'waitpid';
+    
+    { utime.h }
+    function utime(const path: pchar; const ptimes): cint;
+    
+
+
+    
+    procedure exit(status : cint); cdecl; external name '_exit';
+    
+
+    function execve(const path : pchar; const argv : ppchar; const envp: ppchar): cint; cdecl; external name 'execve';
+    
+    function alarm(seconds: cuint): cuint;
+    function pause: cint;
+    function sleep(seconds: cuint): cuint;
+    function getlogin: pchar;
+    
+    
+    
+
+    
+    function chdir(const path : pchar): cint; cdecl; external name 'chdir';
+    function mkdir(const path : pchar; mode: mode_t):cint; cdecl; external name 'mkdir';
+    function unlink(const path: pchar): cint; cdecl; external name 'unlink';
+    function rmdir(const path : pchar): cint; cdecl; external name 'rmdir';
+    function rename(const old : pchar; const newpath: pchar): cint; cdecl;external name 'rename';
+    function access(const pathname : pchar; amode : cint): cint; cdecl; external name 'access';
+    function close(fd : cint): cint; cdecl; external name 'close';
+    function read(fd: cint; buf: pchar; nbytes : size_t): ssize_t; cdecl; external name 'read';
+    function write(fd: cint;const buf:pchar; nbytes : size_t): ssize_t; cdecl; external name 'write';
+    function lseek(fd : cint; offset : off_t; whence : cint): off_t; cdecl; external name 'lseek';
+    function ftruncate(fd : cint; flength : off_t): cint; cdecl; external name 'ftruncate';
+    function getcwd(buf: pchar; size: size_t): pchar;
+    
+    function S_ISDIR(m : mode_t): boolean;
+    function S_ISCHR(m : mode_t): boolean;
+    function S_ISBLK(m : mode_t): boolean;
+    function S_ISREG(m : mode_t): boolean;
+    function S_ISLNK(m : mode_t): boolean;
+    function S_ISSOCK(m:word):boolean;
+
+    function wifexited(status : cint): cint;
+    function wexitstatus(status : cint): cint;
+    function wstopsig(status : cint): cint;
+    function wifsignaled(status : cint): cint;
+
+implementation
+
+
+    function S_ISDIR(m : mode_t): boolean;
+      begin
+      end;
+
+    function S_ISCHR(m : mode_t): boolean;
+      begin
+      end;
+
+    function S_ISBLK(m : mode_t): boolean;
+      begin
+      end;
+
+    function S_ISREG(m : mode_t): boolean;
+      begin
+      end;
+
+    function S_ISFIFO(m : mode_t): boolean;
+      begin
+      end;
+      
+    function S_ISLNK(m : mode_t): boolean;
+      begin
+      end;
+      
+    function S_ISSOCK(m:word):boolean;
+      begin
+      end;
+
+    function wifexited(status : cint): cint;
+      begin
+      end;
+
+    function wexitstatus(status : cint): cint;
+     begin
+     end;
+
+    function wstopsig(status : cint): cint;
+     begin
+     end;
+
+    function wifsignaled(status : cint): cint;
+     begin
+     end;
+     
+{
+
+ $Log: not supported by cvs2svn $
+
+}

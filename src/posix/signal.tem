@@ -1,0 +1,47 @@
+{
+    $Id: signal.tem,v 1.1 2006-10-16 22:26:08 carl Exp $
+
+ **********************************************************************}
+
+type
+    sigset_t =;          { used for additional signal   }
+
+
+   sighandler_t = procedure (signo: cint); cdecl;
+
+   { signal services }
+   sigactionrec = packed record
+   end;
+
+
+const
+
+    {************************ signals *****************************}
+    { more can be provided. Herein are only included the required  }
+    { values.                                                      }
+    {**************************************************************}
+    SIGABRT    =  ;     { abnormal termination           }
+    SIGALRM    =  ;     { alarm clock (used with alarm() }
+    SIGFPE     =  ;     { illegal arithmetic operation   }
+    SIGHUP     =  ;     { Hangup                         }
+    SIGILL     =  ;     { Illegal instruction            }
+    SIGINT     =  ;     { Interactive attention signal   }
+    SIGKILL    =  ;     { Kill, cannot be caught         }
+    SIGPIPE    =  ;     { Broken pipe signal             }
+    SIGQUIT    =  ;     { Interactive termination signal }
+    SIGSEGV    =  ;     { Detection of invalid memory reference }
+    SIGTERM    =  ;     { Termination request           }
+    SIGUSR1    =  ;     { Application defined signal 1  }
+    SIGUSR2    =  ;     { Application defined signal 2  }
+    SIGCHLD    =  ;     { Child process terminated / stopped }
+    SIGCONT    =  ;     { Continue if stopped               }
+    SIGSTOP    =  ;     { Stop signal. cannot be cuaght     }
+    SIGSTP     =  ;     { Interactive stop signal           }
+    SIGTTIN    =  ;     { Background read from TTY          }
+    SIGTTOU    =  ;     { Background write to TTY           }
+    SIGBUS     =  ;     { Access to undefined memory        }
+
+
+{
+  $Log: not supported by cvs2svn $
+}

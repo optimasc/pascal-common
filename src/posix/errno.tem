@@ -1,0 +1,58 @@
+{***********************************************************************}
+{                       POSIX ERROR DEFINITIONS                         }
+{***********************************************************************}
+const
+    { The following constants are system dependent but must all exist }
+    E2BIG       =
+    EACCES      =
+    EAGAIN      =
+    EBADF       =
+    EBUSY       =
+    ECANCELED   =
+    ECHILD      =
+    EDEADLK     =
+    EDOM        =
+    EEXIST      =
+    EFAULT      =
+    EFBIG       =
+    EINPROGRESS =
+    EINTR       =
+    EINVAL      =
+    EIO         =
+    EISDIR      =
+    EMFILE      =
+    EMLINK      =
+    EMSGSIZE    =
+    ENAMETOOLONG=
+    ENFILE      =
+    ENODEV      =
+    ENOENT      =
+    ENOEXEC     =
+    ENOLCK      =
+    ENOMEM      =
+    ENOSPC      =
+    ENOSYS      =
+    ENOTDIR     =
+    ENOTEMPTY   =
+    ENOTTY      =
+    ENXIO       =
+    EPERM       =
+    EPIPE       =
+    ERANGE      =
+    EROFS       =
+    ESPIPE      =
+    ESRCH       =
+    ETIMEDOUT   =
+    EXDEV       =
+    { These next errors are POSIX, but only defined when    }
+    { certain types of POSIX extensions are defined:        }
+    {EBADMSG     =    realtime extension POSIX only   }
+    {ECANCELED   =    async. I/O extension POSIX only }
+    {EMSGSIZE    =    realtime extension POSIX only   }
+    {EINPROGRESS =    async. I/O extension POSIX only }
+    {ENOTSUP     =    unsupported syscall - optional  }
+
+{
+  $Log: not supported by cvs2svn $
+
+}
