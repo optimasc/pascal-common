@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: unicode.pas,v 1.38 2006-08-31 03:03:55 carl Exp $
+    $Id: unicode.pas,v 1.39 2006-10-16 22:21:22 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Unicode related routines
@@ -1367,6 +1367,11 @@ const
     ConvertFromUCS4:=UNICODE_ERR_OK;  
     p:=nil;
     desttype:=upstring(desttype);
+    if desttype = 'UTF-8' then
+      begin
+        ConvertFromUCS4:=convertUCS4toUTF8(source,dest);
+        exit;
+      end;
     for i:=1 to MAX_ALIAS do
       begin
         if aliaslist[i].aliasname = desttype then
@@ -1434,6 +1439,11 @@ const
     if length(source) = 0 then
       begin
         ucs4_setlength(dest,0);
+        exit;
+      end;
+    if srctype = 'UTF-8' then
+      begin
+        ConvertToUCS4:=convertUTF8toUCS4(source,dest);
         exit;
       end;
     { Search the alias type }
@@ -3493,7 +3503,7 @@ end;
     dst:=pucs2strarray(buffer);
     dst^[0]:=0;
 
-    if EndIndex > 0 then
+    if EndIndex >= 0 then
       begin
           for i:=StartIndex to EndIndex do
           begin
@@ -3599,6 +3609,11 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.38  2006/08/31 03:03:55  carl
+  + Better documentation
+  * Bugfixes when utf8string is declared as a standard shortstring, there could
+    be memory corruption which could go undetected.
+
   Revision 1.37  2006/01/09 04:49:45  carl
     + Speed optimizations
 
