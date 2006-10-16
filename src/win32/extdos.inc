@@ -276,6 +276,40 @@ begin
   ExtAttrToWinAttr:=dwAttr;
 end;
 
+
+const
+ MAX_DEVICE_NAMES = 11;
+ DeviceList: array[1..MAX_DEVICE_NAMES] of string[4] =
+ ( 
+  'CON',
+  'AUX',
+  'COM1',
+  'COM2',
+  'COM3',
+  'COM4',
+  'LPT1',
+  'LPT2',
+  'LPT3',
+  'PRN',
+  'NUL'
+ );
+{ Verifies if this is a special device }
+function IsDevice(s: utf8string): boolean;
+var
+ i: integer;
+begin
+  IsDevice:=false;
+  s:=Upstring(s);
+  for i:=1 to MAX_DEVICE_NAMES do
+    begin
+      if DeviceList[i] =s then
+        begin
+          IsDevice:=true;
+          exit;
+        end;
+    end;
+end;
+
 procedure GetShellAssociationInfo(const ext: utf8string; var assoc: TFileAssociation;
   var comment: utf8string);
 var
@@ -772,24 +806,24 @@ function getfilestats(fname: putf8char; var stats: TFileStats): integer;
 var
  F: file;
  ResultVal: BOOL;
+ ucs2str: pucs2char;
+ ucs4str: pucs4char;
  info: BY_HANDLE_FILE_INFORMATION;
  name: namestr;
  status: integer;
  dir: dirstr;
  ext: extstr;
  FileTimeInfo: SYSTEMTIME;
+ security : TSecurityAttributes;
  s: string;
 begin
   fillchar(stats,sizeof(stats),#0);
-  FileAssign(F,utf8strpas(fname));
-  status:=FileIOResult;
-  if status <> 0 then
-    begin
-      getfilestats:=status;
-      exit;
-    end;
-  FileReset(F,fmOpenRead);
-  status:=FileIOResult;
+  ucs4str:=ucs4strnew(fname,'UTF-8');
+  ucs2str:=ucs2strnew(ucs4str);
+  filerec(f).handle:=PCreateFileW (pwidechar(ucs2str),GENERIC_READ,FILE_SHARE_READ,@security,OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL,0);
+  ucs2strdispose(ucs2str);
+  ucs4strdispose(ucs4str);
+  status:=GetLastError;
   if status <> 0 then
     begin
       getfilestats:=status;
@@ -815,13 +849,22 @@ begin
       s:=hexstr(longint(info.nFileIndexHigh),8);
       move(s[1],stats.ino[8],length(s));
       {** Name of the resource on disk }
-      FSplit(strpas(fname),dir,name,ext);
+      s:=strpas(fname);
+      s:=FExpand(s);
+      FSplit(s,dir,name,ext);
       s:=name+ext;
       stats.name:=s;
+      stats.dirstr:=dir;
+      
       { Fill up shell file assocations and comment strings }
       GetShellAssociationInfo(ext,stats.association,stats.comment);
       stats.nlink:=info.nNumberOfLinks;
       stats.attributes:=WinAttrToExtAttr(info.dwFileAttributes);
+      { Check for special devices }
+      if IsDevice(stats.name) then
+        begin
+          Include(stats.attributes, attr_device);
+        end;
       stats.owner:=getfileowner(fname);
       stats.size:=getfilesize(fname);
       ResultVal:=FileTimeToSystemTime(info.ftLastWriteTime,FileTimeInfo);
@@ -858,7 +901,7 @@ begin
     end
   else
      getfilestats:=GetLastError;
-  FileClose(F);
+  CloseHandle(FileRec(f).handle);
 end;
 
 
@@ -989,6 +1032,9 @@ var
  ucs2str: pucs2char;
  attributes: DWORD;
  outattributes: tresourceattributes;
+ Dir: DirStr;
+ Name: NameStr;
+ Ext: ExtStr;
 begin
   ucs4str:=ucs4strnew(fname,'UTF-8');
   outattributes:=[];
@@ -1001,6 +1047,11 @@ begin
           attributes:=GetFileAttributesW({$IFDEF FPC}LPCWSTR{$ELSE}pwidechar{$ENDIF}(ucs2str));
           { convert the attributes to our format }
           outattributes:=WinAttrToExtAttr(attributes);
+          FSplit(utf8strpas(fname),Dir,Name,Ext);
+          if IsDevice(Name+Ext) then
+            begin
+              Include(outAttributes,attr_device);  
+            end;
           ucs2strdispose(ucs2str);
         end;
       ucs4strdispose(ucs4str);
@@ -1102,6 +1153,11 @@ begin
   f.stats.size:=F.W32FindData.NFileSizeLow;
   f.stats.utc:=true;
   f.stats.attributes:=WinAttrToExtAttr(F.W32FindData.dwFileAttributes);
+  { Check for special devices }
+  if IsDevice(f.stats.name) then
+    begin
+      Include(f.stats.attributes, attr_device);
+    end;
   { Convert to correct time data }
   ResultVal := FileTimeToSystemTime(F.W32FindData.ftLastWriteTime,FileTimeInfo);
   if ResultVal and not
@@ -1153,6 +1209,7 @@ begin
   lattr:=ExtAttrToWinAttr(attr);
   SearchRec.SearchAttr:=attr;
   SearchRec.IncludeAttr:=lAttr;
+  s:=FExpand(s);
   Fsplit(s,dir,name,ext);
   if dir <> '' then
     begin
@@ -1162,6 +1219,10 @@ begin
   SearchRec.stats.DirStr:=dir;
 { FindFirstFile is a Win32 Call }
   { Convert the string to a UCS-2 character string }
+  { Expand wildcards }
+  if path = '*' then
+    path:='*.*';
+  
   ucs4str:=ucs4strnew(path,'UTF-8');
   ucs2str:=ucs2strnew(ucs4str);
   SearchRec.FindHandle:=PFindFirstFileW (pwidechar(ucs2str),SearchRec.W32FindData);
@@ -1370,6 +1431,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.6  2006/08/31 03:09:38  carl
+  * Bugfix with DirectoryExists, would sometimes give wrong results.
+
   Revision 1.5  2006/01/21 22:32:26  carl
     + GetCurrentDirectory/SetCurrentDirectory
 
