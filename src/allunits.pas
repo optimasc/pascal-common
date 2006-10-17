@@ -17,7 +17,9 @@ uses
   ietf,
   sgml,
 {$IFDEF LINUX}
+{$IFDEF CPU86}
   posix,
+{$ENDIF}  
 {$ENDIF}
   utils;
   
