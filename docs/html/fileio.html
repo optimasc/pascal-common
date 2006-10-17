@@ -27,31 +27,31 @@ File I/O unit</p>
 <td class="itemcode"><code>procedure <b><a   href="fileio.html#FileAssign">FileAssign</a></b>(var F: file; const Name: string);</code></td>
 </tr>
 <tr class="list2">
+<td class="itemcode"><code>function <b><a   href="fileio.html#FileBlockRead">FileBlockRead</a></b>(var F: file; var Buf; Count: integer): integer;</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code>function <b><a   href="fileio.html#FileBlockWrite">FileBlockWrite</a></b>(var F: file; var Buf; Count: integer): integer;</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code>procedure <b><a   href="fileio.html#FileClose">FileClose</a></b>(var F: file);</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code>function <b><a   href="fileio.html#FileGetPos">FileGetPos</a></b>(var F: file): big_integer_t;</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code>function <b><a   href="fileio.html#FileGetSize">FileGetSize</a></b>(var F: file): big_integer_t;</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code>function <b><a   href="fileio.html#FileIOResult">FileIOResult</a></b>: integer;</code></td>
+</tr>
+<tr class="list2">
 <td class="itemcode"><code>procedure <b><a   href="fileio.html#FileReset">FileReset</a></b>(var F: file; mode: integer);</code></td>
 </tr>
 <tr class="list">
 <td class="itemcode"><code>procedure <b><a   href="fileio.html#FileRewrite">FileRewrite</a></b>(var F: file; mode: integer);</code></td>
 </tr>
 <tr class="list2">
-<td class="itemcode"><code>procedure <b><a   href="fileio.html#FileClose">FileClose</a></b>(var F: file);</code></td>
-</tr>
-<tr class="list">
-<td class="itemcode"><code>function <b><a   href="fileio.html#FileBlockRead">FileBlockRead</a></b>(var F: file; var Buf; Count: integer): integer;</code></td>
-</tr>
-<tr class="list2">
-<td class="itemcode"><code>function <b><a   href="fileio.html#FileBlockWrite">FileBlockWrite</a></b>(var F: file; var Buf; Count: integer): integer;</code></td>
-</tr>
-<tr class="list">
 <td class="itemcode"><code>procedure <b><a   href="fileio.html#FileSeek">FileSeek</a></b>(var F: file; N: big_integer_t);</code></td>
-</tr>
-<tr class="list2">
-<td class="itemcode"><code>function <b><a   href="fileio.html#FileGetSize">FileGetSize</a></b>(var F: file): big_integer_t;</code></td>
-</tr>
-<tr class="list">
-<td class="itemcode"><code>function <b><a   href="fileio.html#FileGetPos">FileGetPos</a></b>(var F: file): big_integer_t;</code></td>
-</tr>
-<tr class="list2">
-<td class="itemcode"><code>function <b><a   href="fileio.html#FileIOResult">FileIOResult</a></b>: integer;</code></td>
 </tr>
 <tr class="list">
 <td class="itemcode"><code>procedure <b><a   href="fileio.html#FileTruncate">FileTruncate</a></b>(var F: file);</code></td>
@@ -70,6 +70,72 @@ Assign a filename to a file</p>
 
 
 <p>This is uased to assign a filename with a file. This assignment will then permit to operate on the file. The assignment is completely compatible with the standard <code>AssignFile</code> system unit routine.</p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="FileBlockRead"></a><code>function <b>FileBlockRead</b>(var F: file; var Buf; Count: integer): integer;</code></td>
+</tr>
+</table>
+<p>
+Read data from a file</p>
+<p>
+
+
+<p>Reads data bytes from the specified opened file. Returns the number of bytes actually read.</p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="FileBlockWrite"></a><code>function <b>FileBlockWrite</b>(var F: file; var Buf; Count: integer): integer;</code></td>
+</tr>
+</table>
+<p>
+Write data to a file</p>
+<p>
+
+
+<p>Write data bytes to the specified opened file. Returns the number of bytes actually written.</p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="FileClose"></a><code>procedure <b>FileClose</b>(var F: file);</code></td>
+</tr>
+</table>
+<p>
+Close a previously opened file</p>
+<p>
+
+
+<p>This closes a file that was previously opened by a call to FileOpen or FileReset.</p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="FileGetPos"></a><code>function <b>FileGetPos</b>(var F: file): big_integer_t;</code></td>
+</tr>
+</table>
+<p>
+Return the current file pointer position</p>
+<p>
+
+
+<p>Returns the current file pointer position within the file. The start of the file is at position zero.</p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="FileGetSize"></a><code>function <b>FileGetSize</b>(var F: file): big_integer_t;</code></td>
+</tr>
+</table>
+<p>
+Get the size of a file in bytes</p>
+<p>
+
+
+<p>Returns the current size of the file in bytes. The file must be assigned and opened to access this routine.</p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="FileIOResult"></a><code>function <b>FileIOResult</b>: integer;</code></td>
+</tr>
+</table>
+<p>
+Return the result of the last I/O operation</p>
+<p>
+
+
+<p>Returns the I/O Result of the last operation. If this routine is not called and the unit is compiled with the DEBUG define, and if there was an error in the last operation, then the next File I/O operation will cause a runtime error with the I/O error code.</p>
 <table class="detail">
 <tr class="list">
 <td class="itemcode"><a name="FileReset"></a><code>procedure <b>FileReset</b>(var F: file; mode: integer);</code></td>
@@ -96,39 +162,6 @@ Open/Overwrite a file</p>
 <p>The file should have previously been assigned using <code>FileAssign</code>.</p>
 <table class="detail">
 <tr class="list">
-<td class="itemcode"><a name="FileClose"></a><code>procedure <b>FileClose</b>(var F: file);</code></td>
-</tr>
-</table>
-<p>
-Close a previously opened file</p>
-<p>
-
-
-<p>This closes a file that was previously opened by a call to FileOpen or FileReset.</p>
-<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="FileBlockRead"></a><code>function <b>FileBlockRead</b>(var F: file; var Buf; Count: integer): integer;</code></td>
-</tr>
-</table>
-<p>
-Read data from a file</p>
-<p>
-
-
-<p>Reads data bytes from the specified opened file. Returns the number of bytes actually read.</p>
-<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="FileBlockWrite"></a><code>function <b>FileBlockWrite</b>(var F: file; var Buf; Count: integer): integer;</code></td>
-</tr>
-</table>
-<p>
-Write data to a file</p>
-<p>
-
-
-<p>Write data bytes to the specified opened file. Returns the number of bytes actually written.</p>
-<table class="detail">
-<tr class="list">
 <td class="itemcode"><a name="FileSeek"></a><code>procedure <b>FileSeek</b>(var F: file; N: big_integer_t);</code></td>
 </tr>
 </table>
@@ -138,39 +171,6 @@ Change the file pointer position of an opened file</p>
 
 
 <p>Seeks to a specific file position in a file (starting from zero which is the start of the file).</p>
-<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="FileGetSize"></a><code>function <b>FileGetSize</b>(var F: file): big_integer_t;</code></td>
-</tr>
-</table>
-<p>
-Get the size of a file in bytes</p>
-<p>
-
-
-<p>Returns the current size of the file in bytes. The file must be assigned and opened to access this routine.</p>
-<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="FileGetPos"></a><code>function <b>FileGetPos</b>(var F: file): big_integer_t;</code></td>
-</tr>
-</table>
-<p>
-Return the current file pointer position</p>
-<p>
-
-
-<p>Returns the current file pointer position within the file. The start of the file is at position zero.</p>
-<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="FileIOResult"></a><code>function <b>FileIOResult</b>: integer;</code></td>
-</tr>
-</table>
-<p>
-Return the result of the last I/O operation</p>
-<p>
-
-
-<p>Returns the I/O Result of the last operation. If this routine is not called and the unit is compiled with the DEBUG define, and if there was an error in the last operation, then the next File I/O operation will cause a runtime error with the I/O error code.</p>
 <table class="detail">
 <tr class="list">
 <td class="itemcode"><a name="FileTruncate"></a><code>procedure <b>FileTruncate</b>(var F: file);</code></td>
@@ -186,6 +186,6 @@ Truncate a file at the current file position</p>
 <ul class="authors">
 <li>Carl Eric Codere</li>
 </ul>
-<hr noshade size="1"><span class="appinfo"><em>Generated by <a  target="_parent" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8.3</a> on 2006-08-22 21:08:50</em>
+<hr noshade size="1"><span class="appinfo"><em>Generated by <a  target="_parent" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8.3</a> on 2006-10-16 20:10:13</em>
 </span>
 </body></html>

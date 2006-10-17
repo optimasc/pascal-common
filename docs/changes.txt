@@ -1,5 +1,15 @@
 History of major changes in the releases:
 
+1.4.1:
+   + Better documentation
+   * Unicode: When utf8string is a shortstring, some memory corruption
+     could be not noticed.
+   * Unicode: ConvertFromUCS4()/ConvertToUCS4() would not work with UTF-8 strings
+   + ietf: Updated Namespaces of URN's with latest IANA list (2006-08-28)
+   + extdos: Initial LINUX version
+   * extdos Win32: Device attributes were not correctly set
+   * extdos Win32: FindFirstEx() would not expand the path, so the FindFirst could be wrong
+
 1.4.0:
    + Filesystem validation routines
    * Speed optimizations

@@ -24,40 +24,40 @@ Localisation unit</p>
 <a name="@FuncsProcs"></a><h3 class="summary">Functions and Procedures</h3>
 <table class="summary">
 <tr class="list">
+<td class="itemcode"><code>function <b><a   href="locale.html#GetCharEncoding">GetCharEncoding</a></b>(alias: string; var _name: string): integer;</code></td>
+</tr>
+<tr class="list2">
 <td class="itemcode"><code>function <b><a   href="locale.html#GetISODateString">GetISODateString</a></b>(Year, Month, Day: Word): shortstring;</code></td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemcode"><code>function <b><a   href="locale.html#GetISODateStringBasic">GetISODateStringBasic</a></b>(Year, Month, Day: Word): shortstring;</code></td>
-</tr>
-<tr class="list">
-<td class="itemcode"><code>function <b><a   href="locale.html#IsValidISODateString">IsValidISODateString</a></b>(datestr: shortstring; strict: boolean): boolean;</code></td>
-</tr>
-<tr class="list2">
-<td class="itemcode"><code>function <b><a   href="locale.html#IsValidISOTimeString">IsValidISOTimeString</a></b>(timestr: shortstring; strict: boolean): boolean;</code></td>
-</tr>
-<tr class="list">
-<td class="itemcode"><code>function <b><a   href="locale.html#IsValidISODateTimeString">IsValidISODateTimeString</a></b>(str: shortstring; strict: boolean): boolean;</code></td>
-</tr>
-<tr class="list2">
-<td class="itemcode"><code>function <b><a   href="locale.html#GetISOTimeString">GetISOTimeString</a></b>(Hour, Minute, Second: Word; UTC: Boolean): shortstring;</code></td>
-</tr>
-<tr class="list">
-<td class="itemcode"><code>function <b><a   href="locale.html#GetISOTimeStringBasic">GetISOTimeStringBasic</a></b>(Hour, Minute, Second: Word; UTC: Boolean): shortstring;</code></td>
 </tr>
 <tr class="list2">
 <td class="itemcode"><code>function <b><a   href="locale.html#GetISODateTimeString">GetISODateTimeString</a></b>(Year, Month, Day, Hour, Minute, Second: Word; UTC: Boolean): shortstring;</code></td>
 </tr>
 <tr class="list">
-<td class="itemcode"><code>procedure <b><a   href="locale.html#UNIXToDateTime">UNIXToDateTime</a></b>(epoch: big_integer_t; var year, month, day, hour, minute, second: Word);</code></td>
+<td class="itemcode"><code>function <b><a   href="locale.html#GetISOTimeString">GetISOTimeString</a></b>(Hour, Minute, Second: Word; UTC: Boolean): shortstring;</code></td>
 </tr>
 <tr class="list2">
-<td class="itemcode"><code>function <b><a   href="locale.html#GetCharEncoding">GetCharEncoding</a></b>(alias: string; var _name: string): integer;</code></td>
+<td class="itemcode"><code>function <b><a   href="locale.html#GetISOTimeStringBasic">GetISOTimeStringBasic</a></b>(Hour, Minute, Second: Word; UTC: Boolean): shortstring;</code></td>
 </tr>
 <tr class="list">
-<td class="itemcode"><code>function <b><a   href="locale.html#MicrosoftCodePageToMIMECharset">MicrosoftCodePageToMIMECharset</a></b>(cp: word): string;</code></td>
+<td class="itemcode"><code>function <b><a   href="locale.html#IsValidISODateString">IsValidISODateString</a></b>(datestr: shortstring; strict: boolean): boolean;</code></td>
 </tr>
 <tr class="list2">
+<td class="itemcode"><code>function <b><a   href="locale.html#IsValidISODateTimeString">IsValidISODateTimeString</a></b>(str: shortstring; strict: boolean): boolean;</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code>function <b><a   href="locale.html#IsValidISOTimeString">IsValidISOTimeString</a></b>(timestr: shortstring; strict: boolean): boolean;</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code>function <b><a   href="locale.html#MicrosoftCodePageToMIMECharset">MicrosoftCodePageToMIMECharset</a></b>(cp: word): string;</code></td>
+</tr>
+<tr class="list">
 <td class="itemcode"><code>function <b><a   href="locale.html#MicrosoftLangageCodeToISOCode">MicrosoftLangageCodeToISOCode</a></b>(langcode: integer): string;</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code>procedure <b><a   href="locale.html#UNIXToDateTime">UNIXToDateTime</a></b>(epoch: big_integer_t; var year, month, day, hour, minute, second: Word);</code></td>
 </tr>
 </table>
 <a name="@Constants"></a><h3 class="summary">Constants</h3>
@@ -92,6 +92,13 @@ Localisation unit</p>
 </table>
 <h2 class="description">Description</h2>
 <h3 class="detail">Functions and Procedures</h3>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="GetCharEncoding"></a><code>function <b>GetCharEncoding</b>(alias: string; var _name: string): integer;</code></td>
+</tr>
+</table>
+<p>
+Using a registered ALIAS name for a specific character encoding, return the common or MIME name associated with this character set, and indicate the type of stream format used. The type of stream format used can be one of the <code>CHAR_ENCODING_XXXX</code> constants.</p>
 <table class="detail">
 <tr class="list">
 <td class="itemcode"><a name="GetISODateString"></a><code>function <b>GetISODateString</b>(Year, Month, Day: Word): shortstring;</code></td>
@@ -134,6 +141,33 @@ Returns the basic format representation of a date as recommended by ISO 8601 (Gr
 </dl>
 <table class="detail">
 <tr class="list">
+<td class="itemcode"><a name="GetISODateTimeString"></a><code>function <b>GetISODateTimeString</b>(Year, Month, Day, Hour, Minute, Second: Word; UTC: Boolean): shortstring;</code></td>
+</tr>
+</table>
+<p>
+Returns the extended format representation of a date and time as recommended by ISO 8601 (Gregorian Calendar). The extended format ISO 8601 representation is of the form: YYYY-MM-DDTHH:mm:ss[Timezone offset]
+
+<p>Returns an empty string if there is an error.</p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="GetISOTimeString"></a><code>function <b>GetISOTimeString</b>(Hour, Minute, Second: Word; UTC: Boolean): shortstring;</code></td>
+</tr>
+</table>
+<p>
+Returns the extended format representation of a time as recommended by ISO 8601 (Gregorian Calendar).
+
+<p>Returns an empty string if there is an error. The extended representation separates each member (hour,minute,second) with a colon (:).</p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="GetISOTimeStringBasic"></a><code>function <b>GetISOTimeStringBasic</b>(Hour, Minute, Second: Word; UTC: Boolean): shortstring;</code></td>
+</tr>
+</table>
+<p>
+Returns the basic format representation of a time as recommended by ISO 8601 (Gregorian Calendar).
+
+<p>Returns an empty string if there is an error. The extended representation separates each member (hour,minute,second) with a colon (:).</p>
+<table class="detail">
+<tr class="list">
 <td class="itemcode"><a name="IsValidISODateString"></a><code>function <b>IsValidISODateString</b>(datestr: shortstring; strict: boolean): boolean;</code></td>
 </tr>
 </table>
@@ -152,27 +186,6 @@ Verifies if the date is in a valid ISO 8601 format</p>
 </dl>
 <h6 class="return">returns</h6>
 <p class="return">TRUE if the date string is valid otherwise false</p><table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="IsValidISOTimeString"></a><code>function <b>IsValidISOTimeString</b>(timestr: shortstring; strict: boolean): boolean;</code></td>
-</tr>
-</table>
-<p>
-Verifies if the time is in a valid ISO 8601 format</p>
-<p>
-
-
-<p>Currently does not support the fractional second parameters, and only the extemded time format recommended by W3C when used with the time zone designator.
-
-<p>  </p>
-<h6 class="parameters">parameters</h6>
-<dl class="parameters">
-<dt>timestr</dt>
-<dd>Time string in valid ISO 8601 format</dd>
-<dt>strict</dt>
-<dd>The value must contain all the required parameters with UTC, either in basic or extended format to be valid</dd>
-</dl>
-<h6 class="return">returns</h6>
-<p class="return">TRUE if the time string is valid otherwise false</p><table class="detail">
 <tr class="list">
 <td class="itemcode"><a name="IsValidISODateTimeString"></a><code>function <b>IsValidISODateTimeString</b>(str: shortstring; strict: boolean): boolean;</code></td>
 </tr>
@@ -195,55 +208,54 @@ Verifies if the date and time is in a valid ISO 8601 format</p>
 <h6 class="return">returns</h6>
 <p class="return">TRUE if the date-time string is valid otherwise false</p><table class="detail">
 <tr class="list">
-<td class="itemcode"><a name="GetISOTimeString"></a><code>function <b>GetISOTimeString</b>(Hour, Minute, Second: Word; UTC: Boolean): shortstring;</code></td>
+<td class="itemcode"><a name="IsValidISOTimeString"></a><code>function <b>IsValidISOTimeString</b>(timestr: shortstring; strict: boolean): boolean;</code></td>
 </tr>
 </table>
 <p>
-Returns the extended format representation of a time as recommended by ISO 8601 (Gregorian Calendar).
+Verifies if the time is in a valid ISO 8601 format</p>
+<p>
 
-<p>Returns an empty string if there is an error. The extended representation separates each member (hour,minute,second) with a colon (:).</p>
-<table class="detail">
+
+<p>Currently does not support the fractional second parameters, and only the extemded time format recommended by W3C when used with the time zone designator.
+
+<p>  </p>
+<h6 class="parameters">parameters</h6>
+<dl class="parameters">
+<dt>timestr</dt>
+<dd>Time string in valid ISO 8601 format</dd>
+<dt>strict</dt>
+<dd>The value must contain all the required parameters with UTC, either in basic or extended format to be valid</dd>
+</dl>
+<h6 class="return">returns</h6>
+<p class="return">TRUE if the time string is valid otherwise false</p><table class="detail">
 <tr class="list">
-<td class="itemcode"><a name="GetISOTimeStringBasic"></a><code>function <b>GetISOTimeStringBasic</b>(Hour, Minute, Second: Word; UTC: Boolean): shortstring;</code></td>
+<td class="itemcode"><a name="MicrosoftCodePageToMIMECharset"></a><code>function <b>MicrosoftCodePageToMIMECharset</b>(cp: word): string;</code></td>
 </tr>
 </table>
 <p>
-Returns the basic format representation of a time as recommended by ISO 8601 (Gregorian Calendar).
+Using a code page identifier (as defined by Microsoft and OS/2) return the resulting IANA encoding alias string
 
-<p>Returns an empty string if there is an error. The extended representation separates each member (hour,minute,second) with a colon (:).</p>
-<table class="detail">
+<p> </p>
+<h6 class="parameters">parameters</h6>
+<dl class="parameters">
+<dt>cp</dt>
+<dd>Codepage</dd>
+</dl>
+<h6 class="return">returns</h6>
+<p class="return">IANA String representation of the character encoding</p><table class="detail">
 <tr class="list">
-<td class="itemcode"><a name="GetISODateTimeString"></a><code>function <b>GetISODateTimeString</b>(Year, Month, Day, Hour, Minute, Second: Word; UTC: Boolean): shortstring;</code></td>
+<td class="itemcode"><a name="MicrosoftLangageCodeToISOCode"></a><code>function <b>MicrosoftLangageCodeToISOCode</b>(langcode: integer): string;</code></td>
 </tr>
 </table>
-&nbsp;<table class="detail">
+<p>
+Using a Microsoft language identifier (as defined by Microsoft and OS/2) return the resulting ISO 639-2 language code identifier.</p>
+<table class="detail">
 <tr class="list">
 <td class="itemcode"><a name="UNIXToDateTime"></a><code>procedure <b>UNIXToDateTime</b>(epoch: big_integer_t; var year, month, day, hour, minute, second: Word);</code></td>
 </tr>
 </table>
 <p>
 Converts a UNIX styled time (the number of seconds since 1970) to a standard date and time representation.</p>
-<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="GetCharEncoding"></a><code>function <b>GetCharEncoding</b>(alias: string; var _name: string): integer;</code></td>
-</tr>
-</table>
-<p>
-Using a registered ALIAS name for a specific character encoding, return the common or MIME name associated with this character set, and indicate the type of stream format used. The type of stream format used can be one of the <code>CHAR_ENCODING_XXXX</code> constants.</p>
-<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="MicrosoftCodePageToMIMECharset"></a><code>function <b>MicrosoftCodePageToMIMECharset</b>(cp: word): string;</code></td>
-</tr>
-</table>
-<p>
-Using a code page identifier (as defined by Microsoft and OS/2) return the resulting IANA encoding alias string</p>
-<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="MicrosoftLangageCodeToISOCode"></a><code>function <b>MicrosoftLangageCodeToISOCode</b>(langcode: integer): string;</code></td>
-</tr>
-</table>
-<p>
-Using a code page identifier (as defined by Microsoft and OS/2) return the resulting IANA encoding alias string</p>
 <h3 class="detail">Constants</h3>
 <table class="detail">
 <tr class="list">
@@ -312,6 +324,6 @@ Character encoding value: UTF-32 unknown endian (determined by BOM)</p>
 <ul class="authors">
 <li>Carl Eric Codere</li>
 </ul>
-<hr noshade size="1"><span class="appinfo"><em>Generated by <a  target="_parent" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8.3</a> on 2006-08-22 21:08:50</em>
+<hr noshade size="1"><span class="appinfo"><em>Generated by <a  target="_parent" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8.3</a> on 2006-10-16 20:10:14</em>
 </span>
 </body></html>

@@ -20,10 +20,64 @@ General utilities common to all platforms.</p>
 <a name="@FuncsProcs"></a><h3 class="summary">Functions and Procedures</h3>
 <table class="summary">
 <tr class="list">
-<td class="itemcode"><code>Function <b><a   href="utils.html#AnsiFileExists">AnsiFileExists</a></b>(const FName : string): Boolean;</code></td>
+<td class="itemcode"><code>function <b><a   href="utils.html#AddDoubleQuotes">AddDoubleQuotes</a></b>(s: string): string;</code></td>
 </tr>
 <tr class="list2">
 <td class="itemcode"><code>Function <b><a   href="utils.html#AnsiDirectoryExists">AnsiDirectoryExists</a></b>(DName : string): Boolean;</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code>Function <b><a   href="utils.html#AnsiFileExists">AnsiFileExists</a></b>(const FName : string): Boolean;</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code>function <b><a   href="utils.html#boolstr">boolstr</a></b>(val: boolean; cnt: byte): string;</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code>function <b><a   href="utils.html#ChangeFileExt">ChangeFileExt</a></b>(const FileName, Extension: string): string;</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code>function <b><a   href="utils.html#CleanString">CleanString</a></b>(const s: string): string;</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code>function <b><a   href="utils.html#CompareByte">CompareByte</a></b>(buf1,buf2: pchar;len:longint):integer;</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code>function <b><a   href="utils.html#decstr">decstr</a></b>(val : longint;cnt : byte) : string;</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code>function <b><a   href="utils.html#decstrunsigned">decstrunsigned</a></b>(l : longword;cnt: byte): string;</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code>function <b><a   href="utils.html#EscapeToPascal">EscapeToPascal</a></b>(const s:string; var code: integer): string;</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code>function <b><a   href="utils.html#FillTo">FillTo</a></b>(s : string; tolength: integer): string;</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code>function <b><a   href="utils.html#fillwithzero">fillwithzero</a></b>(s: string; newlength: integer): string;</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code>function <b><a   href="utils.html#hexstr">hexstr</a></b>(val : longint;cnt : byte) : string;</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code>function <b><a   href="utils.html#LowString">LowString</a></b>(s : string): string;</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code>function <b><a   href="utils.html#Printf">Printf</a></b>(const s : string; var Buf; size : word): string;</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code>function <b><a   href="utils.html#RemoveDoubleQuotes">RemoveDoubleQuotes</a></b>(s: string): string;</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code>function <b><a   href="utils.html#removenulls">removenulls</a></b>(const s: string): string;</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code>procedure <b><a   href="utils.html#StreamErrorProcedure">StreamErrorProcedure</a></b>(Var S: TStream);</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code>procedure <b><a   href="utils.html#stringdispose">stringdispose</a></b>(var p : <a   href="utils.html#PshortString">pShortstring</a>);</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code>function <b><a   href="utils.html#stringdup">stringdup</a></b>(const s : string) : <a   href="utils.html#PshortString">pShortstring</a>;</code></td>
 </tr>
 <tr class="list">
 <td class="itemcode"><code>Procedure <b><a   href="utils.html#SwapLong">SwapLong</a></b>(var x : longword);</code></td>
@@ -32,19 +86,7 @@ General utilities common to all platforms.</p>
 <td class="itemcode"><code>Procedure <b><a   href="utils.html#SwapWord">SwapWord</a></b>(var x : word);</code></td>
 </tr>
 <tr class="list">
-<td class="itemcode"><code>function <b><a   href="utils.html#UpString">UpString</a></b>(s : string): string;</code></td>
-</tr>
-<tr class="list2">
-<td class="itemcode"><code>function <b><a   href="utils.html#LowString">LowString</a></b>(s : string): string;</code></td>
-</tr>
-<tr class="list">
-<td class="itemcode"><code>function <b><a   href="utils.html#AddDoubleQuotes">AddDoubleQuotes</a></b>(s: string): string;</code></td>
-</tr>
-<tr class="list2">
-<td class="itemcode"><code>function <b><a   href="utils.html#RemoveDoubleQuotes">RemoveDoubleQuotes</a></b>(s: string): string;</code></td>
-</tr>
-<tr class="list">
-<td class="itemcode"><code>procedure <b><a   href="utils.html#StreamErrorProcedure">StreamErrorProcedure</a></b>(Var S: TStream);</code></td>
+<td class="itemcode"><code>function <b><a   href="utils.html#Trim">Trim</a></b>(const S: string): string;</code></td>
 </tr>
 <tr class="list2">
 <td class="itemcode"><code>function <b><a   href="utils.html#TrimLeft">TrimLeft</a></b>(const S: string): string;</code></td>
@@ -53,61 +95,19 @@ General utilities common to all platforms.</p>
 <td class="itemcode"><code>function <b><a   href="utils.html#TrimRight">TrimRight</a></b>(const S: string): string;</code></td>
 </tr>
 <tr class="list2">
-<td class="itemcode"><code>function <b><a   href="utils.html#hexstr">hexstr</a></b>(val : longint;cnt : byte) : string;</code></td>
-</tr>
-<tr class="list">
-<td class="itemcode"><code>function <b><a   href="utils.html#decstr">decstr</a></b>(val : longint;cnt : byte) : string;</code></td>
-</tr>
-<tr class="list2">
-<td class="itemcode"><code>function <b><a   href="utils.html#decstrunsigned">decstrunsigned</a></b>(l : longword;cnt: byte): string;</code></td>
-</tr>
-<tr class="list">
-<td class="itemcode"><code>function <b><a   href="utils.html#boolstr">boolstr</a></b>(val: boolean; cnt: byte): string;</code></td>
-</tr>
-<tr class="list2">
-<td class="itemcode"><code>function <b><a   href="utils.html#CompareByte">CompareByte</a></b>(buf1,buf2: pchar;len:longint):integer;</code></td>
-</tr>
-<tr class="list">
-<td class="itemcode"><code>function <b><a   href="utils.html#Trim">Trim</a></b>(const S: string): string;</code></td>
-</tr>
-<tr class="list2">
-<td class="itemcode"><code>function <b><a   href="utils.html#Printf">Printf</a></b>(const s : string; var Buf; size : word): string;</code></td>
-</tr>
-<tr class="list">
-<td class="itemcode"><code>function <b><a   href="utils.html#FillTo">FillTo</a></b>(s : string; tolength: integer): string;</code></td>
-</tr>
-<tr class="list2">
-<td class="itemcode"><code>function <b><a   href="utils.html#stringdup">stringdup</a></b>(const s : string) : <a   href="utils.html#PshortString">pShortstring</a>;</code></td>
-</tr>
-<tr class="list">
-<td class="itemcode"><code>procedure <b><a   href="utils.html#stringdispose">stringdispose</a></b>(var p : <a   href="utils.html#PshortString">pShortstring</a>);</code></td>
-</tr>
-<tr class="list2">
-<td class="itemcode"><code>function <b><a   href="utils.html#EscapeToPascal">EscapeToPascal</a></b>(const s:string; var code: integer): string;</code></td>
-</tr>
-<tr class="list">
-<td class="itemcode"><code>function <b><a   href="utils.html#ValDecimal">ValDecimal</a></b>(const S:String; var code: integer):longint;</code></td>
-</tr>
-<tr class="list2">
-<td class="itemcode"><code>function <b><a   href="utils.html#ValOctal">ValOctal</a></b>(const S:String;var code: integer):longint;</code></td>
+<td class="itemcode"><code>function <b><a   href="utils.html#UpString">UpString</a></b>(s : string): string;</code></td>
 </tr>
 <tr class="list">
 <td class="itemcode"><code>function <b><a   href="utils.html#ValBinary">ValBinary</a></b>(const S:String; var code: integer):longint;</code></td>
 </tr>
 <tr class="list2">
+<td class="itemcode"><code>function <b><a   href="utils.html#ValDecimal">ValDecimal</a></b>(const S:String; var code: integer):longint;</code></td>
+</tr>
+<tr class="list">
 <td class="itemcode"><code>function <b><a   href="utils.html#ValHexadecimal">ValHexadecimal</a></b>(const S:String; var code: integer):longint;</code></td>
 </tr>
-<tr class="list">
-<td class="itemcode"><code>function <b><a   href="utils.html#CleanString">CleanString</a></b>(const s: string): string;</code></td>
-</tr>
 <tr class="list2">
-<td class="itemcode"><code>function <b><a   href="utils.html#ChangeFileExt">ChangeFileExt</a></b>(const FileName, Extension: string): string;</code></td>
-</tr>
-<tr class="list">
-<td class="itemcode"><code>function <b><a   href="utils.html#fillwithzero">fillwithzero</a></b>(s: string; newlength: integer): string;</code></td>
-</tr>
-<tr class="list2">
-<td class="itemcode"><code>function <b><a   href="utils.html#removenulls">removenulls</a></b>(const s: string): string;</code></td>
+<td class="itemcode"><code>function <b><a   href="utils.html#ValOctal">ValOctal</a></b>(const S:String;var code: integer):longint;</code></td>
 </tr>
 </table>
 <a name="@Types"></a><h3 class="summary">Types</h3>
@@ -132,24 +132,14 @@ General utilities common to all platforms.</p>
 <h3 class="detail">Functions and Procedures</h3>
 <table class="detail">
 <tr class="list">
-<td class="itemcode"><a name="AnsiFileExists"></a><code>Function <b>AnsiFileExists</b>(const FName : string): Boolean;</code></td>
+<td class="itemcode"><a name="AddDoubleQuotes"></a><code>function <b>AddDoubleQuotes</b>(s: string): string;</code></td>
 </tr>
 </table>
 <p>
-Verifies the existence of a filename</p>
+Trims and adds double quotes to the string if it contains spaces</p>
 <p>
- This routine verifies if the file named can be opened or if it actually exists.
-
-<p>Only works with the current active code page table.
-
-<p> </p>
-<h6 class="parameters">parameters</h6>
-<dl class="parameters">
-<dt>FName</dt>
-<dd>Name of the file to check</dd>
-</dl>
-<h6 class="return">returns</h6>
-<p class="return">FALSE if the file cannot be opened or if it does not exist.</p><table class="detail">
+.</p>
+<table class="detail">
 <tr class="list">
 <td class="itemcode"><a name="AnsiDirectoryExists"></a><code>Function <b>AnsiDirectoryExists</b>(DName : string): Boolean;</code></td>
 </tr>
@@ -170,89 +160,56 @@ Verifies the existence of a directory</p>
 <h6 class="return">returns</h6>
 <p class="return">FALSE if the directory cannot be opened or if it does not exist.</p><table class="detail">
 <tr class="list">
-<td class="itemcode"><a name="SwapLong"></a><code>Procedure <b>SwapLong</b>(var x : longword);</code></td>
+<td class="itemcode"><a name="AnsiFileExists"></a><code>Function <b>AnsiFileExists</b>(const FName : string): Boolean;</code></td>
 </tr>
 </table>
 <p>
-Change the endian of a 32-bit value</p>
-<table class="detail">
+Verifies the existence of a filename</p>
+<p>
+ This routine verifies if the file named can be opened or if it actually exists.
+
+<p>Only works with the current active code page table.
+
+<p> </p>
+<h6 class="parameters">parameters</h6>
+<dl class="parameters">
+<dt>FName</dt>
+<dd>Name of the file to check</dd>
+</dl>
+<h6 class="return">returns</h6>
+<p class="return">FALSE if the file cannot be opened or if it does not exist.</p><table class="detail">
 <tr class="list">
-<td class="itemcode"><a name="SwapWord"></a><code>Procedure <b>SwapWord</b>(var x : word);</code></td>
+<td class="itemcode"><a name="boolstr"></a><code>function <b>boolstr</b>(val: boolean; cnt: byte): string;</code></td>
 </tr>
 </table>
 <p>
-Change the endian of a 16-bit value</p>
-<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="UpString"></a><code>function <b>UpString</b>(s : string): string;</code></td>
-</tr>
-</table>
-<p>
-Convert a string to uppercase ASCII</p>
+Convert a boolean value to an ASCII representation</p>
 <p>
 
 
-<p>Converts a string containing ASCII characters to a string in upper case ASCII characters.</p>
+<p>To avoid left padding with spaces, set <code>cnt</code> to zero.</p>
 <table class="detail">
 <tr class="list">
-<td class="itemcode"><a name="LowString"></a><code>function <b>LowString</b>(s : string): string;</code></td>
+<td class="itemcode"><a name="ChangeFileExt"></a><code>function <b>ChangeFileExt</b>(const FileName, Extension: string): string;</code></td>
+</tr>
+</table>
+&nbsp;<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="CleanString"></a><code>function <b>CleanString</b>(const s: string): string;</code></td>
 </tr>
 </table>
 <p>
-Convert a string to lowercase ASCII</p>
-<p>
+Cleans up a string of illegal control characters, newlines and tabs. It does the following on the string:
 
+<p>This only works on UTF-8/ASCII/ISO-8859 strings.
 
-<p>Converts a string containing ASCII characters to a string in lower case ASCII characters.</p>
+<p>1) Removes characters from code #0..#31 at any location in the string. 2) Trims spaces at the begining and end of the string.</p>
 <table class="detail">
 <tr class="list">
-<td class="itemcode"><a name="AddDoubleQuotes"></a><code>function <b>AddDoubleQuotes</b>(s: string): string;</code></td>
+<td class="itemcode"><a name="CompareByte"></a><code>function <b>CompareByte</b>(buf1,buf2: pchar;len:longint):integer;</code></td>
 </tr>
 </table>
-<p>
-This routine adds double quotes to the selected string, if the string contains any space character after the string has been trimmed.</p>
-<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="RemoveDoubleQuotes"></a><code>function <b>RemoveDoubleQuotes</b>(s: string): string;</code></td>
-</tr>
-</table>
-<p>
-This routine removes double quotes to the selected string (the leading and ending double quotes only)</p>
-<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="StreamErrorProcedure"></a><code>procedure <b>StreamErrorProcedure</b>(Var S: TStream);</code></td>
-</tr>
-</table>
-<p>
-Generic stream error procedure</p>
-<p>
- Generic stream error procedure that can be used to set <code>streamerror</code></p>
-<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="TrimLeft"></a><code>function <b>TrimLeft</b>(const S: string): string;</code></td>
-</tr>
-</table>
-<p>
-Remove all whitespace from the start of a string</p>
-<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="TrimRight"></a><code>function <b>TrimRight</b>(const S: string): string;</code></td>
-</tr>
-</table>
-<p>
-Remove all whitespace from the end of a string</p>
-<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="hexstr"></a><code>function <b>hexstr</b>(val : longint;cnt : byte) : string;</code></td>
-</tr>
-</table>
-<p>
-Convert a value to an ASCII hexadecimal representation</p>
-<p>
-
-
-<p>Convert a value to an ASCII hexadecimal representation. All ascii character are returned in upper case letters.</p>
-<table class="detail">
+&nbsp;<table class="detail">
 <tr class="list">
 <td class="itemcode"><a name="decstr"></a><code>function <b>decstr</b>(val : longint;cnt : byte) : string;</code></td>
 </tr>
@@ -290,27 +247,52 @@ Convert a value to an ASCII decimal representation</p>
 </dl>
 <table class="detail">
 <tr class="list">
-<td class="itemcode"><a name="boolstr"></a><code>function <b>boolstr</b>(val: boolean; cnt: byte): string;</code></td>
+<td class="itemcode"><a name="EscapeToPascal"></a><code>function <b>EscapeToPascal</b>(const s:string; var code: integer): string;</code></td>
 </tr>
 </table>
 <p>
-Convert a boolean value to an ASCII representation</p>
-<p>
+Converts a C style string (containing escape characters), to a pascal style string. Returns the converted string. If there is no error in the conversion, <code>code</code> will be equal to zero.
 
-
-<p>To avoid left padding with spaces, set <code>cnt</code> to zero.</p>
+<p> </p>
+<h6 class="parameters">parameters</h6>
+<dl class="parameters">
+<dt>s</dt>
+<dd>String to convert</dd>
+<dt>code</dt>
+<dd>Result of operation, 0 when there is no error</dd>
+</dl>
 <table class="detail">
 <tr class="list">
-<td class="itemcode"><a name="CompareByte"></a><code>function <b>CompareByte</b>(buf1,buf2: pchar;len:longint):integer;</code></td>
+<td class="itemcode"><a name="FillTo"></a><code>function <b>FillTo</b>(s : string; tolength: integer): string;</code></td>
 </tr>
 </table>
 &nbsp;<table class="detail">
 <tr class="list">
-<td class="itemcode"><a name="Trim"></a><code>function <b>Trim</b>(const S: string): string;</code></td>
+<td class="itemcode"><a name="fillwithzero"></a><code>function <b>fillwithzero</b>(s: string; newlength: integer): string;</code></td>
+</tr>
+</table>
+&nbsp;<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="hexstr"></a><code>function <b>hexstr</b>(val : longint;cnt : byte) : string;</code></td>
 </tr>
 </table>
 <p>
-Trim removes leading and trailing spaces and control characters from the given string S</p>
+Convert a value to an ASCII hexadecimal representation</p>
+<p>
+
+
+<p>Convert a value to an ASCII hexadecimal representation. All ascii character are returned in upper case letters.</p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="LowString"></a><code>function <b>LowString</b>(s : string): string;</code></td>
+</tr>
+</table>
+<p>
+Convert a string to lowercase ASCII</p>
+<p>
+
+
+<p>Converts a string containing ASCII characters to a string in lower case ASCII characters.</p>
 <table class="detail">
 <tr class="list">
 <td class="itemcode"><a name="Printf"></a><code>function <b>Printf</b>(const s : string; var Buf; size : word): string;</code></td>
@@ -336,7 +318,34 @@ Format a string and print it out to the console</p>
 <h6 class="return">returns</h6>
 <p class="return">The resulting formatted string</p><table class="detail">
 <tr class="list">
-<td class="itemcode"><a name="FillTo"></a><code>function <b>FillTo</b>(s : string; tolength: integer): string;</code></td>
+<td class="itemcode"><a name="RemoveDoubleQuotes"></a><code>function <b>RemoveDoubleQuotes</b>(s: string): string;</code></td>
+</tr>
+</table>
+<p>
+Removes the leading and ending double quotes from a string</p>
+<p>
+
+
+<p>If there is no double quotes at the beginning or end of the string, it returns the unmodified string.</p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="removenulls"></a><code>function <b>removenulls</b>(const s: string): string;</code></td>
+</tr>
+</table>
+<p>
+Remove all null characters from a string.</p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="StreamErrorProcedure"></a><code>procedure <b>StreamErrorProcedure</b>(Var S: TStream);</code></td>
+</tr>
+</table>
+<p>
+Generic stream error procedure</p>
+<p>
+ Generic stream error procedure that can be used to set <code>streamerror</code></p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="stringdispose"></a><code>procedure <b>stringdispose</b>(var p : <a   href="utils.html#PshortString">pShortstring</a>);</code></td>
 </tr>
 </table>
 &nbsp;<table class="detail">
@@ -346,39 +355,50 @@ Format a string and print it out to the console</p>
 </table>
 &nbsp;<table class="detail">
 <tr class="list">
-<td class="itemcode"><a name="stringdispose"></a><code>procedure <b>stringdispose</b>(var p : <a   href="utils.html#PshortString">pShortstring</a>);</code></td>
-</tr>
-</table>
-&nbsp;<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="EscapeToPascal"></a><code>function <b>EscapeToPascal</b>(const s:string; var code: integer): string;</code></td>
+<td class="itemcode"><a name="SwapLong"></a><code>Procedure <b>SwapLong</b>(var x : longword);</code></td>
 </tr>
 </table>
 <p>
-Converts a C style string (containing escape characters), to a pascal style string. Returns the converted string. If there is no error in the conversion, <code>code</code> will be equal to zero.
+Change the endian of a 32-bit value</p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="SwapWord"></a><code>Procedure <b>SwapWord</b>(var x : word);</code></td>
+</tr>
+</table>
+<p>
+Change the endian of a 16-bit value</p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="Trim"></a><code>function <b>Trim</b>(const S: string): string;</code></td>
+</tr>
+</table>
+<p>
+Trim removes leading and trailing spaces and control characters from the given string S</p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="TrimLeft"></a><code>function <b>TrimLeft</b>(const S: string): string;</code></td>
+</tr>
+</table>
+<p>
+Remove all whitespace from the start of a string</p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="TrimRight"></a><code>function <b>TrimRight</b>(const S: string): string;</code></td>
+</tr>
+</table>
+<p>
+Remove all whitespace from the end of a string</p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="UpString"></a><code>function <b>UpString</b>(s : string): string;</code></td>
+</tr>
+</table>
+<p>
+Convert a string to uppercase ASCII</p>
+<p>
 
-<p> </p>
-<h6 class="parameters">parameters</h6>
-<dl class="parameters">
-<dt>s</dt>
-<dd>String to convert</dd>
-<dt>code</dt>
-<dd>Result of operation, 0 when there is no error</dd>
-</dl>
-<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="ValDecimal"></a><code>function <b>ValDecimal</b>(const S:String; var code: integer):longint;</code></td>
-</tr>
-</table>
-<p>
-Convert a decimal value represented by a string to its numerical value. If there is no error, <code>code</code> will be equal to zero.</p>
-<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="ValOctal"></a><code>function <b>ValOctal</b>(const S:String;var code: integer):longint;</code></td>
-</tr>
-</table>
-<p>
-Convert an octal value represented by a string to its numerical value. If there is no error, <code>code</code> will be equal to zero.</p>
+
+<p>Converts a string containing ASCII characters to a string in upper case ASCII characters.</p>
 <table class="detail">
 <tr class="list">
 <td class="itemcode"><a name="ValBinary"></a><code>function <b>ValBinary</b>(const S:String; var code: integer):longint;</code></td>
@@ -388,6 +408,13 @@ Convert an octal value represented by a string to its numerical value. If there 
 Convert a binary value represented by a string to its numerical value. If there is no error, <code>code</code> will be equal to zero.</p>
 <table class="detail">
 <tr class="list">
+<td class="itemcode"><a name="ValDecimal"></a><code>function <b>ValDecimal</b>(const S:String; var code: integer):longint;</code></td>
+</tr>
+</table>
+<p>
+Convert a decimal value represented by a string to its numerical value. If there is no error, <code>code</code> will be equal to zero.</p>
+<table class="detail">
+<tr class="list">
 <td class="itemcode"><a name="ValHexadecimal"></a><code>function <b>ValHexadecimal</b>(const S:String; var code: integer):longint;</code></td>
 </tr>
 </table>
@@ -395,32 +422,11 @@ Convert a binary value represented by a string to its numerical value. If there 
 Convert an hexadecimal value represented by a string to its numerical value. If there is no error, <code>code</code> will be equal to zero.</p>
 <table class="detail">
 <tr class="list">
-<td class="itemcode"><a name="CleanString"></a><code>function <b>CleanString</b>(const s: string): string;</code></td>
+<td class="itemcode"><a name="ValOctal"></a><code>function <b>ValOctal</b>(const S:String;var code: integer):longint;</code></td>
 </tr>
 </table>
 <p>
-Cleans up a string of illegal control characters, newlines and tabs. It does the following on the string:
-
-<p>This only works on UTF-8/ASCII/ISO-8859 strings.
-
-<p>1) Removes characters from code #0..#31 at any location in the string. 2) Trims spaces at the begining and end of the string.</p>
-<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="ChangeFileExt"></a><code>function <b>ChangeFileExt</b>(const FileName, Extension: string): string;</code></td>
-</tr>
-</table>
-&nbsp;<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="fillwithzero"></a><code>function <b>fillwithzero</b>(s: string; newlength: integer): string;</code></td>
-</tr>
-</table>
-&nbsp;<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="removenulls"></a><code>function <b>removenulls</b>(const s: string): string;</code></td>
-</tr>
-</table>
-<p>
-Remove all null characters from a string.</p>
+Convert an octal value represented by a string to its numerical value. If there is no error, <code>code</code> will be equal to zero.</p>
 <h3 class="detail">Types</h3>
 <table class="detail">
 <tr class="list">
@@ -447,6 +453,6 @@ Remove all null characters from a string.</p>
 <ul class="authors">
 <li>Carl Eric Codere</li>
 </ul>
-<hr noshade size="1"><span class="appinfo"><em>Generated by <a  target="_parent" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8.3</a> on 2006-08-22 21:08:51</em>
+<hr noshade size="1"><span class="appinfo"><em>Generated by <a  target="_parent" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8.3</a> on 2006-10-16 20:10:14</em>
 </span>
 </body></html>

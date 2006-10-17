@@ -27,19 +27,19 @@ Base collection object</p>
 <table class="summary">
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code><b><a   href="collects.TExtendedCollection.html#Items">Items</a></b>: <a   href="collects.html#PItemList">PItemList</a>;</code></td>
-</tr>
-<tr class="list2">
-<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><code><b><a   href="collects.TExtendedCollection.html#Count">Count</a></b>: Integer;</code></td>
-</tr>
-<tr class="list">
-<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code><b><a   href="collects.TExtendedCollection.html#Limit">Limit</a></b>: Integer;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><code><b><a   href="collects.TExtendedCollection.html#Delta">Delta</a></b>: Integer;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code><b><a   href="collects.TExtendedCollection.html#Items">Items</a></b>: <a   href="collects.html#PItemList">PItemList</a>;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code><b><a   href="collects.TExtendedCollection.html#Limit">Limit</a></b>: Integer;</code></td>
 </tr>
 </table>
 <a name="@Methods"></a><h3 class="summary">Methods</h3>
@@ -58,47 +58,15 @@ Base collection object</p>
 </tr>
 <tr class="list2">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>FUNCTION <b><a   href="collects.TExtendedCollection.html#IndexOf">IndexOf</a></b> (Item: Pointer): Integer; Virtual;</code></td>
-</tr>
-<tr class="list">
-<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>FUNCTION <b><a   href="collects.TExtendedCollection.html#LastThat">LastThat</a></b> (Test: Pointer): Pointer;</code></td>
-</tr>
-<tr class="list2">
-<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><code>FUNCTION <b><a   href="collects.TExtendedCollection.html#FirstThat">FirstThat</a></b> (Test: Pointer): Pointer;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>PROCEDURE <b><a   href="collects.TExtendedCollection.html#Pack">Pack</a></b>;</code></td>
+<td class="itemcode"><code>FUNCTION <b><a   href="collects.TExtendedCollection.html#IndexOf">IndexOf</a></b> (Item: Pointer): Integer; Virtual;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>PROCEDURE <b><a   href="collects.TExtendedCollection.html#FreeAll">FreeAll</a></b>;</code></td>
-</tr>
-<tr class="list">
-<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>PROCEDURE <b><a   href="collects.TExtendedCollection.html#DeleteAll">DeleteAll</a></b>;</code></td>
-</tr>
-<tr class="list2">
-<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>PROCEDURE <b><a   href="collects.TExtendedCollection.html#Free">Free</a></b> (Item: Pointer);</code></td>
-</tr>
-<tr class="list">
-<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>PROCEDURE <b><a   href="collects.TExtendedCollection.html#Insert">Insert</a></b> (Item: Pointer); Virtual;</code></td>
-</tr>
-<tr class="list2">
-<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>PROCEDURE <b><a   href="collects.TExtendedCollection.html#Delete">Delete</a></b> (Item: Pointer);</code></td>
-</tr>
-<tr class="list">
-<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>PROCEDURE <b><a   href="collects.TExtendedCollection.html#AtFree">AtFree</a></b> (Index: Integer);</code></td>
-</tr>
-<tr class="list2">
-<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>PROCEDURE <b><a   href="collects.TExtendedCollection.html#FreeItem">FreeItem</a></b> (Item: Pointer); Virtual;</code></td>
+<td class="itemcode"><code>FUNCTION <b><a   href="collects.TExtendedCollection.html#LastThat">LastThat</a></b> (Test: Pointer): Pointer;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
@@ -106,34 +74,60 @@ Base collection object</p>
 </tr>
 <tr class="list2">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>PROCEDURE <b><a   href="collects.TExtendedCollection.html#AtFree">AtFree</a></b> (Index: Integer);</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>PROCEDURE <b><a   href="collects.TExtendedCollection.html#AtInsert">AtInsert</a></b> (Index: Integer; Item: Pointer);</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>PROCEDURE <b><a   href="collects.TExtendedCollection.html#AtPut">AtPut</a></b> (Index: Integer; Item: Pointer);</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>PROCEDURE <b><a   href="collects.TExtendedCollection.html#Delete">Delete</a></b> (Item: Pointer);</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>PROCEDURE <b><a   href="collects.TExtendedCollection.html#DeleteAll">DeleteAll</a></b>;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>PROCEDURE <b><a   href="collects.TExtendedCollection.html#Error">Error</a></b> (Code, Info: Integer); Virtual;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><code>PROCEDURE <b><a   href="collects.TExtendedCollection.html#ForEach">ForEach</a></b> (Action: Pointer);</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>PROCEDURE <b><a   href="collects.TExtendedCollection.html#SetLimit">SetLimit</a></b> (ALimit: Integer); Virtual;</code></td>
+<td class="itemcode"><code>PROCEDURE <b><a   href="collects.TExtendedCollection.html#Free">Free</a></b> (Item: Pointer);</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>PROCEDURE <b><a   href="collects.TExtendedCollection.html#Error">Error</a></b> (Code, Info: Integer); Virtual;</code></td>
+<td class="itemcode"><code>PROCEDURE <b><a   href="collects.TExtendedCollection.html#FreeAll">FreeAll</a></b>;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>PROCEDURE <b><a   href="collects.TExtendedCollection.html#AtPut">AtPut</a></b> (Index: Integer; Item: Pointer);</code></td>
+<td class="itemcode"><code>PROCEDURE <b><a   href="collects.TExtendedCollection.html#FreeItem">FreeItem</a></b> (Item: Pointer); Virtual;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>PROCEDURE <b><a   href="collects.TExtendedCollection.html#AtInsert">AtInsert</a></b> (Index: Integer; Item: Pointer);</code></td>
+<td class="itemcode"><code>PROCEDURE <b><a   href="collects.TExtendedCollection.html#Insert">Insert</a></b> (Item: Pointer); Virtual;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>PROCEDURE <b><a   href="collects.TExtendedCollection.html#Pack">Pack</a></b>;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>PROCEDURE <b><a   href="collects.TExtendedCollection.html#SetLimit">SetLimit</a></b> (ALimit: Integer); Virtual;</code></td>
 </tr>
 </table>
 <h2 class="description">Description</h2>
 <h3 class="detail">Fields</h3>
 <table class="detail">
-<tr class="list">
-<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="Items"></a><code><b>Items</b>: <a   href="collects.html#PItemList">PItemList</a>;</code></td>
-</tr>
-</table>
-&nbsp;<table class="detail">
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><a name="Count"></a><code><b>Count</b>: Integer;</code></td>
@@ -142,13 +136,19 @@ Base collection object</p>
 &nbsp;<table class="detail">
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="Limit"></a><code><b>Limit</b>: Integer;</code></td>
+<td class="itemcode"><a name="Delta"></a><code><b>Delta</b>: Integer;</code></td>
 </tr>
 </table>
 &nbsp;<table class="detail">
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="Delta"></a><code><b>Delta</b>: Integer;</code></td>
+<td class="itemcode"><a name="Items"></a><code><b>Items</b>: <a   href="collects.html#PItemList">PItemList</a>;</code></td>
+</tr>
+</table>
+&nbsp;<table class="detail">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Limit"></a><code><b>Limit</b>: Integer;</code></td>
 </tr>
 </table>
 &nbsp;<h3 class="detail">Methods</h3>
@@ -173,6 +173,12 @@ Base collection object</p>
 &nbsp;<table class="detail">
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="FirstThat"></a><code>FUNCTION <b>FirstThat</b> (Test: Pointer): Pointer;</code></td>
+</tr>
+</table>
+&nbsp;<table class="detail">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><a name="IndexOf"></a><code>FUNCTION <b>IndexOf</b> (Item: Pointer): Integer; Virtual;</code></td>
 </tr>
 </table>
@@ -185,43 +191,7 @@ Base collection object</p>
 &nbsp;<table class="detail">
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="FirstThat"></a><code>FUNCTION <b>FirstThat</b> (Test: Pointer): Pointer;</code></td>
-</tr>
-</table>
-&nbsp;<table class="detail">
-<tr class="list">
-<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="Pack"></a><code>PROCEDURE <b>Pack</b>;</code></td>
-</tr>
-</table>
-&nbsp;<table class="detail">
-<tr class="list">
-<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="FreeAll"></a><code>PROCEDURE <b>FreeAll</b>;</code></td>
-</tr>
-</table>
-&nbsp;<table class="detail">
-<tr class="list">
-<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="DeleteAll"></a><code>PROCEDURE <b>DeleteAll</b>;</code></td>
-</tr>
-</table>
-&nbsp;<table class="detail">
-<tr class="list">
-<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="Free"></a><code>PROCEDURE <b>Free</b> (Item: Pointer);</code></td>
-</tr>
-</table>
-&nbsp;<table class="detail">
-<tr class="list">
-<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="Insert"></a><code>PROCEDURE <b>Insert</b> (Item: Pointer); Virtual;</code></td>
-</tr>
-</table>
-&nbsp;<table class="detail">
-<tr class="list">
-<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="Delete"></a><code>PROCEDURE <b>Delete</b> (Item: Pointer);</code></td>
+<td class="itemcode"><a name="AtDelete"></a><code>PROCEDURE <b>AtDelete</b> (Index: Integer);</code></td>
 </tr>
 </table>
 &nbsp;<table class="detail">
@@ -233,31 +203,7 @@ Base collection object</p>
 &nbsp;<table class="detail">
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="FreeItem"></a><code>PROCEDURE <b>FreeItem</b> (Item: Pointer); Virtual;</code></td>
-</tr>
-</table>
-&nbsp;<table class="detail">
-<tr class="list">
-<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="AtDelete"></a><code>PROCEDURE <b>AtDelete</b> (Index: Integer);</code></td>
-</tr>
-</table>
-&nbsp;<table class="detail">
-<tr class="list">
-<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="ForEach"></a><code>PROCEDURE <b>ForEach</b> (Action: Pointer);</code></td>
-</tr>
-</table>
-&nbsp;<table class="detail">
-<tr class="list">
-<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="SetLimit"></a><code>PROCEDURE <b>SetLimit</b> (ALimit: Integer); Virtual;</code></td>
-</tr>
-</table>
-&nbsp;<table class="detail">
-<tr class="list">
-<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="Error"></a><code>PROCEDURE <b>Error</b> (Code, Info: Integer); Virtual;</code></td>
+<td class="itemcode"><a name="AtInsert"></a><code>PROCEDURE <b>AtInsert</b> (Index: Integer; Item: Pointer);</code></td>
 </tr>
 </table>
 &nbsp;<table class="detail">
@@ -269,9 +215,63 @@ Base collection object</p>
 &nbsp;<table class="detail">
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="AtInsert"></a><code>PROCEDURE <b>AtInsert</b> (Index: Integer; Item: Pointer);</code></td>
+<td class="itemcode"><a name="Delete"></a><code>PROCEDURE <b>Delete</b> (Item: Pointer);</code></td>
 </tr>
 </table>
-&nbsp;<hr noshade size="1"><span class="appinfo"><em>Generated by <a  target="_parent" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8.3</a> on 2006-08-22 21:08:49</em>
+&nbsp;<table class="detail">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="DeleteAll"></a><code>PROCEDURE <b>DeleteAll</b>;</code></td>
+</tr>
+</table>
+&nbsp;<table class="detail">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Error"></a><code>PROCEDURE <b>Error</b> (Code, Info: Integer); Virtual;</code></td>
+</tr>
+</table>
+&nbsp;<table class="detail">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="ForEach"></a><code>PROCEDURE <b>ForEach</b> (Action: Pointer);</code></td>
+</tr>
+</table>
+&nbsp;<table class="detail">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Free"></a><code>PROCEDURE <b>Free</b> (Item: Pointer);</code></td>
+</tr>
+</table>
+&nbsp;<table class="detail">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="FreeAll"></a><code>PROCEDURE <b>FreeAll</b>;</code></td>
+</tr>
+</table>
+&nbsp;<table class="detail">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="FreeItem"></a><code>PROCEDURE <b>FreeItem</b> (Item: Pointer); Virtual;</code></td>
+</tr>
+</table>
+&nbsp;<table class="detail">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Insert"></a><code>PROCEDURE <b>Insert</b> (Item: Pointer); Virtual;</code></td>
+</tr>
+</table>
+&nbsp;<table class="detail">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Pack"></a><code>PROCEDURE <b>Pack</b>;</code></td>
+</tr>
+</table>
+&nbsp;<table class="detail">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="SetLimit"></a><code>PROCEDURE <b>SetLimit</b> (ALimit: Integer); Virtual;</code></td>
+</tr>
+</table>
+&nbsp;<hr noshade size="1"><span class="appinfo"><em>Generated by <a  target="_parent" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8.3</a> on 2006-10-16 20:10:13</em>
 </span>
 </body></html>

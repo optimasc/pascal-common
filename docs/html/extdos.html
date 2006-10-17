@@ -1,0 +1,578 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/1999/REC-html401-19991224/loose.dtd">
+<html>
+<head>
+<meta name="GENERATOR" content="PasDoc 0.8.8.3">
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+<title>Common pascal units documentation: extdos</title>
+<link rel="StyleSheet" type="text/css" href="pasdoc.css">
+</head>
+<body bgcolor="#ffffff" text="#000000" link="#0000ff" vlink="#800080" alink="#FF0000">
+<h1 class="unit">Unit extdos</h1>
+<table class="sections">
+<tr>
+<td><a class="section"  href="#@Description">Description</a></td><td>uses</td><td><a class="section"  href="#@Classes">Classes, Interfaces, Objects and Records</a></td><td><a class="section"  href="#@FuncsProcs">Functions and Procedures</a></td><td><a class="section"  href="#@Types">Types</a></td><td><a class="section"  href="#@Constants">Constants</a></td><td>Variables</td></tr></table>
+<a name="@Description"></a><h2 class="description">Description</h2>
+<p>
+Extended Operating system routines</p>
+<p>
+ 
+
+<p>Routines that extend the capabilities of the pascal DOS unit. It supports more information extraction from the operating system.
+
+<p>Everything string returned and input is/should be encoded in UTF-8 format.
+
+<p>Currently this unit is only supported on the Win32 platform.</p>
+<a name="@Uses"></a><h2 class="overview">Overview</h2>
+<a name="@Classes"></a><h3 class="cio">Classes, Interfaces, Objects and Records</h3>
+<table class="classestable">
+<tr class="listheader">
+<th class="itemname">Name</th>
+<th class="itemdesc">Description</th>
+</tr>
+<tr class="list">
+<td class="itemname">record&nbsp;<a class="bold"  href="extdos.TFileAssociation.html"><code>TFileAssociation</code></a></td>
+<td class="itemdesc">Information on file associations for the shell</td>
+</tr>
+<tr class="list2">
+<td class="itemname">record&nbsp;<a class="bold"  href="extdos.TFileStats.html"><code>TFileStats</code></a></td>
+<td class="itemdesc">&nbsp;</td>
+</tr>
+<tr class="list">
+<td class="itemname">record&nbsp;<a class="bold"  href="extdos.TSearchRecExt.html"><code>TSearchRecExt</code></a></td>
+<td class="itemdesc">Returned by <a class="normal" href="extdos.html#FindFirstEx">FindFirstEx</a> and <a class="normal" href="extdos.html#FindNextEx">FindNextEx</a></td>
+</tr>
+</table>
+<a name="@FuncsProcs"></a><h3 class="summary">Functions and Procedures</h3>
+<table class="summary">
+<tr class="list">
+<td class="itemcode"><code>function <b><a   href="extdos.html#DirectoryExists">DirectoryExists</a></b>(DName : <a   href="unicode.html#utf8string">utf8string</a>): Boolean;</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code>Function <b><a   href="extdos.html#FileExists">FileExists</a></b>(const FName : <a   href="unicode.html#utf8string">utf8string</a>): Boolean;</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code>procedure <b><a   href="extdos.html#FindCloseEx">FindCloseEx</a></b>(var SearchRec: <a   href="extdos.TSearchRecExt.html">TSearchRecExt</a>);</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code>function <b><a   href="extdos.html#FindFirstEx">FindFirstEx</a></b>(path: <a   href="unicode.html#putf8char">putf8char</a>; attr: <a   href="extdos.html#tresourceattributes">tresourceattributes</a>; var SearchRec:<a   href="extdos.TSearchRecExt.html">TSearchRecExt</a>): integer;</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code>function <b><a   href="extdos.html#FindNextEx">FindNextEx</a></b>(var SearchRec: <a   href="extdos.TSearchRecExt.html">TSearchRecExt</a>): integer;</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code>function <b><a   href="extdos.html#GetCurrentDirectory">GetCurrentDirectory</a></b>(var DirStr: <a   href="unicode.html#utf8string">utf8string</a>): boolean;</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code>function <b><a   href="extdos.html#GetFileATime">GetFileATime</a></b>(fname: <a   href="unicode.html#putf8char">putf8char</a>; var atime: <a   href="dateutil.html#TDatetime">TDateTime</a>): integer;</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code>function <b><a   href="extdos.html#GetFileAttributes">GetFileAttributes</a></b>(fname: <a   href="unicode.html#putf8char">putf8char</a>): <a   href="extdos.html#tresourceattributes">tresourceattributes</a>;</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code>function <b><a   href="extdos.html#GetFileCTime">GetFileCTime</a></b>(fname: <a   href="unicode.html#putf8char">putf8char</a>; var ctime: <a   href="dateutil.html#TDatetime">TDateTime</a>): integer;</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code>function <b><a   href="extdos.html#GetFileMTime">GetFileMTime</a></b>(fname: <a   href="unicode.html#putf8char">putf8char</a>; var mtime: <a   href="dateutil.html#TDatetime">TDateTime</a>): integer;</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code>function <b><a   href="extdos.html#GetFileOwner">GetFileOwner</a></b>(fname: <a   href="unicode.html#putf8char">putf8char</a>): <a   href="unicode.html#utf8string">utf8string</a>;</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code>function <b><a   href="extdos.html#GetFilesize">GetFilesize</a></b>(fname: <a   href="unicode.html#putf8char">putf8char</a>): big_integer_t;</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code>function <b><a   href="extdos.html#GetFilestats">GetFilestats</a></b>(fname: <a   href="unicode.html#putf8char">putf8char</a>; var stats: <a   href="extdos.TFileStats.html">TFileStats</a>): integer;</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code>function <b><a   href="extdos.html#GetGlobalConfigDirectory">GetGlobalConfigDirectory</a></b>: <a   href="unicode.html#utf8string">utf8string</a>;</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code>function <b><a   href="extdos.html#GetLoginConfigDirectory">GetLoginConfigDirectory</a></b>: <a   href="unicode.html#utf8string">utf8string</a>;</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code>function <b><a   href="extdos.html#GetLoginHomeDirectory">GetLoginHomeDirectory</a></b>: <a   href="unicode.html#utf8string">utf8string</a>;</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code>function <b><a   href="extdos.html#GetUserFullName">GetUserFullName</a></b>(account: <a   href="unicode.html#utf8string">utf8string</a>): <a   href="unicode.html#utf8string">utf8string</a>;</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code>function <b><a   href="extdos.html#SetCurrentDirectory">SetCurrentDirectory</a></b>(const DirStr: <a   href="unicode.html#utf8string">utf8string</a>): boolean;</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code>function <b><a   href="extdos.html#SetFileATime">SetFileATime</a></b>(fname: <a   href="unicode.html#putf8char">putf8char</a>; newatime: <a   href="dateutil.html#TDatetime">tdatetime</a>): integer;</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code>function <b><a   href="extdos.html#SetFileCTime">SetFileCTime</a></b>(fname: <a   href="unicode.html#putf8char">putf8char</a>; newctime: <a   href="dateutil.html#TDatetime">tdatetime</a>): integer;</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code>function <b><a   href="extdos.html#SetFileMTime">SetFileMTime</a></b>(fname: <a   href="unicode.html#putf8char">putf8char</a>; newmtime: <a   href="dateutil.html#TDatetime">tdatetime</a>): integer;</code></td>
+</tr>
+</table>
+<a name="@Types"></a><h3 class="summary">Types</h3>
+<table class="summary">
+<tr class="list">
+<td class="itemcode"><code><b><a   href="extdos.html#tresourceattribute">tresourceattribute</a></b> = (...);</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="extdos.html#tresourceattributes">tresourceattributes</a></b> = set of <a   href="extdos.html#tresourceattribute">tresourceattribute</a>;</code></td>
+</tr>
+</table>
+<a name="@Constants"></a><h3 class="summary">Constants</h3>
+<table class="summary">
+<tr class="list">
+<td class="itemcode"><code><b><a   href="extdos.html#EXTDOS_STATUS_OK">EXTDOS_STATUS_OK</a></b> = 0;</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="extdos.html#EXTDOS_STATUS_UNSUPPORTED">EXTDOS_STATUS_UNSUPPORTED</a></b> = -1;</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="extdos.html#EXTDOS_STATUS_DATE_CONVERT_ERROR">EXTDOS_STATUS_DATE_CONVERT_ERROR</a></b> = -2;</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="extdos.html#EXTDOS_STATUS_DATE_UNSUPPORTED">EXTDOS_STATUS_DATE_UNSUPPORTED</a></b> = -3;</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="extdos.html#MIN_FILE_YEAR">MIN_FILE_YEAR</a></b>   =  1601;</code></td>
+</tr>
+</table>
+<h2 class="description">Description</h2>
+<h3 class="detail">Functions and Procedures</h3>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="DirectoryExists"></a><code>function <b>DirectoryExists</b>(DName : <a   href="unicode.html#utf8string">utf8string</a>): Boolean;</code></td>
+</tr>
+</table>
+<p>
+Verifies the existence of a directory</p>
+<p>
+ This routine verifies if the directory named can be opened or if it actually exists.
+
+<p> </p>
+<h6 class="parameters">parameters</h6>
+<dl class="parameters">
+<dt>DName</dt>
+<dd>Name of the directory to check</dd>
+</dl>
+<h6 class="return">returns</h6>
+<p class="return">FALSE if the directory cannot be opened or if it does not exist.</p><table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="FileExists"></a><code>Function <b>FileExists</b>(const FName : <a   href="unicode.html#utf8string">utf8string</a>): Boolean;</code></td>
+</tr>
+</table>
+<p>
+Verifies the existence of a filename</p>
+<p>
+ This routine verifies if the file named can be opened or if it actually exists.
+
+<p> </p>
+<h6 class="parameters">parameters</h6>
+<dl class="parameters">
+<dt>FName</dt>
+<dd>Name of the file to check</dd>
+</dl>
+<h6 class="return">returns</h6>
+<p class="return">FALSE if the file cannot be opened or if it does not exist.</p><table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="FindCloseEx"></a><code>procedure <b>FindCloseEx</b>(var SearchRec: <a   href="extdos.TSearchRecExt.html">TSearchRecExt</a>);</code></td>
+</tr>
+</table>
+<p>
+Closes the search and frees the resources previously allocated by a call to <a class="normal" href="extdos.html#FindFirstEx">FindFirstEx</a>.</p>
+<p>
+
+
+<p></p>
+<h6 class="return">returns</h6>
+<p class="return">0 on success, otherwise an error code</p><table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="FindFirstEx"></a><code>function <b>FindFirstEx</b>(path: <a   href="unicode.html#putf8char">putf8char</a>; attr: <a   href="extdos.html#tresourceattributes">tresourceattributes</a>; var SearchRec:<a   href="extdos.TSearchRecExt.html">TSearchRecExt</a>): integer;</code></td>
+</tr>
+</table>
+<p>
+Searches the specified directory for the first entry matching the specified file name and set of attributes.</p>
+<p>
+
+
+<p></p>
+<h6 class="return">returns</h6>
+<p class="return">0 on success, otherwise an error code</p><table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="FindNextEx"></a><code>function <b>FindNextEx</b>(var SearchRec: <a   href="extdos.TSearchRecExt.html">TSearchRecExt</a>): integer;</code></td>
+</tr>
+</table>
+<p>
+Returns the next entry that matches the name and name specified in a previous call to <a class="normal" href="extdos.html#FindFirstEx">FindFirstEx</a>.</p>
+<p>
+
+
+<p></p>
+<h6 class="return">returns</h6>
+<p class="return">0 on success, otherwise an error code</p><table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="GetCurrentDirectory"></a><code>function <b>GetCurrentDirectory</b>(var DirStr: <a   href="unicode.html#utf8string">utf8string</a>): boolean;</code></td>
+</tr>
+</table>
+<p>
+Returns the current active directory</p>
+<p>
+
+
+<p> </p>
+<h6 class="parameters">parameters</h6>
+<dl class="parameters">
+<dt>DirStr</dt>
+<dd>The current directory for the process</dd>
+</dl>
+<h6 class="return">returns</h6>
+<p class="return">true on success, otherwise false</p><table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="GetFileATime"></a><code>function <b>GetFileATime</b>(fname: <a   href="unicode.html#putf8char">putf8char</a>; var atime: <a   href="dateutil.html#TDatetime">TDateTime</a>): integer;</code></td>
+</tr>
+</table>
+<p>
+Returns the last access date and time of a file</p>
+<p>
+
+
+<p>This returns the last access time of a file in UTC coordinates. Returns 0 if there was no error, otherwise returns an operating system (if positive) or module (if negative) specific error code.
+
+<p>  </p>
+<h6 class="parameters">parameters</h6>
+<dl class="parameters">
+<dt>fname</dt>
+<dd>The filename to access (UTF-8 encoded)</dd>
+<dt>atime</dt>
+<dd>The file access date in UTC/GMT format</dd>
+</dl>
+<h6 class="return">returns</h6>
+<p class="return">0 on success, otherwise an error code</p><table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="GetFileAttributes"></a><code>function <b>GetFileAttributes</b>(fname: <a   href="unicode.html#putf8char">putf8char</a>): <a   href="extdos.html#tresourceattributes">tresourceattributes</a>;</code></td>
+</tr>
+</table>
+<p>
+Returns the attributes of a file</p>
+<p>
+.
+
+<p></p>
+<h6 class="return">returns</h6>
+<p class="return">If error returns big_integer_t(-1), otherwise the size of the file is returned.</p><table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="GetFileCTime"></a><code>function <b>GetFileCTime</b>(fname: <a   href="unicode.html#putf8char">putf8char</a>; var ctime: <a   href="dateutil.html#TDatetime">TDateTime</a>): integer;</code></td>
+</tr>
+</table>
+<p>
+Returns the creation date and time of a file</p>
+<p>
+
+
+<p>This returns the creation time of a file in UTC coordinates. Returns 0 if there was no error, otherwise returns an operating system (if positive) or module (if negative) specific error code.
+
+<p>  </p>
+<h6 class="parameters">parameters</h6>
+<dl class="parameters">
+<dt>fname</dt>
+<dd>The filename to access (UTF-8 encoded)</dd>
+<dt>atime</dt>
+<dd>The file creation date in UTC/GMT format</dd>
+</dl>
+<h6 class="return">returns</h6>
+<p class="return">0 on success, otherwise an error code</p><table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="GetFileMTime"></a><code>function <b>GetFileMTime</b>(fname: <a   href="unicode.html#putf8char">putf8char</a>; var mtime: <a   href="dateutil.html#TDatetime">TDateTime</a>): integer;</code></td>
+</tr>
+</table>
+<p>
+Returns the last modification date and time of a file</p>
+<p>
+
+
+<p>This returns the last modification time of a file in UTC coordinates. Returns 0 if there was no error, otherwise returns an operating system (if positive) or module (if negative) specific error code.
+
+<p>  </p>
+<h6 class="parameters">parameters</h6>
+<dl class="parameters">
+<dt>fname</dt>
+<dd>The filename to access (UTF-8 encoded)</dd>
+<dt>atime</dt>
+<dd>The file modification date in UTC/GMT format</dd>
+</dl>
+<h6 class="return">returns</h6>
+<p class="return">0 on success, otherwise an error code</p><table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="GetFileOwner"></a><code>function <b>GetFileOwner</b>(fname: <a   href="unicode.html#putf8char">putf8char</a>): <a   href="unicode.html#utf8string">utf8string</a>;</code></td>
+</tr>
+</table>
+<p>
+Returns the file owner account name</p>
+<p>
+
+
+<p>This routine returns the owner/creator of this resource as a login user name. This is usually the user name when the user logged on to the system. If this routine is not supported, or if there was an error, this routine returns an empty string.
+
+<p> </p>
+<h6 class="parameters">parameters</h6>
+<dl class="parameters">
+<dt>fname</dt>
+<dd>The filename to access (UTF-8 encoded)</dd>
+</dl>
+<h6 class="return">returns</h6>
+<p class="return">The account name on success, otherwise an empty string</p><table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="GetFilesize"></a><code>function <b>GetFilesize</b>(fname: <a   href="unicode.html#putf8char">putf8char</a>): big_integer_t;</code></td>
+</tr>
+</table>
+<p>
+Returns the size of a file</p>
+<p>
+.
+
+<p></p>
+<h6 class="return">returns</h6>
+<p class="return">If error returns big_integer_t(-1), otherwise the size of the file is returned.</p><table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="GetFilestats"></a><code>function <b>GetFilestats</b>(fname: <a   href="unicode.html#putf8char">putf8char</a>; var stats: <a   href="extdos.TFileStats.html">TFileStats</a>): integer;</code></td>
+</tr>
+</table>
+<p>
+Returns information on a file</p>
+<p>
+.
+
+<p>Returns information on a directory or file given by the complete file specification to the file.
+
+<p></p>
+<h6 class="return">returns</h6>
+<p class="return">0 if no error, otherwise, an error code</p><table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="GetGlobalConfigDirectory"></a><code>function <b>GetGlobalConfigDirectory</b>: <a   href="unicode.html#utf8string">utf8string</a>;</code></td>
+</tr>
+</table>
+<p>
+Returns the path of the current shared application data configuration directory</p>
+<p>
+
+
+<p>This routine returns the current path where shared application configuration data should be stored for the logged-on user. If the path does not exist, it is created first.
+
+<p>.</p>
+<h6 class="return">returns</h6>
+<p class="return">The full path to the requested information, or an empty string if an error occured</p><table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="GetLoginConfigDirectory"></a><code>function <b>GetLoginConfigDirectory</b>: <a   href="unicode.html#utf8string">utf8string</a>;</code></td>
+</tr>
+</table>
+<p>
+Returns the path of the current user's application data configuration directory</p>
+<p>
+
+
+<p>This routine returns the current path where private application configuration data should be stored for the logged-on user. If the path does not exist, it is created first.
+
+<p>.</p>
+<h6 class="return">returns</h6>
+<p class="return">The full path to the requested information, or an empty string if an error occured</p><table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="GetLoginHomeDirectory"></a><code>function <b>GetLoginHomeDirectory</b>: <a   href="unicode.html#utf8string">utf8string</a>;</code></td>
+</tr>
+</table>
+<p>
+Returns the path of the user's home directory</p>
+<p>
+
+
+<p>This routine returns the path of the currently logged in user's home directory.</p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="GetUserFullName"></a><code>function <b>GetUserFullName</b>(account: <a   href="unicode.html#utf8string">utf8string</a>): <a   href="unicode.html#utf8string">utf8string</a>;</code></td>
+</tr>
+</table>
+<p>
+Returns a full name from an account name</p>
+<p>
+
+
+<p>From a login name, returns the full name of the user of this account.
+
+<p> </p>
+<h6 class="parameters">parameters</h6>
+<dl class="parameters">
+<dt>fname</dt>
+<dd>The account name</dd>
+</dl>
+<h6 class="return">returns</h6>
+<p class="return">The full name of the user, or an empty string upon error or if unknown or unsupported.</p><table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="SetCurrentDirectory"></a><code>function <b>SetCurrentDirectory</b>(const DirStr: <a   href="unicode.html#utf8string">utf8string</a>): boolean;</code></td>
+</tr>
+</table>
+<p>
+Sets the current active directory</p>
+<p>
+
+
+<p> </p>
+<h6 class="parameters">parameters</h6>
+<dl class="parameters">
+<dt>DirStr</dt>
+<dd>The current directory to select for the process</dd>
+</dl>
+<h6 class="return">returns</h6>
+<p class="return">true on success, otherwise false</p><table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="SetFileATime"></a><code>function <b>SetFileATime</b>(fname: <a   href="unicode.html#putf8char">putf8char</a>; newatime: <a   href="dateutil.html#TDatetime">tdatetime</a>): integer;</code></td>
+</tr>
+</table>
+<p>
+Change the last access time of a file</p>
+<p>
+
+
+<p>Changes the access time of a file. The time should be in UTC coordinates.
+
+<p>If the time is not supported (for example a year of 1900 on UNIX system), then an error will be reported and no operation will be performed.
+
+<p>  </p>
+<h6 class="parameters">parameters</h6>
+<dl class="parameters">
+<dt>fname</dt>
+<dd>The filename to access (UTF-8 encoded)</dd>
+<dt>atime</dt>
+<dd>The new access time</dd>
+</dl>
+<h6 class="return">returns</h6>
+<p class="return">0 on success, otherwise an error code</p><table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="SetFileCTime"></a><code>function <b>SetFileCTime</b>(fname: <a   href="unicode.html#putf8char">putf8char</a>; newctime: <a   href="dateutil.html#TDatetime">tdatetime</a>): integer;</code></td>
+</tr>
+</table>
+<p>
+Change the creation time of a file</p>
+<p>
+
+
+<p>Changes the creation time of a file. The time should be in UTC coordinates.
+
+<p>If the time is not supported (for example a year of 1900 on UNIX system), then an error will be reported and no operation will be performed.
+
+<p>  </p>
+<h6 class="parameters">parameters</h6>
+<dl class="parameters">
+<dt>fname</dt>
+<dd>The filename to access (UTF-8 encoded)</dd>
+<dt>mtime</dt>
+<dd>The new modification time</dd>
+</dl>
+<h6 class="return">returns</h6>
+<p class="return">0 on success, otherwise an error code</p><table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="SetFileMTime"></a><code>function <b>SetFileMTime</b>(fname: <a   href="unicode.html#putf8char">putf8char</a>; newmtime: <a   href="dateutil.html#TDatetime">tdatetime</a>): integer;</code></td>
+</tr>
+</table>
+<p>
+Change the modification time of a file</p>
+<p>
+
+
+<p>Changes the modification time of a file. The time should be in UTC coordinates.
+
+<p>If the time is not supported (for example a year of 1900 on UNIX system), then an error will be reported and no operation will be performed.
+
+<p>  </p>
+<h6 class="parameters">parameters</h6>
+<dl class="parameters">
+<dt>fname</dt>
+<dd>The filename to access (UTF-8 encoded)</dd>
+<dt>mtime</dt>
+<dd>The new modification time</dd>
+</dl>
+<h6 class="return">returns</h6>
+<p class="return">0 on success, otherwise an error code</p><h3 class="detail">Types</h3>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="tresourceattribute"></a><code><b>tresourceattribute</b> = (...);</code></td>
+</tr>
+</table>
+<p>
+Possible attributes of a resource</p>
+<ul>
+<li>
+attr_any: </li>
+<li>
+attr_readonly: Resource is read-only globally</li>
+<li>
+attr_hidden: Resource is hidden</li>
+<li>
+attr_system: Resource is a system resource</li>
+<li>
+attr_archive: Resource is an archive</li>
+<li>
+attr_link: Resource is a link</li>
+<li>
+attr_directory: Resource is a directory</li>
+<li>
+attr_temporary: resource is a temporary resource</li>
+<li>
+attr_encrypted: resource is encrypted by the operating system</li>
+<li>
+attr_no_indexing: resource should not be indexed</li>
+<li>
+attr_device: resource is a device</li>
+<li>
+attr_extended: resource contains extended attributes/reparse point</li>
+<li>
+attr_compressed: resource is compressed by the filesystem</li>
+<li>
+attr_offline: Resource is actually offline</li>
+<li>
+attr_sparse: Resource is a sparse file</li>
+</ul>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="tresourceattributes"></a><code><b>tresourceattributes</b> = set of <a   href="extdos.html#tresourceattribute">tresourceattribute</a>;</code></td>
+</tr>
+</table>
+&nbsp;<h3 class="detail">Constants</h3>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="EXTDOS_STATUS_OK"></a><code><b>EXTDOS_STATUS_OK</b> = 0;</code></td>
+</tr>
+</table>
+<p>
+Return code: No error in operation</p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="EXTDOS_STATUS_UNSUPPORTED"></a><code><b>EXTDOS_STATUS_UNSUPPORTED</b> = -1;</code></td>
+</tr>
+</table>
+<p>
+Return code: This routine is unsupported on this operating system.</p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="EXTDOS_STATUS_DATE_CONVERT_ERROR"></a><code><b>EXTDOS_STATUS_DATE_CONVERT_ERROR</b> = -2;</code></td>
+</tr>
+</table>
+<p>
+Return code: Conversion operation from native date to TDateTime was invalid.</p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="EXTDOS_STATUS_DATE_UNSUPPORTED"></a><code><b>EXTDOS_STATUS_DATE_UNSUPPORTED</b> = -3;</code></td>
+</tr>
+</table>
+<p>
+Return code: Filesystem does not support this date</p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="MIN_FILE_YEAR"></a><code><b>MIN_FILE_YEAR</b>   =  1601;</code></td>
+</tr>
+</table>
+<p>
+Minimal filesystem year for dates for this operating system **</p>
+<h2 class="authors">Author</h2>
+<ul class="authors">
+<li>Carl Eric Codère</li>
+</ul>
+<hr noshade size="1"><span class="appinfo"><em>Generated by <a  target="_parent" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8.3</a> on 2006-10-16 20:10:13</em>
+</span>
+</body></html>

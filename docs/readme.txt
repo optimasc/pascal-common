@@ -103,6 +103,13 @@ CPU32 if the target is a 32-bit compiler; this is true for
 Turbo Pascal, Virtual Pascal, Kylix, Delphi and most 
 versions of Freepascal. Otherwise define CPU64.
 
+Depending on the target system, the following unit and include directory
+paths should be added for compilation:
+
+DELPHI: ./src/win32; ./src/delphi
+FPC for WIN32: ./src/win32
+FPC for LINUX-X86: ./src/linux ./src/posix
+
 4. Credits
 
 Some of the source code in this package is derived from the Free Pascal 

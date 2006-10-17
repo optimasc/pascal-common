@@ -10,7 +10,7 @@
 <h1 class="unit">Unit ietf</h1>
 <table class="sections">
 <tr>
-<td><a class="section"  href="#@Description">Description</a></td><td>uses</td><td>Classes, Interfaces, Objects and Records</td><td><a class="section"  href="#@FuncsProcs">Functions and Procedures</a></td><td>Types</td><td><a class="section"  href="#@Constants">Constants</a></td><td>Variables</td></tr></table>
+<td><a class="section"  href="#@Description">Description</a></td><td>uses</td><td>Classes, Interfaces, Objects and Records</td><td><a class="section"  href="#@FuncsProcs">Functions and Procedures</a></td><td>Types</td><td>Constants</td><td>Variables</td></tr></table>
 <a name="@Description"></a><h2 class="description">Description</h2>
 <p>
 ietf/web related support unit</p>
@@ -22,13 +22,19 @@ ietf/web related support unit</p>
 <a name="@FuncsProcs"></a><h3 class="summary">Functions and Procedures</h3>
 <table class="summary">
 <tr class="list">
-<td class="itemcode"><code>function <b><a   href="ietf.html#mime_isvalidcontenttype">mime_isvalidcontenttype</a></b>(const s: shortstring): boolean;</code></td>
+<td class="itemcode"><code>function <b><a   href="ietf.html#file_pathsplit">file_pathsplit</a></b>(path: string; var directory, name: string): boolean;</code></td>
 </tr>
 <tr class="list2">
-<td class="itemcode"><code>function <b><a   href="ietf.html#langtag_isvalid">langtag_isvalid</a></b>(const s: string): boolean;</code></td>
+<td class="itemcode"><code>function <b><a   href="ietf.html#http_pathsplit">http_pathsplit</a></b>(path: string; var directory, name: string): boolean;</code></td>
 </tr>
 <tr class="list">
+<td class="itemcode"><code>function <b><a   href="ietf.html#langtag_isvalid">langtag_isvalid</a></b>(const s: string): boolean;</code></td>
+</tr>
+<tr class="list2">
 <td class="itemcode"><code>function <b><a   href="ietf.html#langtag_split">langtag_split</a></b>(const s: string; var primary,sub: string): boolean;</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code>function <b><a   href="ietf.html#mime_isvalidcontenttype">mime_isvalidcontenttype</a></b>(const s: shortstring): boolean;</code></td>
 </tr>
 <tr class="list2">
 <td class="itemcode"><code>function <b><a   href="ietf.html#uri_split">uri_split</a></b>(url: string; var scheme, authority,path, query: string): boolean;</code></td>
@@ -40,41 +46,29 @@ ietf/web related support unit</p>
 <td class="itemcode"><code>function <b><a   href="ietf.html#urn_isvalidnid">urn_isvalidnid</a></b>(nid: string): boolean;</code></td>
 </tr>
 <tr class="list">
-<td class="itemcode"><code>function <b><a   href="ietf.html#urn_split">urn_split</a></b>(urn:string; var urnidstr,nidstr,nssstr: string): boolean;</code></td>
-</tr>
-<tr class="list2">
 <td class="itemcode"><code>function <b><a   href="ietf.html#urn_pathsplit">urn_pathsplit</a></b>(path: string; var namespace, nss: string): boolean;</code></td>
 </tr>
-<tr class="list">
-<td class="itemcode"><code>function <b><a   href="ietf.html#http_pathsplit">http_pathsplit</a></b>(path: string; var directory, name: string): boolean;</code></td>
-</tr>
 <tr class="list2">
-<td class="itemcode"><code>function <b><a   href="ietf.html#file_pathsplit">file_pathsplit</a></b>(path: string; var directory, name: string): boolean;</code></td>
-</tr>
-</table>
-<a name="@Constants"></a><h3 class="summary">Constants</h3>
-<table class="summary">
-<tr class="list">
-<td class="itemcode"><code><b><a   href="ietf.html#URI_START_DELIMITER_CHAR">URI_START_DELIMITER_CHAR</a></b> = '&lt;';</code></td>
-</tr>
-<tr class="list2">
-<td class="itemcode"><code><b><a   href="ietf.html#URI_END_DELIMITER_CHAR">URI_END_DELIMITER_CHAR</a></b> = '&gt;';</code></td>
-</tr>
-<tr class="list">
-<td class="itemcode"><code><b><a   href="ietf.html#URI_SCHEME_NAME_EMAIL">URI_SCHEME_NAME_EMAIL</a></b> = 'mailto';</code></td>
-</tr>
-<tr class="list2">
-<td class="itemcode"><code><b><a   href="ietf.html#URI_SCHEME_SEPARATOR">URI_SCHEME_SEPARATOR</a></b> = ':';</code></td>
+<td class="itemcode"><code>function <b><a   href="ietf.html#urn_split">urn_split</a></b>(urn:string; var urnidstr,nidstr,nssstr: string): boolean;</code></td>
 </tr>
 </table>
 <h2 class="description">Description</h2>
 <h3 class="detail">Functions and Procedures</h3>
 <table class="detail">
 <tr class="list">
-<td class="itemcode"><a name="mime_isvalidcontenttype"></a><code>function <b>mime_isvalidcontenttype</b>(const s: shortstring): boolean;</code></td>
+<td class="itemcode"><a name="file_pathsplit"></a><code>function <b>file_pathsplit</b>(path: string; var directory, name: string): boolean;</code></td>
 </tr>
 </table>
-&nbsp;<table class="detail">
+<p>
+Splits a path string returned by uri_split into its individual components for the file URI.</p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="http_pathsplit"></a><code>function <b>http_pathsplit</b>(path: string; var directory, name: string): boolean;</code></td>
+</tr>
+</table>
+<p>
+Splits a path string returned by uri_split into its individual components for the http URI.</p>
+<table class="detail">
 <tr class="list">
 <td class="itemcode"><a name="langtag_isvalid"></a><code>function <b>langtag_isvalid</b>(const s: string): boolean;</code></td>
 </tr>
@@ -85,6 +79,23 @@ ietf/web related support unit</p>
 </tr>
 </table>
 &nbsp;<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="mime_isvalidcontenttype"></a><code>function <b>mime_isvalidcontenttype</b>(const s: shortstring): boolean;</code></td>
+</tr>
+</table>
+<p>
+abstract(Validates the syntax of a MIME type)
+
+<p>This routine is used to validate if MIME content type signature consists of a constructed valid syntax. It does not validate if the MIME type is assigned or if it actually exists or not.
+
+<p> </p>
+<h6 class="parameters">parameters</h6>
+<dl class="parameters">
+<dt>s</dt>
+<dd>MIME type signature to verify</dd>
+</dl>
+<h6 class="return">returns</h6>
+<p class="return">TRUE if the signature has valid syntax</p><table class="detail">
 <tr class="list">
 <td class="itemcode"><a name="uri_split"></a><code>function <b>uri_split</b>(url: string; var scheme, authority,path, query: string): boolean;</code></td>
 </tr>
@@ -129,6 +140,13 @@ This routine checks that the specified NID (namespace) is either registered to I
 <h6 class="return">returns</h6>
 <p class="return">TRUE if this is a registered or experimental NID string</p><table class="detail">
 <tr class="list">
+<td class="itemcode"><a name="urn_pathsplit"></a><code>function <b>urn_pathsplit</b>(path: string; var namespace, nss: string): boolean;</code></td>
+</tr>
+</table>
+<p>
+Splits a path string returned by uri_split into its individual components for URN.</p>
+<table class="detail">
+<tr class="list">
 <td class="itemcode"><a name="urn_split"></a><code>function <b>urn_split</b>(urn:string; var urnidstr,nidstr,nssstr: string): boolean;</code></td>
 </tr>
 </table>
@@ -139,69 +157,23 @@ Splits an URN string in its separate components</p>
 
 <p>It is based on IETF RFC 2141.
 
-<p>  (nidstr Namespace identifier NID  </p>
+<p>    </p>
 <h6 class="parameters">parameters</h6>
 <dl class="parameters">
 <dt>urn</dt>
 <dd>Complete URN string to separate</dd>
 <dt>urnidstr</dt>
 <dd>Signature URN:</dd>
-<dt></dt>
-<dd></dd>
+<dt>nidstr</dt>
+<dd>Namespace identifier NID</dd>
 <dt>nssstr</dt>
 <dd>Namespace specific string NSS</dd>
 </dl>
 <h6 class="return">returns</h6>
-<p class="return">TRUE if the operation was successfull, or FALSE if the URN is malformed</p><table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="urn_pathsplit"></a><code>function <b>urn_pathsplit</b>(path: string; var namespace, nss: string): boolean;</code></td>
-</tr>
-</table>
-<p>
-Splits a path string returned by uri_split into its individual components for URN.</p>
-<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="http_pathsplit"></a><code>function <b>http_pathsplit</b>(path: string; var directory, name: string): boolean;</code></td>
-</tr>
-</table>
-<p>
-Splits a path string returned by uri_split into its individual components for the http URI.</p>
-<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="file_pathsplit"></a><code>function <b>file_pathsplit</b>(path: string; var directory, name: string): boolean;</code></td>
-</tr>
-</table>
-<p>
-Splits a path string returned by uri_split into its individual components for the file URI.</p>
-<h3 class="detail">Constants</h3>
-<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="URI_START_DELIMITER_CHAR"></a><code><b>URI_START_DELIMITER_CHAR</b> = '&lt;';</code></td>
-</tr>
-</table>
-<p>
-Suggested start delimiter character for an URI, c.f. RFC 2396</p>
-<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="URI_END_DELIMITER_CHAR"></a><code><b>URI_END_DELIMITER_CHAR</b> = '&gt;';</code></td>
-</tr>
-</table>
-<p>
-Suggested end delimiter character for an URI, c.f. RFC 2396</p>
-<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="URI_SCHEME_NAME_EMAIL"></a><code><b>URI_SCHEME_NAME_EMAIL</b> = 'mailto';</code></td>
-</tr>
-</table>
-&nbsp;<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="URI_SCHEME_SEPARATOR"></a><code><b>URI_SCHEME_SEPARATOR</b> = ':';</code></td>
-</tr>
-</table>
-&nbsp;<h2 class="authors">Author</h2>
+<p class="return">TRUE if the operation was successfull, or FALSE if the URN is malformed</p><h2 class="authors">Author</h2>
 <ul class="authors">
 <li>Carl Eric Codere</li>
 </ul>
-<hr noshade size="1"><span class="appinfo"><em>Generated by <a  target="_parent" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8.3</a> on 2006-08-22 21:08:50</em>
+<hr noshade size="1"><span class="appinfo"><em>Generated by <a  target="_parent" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8.3</a> on 2006-10-16 20:10:14</em>
 </span>
 </body></html>

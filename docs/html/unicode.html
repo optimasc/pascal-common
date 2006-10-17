@@ -23,129 +23,59 @@ unicode support unit</p>
 
 <p>Since all these encoding are variable length, except the UCS-4 (which is equivalent to UTF-32 according to ISO 10646:2003) and UCS-2 encoding, to parse through characters, every string should be converted to UCS-4 or UCS-2 before being used.
 
-<p>The principal encoding scheme for this unit is UCS-4.</p>
+<p>The principal encoding scheme for this unit is UCS-4.
+
+<p>Unicode tables are based on Unicode 4.1</p>
 <a name="@Uses"></a><h2 class="overview">Overview</h2>
 <a name="@FuncsProcs"></a><h3 class="summary">Functions and Procedures</h3>
 <table class="summary">
 <tr class="list">
-<td class="itemcode"><code>function <b><a   href="unicode.html#ucs4_length">ucs4_length</a></b>(const s: array of <a   href="unicode.html#ucs4char">ucs4char</a>): integer;</code></td>
+<td class="itemcode"><code>function <b><a   href="unicode.html#ansistrdispose">ansistrdispose</a></b>(p: pchar): pchar;</code></td>
 </tr>
 <tr class="list2">
-<td class="itemcode"><code>procedure <b><a   href="unicode.html#ucs4_setlength">ucs4_setlength</a></b>(var s: array of <a   href="unicode.html#ucs4char">ucs4char</a>; l: integer);</code></td>
+<td class="itemcode"><code>function <b><a   href="unicode.html#ansistrnew">ansistrnew</a></b>(src: pchar): pchar;</code></td>
 </tr>
 <tr class="list">
-<td class="itemcode"><code>function <b><a   href="unicode.html#ucs4_iswhitespace">ucs4_iswhitespace</a></b>(c: <a   href="unicode.html#ucs4char">ucs4char</a>): boolean;</code></td>
+<td class="itemcode"><code>function <b><a   href="unicode.html#ansistrnewstr">ansistrnewstr</a></b>(const str: string): pchar;</code></td>
 </tr>
 <tr class="list2">
-<td class="itemcode"><code>function <b><a   href="unicode.html#ucs4_upcase">ucs4_upcase</a></b>(c: <a   href="unicode.html#ucs4char">ucs4char</a>): <a   href="unicode.html#ucs4char">ucs4char</a>;</code></td>
+<td class="itemcode"><code>function <b><a   href="unicode.html#ansistrpas">ansistrpas</a></b>(src: pchar): string;</code></td>
 </tr>
 <tr class="list">
-<td class="itemcode"><code>function <b><a   href="unicode.html#ucs4_lowcase">ucs4_lowcase</a></b>(c: <a   href="unicode.html#ucs4char">ucs4char</a>): <a   href="unicode.html#ucs4char">ucs4char</a>;</code></td>
+<td class="itemcode"><code>function <b><a   href="unicode.html#asciistrnew">asciistrnew</a></b>(src: pchar): pchar;</code></td>
 </tr>
 <tr class="list2">
-<td class="itemcode"><code>procedure <b><a   href="unicode.html#ucs4_trimleft">ucs4_trimleft</a></b>(var s: <a   href="unicode.html#ucs4string">ucs4string</a>);</code></td>
+<td class="itemcode"><code>function <b><a   href="unicode.html#asciistrnewstr">asciistrnewstr</a></b>(const str: string): pchar;</code></td>
 </tr>
 <tr class="list">
-<td class="itemcode"><code>procedure <b><a   href="unicode.html#ucs4_trimright">ucs4_trimright</a></b>(var s: <a   href="unicode.html#ucs4string">ucs4string</a>);</code></td>
+<td class="itemcode"><code>function <b><a   href="unicode.html#asciistrpas">asciistrpas</a></b>(src: pchar): string;</code></td>
 </tr>
 <tr class="list2">
-<td class="itemcode"><code>procedure <b><a   href="unicode.html#ucs4_trim">ucs4_trim</a></b>(var s: <a   href="unicode.html#ucs4string">ucs4string</a>);</code></td>
+<td class="itemcode"><code>function <b><a   href="unicode.html#ConvertFromUCS4">ConvertFromUCS4</a></b>(const source: <a   href="unicode.html#ucs4string">ucs4string</a>; var dest: string; desttype: string): integer;</code></td>
 </tr>
 <tr class="list">
-<td class="itemcode"><code>procedure <b><a   href="unicode.html#ucs4_copy">ucs4_copy</a></b>(var resultstr: <a   href="unicode.html#ucs4string">ucs4string</a>; const s: <a   href="unicode.html#ucs4string">ucs4string</a>; index: integer; count: integer);</code></td>
+<td class="itemcode"><code>function <b><a   href="unicode.html#ConvertToUCS4">ConvertToUCS4</a></b>(source: string; var dest: <a   href="unicode.html#ucs4string">ucs4string</a>; srctype: string): integer;</code></td>
 </tr>
 <tr class="list2">
-<td class="itemcode"><code>procedure <b><a   href="unicode.html#ucs4_delete">ucs4_delete</a></b>(var s: <a   href="unicode.html#ucs4string">ucs4string</a>; index: integer; count: integer);</code></td>
+<td class="itemcode"><code>function <b><a   href="unicode.html#ConvertUCS2ToUCS4">ConvertUCS2ToUCS4</a></b>(src: array of <a   href="unicode.html#ucs2char">ucs2char</a>; var dst: <a   href="unicode.html#ucs4string">ucs4string</a>): integer;</code></td>
 </tr>
 <tr class="list">
-<td class="itemcode"><code>procedure <b><a   href="unicode.html#ucs4_concat">ucs4_concat</a></b>(var resultstr: <a   href="unicode.html#ucs4string">ucs4string</a>;const s1: <a   href="unicode.html#ucs4string">ucs4string</a>; const s2: array of <a   href="unicode.html#ucs4char">ucs4char</a>);</code></td>
+<td class="itemcode"><code>function <b><a   href="unicode.html#ConvertUCS4ToUCS2">ConvertUCS4ToUCS2</a></b>(src: array of <a   href="unicode.html#ucs4char">ucs4char</a>; var dst: <a   href="unicode.html#ucs2string">ucs2string</a>): integer;</code></td>
 </tr>
 <tr class="list2">
-<td class="itemcode"><code>procedure <b><a   href="unicode.html#ucs4_removeaccents">ucs4_removeaccents</a></b>(var resultstr: <a   href="unicode.html#ucs4string">ucs4string</a>;s2: <a   href="unicode.html#ucs4string">ucs4string</a>);</code></td>
+<td class="itemcode"><code>function <b><a   href="unicode.html#ConvertUCS4toUTF16">ConvertUCS4toUTF16</a></b>(src: array of <a   href="unicode.html#ucs4char">ucs4char</a>; var dest: <a   href="unicode.html#utf16string">utf16string</a>): integer;</code></td>
 </tr>
 <tr class="list">
-<td class="itemcode"><code>procedure <b><a   href="unicode.html#ucs4_concatascii">ucs4_concatascii</a></b>(var resultstr: <a   href="unicode.html#ucs4string">ucs4string</a>;const s1: <a   href="unicode.html#ucs4string">ucs4string</a>; const s2: string);</code></td>
+<td class="itemcode"><code>function <b><a   href="unicode.html#convertUCS4toUTF8">convertUCS4toUTF8</a></b>(s: array of <a   href="unicode.html#ucs4char">ucs4char</a>; var outstr: <a   href="unicode.html#utf8string">utf8string</a>): integer;</code></td>
 </tr>
 <tr class="list2">
-<td class="itemcode"><code>function <b><a   href="unicode.html#ucs4_posascii">ucs4_posascii</a></b>(const substr: string; const s: <a   href="unicode.html#ucs4string">ucs4string</a>): integer;</code></td>
+<td class="itemcode"><code>function <b><a   href="unicode.html#ConvertUTF16ToUCS4">ConvertUTF16ToUCS4</a></b>(src: <a   href="unicode.html#utf16string">utf16string</a>; var dst: <a   href="unicode.html#ucs4string">ucs4string</a>): integer;</code></td>
 </tr>
 <tr class="list">
-<td class="itemcode"><code>function <b><a   href="unicode.html#ucs4_equalascii">ucs4_equalascii</a></b>(const s1 : array of <a   href="unicode.html#ucs4char">ucs4char</a>; s2: string): boolean;</code></td>
+<td class="itemcode"><code>function <b><a   href="unicode.html#ConvertUTF8ToUCS4">ConvertUTF8ToUCS4</a></b>(src: <a   href="unicode.html#utf8string">utf8string</a>; var dst: <a   href="unicode.html#ucs4string">ucs4string</a>): integer;</code></td>
 </tr>
 <tr class="list2">
-<td class="itemcode"><code>function <b><a   href="unicode.html#ucs4_pos">ucs4_pos</a></b>(const substr: <a   href="unicode.html#ucs4string">ucs4string</a>; const s: <a   href="unicode.html#ucs4string">ucs4string</a>): integer;</code></td>
-</tr>
-<tr class="list">
-<td class="itemcode"><code>function <b><a   href="unicode.html#ucs4_equal">ucs4_equal</a></b>(const s1,s2: <a   href="unicode.html#ucs4string">ucs4string</a>): boolean;</code></td>
-</tr>
-<tr class="list2">
-<td class="itemcode"><code>function <b><a   href="unicode.html#ucs4_isvalid">ucs4_isvalid</a></b>(c: <a   href="unicode.html#ucs4char">ucs4char</a>): boolean;</code></td>
-</tr>
-<tr class="list">
-<td class="itemcode"><code>function <b><a   href="unicode.html#ucs4_issupported">ucs4_issupported</a></b>(s: string): boolean;</code></td>
-</tr>
-<tr class="list2">
-<td class="itemcode"><code>function <b><a   href="unicode.html#ucs4_converttoiso8859_1">ucs4_converttoiso8859_1</a></b>(const s: <a   href="unicode.html#ucs4string">ucs4string</a>): string;</code></td>
-</tr>
-<tr class="list">
-<td class="itemcode"><code>function <b><a   href="unicode.html#ucs4_converttoutf8">ucs4_converttoutf8</a></b>(const src: <a   href="unicode.html#ucs4string">ucs4string</a>): <a   href="unicode.html#utf8string">utf8string</a>;</code></td>
-</tr>
-<tr class="list2">
-<td class="itemcode"><code>function <b><a   href="unicode.html#ucs4strlen">ucs4strlen</a></b>(str: <a   href="unicode.html#pucs4char">pucs4char</a>): integer;</code></td>
-</tr>
-<tr class="list">
-<td class="itemcode"><code>procedure <b><a   href="unicode.html#ucs4strpas">ucs4strpas</a></b>(str: <a   href="unicode.html#pucs4char">pucs4char</a>; var res:<a   href="unicode.html#ucs4string">ucs4string</a>);</code></td>
-</tr>
-<tr class="list2">
-<td class="itemcode"><code>function <b><a   href="unicode.html#ucs4strpastoISO8859_1">ucs4strpastoISO8859_1</a></b>(str: <a   href="unicode.html#pucs4char">pucs4char</a>): string;</code></td>
-</tr>
-<tr class="list">
-<td class="itemcode"><code>function <b><a   href="unicode.html#ucs4strpastoASCII">ucs4strpastoASCII</a></b>(str: <a   href="unicode.html#pucs4char">pucs4char</a>): string;</code></td>
-</tr>
-<tr class="list2">
-<td class="itemcode"><code>function <b><a   href="unicode.html#ucs4strpastoUTF8">ucs4strpastoUTF8</a></b>(str: <a   href="unicode.html#pucs4char">pucs4char</a>): <a   href="unicode.html#utf8string">utf8string</a>;</code></td>
-</tr>
-<tr class="list">
-<td class="itemcode"><code>function <b><a   href="unicode.html#ucs4strpcopy">ucs4strpcopy</a></b>(dest: <a   href="unicode.html#pucs4char">pucs4char</a>; source: <a   href="unicode.html#ucs4string">ucs4string</a>):<a   href="unicode.html#pucs4char">pucs4char</a>;</code></td>
-</tr>
-<tr class="list2">
-<td class="itemcode"><code>function <b><a   href="unicode.html#ucs4strnewstr">ucs4strnewstr</a></b>(str: string; srctype: string): <a   href="unicode.html#pucs4char">pucs4char</a>;</code></td>
-</tr>
-<tr class="list">
-<td class="itemcode"><code>function <b><a   href="unicode.html#ucs4strnew">ucs4strnew</a></b>(str: pchar; srctype: string): <a   href="unicode.html#pucs4char">pucs4char</a>;</code></td>
-</tr>
-<tr class="list2">
-<td class="itemcode"><code>function <b><a   href="unicode.html#ucs4strnewucs4">ucs4strnewucs4</a></b>(src: <a   href="unicode.html#pucs4char">pucs4char</a>): <a   href="unicode.html#pucs4char">pucs4char</a>;</code></td>
-</tr>
-<tr class="list">
-<td class="itemcode"><code>function <b><a   href="unicode.html#ucs4strnewucs2">ucs4strnewucs2</a></b>(str: <a   href="unicode.html#pucs2char">pucs2char</a>): <a   href="unicode.html#pucs4char">pucs4char</a>;</code></td>
-</tr>
-<tr class="list2">
-<td class="itemcode"><code>function <b><a   href="unicode.html#ucs4strdispose">ucs4strdispose</a></b>(str: <a   href="unicode.html#pucs4char">pucs4char</a>): <a   href="unicode.html#pucs4char">pucs4char</a>;</code></td>
-</tr>
-<tr class="list">
-<td class="itemcode"><code>function <b><a   href="unicode.html#ucs4StrPosISO8859_1">ucs4StrPosISO8859_1</a></b>(S: <a   href="unicode.html#pucs4char">pucs4char</a>; Str2: PChar): <a   href="unicode.html#pucs4char">pucs4char</a>;</code></td>
-</tr>
-<tr class="list2">
-<td class="itemcode"><code>function <b><a   href="unicode.html#ucs4strtrim">ucs4strtrim</a></b>(const p: <a   href="unicode.html#pucs4char">pucs4char</a>): <a   href="unicode.html#pucs4char">pucs4char</a>;</code></td>
-</tr>
-<tr class="list">
-<td class="itemcode"><code>function <b><a   href="unicode.html#ucs4strfill">ucs4strfill</a></b>(var p: <a   href="unicode.html#pucs4char">pucs4char</a>; count: integer; value: <a   href="unicode.html#ucs4char">ucs4char</a>): <a   href="unicode.html#pucs4char">pucs4char</a>;</code></td>
-</tr>
-<tr class="list2">
-<td class="itemcode"><code>procedure <b><a   href="unicode.html#ucs4strcheck">ucs4strcheck</a></b>(p: <a   href="unicode.html#pucs4char">pucs4char</a>; maxcount: integer; value: <a   href="unicode.html#ucs4char">ucs4char</a>);</code></td>
-</tr>
-<tr class="list">
-<td class="itemcode"><code>function <b><a   href="unicode.html#ucs2_length">ucs2_length</a></b>(const s: array of <a   href="unicode.html#ucs2char">ucs2char</a>): integer;</code></td>
-</tr>
-<tr class="list2">
-<td class="itemcode"><code>procedure <b><a   href="unicode.html#ucs2_setlength">ucs2_setlength</a></b>(var s: array of <a   href="unicode.html#ucs2char">ucs2char</a>; l: integer);</code></td>
-</tr>
-<tr class="list">
-<td class="itemcode"><code>function <b><a   href="unicode.html#ucs2_isvalid">ucs2_isvalid</a></b>(ch: <a   href="unicode.html#ucs2char">ucs2char</a>): boolean;</code></td>
-</tr>
-<tr class="list2">
-<td class="itemcode"><code>function <b><a   href="unicode.html#ucs2_upcase">ucs2_upcase</a></b>(c: <a   href="unicode.html#ucs2char">ucs2char</a>): <a   href="unicode.html#ucs2char">ucs2char</a>;</code></td>
+<td class="itemcode"><code>function <b><a   href="unicode.html#ucs2strdispose">ucs2strdispose</a></b>(str: <a   href="unicode.html#pucs2char">pucs2char</a>): <a   href="unicode.html#pucs2char">pucs2char</a>;</code></td>
 </tr>
 <tr class="list">
 <td class="itemcode"><code>function <b><a   href="unicode.html#ucs2strlcopyucs4">ucs2strlcopyucs4</a></b>(src: <a   href="unicode.html#pucs2char">pucs2char</a>; dst: <a   href="unicode.html#pucs4char">pucs4char</a>; maxlen: integer): <a   href="unicode.html#pucs4char">pucs4char</a>;</code></td>
@@ -157,109 +87,181 @@ unicode support unit</p>
 <td class="itemcode"><code>function <b><a   href="unicode.html#ucs2strnew">ucs2strnew</a></b>(src: <a   href="unicode.html#pucs4char">pucs4char</a>): <a   href="unicode.html#pucs2char">pucs2char</a>;</code></td>
 </tr>
 <tr class="list2">
-<td class="itemcode"><code>function <b><a   href="unicode.html#ucs2strdispose">ucs2strdispose</a></b>(str: <a   href="unicode.html#pucs2char">pucs2char</a>): <a   href="unicode.html#pucs2char">pucs2char</a>;</code></td>
+<td class="itemcode"><code>function <b><a   href="unicode.html#ucs2_isvalid">ucs2_isvalid</a></b>(ch: <a   href="unicode.html#ucs2char">ucs2char</a>): boolean;</code></td>
 </tr>
 <tr class="list">
-<td class="itemcode"><code>function <b><a   href="unicode.html#utf8strnew">utf8strnew</a></b>(src: <a   href="unicode.html#pucs4char">pucs4char</a>): pchar;</code></td>
+<td class="itemcode"><code>function <b><a   href="unicode.html#ucs2_length">ucs2_length</a></b>(const s: array of <a   href="unicode.html#ucs2char">ucs2char</a>): integer;</code></td>
 </tr>
 <tr class="list2">
-<td class="itemcode"><code>function <b><a   href="unicode.html#utf8strlen">utf8strlen</a></b>(s: <a   href="unicode.html#putf8char">putf8char</a>): integer;</code></td>
+<td class="itemcode"><code>procedure <b><a   href="unicode.html#ucs2_setlength">ucs2_setlength</a></b>(var s: array of <a   href="unicode.html#ucs2char">ucs2char</a>; l: integer);</code></td>
 </tr>
 <tr class="list">
-<td class="itemcode"><code>function <b><a   href="unicode.html#utf8strnewutf8">utf8strnewutf8</a></b>(src: pchar): pchar;</code></td>
+<td class="itemcode"><code>function <b><a   href="unicode.html#ucs2_upcase">ucs2_upcase</a></b>(c: <a   href="unicode.html#ucs2char">ucs2char</a>): <a   href="unicode.html#ucs2char">ucs2char</a>;</code></td>
 </tr>
 <tr class="list2">
-<td class="itemcode"><code>function <b><a   href="unicode.html#utf8strdispose">utf8strdispose</a></b>(p: pchar): pchar;</code></td>
+<td class="itemcode"><code>procedure <b><a   href="unicode.html#ucs4strcheck">ucs4strcheck</a></b>(p: <a   href="unicode.html#pucs4char">pucs4char</a>; maxcount: integer; value: <a   href="unicode.html#ucs4char">ucs4char</a>);</code></td>
 </tr>
 <tr class="list">
-<td class="itemcode"><code>function <b><a   href="unicode.html#utf8strlcopyucs4">utf8strlcopyucs4</a></b>(src: pchar; dst: <a   href="unicode.html#pucs4char">pucs4char</a>; maxlen: integer): <a   href="unicode.html#pucs4char">pucs4char</a>;</code></td>
+<td class="itemcode"><code>function <b><a   href="unicode.html#ucs4strdispose">ucs4strdispose</a></b>(str: <a   href="unicode.html#pucs4char">pucs4char</a>): <a   href="unicode.html#pucs4char">pucs4char</a>;</code></td>
 </tr>
 <tr class="list2">
-<td class="itemcode"><code>function <b><a   href="unicode.html#utf8strpastoISO8859_1">utf8strpastoISO8859_1</a></b>(src: pchar): string;</code></td>
+<td class="itemcode"><code>function <b><a   href="unicode.html#ucs4strfill">ucs4strfill</a></b>(var p: <a   href="unicode.html#pucs4char">pucs4char</a>; count: integer; value: <a   href="unicode.html#ucs4char">ucs4char</a>): <a   href="unicode.html#pucs4char">pucs4char</a>;</code></td>
 </tr>
 <tr class="list">
-<td class="itemcode"><code>function <b><a   href="unicode.html#utf8strpastoASCII">utf8strpastoASCII</a></b>(src: pchar): string;</code></td>
+<td class="itemcode"><code>function <b><a   href="unicode.html#ucs4strlen">ucs4strlen</a></b>(str: <a   href="unicode.html#pucs4char">pucs4char</a>): integer;</code></td>
 </tr>
 <tr class="list2">
-<td class="itemcode"><code>function <b><a   href="unicode.html#utf8strpastostring">utf8strpastostring</a></b>(src: pchar; desttype: string): string;</code></td>
+<td class="itemcode"><code>function <b><a   href="unicode.html#ucs4strnew">ucs4strnew</a></b>(str: pchar; srctype: string): <a   href="unicode.html#pucs4char">pucs4char</a>;</code></td>
 </tr>
 <tr class="list">
-<td class="itemcode"><code>function <b><a   href="unicode.html#utf8strpas">utf8strpas</a></b>(src: pchar): string;</code></td>
+<td class="itemcode"><code>function <b><a   href="unicode.html#ucs4strnewstr">ucs4strnewstr</a></b>(str: string; srctype: string): <a   href="unicode.html#pucs4char">pucs4char</a>;</code></td>
 </tr>
 <tr class="list2">
-<td class="itemcode"><code>function <b><a   href="unicode.html#utf8strnewstr">utf8strnewstr</a></b>(str: <a   href="unicode.html#utf8string">utf8string</a>): <a   href="unicode.html#putf8char">putf8char</a>;</code></td>
+<td class="itemcode"><code>function <b><a   href="unicode.html#ucs4strnewucs2">ucs4strnewucs2</a></b>(str: <a   href="unicode.html#pucs2char">pucs2char</a>): <a   href="unicode.html#pucs4char">pucs4char</a>;</code></td>
 </tr>
 <tr class="list">
-<td class="itemcode"><code>procedure <b><a   href="unicode.html#utf8stringdispose">utf8stringdispose</a></b>(var p : <a   href="unicode.html#putf8shortstring">putf8shortstring</a>);</code></td>
+<td class="itemcode"><code>function <b><a   href="unicode.html#ucs4strnewucs4">ucs4strnewucs4</a></b>(src: <a   href="unicode.html#pucs4char">pucs4char</a>): <a   href="unicode.html#pucs4char">pucs4char</a>;</code></td>
 </tr>
 <tr class="list2">
-<td class="itemcode"><code>function <b><a   href="unicode.html#utf8stringdup">utf8stringdup</a></b>(const s : string) : <a   href="unicode.html#putf8shortstring">putf8shortstring</a>;</code></td>
+<td class="itemcode"><code>procedure <b><a   href="unicode.html#ucs4strpas">ucs4strpas</a></b>(str: <a   href="unicode.html#pucs4char">pucs4char</a>; var res:<a   href="unicode.html#ucs4string">ucs4string</a>);</code></td>
 </tr>
 <tr class="list">
-<td class="itemcode"><code>function <b><a   href="unicode.html#asciistrpas">asciistrpas</a></b>(src: pchar): string;</code></td>
+<td class="itemcode"><code>function <b><a   href="unicode.html#ucs4strpastoASCII">ucs4strpastoASCII</a></b>(str: <a   href="unicode.html#pucs4char">pucs4char</a>): string;</code></td>
 </tr>
 <tr class="list2">
-<td class="itemcode"><code>function <b><a   href="unicode.html#asciistrnew">asciistrnew</a></b>(src: pchar): pchar;</code></td>
+<td class="itemcode"><code>function <b><a   href="unicode.html#ucs4strpastoISO8859_1">ucs4strpastoISO8859_1</a></b>(str: <a   href="unicode.html#pucs4char">pucs4char</a>): string;</code></td>
 </tr>
 <tr class="list">
-<td class="itemcode"><code>function <b><a   href="unicode.html#asciistrnewstr">asciistrnewstr</a></b>(const str: string): pchar;</code></td>
+<td class="itemcode"><code>function <b><a   href="unicode.html#ucs4strpastoUTF8">ucs4strpastoUTF8</a></b>(str: <a   href="unicode.html#pucs4char">pucs4char</a>): <a   href="unicode.html#utf8string">utf8string</a>;</code></td>
 </tr>
 <tr class="list2">
-<td class="itemcode"><code>function <b><a   href="unicode.html#ansistrpas">ansistrpas</a></b>(src: pchar): string;</code></td>
+<td class="itemcode"><code>function <b><a   href="unicode.html#ucs4strpcopy">ucs4strpcopy</a></b>(dest: <a   href="unicode.html#pucs4char">pucs4char</a>; source: <a   href="unicode.html#ucs4string">ucs4string</a>):<a   href="unicode.html#pucs4char">pucs4char</a>;</code></td>
 </tr>
 <tr class="list">
-<td class="itemcode"><code>function <b><a   href="unicode.html#ansistrnew">ansistrnew</a></b>(src: pchar): pchar;</code></td>
+<td class="itemcode"><code>function <b><a   href="unicode.html#ucs4strposISO8859_1">ucs4strposISO8859_1</a></b>(S: <a   href="unicode.html#pucs4char">pucs4char</a>; Str2: PChar): <a   href="unicode.html#pucs4char">pucs4char</a>;</code></td>
 </tr>
 <tr class="list2">
-<td class="itemcode"><code>function <b><a   href="unicode.html#ansistrnewstr">ansistrnewstr</a></b>(const str: string): pchar;</code></td>
+<td class="itemcode"><code>function <b><a   href="unicode.html#ucs4strtrim">ucs4strtrim</a></b>(const p: <a   href="unicode.html#pucs4char">pucs4char</a>): <a   href="unicode.html#pucs4char">pucs4char</a>;</code></td>
 </tr>
 <tr class="list">
-<td class="itemcode"><code>function <b><a   href="unicode.html#ansistrdispose">ansistrdispose</a></b>(p: pchar): pchar;</code></td>
+<td class="itemcode"><code>procedure <b><a   href="unicode.html#ucs4_concat">ucs4_concat</a></b>(var resultstr: <a   href="unicode.html#ucs4string">ucs4string</a>;const s1: <a   href="unicode.html#ucs4string">ucs4string</a>; const s2: array of <a   href="unicode.html#ucs4char">ucs4char</a>);</code></td>
 </tr>
 <tr class="list2">
-<td class="itemcode"><code>function <b><a   href="unicode.html#utf16_sizeencoding">utf16_sizeencoding</a></b>(c: <a   href="unicode.html#utf16char">utf16char</a>): integer;</code></td>
+<td class="itemcode"><code>procedure <b><a   href="unicode.html#ucs4_concatascii">ucs4_concatascii</a></b>(var resultstr: <a   href="unicode.html#ucs4string">ucs4string</a>;const s1: <a   href="unicode.html#ucs4string">ucs4string</a>; const s2: string);</code></td>
 </tr>
 <tr class="list">
-<td class="itemcode"><code>function <b><a   href="unicode.html#utf8_sizeencoding">utf8_sizeencoding</a></b>(c: <a   href="unicode.html#utf8char">utf8char</a>): integer;</code></td>
+<td class="itemcode"><code>function <b><a   href="unicode.html#ucs4_converttoiso8859_1">ucs4_converttoiso8859_1</a></b>(const s: <a   href="unicode.html#ucs4string">ucs4string</a>): string;</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code>function <b><a   href="unicode.html#ucs4_converttoutf8">ucs4_converttoutf8</a></b>(const src: <a   href="unicode.html#ucs4string">ucs4string</a>): <a   href="unicode.html#utf8string">utf8string</a>;</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code>procedure <b><a   href="unicode.html#ucs4_copy">ucs4_copy</a></b>(var resultstr: <a   href="unicode.html#ucs4string">ucs4string</a>; const s: <a   href="unicode.html#ucs4string">ucs4string</a>; index: integer; count: integer);</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code>procedure <b><a   href="unicode.html#ucs4_delete">ucs4_delete</a></b>(var s: <a   href="unicode.html#ucs4string">ucs4string</a>; index: integer; count: integer);</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code>function <b><a   href="unicode.html#ucs4_equal">ucs4_equal</a></b>(const s1,s2: <a   href="unicode.html#ucs4string">ucs4string</a>): boolean;</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code>function <b><a   href="unicode.html#ucs4_equalascii">ucs4_equalascii</a></b>(const s1 : array of <a   href="unicode.html#ucs4char">ucs4char</a>; s2: string): boolean;</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code>function <b><a   href="unicode.html#ucs4_issupported">ucs4_issupported</a></b>(s: string): boolean;</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code>function <b><a   href="unicode.html#ucs4_isvalid">ucs4_isvalid</a></b>(c: <a   href="unicode.html#ucs4char">ucs4char</a>): boolean;</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code>function <b><a   href="unicode.html#ucs4_iswhitespace">ucs4_iswhitespace</a></b>(c: <a   href="unicode.html#ucs4char">ucs4char</a>): boolean;</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code>function <b><a   href="unicode.html#ucs4_length">ucs4_length</a></b>(const s: array of <a   href="unicode.html#ucs4char">ucs4char</a>): integer;</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code>function <b><a   href="unicode.html#ucs4_lowcase">ucs4_lowcase</a></b>(c: <a   href="unicode.html#ucs4char">ucs4char</a>): <a   href="unicode.html#ucs4char">ucs4char</a>;</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code>function <b><a   href="unicode.html#ucs4_pos">ucs4_pos</a></b>(const substr: <a   href="unicode.html#ucs4string">ucs4string</a>; const s: <a   href="unicode.html#ucs4string">ucs4string</a>): integer;</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code>function <b><a   href="unicode.html#ucs4_posascii">ucs4_posascii</a></b>(const substr: string; const s: <a   href="unicode.html#ucs4string">ucs4string</a>): integer;</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code>procedure <b><a   href="unicode.html#ucs4_removeaccents">ucs4_removeaccents</a></b>(var resultstr: <a   href="unicode.html#ucs4string">ucs4string</a>;s2: <a   href="unicode.html#ucs4string">ucs4string</a>);</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code>procedure <b><a   href="unicode.html#ucs4_setlength">ucs4_setlength</a></b>(var s: array of <a   href="unicode.html#ucs4char">ucs4char</a>; l: integer);</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code>procedure <b><a   href="unicode.html#ucs4_trim">ucs4_trim</a></b>(var s: <a   href="unicode.html#ucs4string">ucs4string</a>);</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code>procedure <b><a   href="unicode.html#ucs4_trimleft">ucs4_trimleft</a></b>(var s: <a   href="unicode.html#ucs4string">ucs4string</a>);</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code>procedure <b><a   href="unicode.html#ucs4_trimright">ucs4_trimright</a></b>(var s: <a   href="unicode.html#ucs4string">ucs4string</a>);</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code>function <b><a   href="unicode.html#ucs4_upcase">ucs4_upcase</a></b>(c: <a   href="unicode.html#ucs4char">ucs4char</a>): <a   href="unicode.html#ucs4char">ucs4char</a>;</code></td>
 </tr>
 <tr class="list2">
 <td class="itemcode"><code>function <b><a   href="unicode.html#utf16_length">utf16_length</a></b>(const s: array of <a   href="unicode.html#utf16char">utf16char</a>): integer;</code></td>
 </tr>
 <tr class="list">
-<td class="itemcode"><code>function <b><a   href="unicode.html#utf8_length">utf8_length</a></b>(const s: <a   href="unicode.html#utf8string">utf8string</a>): integer;</code></td>
+<td class="itemcode"><code>procedure <b><a   href="unicode.html#utf16_setlength">utf16_setlength</a></b>(var s: array of <a   href="unicode.html#utf16char">utf16char</a>; l: integer);</code></td>
 </tr>
 <tr class="list2">
+<td class="itemcode"><code>function <b><a   href="unicode.html#utf16_sizeencoding">utf16_sizeencoding</a></b>(c: <a   href="unicode.html#utf16char">utf16char</a>): integer;</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code>function <b><a   href="unicode.html#utf8strdispose">utf8strdispose</a></b>(p: pchar): pchar;</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code>procedure <b><a   href="unicode.html#utf8stringdispose">utf8stringdispose</a></b>(var p : <a   href="unicode.html#putf8shortstring">putf8shortstring</a>);</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code>function <b><a   href="unicode.html#utf8stringdup">utf8stringdup</a></b>(const s : string) : <a   href="unicode.html#putf8shortstring">putf8shortstring</a>;</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code>function <b><a   href="unicode.html#utf8strlcopyucs4">utf8strlcopyucs4</a></b>(src: pchar; dst: <a   href="unicode.html#pucs4char">pucs4char</a>; maxlen: integer): <a   href="unicode.html#pucs4char">pucs4char</a>;</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code>function <b><a   href="unicode.html#utf8strlen">utf8strlen</a></b>(s: <a   href="unicode.html#putf8char">putf8char</a>): integer;</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code>function <b><a   href="unicode.html#utf8strnew">utf8strnew</a></b>(src: <a   href="unicode.html#pucs4char">pucs4char</a>): pchar;</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code>function <b><a   href="unicode.html#utf8strnewstr">utf8strnewstr</a></b>(str: <a   href="unicode.html#utf8string">utf8string</a>): <a   href="unicode.html#putf8char">putf8char</a>;</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code>function <b><a   href="unicode.html#utf8strnewutf8">utf8strnewutf8</a></b>(src: pchar): pchar;</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code>function <b><a   href="unicode.html#utf8strpas">utf8strpas</a></b>(src: pchar): string;</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code>function <b><a   href="unicode.html#utf8strpastoASCII">utf8strpastoASCII</a></b>(src: pchar): string;</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code>function <b><a   href="unicode.html#utf8strpastoISO8859_1">utf8strpastoISO8859_1</a></b>(src: pchar): string;</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code>function <b><a   href="unicode.html#utf8strpastostring">utf8strpastostring</a></b>(src: pchar; desttype: string): string;</code></td>
+</tr>
+<tr class="list">
 <td class="itemcode"><code>function <b><a   href="unicode.html#utf8_islegal">utf8_islegal</a></b>(const s: <a   href="unicode.html#utf8string">utf8string</a>): boolean;</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code>function <b><a   href="unicode.html#utf8_length">utf8_length</a></b>(const s: <a   href="unicode.html#utf8string">utf8string</a>): integer;</code></td>
 </tr>
 <tr class="list">
 <td class="itemcode"><code>procedure <b><a   href="unicode.html#utf8_setlength">utf8_setlength</a></b>(var s: <a   href="unicode.html#utf8string">utf8string</a>; l: integer);</code></td>
 </tr>
 <tr class="list2">
-<td class="itemcode"><code>procedure <b><a   href="unicode.html#utf16_setlength">utf16_setlength</a></b>(var s: array of <a   href="unicode.html#utf16char">utf16char</a>; l: integer);</code></td>
-</tr>
-<tr class="list">
-<td class="itemcode"><code>function <b><a   href="unicode.html#convertUCS4toUTF8">convertUCS4toUTF8</a></b>(s: array of <a   href="unicode.html#ucs4char">ucs4char</a>; var outstr: <a   href="unicode.html#utf8string">utf8string</a>): integer;</code></td>
-</tr>
-<tr class="list2">
-<td class="itemcode"><code>function <b><a   href="unicode.html#ConvertFromUCS4">ConvertFromUCS4</a></b>(const source: <a   href="unicode.html#ucs4string">ucs4string</a>; var dest: string; desttype: string): integer;</code></td>
-</tr>
-<tr class="list">
-<td class="itemcode"><code>function <b><a   href="unicode.html#ConvertToUCS4">ConvertToUCS4</a></b>(source: string; var dest: <a   href="unicode.html#ucs4string">ucs4string</a>; srctype: string): integer;</code></td>
-</tr>
-<tr class="list2">
-<td class="itemcode"><code>function <b><a   href="unicode.html#ConvertUTF16ToUCS4">ConvertUTF16ToUCS4</a></b>(src: <a   href="unicode.html#utf16string">utf16string</a>; var dst: <a   href="unicode.html#ucs4string">ucs4string</a>): integer;</code></td>
-</tr>
-<tr class="list">
-<td class="itemcode"><code>function <b><a   href="unicode.html#ConvertUCS4toUTF16">ConvertUCS4toUTF16</a></b>(src: array of <a   href="unicode.html#ucs4char">ucs4char</a>; var dest: <a   href="unicode.html#utf16string">utf16string</a>): integer;</code></td>
-</tr>
-<tr class="list2">
-<td class="itemcode"><code>function <b><a   href="unicode.html#ConvertUTF8ToUCS4">ConvertUTF8ToUCS4</a></b>(src: <a   href="unicode.html#utf8string">utf8string</a>; var dst: <a   href="unicode.html#ucs4string">ucs4string</a>): integer;</code></td>
-</tr>
-<tr class="list">
-<td class="itemcode"><code>function <b><a   href="unicode.html#ConvertUCS4ToUCS2">ConvertUCS4ToUCS2</a></b>(src: array of <a   href="unicode.html#ucs4char">ucs4char</a>; var dst: <a   href="unicode.html#ucs2string">ucs2string</a>): integer;</code></td>
-</tr>
-<tr class="list2">
-<td class="itemcode"><code>function <b><a   href="unicode.html#ConvertUCS2ToUCS4">ConvertUCS2ToUCS4</a></b>(src: array of <a   href="unicode.html#ucs2char">ucs2char</a>; var dst: <a   href="unicode.html#ucs4string">ucs4string</a>): integer;</code></td>
+<td class="itemcode"><code>function <b><a   href="unicode.html#utf8_sizeencoding">utf8_sizeencoding</a></b>(c: <a   href="unicode.html#utf8char">utf8char</a>): integer;</code></td>
 </tr>
 </table>
 <a name="@Types"></a><h3 class="summary">Types</h3>
@@ -359,618 +361,44 @@ unicode support unit</p>
 <h3 class="detail">Functions and Procedures</h3>
 <table class="detail">
 <tr class="list">
-<td class="itemcode"><a name="ucs4_length"></a><code>function <b>ucs4_length</b>(const s: array of <a   href="unicode.html#ucs4char">ucs4char</a>): integer;</code></td>
+<td class="itemcode"><a name="ansistrdispose"></a><code>function <b>ansistrdispose</b>(p: pchar): pchar;</code></td>
 </tr>
 </table>
 <p>
-Returns the current length of an UCS-4 string</p>
+Disposes of an ansi null-terminated string</p>
+<p>
+
+
+<p>Does nothing if the pointer passed is already nil.</p>
 <table class="detail">
 <tr class="list">
-<td class="itemcode"><a name="ucs4_setlength"></a><code>procedure <b>ucs4_setlength</b>(var s: array of <a   href="unicode.html#ucs4char">ucs4char</a>; l: integer);</code></td>
+<td class="itemcode"><a name="ansistrnew"></a><code>function <b>ansistrnew</b>(src: pchar): pchar;</code></td>
 </tr>
 </table>
 <p>
-Set the new dynamic length of an UCS-4 string</p>
+Allocates and copies an ISO-8859-1 null-terminated string from a null-terminated string</p>
+<p>
+
+
+<p>The value returned is nil, if the src pointer was also nil.</p>
 <table class="detail">
 <tr class="list">
-<td class="itemcode"><a name="ucs4_iswhitespace"></a><code>function <b>ucs4_iswhitespace</b>(c: <a   href="unicode.html#ucs4char">ucs4char</a>): boolean;</code></td>
+<td class="itemcode"><a name="ansistrnewstr"></a><code>function <b>ansistrnewstr</b>(const str: string): pchar;</code></td>
 </tr>
 </table>
 <p>
-Determines if the specified character is a whitespace character</p>
+Allocates and copies an ansi string to a null-terminated string</p>
+<p>
+
+
+<p>The value returned is nil, if the length of str = 0.</p>
 <table class="detail">
 <tr class="list">
-<td class="itemcode"><a name="ucs4_upcase"></a><code>function <b>ucs4_upcase</b>(c: <a   href="unicode.html#ucs4char">ucs4char</a>): <a   href="unicode.html#ucs4char">ucs4char</a>;</code></td>
+<td class="itemcode"><a name="ansistrpas"></a><code>function <b>ansistrpas</b>(src: pchar): string;</code></td>
 </tr>
 </table>
 <p>
-Converts a character to an uppercase character</p>
-<p>
-
-
-<p>This routine only supports the simple form case folding algorithm (e.g full form is not supported).</p>
-<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="ucs4_lowcase"></a><code>function <b>ucs4_lowcase</b>(c: <a   href="unicode.html#ucs4char">ucs4char</a>): <a   href="unicode.html#ucs4char">ucs4char</a>;</code></td>
-</tr>
-</table>
-<p>
-Converts a character to a lowercase character</p>
-<p>
-
-
-<p>This routine only supports the simple form case folding algorithm (e.g full form is not supported).</p>
-<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="ucs4_trimleft"></a><code>procedure <b>ucs4_trimleft</b>(var s: <a   href="unicode.html#ucs4string">ucs4string</a>);</code></td>
-</tr>
-</table>
-<p>
-Trims leading spaces and control characters from an UCS-4 string.</p>
-<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="ucs4_trimright"></a><code>procedure <b>ucs4_trimright</b>(var s: <a   href="unicode.html#ucs4string">ucs4string</a>);</code></td>
-</tr>
-</table>
-<p>
-Trims trailing spaces and control characters from an UCS-4 string.</p>
-<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="ucs4_trim"></a><code>procedure <b>ucs4_trim</b>(var s: <a   href="unicode.html#ucs4string">ucs4string</a>);</code></td>
-</tr>
-</table>
-<p>
-Trims trailing and leading spaces and control characters from an UCS-4 string.</p>
-<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="ucs4_copy"></a><code>procedure <b>ucs4_copy</b>(var resultstr: <a   href="unicode.html#ucs4string">ucs4string</a>; const s: <a   href="unicode.html#ucs4string">ucs4string</a>; index: integer; count: integer);</code></td>
-</tr>
-</table>
-<p>
-Returns an UCS-4 substring of an UCS-4 string</p>
-<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="ucs4_delete"></a><code>procedure <b>ucs4_delete</b>(var s: <a   href="unicode.html#ucs4string">ucs4string</a>; index: integer; count: integer);</code></td>
-</tr>
-</table>
-<p>
-Deletes a substring from a string</p>
-<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="ucs4_concat"></a><code>procedure <b>ucs4_concat</b>(var resultstr: <a   href="unicode.html#ucs4string">ucs4string</a>;const s1: <a   href="unicode.html#ucs4string">ucs4string</a>; const s2: array of <a   href="unicode.html#ucs4char">ucs4char</a>);</code></td>
-</tr>
-</table>
-<p>
-Concatenates two UCS-4 strings, and gives a resulting UCS-4 string</p>
-<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="ucs4_removeaccents"></a><code>procedure <b>ucs4_removeaccents</b>(var resultstr: <a   href="unicode.html#ucs4string">ucs4string</a>;s2: <a   href="unicode.html#ucs4string">ucs4string</a>);</code></td>
-</tr>
-</table>
-<p>
-Replaces all accented characters with their base representation</p>
-<p>
-. This routine is useful for converted multilangual strings to their ASCII equivalents.</p>
-<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="ucs4_concatascii"></a><code>procedure <b>ucs4_concatascii</b>(var resultstr: <a   href="unicode.html#ucs4string">ucs4string</a>;const s1: <a   href="unicode.html#ucs4string">ucs4string</a>; const s2: string);</code></td>
-</tr>
-</table>
-<p>
-Concatenates an UCS-4 string with an ASCII string, and gives a resulting UCS-4 string</p>
-<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="ucs4_posascii"></a><code>function <b>ucs4_posascii</b>(const substr: string; const s: <a   href="unicode.html#ucs4string">ucs4string</a>): integer;</code></td>
-</tr>
-</table>
-<p>
-Searches for an ASCII substring in an UCS-4 string</p>
-<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="ucs4_equalascii"></a><code>function <b>ucs4_equalascii</b>(const s1 : array of <a   href="unicode.html#ucs4char">ucs4char</a>; s2: string): boolean;</code></td>
-</tr>
-</table>
-<p>
-Checks if an ASCII string is equal to an UCS-4 string </p>
-<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="ucs4_pos"></a><code>function <b>ucs4_pos</b>(const substr: <a   href="unicode.html#ucs4string">ucs4string</a>; const s: <a   href="unicode.html#ucs4string">ucs4string</a>): integer;</code></td>
-</tr>
-</table>
-<p>
-Searches for an UCS-4 substring in an UCS-4 string</p>
-<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="ucs4_equal"></a><code>function <b>ucs4_equal</b>(const s1,s2: <a   href="unicode.html#ucs4string">ucs4string</a>): boolean;</code></td>
-</tr>
-</table>
-<p>
-Checks if both UCS-4 strings are equal</p>
-<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="ucs4_isvalid"></a><code>function <b>ucs4_isvalid</b>(c: <a   href="unicode.html#ucs4char">ucs4char</a>): boolean;</code></td>
-</tr>
-</table>
-<p>
-Checks if the UCS-4 character is valid</p>
-<p>
-
-
-<p>This routine verifies if the UCS-4 character is within the valid ranges of UCS-4 characters, as specified in the Unicode standard 4.0. BOM characters are NOT valid with this routine.</p>
-<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="ucs4_issupported"></a><code>function <b>ucs4_issupported</b>(s: string): boolean;</code></td>
-</tr>
-</table>
-<p>
-Checks if conversion from/to this character set format to/from UCS-4 is supported</p>
-<p>
-
-
-<p> </p>
-<h6 class="parameters">parameters</h6>
-<dl class="parameters">
-<dt>s</dt>
-<dd>This is an alias for a character set, as defined by IANA</dd>
-</dl>
-<h6 class="return">returns</h6>
-<p class="return">true if conversion to/from UCS-4 is supported with this character set, otherwise FALSE</p><table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="ucs4_converttoiso8859_1"></a><code>function <b>ucs4_converttoiso8859_1</b>(const s: <a   href="unicode.html#ucs4string">ucs4string</a>): string;</code></td>
-</tr>
-</table>
-<p>
-Converts an UCS-4 string to an ISO-8859-1 string</p>
-<p>
-
-
-<p> </p>
-<h6 class="parameters">parameters</h6>
-<dl class="parameters">
-<dt>s</dt>
-<dd>The UCS-4 string to convert</dd>
-</dl>
-<h6 class="return">returns</h6>
-<p class="return">The converted string with possible escape characters if a character could not be converted</p><table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="ucs4_converttoutf8"></a><code>function <b>ucs4_converttoutf8</b>(const src: <a   href="unicode.html#ucs4string">ucs4string</a>): <a   href="unicode.html#utf8string">utf8string</a>;</code></td>
-</tr>
-</table>
-<p>
-Converts an UCS-4 string to an UTF-8 string</p>
-<p>
-
-
-<p>If there is an error (such as reserved special characters), returns an empty string
-
-<p> </p>
-<h6 class="parameters">parameters</h6>
-<dl class="parameters">
-<dt>s</dt>
-<dd>The UCS-4 string to convert</dd>
-</dl>
-<h6 class="return">returns</h6>
-<p class="return">The converted string</p><table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="ucs4strlen"></a><code>function <b>ucs4strlen</b>(str: <a   href="unicode.html#pucs4char">pucs4char</a>): integer;</code></td>
-</tr>
-</table>
-<p>
-Returns the number of characters in the null terminated UCS-4 string</p>
-<p>
-
-
-<p> </p>
-<h6 class="parameters">parameters</h6>
-<dl class="parameters">
-<dt>str</dt>
-<dd>The UCS-4 null terminated string to check</dd>
-</dl>
-<h6 class="return">returns</h6>
-<p class="return">The number of characters in str, not counting the null character</p><table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="ucs4strpas"></a><code>procedure <b>ucs4strpas</b>(str: <a   href="unicode.html#pucs4char">pucs4char</a>; var res:<a   href="unicode.html#ucs4string">ucs4string</a>);</code></td>
-</tr>
-</table>
-<p>
-Converts a null-terminated UCS-4 string to a Pascal-style UCS-4 string.</p>
-<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="ucs4strpastoISO8859_1"></a><code>function <b>ucs4strpastoISO8859_1</b>(str: <a   href="unicode.html#pucs4char">pucs4char</a>): string;</code></td>
-</tr>
-</table>
-<p>
-Converts a null-terminated UCS-4 string to a Pascal-style ISO 8859-1 encoded string.</p>
-<p>
-
-
-<p>If the length is greater than the supported maximum string length, the string is truncated.
-
-<p>Characters that cannot be converted are converted to escape sequences of the form : \uxxxxxxxx where xxxxxxxx is the hex representation of the character.</p>
-<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="ucs4strpastoASCII"></a><code>function <b>ucs4strpastoASCII</b>(str: <a   href="unicode.html#pucs4char">pucs4char</a>): string;</code></td>
-</tr>
-</table>
-<p>
-Converts a null-terminated UCS-4 string to a Pascal-style ASCII encoded string.</p>
-<p>
-
-
-<p>If the length is greater than the supported maximum string length, the string is truncated.
-
-<p>Characters that cannot be converted are converted to escape sequences of the form : \uxxxxxxxx where xxxxxxxx is the hex representation of the character.</p>
-<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="ucs4strpastoUTF8"></a><code>function <b>ucs4strpastoUTF8</b>(str: <a   href="unicode.html#pucs4char">pucs4char</a>): <a   href="unicode.html#utf8string">utf8string</a>;</code></td>
-</tr>
-</table>
-<p>
-Converts a null-terminated UCS-4 string to a Pascal-style UTF-8 encoded string.</p>
-<p>
-
-
-<p>If the length is greater than the supported maximum string length, the string is truncated.</p>
-<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="ucs4strpcopy"></a><code>function <b>ucs4strpcopy</b>(dest: <a   href="unicode.html#pucs4char">pucs4char</a>; source: <a   href="unicode.html#ucs4string">ucs4string</a>):<a   href="unicode.html#pucs4char">pucs4char</a>;</code></td>
-</tr>
-</table>
-<p>
-Copies a Pascal-style UCS-4 string to a null-terminated UCS-4 string.</p>
-<p>
-
-
-<p>This routine does not perform any length checking. If the source string contains some null characters, those nulls are removed from the resulting string.
-
-<p>The destination buffer must have room for at least Length(Source)+1 characters.</p>
-<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="ucs4strnewstr"></a><code>function <b>ucs4strnewstr</b>(str: string; srctype: string): <a   href="unicode.html#pucs4char">pucs4char</a>;</code></td>
-</tr>
-</table>
-<p>
-Converts a pascal string to an UCS-4 null terminated string</p>
-<p>
-
-
-<p>The memory for the buffer is allocated. Use <a class="normal" href="unicode.html#ucs4strdispose">ucs4strdispose</a> to dispose of the allocated string. The string is null terminated. If the original string contains some null characters, those nulls are removed from the resulting string.
-
-<p> </p>
-<h6 class="parameters">parameters</h6>
-<dl class="parameters">
-<dt>str</dt>
-<dd>The string to convert, single character coded</dd>
-<dt>srctype</dt>
-<dd>The encoding of the string, UTF-8 is also valid - case-insensitive</dd>
-</dl>
-<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="ucs4strnew"></a><code>function <b>ucs4strnew</b>(str: pchar; srctype: string): <a   href="unicode.html#pucs4char">pucs4char</a>;</code></td>
-</tr>
-</table>
-<p>
-Converts a null terminated string to an UCS-4 null terminated string</p>
-<p>
-
-
-<p>The memory for the buffer is allocated. Use <a class="normal" href="unicode.html#ucs4strdispose">ucs4strdispose</a> to dispose of the allocated string. The string is null terminated. If str is nil, then this routine returns nil and does not allocate anything.
-
-<p> </p>
-<h6 class="parameters">parameters</h6>
-<dl class="parameters">
-<dt>str</dt>
-<dd>The string to convert, single character coded, or UTF-8 coded</dd>
-<dt>srctype</dt>
-<dd>The encoding of the string, UTF-8 is also valid - case-insensitive</dd>
-</dl>
-<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="ucs4strnewucs4"></a><code>function <b>ucs4strnewucs4</b>(src: <a   href="unicode.html#pucs4char">pucs4char</a>): <a   href="unicode.html#pucs4char">pucs4char</a>;</code></td>
-</tr>
-</table>
-<p>
-Allocates and copies an UCS-4 null terminated string</p>
-<p>
-
-
-<p>The memory for the buffer is allocated. Use <a class="normal" href="unicode.html#ucs4strdispose">ucs4strdispose</a> to dispose of the allocated string. The string is copied from src and is null terminated. If the parameter is nil, this routine returns nil and does not allocate anything.</p>
-<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="ucs4strnewucs2"></a><code>function <b>ucs4strnewucs2</b>(str: <a   href="unicode.html#pucs2char">pucs2char</a>): <a   href="unicode.html#pucs4char">pucs4char</a>;</code></td>
-</tr>
-</table>
-<p>
-Converts an UCS-2 null terminated string to an UCS-4 null terminated string</p>
-<p>
-
-
-<p>The memory for the buffer is allocated. Use <a class="normal" href="unicode.html#ucs4strdispose">ucs4strdispose</a> to dispose of the allocated string. The string is null terminated. If str is nil, then this routine returns nil and does not allocate anything.
-
-<p></p>
-<h6 class="parameters">parameters</h6>
-<dl class="parameters">
-<dt>str</dt>
-<dd>The string to convert, UCS-2 encoded</dd>
-</dl>
-<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="ucs4strdispose"></a><code>function <b>ucs4strdispose</b>(str: <a   href="unicode.html#pucs4char">pucs4char</a>): <a   href="unicode.html#pucs4char">pucs4char</a>;</code></td>
-</tr>
-</table>
-<p>
-Disposes of an UCS-4 null terminated string on the heap</p>
-<p>
-
-
-<p>Disposes of a string that was previously allocated with <code>ucs4strnew</code>, and sets the pointer to nil.</p>
-<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="ucs4StrPosISO8859_1"></a><code>function <b>ucs4StrPosISO8859_1</b>(S: <a   href="unicode.html#pucs4char">pucs4char</a>; Str2: PChar): <a   href="unicode.html#pucs4char">pucs4char</a>;</code></td>
-</tr>
-</table>
-<p>
-Returns a pointer to the first occurence of an ISO-8859-1 encoded null terminated string in a UCS-4 encoded null terminated string.</p>
-<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="ucs4strtrim"></a><code>function <b>ucs4strtrim</b>(const p: <a   href="unicode.html#pucs4char">pucs4char</a>): <a   href="unicode.html#pucs4char">pucs4char</a>;</code></td>
-</tr>
-</table>
-<p>
-Allocates a new UCS-4 null terminated string, and copies the existing string, avoid a copy of the whitespace at the start and end of the string</p>
-<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="ucs4strfill"></a><code>function <b>ucs4strfill</b>(var p: <a   href="unicode.html#pucs4char">pucs4char</a>; count: integer; value: <a   href="unicode.html#ucs4char">ucs4char</a>): <a   href="unicode.html#pucs4char">pucs4char</a>;</code></td>
-</tr>
-</table>
-<p>
-Fills a memory region consisting of ucs-4 characters with the specified UCS-4 character.</p>
-<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="ucs4strcheck"></a><code>procedure <b>ucs4strcheck</b>(p: <a   href="unicode.html#pucs4char">pucs4char</a>; maxcount: integer; value: <a   href="unicode.html#ucs4char">ucs4char</a>);</code></td>
-</tr>
-</table>
-<p>
-This routine checks the validity of an UCS-4 null terminated string. It first skips to the null character, and if maxcount is greater than the index, verifies that the values in memory are of value VALUE.
-
-<p>Otherwise, returns an ERROR. This routine is used with UCS4StrFill.</p>
-<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="ucs2_length"></a><code>function <b>ucs2_length</b>(const s: array of <a   href="unicode.html#ucs2char">ucs2char</a>): integer;</code></td>
-</tr>
-</table>
-<p>
-Returns the current length of an UCS-2 string</p>
-<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="ucs2_setlength"></a><code>procedure <b>ucs2_setlength</b>(var s: array of <a   href="unicode.html#ucs2char">ucs2char</a>; l: integer);</code></td>
-</tr>
-</table>
-<p>
-Set the new dynamic length of an ucs-2 string</p>
-<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="ucs2_isvalid"></a><code>function <b>ucs2_isvalid</b>(ch: <a   href="unicode.html#ucs2char">ucs2char</a>): boolean;</code></td>
-</tr>
-</table>
-<p>
-Checks if the UCS-2 character is valid</p>
-<p>
-
-
-<p>This routine verifies if the UCS-2 character is within the valid ranges of UCS-2 characters, as specified in the Unicode standard 4.0. BOM characters are NOT valid with this routine.</p>
-<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="ucs2_upcase"></a><code>function <b>ucs2_upcase</b>(c: <a   href="unicode.html#ucs2char">ucs2char</a>): <a   href="unicode.html#ucs2char">ucs2char</a>;</code></td>
-</tr>
-</table>
-<p>
-Converts a character to an uppercase character</p>
-<p>
-
-
-<p>This routine only supports the simple form case folding algorithm (e.g full form is not supported).</p>
-<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="ucs2strlcopyucs4"></a><code>function <b>ucs2strlcopyucs4</b>(src: <a   href="unicode.html#pucs2char">pucs2char</a>; dst: <a   href="unicode.html#pucs4char">pucs4char</a>; maxlen: integer): <a   href="unicode.html#pucs4char">pucs4char</a>;</code></td>
-</tr>
-</table>
-<p>
-Convert an UCS-2 null terminated string to an UCS-4 null terminated string</p>
-<p>
-
-
-<p>This routine converts an UCS-2 encoded null terminared string to an UCS-4 null terminated string that is stored in native byte order, up to length conversion. The destination buffer should already have been allocated.
-
-<p></p>
-<h6 class="return">returns</h6>
-<p class="return">nil if there was an error in the conversion</p><table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="ucs2strlen"></a><code>function <b>ucs2strlen</b>(str: <a   href="unicode.html#pucs2char">pucs2char</a>): integer;</code></td>
-</tr>
-</table>
-<p>
-Returns the number of characters in the null terminated UCS-2 string</p>
-<p>
-
-
-<p> </p>
-<h6 class="parameters">parameters</h6>
-<dl class="parameters">
-<dt>str</dt>
-<dd>The UCS-2 null terminated string to check</dd>
-</dl>
-<h6 class="return">returns</h6>
-<p class="return">The number of characters in str, not counting the null character</p><table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="ucs2strnew"></a><code>function <b>ucs2strnew</b>(src: <a   href="unicode.html#pucs4char">pucs4char</a>): <a   href="unicode.html#pucs2char">pucs2char</a>;</code></td>
-</tr>
-</table>
-<p>
-Converts an UCS-4 null terminated string to an UCS-2 null terminated string</p>
-<p>
-
-
-<p>The memory for the buffer is allocated. Use <a class="normal" href="unicode.html#ucs2strdispose">ucs2strdispose</a> to dispose of the allocated string. The string is null terminated. If src is nil, this routine returns nil, and does not allocate anything.
-
-<p></p>
-<h6 class="return">returns</h6>
-<p class="return">nil if the conversion cannot be represented in UCS-2 encoding, or nil if there was an error</p><table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="ucs2strdispose"></a><code>function <b>ucs2strdispose</b>(str: <a   href="unicode.html#pucs2char">pucs2char</a>): <a   href="unicode.html#pucs2char">pucs2char</a>;</code></td>
-</tr>
-</table>
-<p>
-Disposes of an UCS-2 null terminated string on the heap</p>
-<p>
-
-
-<p>Disposes of a string that was previously allocated with <code>ucs2strnew</code>, and sets the pointer to nil.</p>
-<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="utf8strnew"></a><code>function <b>utf8strnew</b>(src: <a   href="unicode.html#pucs4char">pucs4char</a>): pchar;</code></td>
-</tr>
-</table>
-<p>
-Converts an UCS-4 null terminated string to an UTF-8 null terminated string</p>
-<p>
-
-
-<p>The memory for the buffer is allocated. Use <a class="normal" href="unicode.html#utf8strdispose">utf8strdispose</a> to dispose of the allocated string. The string is null terminated. If the parameter is nil, this routine returns nil and does not allocate anything.</p>
-<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="utf8strlen"></a><code>function <b>utf8strlen</b>(s: <a   href="unicode.html#putf8char">putf8char</a>): integer;</code></td>
-</tr>
-</table>
-<p>
-Returns the length of the string, not counting the null character</p>
-<p>
-
-
-<p>If the pointer is nil, the value returned is zero.</p>
-<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="utf8strnewutf8"></a><code>function <b>utf8strnewutf8</b>(src: pchar): pchar;</code></td>
-</tr>
-</table>
-<p>
-Allocates and copies an UTF-8 null terminated string</p>
-<p>
-
-
-<p>The memory for the buffer is allocated. Use <a class="normal" href="unicode.html#utf8strdispose">utf8strdispose</a> to dispose of the allocated string. The string is copied from src and is null terminated. If the parameter is nil, this routine returns nil and does not allocate anything.</p>
-<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="utf8strdispose"></a><code>function <b>utf8strdispose</b>(p: pchar): pchar;</code></td>
-</tr>
-</table>
-<p>
-Disposes of an UTF-8 null terminated string on the heap</p>
-<p>
-
-
-<p>Disposes of a string that was previously allocated with <code>utf8strnew</code>, and sets the pointer to nil.</p>
-<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="utf8strlcopyucs4"></a><code>function <b>utf8strlcopyucs4</b>(src: pchar; dst: <a   href="unicode.html#pucs4char">pucs4char</a>; maxlen: integer): <a   href="unicode.html#pucs4char">pucs4char</a>;</code></td>
-</tr>
-</table>
-<p>
-Convert an UTF-8 null terminated string to an UCS-4 null terminated string</p>
-<p>
-
-
-<p>This routine converts an UTF-8 null terminared string to an UCS-4 null terminated string that is stored in native byte order, up to length conversion.
-
-<p></p>
-<h6 class="return">returns</h6>
-<p class="return">nil if there was no error in the conversion</p><table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="utf8strpastoISO8859_1"></a><code>function <b>utf8strpastoISO8859_1</b>(src: pchar): string;</code></td>
-</tr>
-</table>
-<p>
-Converts a null-terminated UTF-8 string to a Pascal-style ISO 8859-1 encoded string.</p>
-<p>
-
-
-<p>Characters that cannot be converted are converted to escape sequences of the form : \uxxxxxxxx where xxxxxxxx is the hex representation of the character.</p>
-<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="utf8strpastoASCII"></a><code>function <b>utf8strpastoASCII</b>(src: pchar): string;</code></td>
-</tr>
-</table>
-<p>
-Converts a null-terminated UTF-8 string to a Pascal-style ASCII encoded string.</p>
-<p>
-
-
-<p>Characters that cannot be converted are converted to escape sequences of the form : \uxxxxxxxx where xxxxxxxx is the hex representation of the character.</p>
-<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="utf8strpastostring"></a><code>function <b>utf8strpastostring</b>(src: pchar; desttype: string): string;</code></td>
-</tr>
-</table>
-<p>
-Converts an UTF-8 null terminated string to a string encoded to a different code page</p>
-<p>
-
-
-<p>Characters that cannot be converted are converted to escape sequences of the form : \uxxxxxxxx where xxxxxxxx is the hex representation of the character.
-
-<p>If the null character string does not fit in the resulting string, it is truncated.
-
-<p>  .</p>
-<h6 class="parameters">parameters</h6>
-<dl class="parameters">
-<dt>src</dt>
-<dd>Null terminated UTF-8 encoded string</dd>
-<dt>desttype</dt>
-<dd>Encoding type for resulting string</dd>
-</dl>
-<h6 class="return">returns</h6>
-<p class="return">an empty string on error, or a correctly encoded string</p><table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="utf8strpas"></a><code>function <b>utf8strpas</b>(src: pchar): string;</code></td>
-</tr>
-</table>
-<p>
-Converts a null-terminated UTF-8 string to a Pascal-style UTF-8 encoded string.</p>
-<p>
-
-
-<p>The string is empty if the pointer was nil.</p>
-<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="utf8strnewstr"></a><code>function <b>utf8strnewstr</b>(str: <a   href="unicode.html#utf8string">utf8string</a>): <a   href="unicode.html#putf8char">putf8char</a>;</code></td>
-</tr>
-</table>
-<p>
-Converts an UTF-8 string to a null terminated UTF-8 string.</p>
-<p>
-
-
-<p>The memory for the storage of the string is allocated by the routine, and the ending null character is also added.
-
-<p></p>
-<h6 class="return">returns</h6>
-<p class="return">The newly allocated UTF-8 null terminated string</p><table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="utf8stringdispose"></a><code>procedure <b>utf8stringdispose</b>(var p : <a   href="unicode.html#putf8shortstring">putf8shortstring</a>);</code></td>
-</tr>
-</table>
-&nbsp;<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="utf8stringdup"></a><code>function <b>utf8stringdup</b>(const s : string) : <a   href="unicode.html#putf8shortstring">putf8shortstring</a>;</code></td>
-</tr>
-</table>
-&nbsp;<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="asciistrpas"></a><code>function <b>asciistrpas</b>(src: pchar): string;</code></td>
-</tr>
-</table>
-<p>
-Converts a null-terminated ASCII string to a Pascal-style ASCII encoded string.</p>
+Converts a null-terminated ISO-8859-1 string to a Pascal-style ASCII encoded string.</p>
 <p>
 
 
@@ -991,120 +419,24 @@ Allocates and copies an ascii null-terminated string from a null-terminated stri
 <td class="itemcode"><a name="asciistrnewstr"></a><code>function <b>asciistrnewstr</b>(const str: string): pchar;</code></td>
 </tr>
 </table>
-&nbsp;<table class="detail">
+<p>
+Allocates and copies an ascii string to a null-terminated string</p>
+<p>
+
+
+<p>The value returned is nil, if the length of str = 0.</p>
+<table class="detail">
 <tr class="list">
-<td class="itemcode"><a name="ansistrpas"></a><code>function <b>ansistrpas</b>(src: pchar): string;</code></td>
+<td class="itemcode"><a name="asciistrpas"></a><code>function <b>asciistrpas</b>(src: pchar): string;</code></td>
 </tr>
 </table>
 <p>
-Converts a null-terminated ISO-8859-1 string to a Pascal-style ASCII encoded string.</p>
+Converts a null-terminated ASCII string to a Pascal-style ASCII encoded string.</p>
 <p>
 
 
 <p>The returned string shall be empty if the pointer was nil.</p>
 <table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="ansistrnew"></a><code>function <b>ansistrnew</b>(src: pchar): pchar;</code></td>
-</tr>
-</table>
-<p>
-Allocates and copies an ISO-8859-1 null-terminated string from a null-terminated string</p>
-<p>
-
-
-<p>The value returned is nil, if the src pointer was also nil.</p>
-<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="ansistrnewstr"></a><code>function <b>ansistrnewstr</b>(const str: string): pchar;</code></td>
-</tr>
-</table>
-&nbsp;<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="ansistrdispose"></a><code>function <b>ansistrdispose</b>(p: pchar): pchar;</code></td>
-</tr>
-</table>
-&nbsp;<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="utf16_sizeencoding"></a><code>function <b>utf16_sizeencoding</b>(c: <a   href="unicode.html#utf16char">utf16char</a>): integer;</code></td>
-</tr>
-</table>
-<p>
-Returns the number of characters that are used to encode this character</p>
-<p>
-
-
-<p>Actually checks if this is a high-surrogate value, if not returns 1, indicating that the character is encoded a single <code>utf16</code> character, otherwise returns 2, indicating that 1 one other <code>utf16</code> character is required to encode this data.</p>
-<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="utf8_sizeencoding"></a><code>function <b>utf8_sizeencoding</b>(c: <a   href="unicode.html#utf8char">utf8char</a>): integer;</code></td>
-</tr>
-</table>
-<p>
-Returns the number of characters that are used to encode this character</p>
-<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="utf16_length"></a><code>function <b>utf16_length</b>(const s: array of <a   href="unicode.html#utf16char">utf16char</a>): integer;</code></td>
-</tr>
-</table>
-<p>
-Returns the current length of an UTF-16 string</p>
-<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="utf8_length"></a><code>function <b>utf8_length</b>(const s: <a   href="unicode.html#utf8string">utf8string</a>): integer;</code></td>
-</tr>
-</table>
-<p>
-Returns the current length of an UTF-8 string</p>
-<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="utf8_islegal"></a><code>function <b>utf8_islegal</b>(const s: <a   href="unicode.html#utf8string">utf8string</a>): boolean;</code></td>
-</tr>
-</table>
-<p>
-Returns if the specified UTF-8 string is legal or not</p>
-<p>
-
-
-<p>Verifies that the UTF-8 encoded strings is encoded in a legal way.
-
-<p></p>
-<h6 class="return">returns</h6>
-<p class="return">FALSE if the string is illegal, otherwise returns TRUE</p><table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="utf8_setlength"></a><code>procedure <b>utf8_setlength</b>(var s: <a   href="unicode.html#utf8string">utf8string</a>; l: integer);</code></td>
-</tr>
-</table>
-<p>
-Set the length of an UTF-8 string</p>
-<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="utf16_setlength"></a><code>procedure <b>utf16_setlength</b>(var s: array of <a   href="unicode.html#utf16char">utf16char</a>; l: integer);</code></td>
-</tr>
-</table>
-<p>
-Set the length of an UTF-16 string</p>
-<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="convertUCS4toUTF8"></a><code>function <b>convertUCS4toUTF8</b>(s: array of <a   href="unicode.html#ucs4char">ucs4char</a>; var outstr: <a   href="unicode.html#utf8string">utf8string</a>): integer;</code></td>
-</tr>
-</table>
-<p>
-Convert an UCS-4 string to an UTF-8 string</p>
-<p>
-
-
-<p>Converts an UCS-4 string or character in native endian to an UTF-8 string.
-
-<p>  </p>
-<h6 class="parameters">parameters</h6>
-<dl class="parameters">
-<dt>s</dt>
-<dd>Either a single UCS-4 character or a complete UCS-4 string</dd>
-<dt>outstr</dt>
-<dd>Resulting UTF-8 coded string</dd>
-</dl>
-<h6 class="return">returns</h6>
-<p class="return"><a class="normal" href="unicode.html#UNICODE_ERR_OK">UNICODE_ERR_OK</a> if there was no error in the conversion</p><table class="detail">
 <tr class="list">
 <td class="itemcode"><a name="ConvertFromUCS4"></a><code>function <b>ConvertFromUCS4</b>(const source: <a   href="unicode.html#ucs4string">ucs4string</a>; var dest: string; desttype: string): integer;</code></td>
 </tr>
@@ -1152,52 +484,24 @@ Convert a byte encoded string to an UCS-4 string</p>
 <h6 class="return">returns</h6>
 <p class="return"><a class="normal" href="unicode.html#UNICODE_ERR_OK">UNICODE_ERR_OK</a> if there was no error in the conversion</p><table class="detail">
 <tr class="list">
-<td class="itemcode"><a name="ConvertUTF16ToUCS4"></a><code>function <b>ConvertUTF16ToUCS4</b>(src: <a   href="unicode.html#utf16string">utf16string</a>; var dst: <a   href="unicode.html#ucs4string">ucs4string</a>): integer;</code></td>
+<td class="itemcode"><a name="ConvertUCS2ToUCS4"></a><code>function <b>ConvertUCS2ToUCS4</b>(src: array of <a   href="unicode.html#ucs2char">ucs2char</a>; var dst: <a   href="unicode.html#ucs4string">ucs4string</a>): integer;</code></td>
 </tr>
 </table>
 <p>
-Convert an UTF-16 string to an UCS-4 string</p>
+Convert an UCS-2 string to an UCS-4 string</p>
 <p>
 
 
-<p>This routine converts an UTF-16 string to an UCS-4 string. Both strings must be stored in native byte order (native endian).
-
-<p></p>
-<h6 class="return">returns</h6>
-<p class="return"><a class="normal" href="unicode.html#UNICODE_ERR_OK">UNICODE_ERR_OK</a> if there was no error in the conversion</p><table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="ConvertUCS4toUTF16"></a><code>function <b>ConvertUCS4toUTF16</b>(src: array of <a   href="unicode.html#ucs4char">ucs4char</a>; var dest: <a   href="unicode.html#utf16string">utf16string</a>): integer;</code></td>
-</tr>
-</table>
-<p>
-Convert an UCS-4 string to an UTF-16 string</p>
-<p>
-
-
-<p>This routine converts an UCS-4 string to an UTF-16 string. Both strings must be stored in native byte order (native endian).
+<p>This routine converts an UCS-2 string to an UCS-4 string that is stored in native byte order (big-endian). If some characters could not be converted an error will be reported.
 
 <p>  </p>
 <h6 class="parameters">parameters</h6>
 <dl class="parameters">
 <dt>src</dt>
-<dd>Either a single UCS-4 character or a complete UCS-4 string</dd>
+<dd>Either a single ucs-2 character or a complete ucs-2 string</dd>
 <dt>dest</dt>
-<dd>Resulting UTF-16 coded string</dd>
+<dd>Resulting UCS-4 coded string</dd>
 </dl>
-<h6 class="return">returns</h6>
-<p class="return"><a class="normal" href="unicode.html#UNICODE_ERR_OK">UNICODE_ERR_OK</a> if there was no error in the conversion</p><table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="ConvertUTF8ToUCS4"></a><code>function <b>ConvertUTF8ToUCS4</b>(src: <a   href="unicode.html#utf8string">utf8string</a>; var dst: <a   href="unicode.html#ucs4string">ucs4string</a>): integer;</code></td>
-</tr>
-</table>
-<p>
-Convert an UTF-8 string to an UCS-4 string</p>
-<p>
-
-
-<p>This routine converts an UTF-8 string to an UCS-4 string that is stored in native byte order.
-
-<p></p>
 <h6 class="return">returns</h6>
 <p class="return"><a class="normal" href="unicode.html#UNICODE_ERR_OK">UNICODE_ERR_OK</a> if there was no error in the conversion</p><table class="detail">
 <tr class="list">
@@ -1222,26 +526,762 @@ Convert an UCS-4 string to an UCS-2 string</p>
 <h6 class="return">returns</h6>
 <p class="return"><a class="normal" href="unicode.html#UNICODE_ERR_OK">UNICODE_ERR_OK</a> if there was no error in the conversion</p><table class="detail">
 <tr class="list">
-<td class="itemcode"><a name="ConvertUCS2ToUCS4"></a><code>function <b>ConvertUCS2ToUCS4</b>(src: array of <a   href="unicode.html#ucs2char">ucs2char</a>; var dst: <a   href="unicode.html#ucs4string">ucs4string</a>): integer;</code></td>
+<td class="itemcode"><a name="ConvertUCS4toUTF16"></a><code>function <b>ConvertUCS4toUTF16</b>(src: array of <a   href="unicode.html#ucs4char">ucs4char</a>; var dest: <a   href="unicode.html#utf16string">utf16string</a>): integer;</code></td>
 </tr>
 </table>
 <p>
-Convert an UCS-2 string to an UCS-4 string</p>
+Convert an UCS-4 string to an UTF-16 string</p>
 <p>
 
 
-<p>This routine converts an UCS-2 string to an UCS-4 string that is stored in native byte order (big-endian). If some characters could not be converted an error will be reported.
+<p>This routine converts an UCS-4 string to an UTF-16 string. Both strings must be stored in native byte order (native endian).
 
 <p>  </p>
 <h6 class="parameters">parameters</h6>
 <dl class="parameters">
 <dt>src</dt>
-<dd>Either a single ucs-2 character or a complete ucs-2 string</dd>
+<dd>Either a single UCS-4 character or a complete UCS-4 string</dd>
 <dt>dest</dt>
-<dd>Resulting UCS-4 coded string</dd>
+<dd>Resulting UTF-16 coded string</dd>
 </dl>
 <h6 class="return">returns</h6>
-<p class="return"><a class="normal" href="unicode.html#UNICODE_ERR_OK">UNICODE_ERR_OK</a> if there was no error in the conversion</p><h3 class="detail">Types</h3>
+<p class="return"><a class="normal" href="unicode.html#UNICODE_ERR_OK">UNICODE_ERR_OK</a> if there was no error in the conversion</p><table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="convertUCS4toUTF8"></a><code>function <b>convertUCS4toUTF8</b>(s: array of <a   href="unicode.html#ucs4char">ucs4char</a>; var outstr: <a   href="unicode.html#utf8string">utf8string</a>): integer;</code></td>
+</tr>
+</table>
+<p>
+Convert an UCS-4 string to an UTF-8 string</p>
+<p>
+
+
+<p>Converts an UCS-4 string or character in native endian to an UTF-8 string.
+
+<p>  </p>
+<h6 class="parameters">parameters</h6>
+<dl class="parameters">
+<dt>s</dt>
+<dd>Either a single UCS-4 character or a complete UCS-4 string</dd>
+<dt>outstr</dt>
+<dd>Resulting UTF-8 coded string</dd>
+</dl>
+<h6 class="return">returns</h6>
+<p class="return"><a class="normal" href="unicode.html#UNICODE_ERR_OK">UNICODE_ERR_OK</a> if there was no error in the conversion</p><table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="ConvertUTF16ToUCS4"></a><code>function <b>ConvertUTF16ToUCS4</b>(src: <a   href="unicode.html#utf16string">utf16string</a>; var dst: <a   href="unicode.html#ucs4string">ucs4string</a>): integer;</code></td>
+</tr>
+</table>
+<p>
+Convert an UTF-16 string to an UCS-4 string</p>
+<p>
+
+
+<p>This routine converts an UTF-16 string to an UCS-4 string. Both strings must be stored in native byte order (native endian).
+
+<p></p>
+<h6 class="return">returns</h6>
+<p class="return"><a class="normal" href="unicode.html#UNICODE_ERR_OK">UNICODE_ERR_OK</a> if there was no error in the conversion</p><table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="ConvertUTF8ToUCS4"></a><code>function <b>ConvertUTF8ToUCS4</b>(src: <a   href="unicode.html#utf8string">utf8string</a>; var dst: <a   href="unicode.html#ucs4string">ucs4string</a>): integer;</code></td>
+</tr>
+</table>
+<p>
+Convert an UTF-8 string to an UCS-4 string</p>
+<p>
+
+
+<p>This routine converts an UTF-8 string to an UCS-4 string that is stored in native byte order.
+
+<p></p>
+<h6 class="return">returns</h6>
+<p class="return"><a class="normal" href="unicode.html#UNICODE_ERR_OK">UNICODE_ERR_OK</a> if there was no error in the conversion</p><table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="ucs2strdispose"></a><code>function <b>ucs2strdispose</b>(str: <a   href="unicode.html#pucs2char">pucs2char</a>): <a   href="unicode.html#pucs2char">pucs2char</a>;</code></td>
+</tr>
+</table>
+<p>
+Disposes of an UCS-2 null terminated string on the heap</p>
+<p>
+
+
+<p>Disposes of a string that was previously allocated with <code>ucs2strnew</code>, and sets the pointer to nil.</p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="ucs2strlcopyucs4"></a><code>function <b>ucs2strlcopyucs4</b>(src: <a   href="unicode.html#pucs2char">pucs2char</a>; dst: <a   href="unicode.html#pucs4char">pucs4char</a>; maxlen: integer): <a   href="unicode.html#pucs4char">pucs4char</a>;</code></td>
+</tr>
+</table>
+<p>
+Convert an UCS-2 null terminated string to an UCS-4 null terminated string</p>
+<p>
+
+
+<p>This routine converts an UCS-2 encoded null terminared string to an UCS-4 null terminated string that is stored in native byte order, up to length conversion. The destination buffer should already have been allocated.
+
+<p></p>
+<h6 class="return">returns</h6>
+<p class="return">nil if there was an error in the conversion</p><table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="ucs2strlen"></a><code>function <b>ucs2strlen</b>(str: <a   href="unicode.html#pucs2char">pucs2char</a>): integer;</code></td>
+</tr>
+</table>
+<p>
+Returns the number of characters in the null terminated UCS-2 string</p>
+<p>
+
+
+<p> </p>
+<h6 class="parameters">parameters</h6>
+<dl class="parameters">
+<dt>str</dt>
+<dd>The UCS-2 null terminated string to check</dd>
+</dl>
+<h6 class="return">returns</h6>
+<p class="return">The number of characters in str, not counting the null character</p><table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="ucs2strnew"></a><code>function <b>ucs2strnew</b>(src: <a   href="unicode.html#pucs4char">pucs4char</a>): <a   href="unicode.html#pucs2char">pucs2char</a>;</code></td>
+</tr>
+</table>
+<p>
+Converts an UCS-4 null terminated string to an UCS-2 null terminated string</p>
+<p>
+
+
+<p>The memory for the buffer is allocated. Use <a class="normal" href="unicode.html#ucs2strdispose">ucs2strdispose</a> to dispose of the allocated string. The string is null terminated. If src is nil, this routine returns nil, and does not allocate anything.
+
+<p></p>
+<h6 class="return">returns</h6>
+<p class="return">nil if the conversion cannot be represented in UCS-2 encoding, or nil if there was an error</p><table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="ucs2_isvalid"></a><code>function <b>ucs2_isvalid</b>(ch: <a   href="unicode.html#ucs2char">ucs2char</a>): boolean;</code></td>
+</tr>
+</table>
+<p>
+Checks if the UCS-2 character is valid</p>
+<p>
+
+
+<p>This routine verifies if the UCS-2 character is within the valid ranges of UCS-2 characters, as specified in the Unicode standard 4.0. BOM characters are NOT valid with this routine.</p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="ucs2_length"></a><code>function <b>ucs2_length</b>(const s: array of <a   href="unicode.html#ucs2char">ucs2char</a>): integer;</code></td>
+</tr>
+</table>
+<p>
+Returns the current length of an UCS-2 string</p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="ucs2_setlength"></a><code>procedure <b>ucs2_setlength</b>(var s: array of <a   href="unicode.html#ucs2char">ucs2char</a>; l: integer);</code></td>
+</tr>
+</table>
+<p>
+Set the new dynamic length of an ucs-2 string</p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="ucs2_upcase"></a><code>function <b>ucs2_upcase</b>(c: <a   href="unicode.html#ucs2char">ucs2char</a>): <a   href="unicode.html#ucs2char">ucs2char</a>;</code></td>
+</tr>
+</table>
+<p>
+Converts a character to an uppercase character</p>
+<p>
+
+
+<p>This routine only supports the simple form case folding algorithm (e.g full form is not supported).</p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="ucs4strcheck"></a><code>procedure <b>ucs4strcheck</b>(p: <a   href="unicode.html#pucs4char">pucs4char</a>; maxcount: integer; value: <a   href="unicode.html#ucs4char">ucs4char</a>);</code></td>
+</tr>
+</table>
+<p>
+This routine checks the validity of an UCS-4 null terminated string. It first skips to the null character, and if maxcount is greater than the index, verifies that the values in memory are of value VALUE.
+
+<p>Otherwise, returns an ERROR. This routine is used with ucs4strfill.</p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="ucs4strdispose"></a><code>function <b>ucs4strdispose</b>(str: <a   href="unicode.html#pucs4char">pucs4char</a>): <a   href="unicode.html#pucs4char">pucs4char</a>;</code></td>
+</tr>
+</table>
+<p>
+Disposes of an UCS-4 null terminated string on the heap</p>
+<p>
+
+
+<p>Disposes of a string that was previously allocated with <code>ucs4strnew</code>, and sets the pointer to nil.</p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="ucs4strfill"></a><code>function <b>ucs4strfill</b>(var p: <a   href="unicode.html#pucs4char">pucs4char</a>; count: integer; value: <a   href="unicode.html#ucs4char">ucs4char</a>): <a   href="unicode.html#pucs4char">pucs4char</a>;</code></td>
+</tr>
+</table>
+<p>
+Fills an UCS-4 null terminated string with the specified UCS-4 character</p>
+<p>
+
+
+<p>Fills a memory region consisting of ucs-4 characters with the specified UCS-4 character.</p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="ucs4strlen"></a><code>function <b>ucs4strlen</b>(str: <a   href="unicode.html#pucs4char">pucs4char</a>): integer;</code></td>
+</tr>
+</table>
+<p>
+Returns the number of characters in the null terminated UCS-4 string</p>
+<p>
+
+
+<p> </p>
+<h6 class="parameters">parameters</h6>
+<dl class="parameters">
+<dt>str</dt>
+<dd>The UCS-4 null terminated string to check</dd>
+</dl>
+<h6 class="return">returns</h6>
+<p class="return">The number of characters in str, not counting the null character</p><table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="ucs4strnew"></a><code>function <b>ucs4strnew</b>(str: pchar; srctype: string): <a   href="unicode.html#pucs4char">pucs4char</a>;</code></td>
+</tr>
+</table>
+<p>
+Converts a null terminated string to an UCS-4 null terminated string</p>
+<p>
+
+
+<p>The memory for the buffer is allocated. Use <a class="normal" href="unicode.html#ucs4strdispose">ucs4strdispose</a> to dispose of the allocated string. The string is null terminated. If str is nil, then this routine returns nil and does not allocate anything.
+
+<p> </p>
+<h6 class="parameters">parameters</h6>
+<dl class="parameters">
+<dt>str</dt>
+<dd>The string to convert, single character coded, or UTF-8 coded</dd>
+<dt>srctype</dt>
+<dd>The encoding of the string, UTF-8 is also valid - case-insensitive</dd>
+</dl>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="ucs4strnewstr"></a><code>function <b>ucs4strnewstr</b>(str: string; srctype: string): <a   href="unicode.html#pucs4char">pucs4char</a>;</code></td>
+</tr>
+</table>
+<p>
+Converts a pascal string to an UCS-4 null terminated string</p>
+<p>
+
+
+<p>The memory for the buffer is allocated. Use <a class="normal" href="unicode.html#ucs4strdispose">ucs4strdispose</a> to dispose of the allocated string. The string is null terminated. If the original string contains some null characters, those nulls are removed from the resulting string.
+
+<p> </p>
+<h6 class="parameters">parameters</h6>
+<dl class="parameters">
+<dt>str</dt>
+<dd>The string to convert, single character coded</dd>
+<dt>srctype</dt>
+<dd>The encoding of the string, UTF-8 is also valid - case-insensitive</dd>
+</dl>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="ucs4strnewucs2"></a><code>function <b>ucs4strnewucs2</b>(str: <a   href="unicode.html#pucs2char">pucs2char</a>): <a   href="unicode.html#pucs4char">pucs4char</a>;</code></td>
+</tr>
+</table>
+<p>
+Converts an UCS-2 null terminated string to an UCS-4 null terminated string</p>
+<p>
+
+
+<p>The memory for the buffer is allocated. Use <a class="normal" href="unicode.html#ucs4strdispose">ucs4strdispose</a> to dispose of the allocated string. The string is null terminated. If str is nil, then this routine returns nil and does not allocate anything.
+
+<p></p>
+<h6 class="parameters">parameters</h6>
+<dl class="parameters">
+<dt>str</dt>
+<dd>The string to convert, UCS-2 encoded</dd>
+</dl>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="ucs4strnewucs4"></a><code>function <b>ucs4strnewucs4</b>(src: <a   href="unicode.html#pucs4char">pucs4char</a>): <a   href="unicode.html#pucs4char">pucs4char</a>;</code></td>
+</tr>
+</table>
+<p>
+Allocates and copies an UCS-4 null terminated string</p>
+<p>
+
+
+<p>The memory for the buffer is allocated. Use <a class="normal" href="unicode.html#ucs4strdispose">ucs4strdispose</a> to dispose of the allocated string. The string is copied from src and is null terminated. If the parameter is nil, this routine returns nil and does not allocate anything.</p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="ucs4strpas"></a><code>procedure <b>ucs4strpas</b>(str: <a   href="unicode.html#pucs4char">pucs4char</a>; var res:<a   href="unicode.html#ucs4string">ucs4string</a>);</code></td>
+</tr>
+</table>
+<p>
+Converts a null-terminated UCS-4 string to a Pascal-style UCS-4 string.</p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="ucs4strpastoASCII"></a><code>function <b>ucs4strpastoASCII</b>(str: <a   href="unicode.html#pucs4char">pucs4char</a>): string;</code></td>
+</tr>
+</table>
+<p>
+Converts a null-terminated UCS-4 string to a Pascal-style ASCII encoded string.</p>
+<p>
+
+
+<p>If the length is greater than the supported maximum string length, the string is truncated.
+
+<p>Characters that cannot be converted are converted to escape sequences of the form : \uxxxxxxxx where xxxxxxxx is the hex representation of the character.</p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="ucs4strpastoISO8859_1"></a><code>function <b>ucs4strpastoISO8859_1</b>(str: <a   href="unicode.html#pucs4char">pucs4char</a>): string;</code></td>
+</tr>
+</table>
+<p>
+Converts a null-terminated UCS-4 string to a Pascal-style ISO 8859-1 encoded string.</p>
+<p>
+
+
+<p>If the length is greater than the supported maximum string length, the string is truncated.
+
+<p>Characters that cannot be converted are converted to escape sequences of the form : \uxxxxxxxx where xxxxxxxx is the hex representation of the character.</p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="ucs4strpastoUTF8"></a><code>function <b>ucs4strpastoUTF8</b>(str: <a   href="unicode.html#pucs4char">pucs4char</a>): <a   href="unicode.html#utf8string">utf8string</a>;</code></td>
+</tr>
+</table>
+<p>
+Converts a null-terminated UCS-4 string to a Pascal-style UTF-8 encoded string.</p>
+<p>
+
+
+<p>If the length is greater than the supported maximum string length, the string is truncated.</p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="ucs4strpcopy"></a><code>function <b>ucs4strpcopy</b>(dest: <a   href="unicode.html#pucs4char">pucs4char</a>; source: <a   href="unicode.html#ucs4string">ucs4string</a>):<a   href="unicode.html#pucs4char">pucs4char</a>;</code></td>
+</tr>
+</table>
+<p>
+Copies a Pascal-style UCS-4 string to a null-terminated UCS-4 string.</p>
+<p>
+
+
+<p>This routine does not perform any length checking. If the source string contains some null characters, those nulls are removed from the resulting string.
+
+<p>The destination buffer must have room for at least Length(Source)+1 characters.</p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="ucs4strposISO8859_1"></a><code>function <b>ucs4strposISO8859_1</b>(S: <a   href="unicode.html#pucs4char">pucs4char</a>; Str2: PChar): <a   href="unicode.html#pucs4char">pucs4char</a>;</code></td>
+</tr>
+</table>
+<p>
+Returns a pointer to the first occurence of an ISO-8859-1 encoded null terminated string in a UCS-4 encoded null terminated string.</p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="ucs4strtrim"></a><code>function <b>ucs4strtrim</b>(const p: <a   href="unicode.html#pucs4char">pucs4char</a>): <a   href="unicode.html#pucs4char">pucs4char</a>;</code></td>
+</tr>
+</table>
+<p>
+Allocate and copy trimmed an UCS-4 null terminated string</p>
+<p>
+
+
+<p>Allocates a new UCS-4 null terminated string, and copies the existing string, avoiding a copy of the whitespace at the start and end of the string</p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="ucs4_concat"></a><code>procedure <b>ucs4_concat</b>(var resultstr: <a   href="unicode.html#ucs4string">ucs4string</a>;const s1: <a   href="unicode.html#ucs4string">ucs4string</a>; const s2: array of <a   href="unicode.html#ucs4char">ucs4char</a>);</code></td>
+</tr>
+</table>
+<p>
+Concatenates two UCS-4 strings, and gives a resulting UCS-4 string</p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="ucs4_concatascii"></a><code>procedure <b>ucs4_concatascii</b>(var resultstr: <a   href="unicode.html#ucs4string">ucs4string</a>;const s1: <a   href="unicode.html#ucs4string">ucs4string</a>; const s2: string);</code></td>
+</tr>
+</table>
+<p>
+Concatenates an UCS-4 string with an ASCII string, and gives a resulting UCS-4 string</p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="ucs4_converttoiso8859_1"></a><code>function <b>ucs4_converttoiso8859_1</b>(const s: <a   href="unicode.html#ucs4string">ucs4string</a>): string;</code></td>
+</tr>
+</table>
+<p>
+Converts an UCS-4 string to an ISO-8859-1 string</p>
+<p>
+
+
+<p> </p>
+<h6 class="parameters">parameters</h6>
+<dl class="parameters">
+<dt>s</dt>
+<dd>The UCS-4 string to convert</dd>
+</dl>
+<h6 class="return">returns</h6>
+<p class="return">The converted string with possible escape characters if a character could not be converted</p><table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="ucs4_converttoutf8"></a><code>function <b>ucs4_converttoutf8</b>(const src: <a   href="unicode.html#ucs4string">ucs4string</a>): <a   href="unicode.html#utf8string">utf8string</a>;</code></td>
+</tr>
+</table>
+<p>
+Converts an UCS-4 string to an UTF-8 string</p>
+<p>
+
+
+<p>If there is an error (such as reserved special characters), returns an empty string
+
+<p> </p>
+<h6 class="parameters">parameters</h6>
+<dl class="parameters">
+<dt>s</dt>
+<dd>The UCS-4 string to convert</dd>
+</dl>
+<h6 class="return">returns</h6>
+<p class="return">The converted string</p><table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="ucs4_copy"></a><code>procedure <b>ucs4_copy</b>(var resultstr: <a   href="unicode.html#ucs4string">ucs4string</a>; const s: <a   href="unicode.html#ucs4string">ucs4string</a>; index: integer; count: integer);</code></td>
+</tr>
+</table>
+<p>
+Returns an UCS-4 substring of an UCS-4 string</p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="ucs4_delete"></a><code>procedure <b>ucs4_delete</b>(var s: <a   href="unicode.html#ucs4string">ucs4string</a>; index: integer; count: integer);</code></td>
+</tr>
+</table>
+<p>
+Deletes a substring from a string</p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="ucs4_equal"></a><code>function <b>ucs4_equal</b>(const s1,s2: <a   href="unicode.html#ucs4string">ucs4string</a>): boolean;</code></td>
+</tr>
+</table>
+<p>
+Checks if both UCS-4 strings are equal</p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="ucs4_equalascii"></a><code>function <b>ucs4_equalascii</b>(const s1 : array of <a   href="unicode.html#ucs4char">ucs4char</a>; s2: string): boolean;</code></td>
+</tr>
+</table>
+<p>
+Checks if an ASCII string is equal to an UCS-4 string </p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="ucs4_issupported"></a><code>function <b>ucs4_issupported</b>(s: string): boolean;</code></td>
+</tr>
+</table>
+<p>
+Checks if conversion from/to this character set format to/from UCS-4 is supported</p>
+<p>
+
+
+<p> </p>
+<h6 class="parameters">parameters</h6>
+<dl class="parameters">
+<dt>s</dt>
+<dd>This is an alias for a character set, as defined by IANA</dd>
+</dl>
+<h6 class="return">returns</h6>
+<p class="return">true if conversion to/from UCS-4 is supported with this character set, otherwise FALSE</p><table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="ucs4_isvalid"></a><code>function <b>ucs4_isvalid</b>(c: <a   href="unicode.html#ucs4char">ucs4char</a>): boolean;</code></td>
+</tr>
+</table>
+<p>
+Checks if the UCS-4 character is valid</p>
+<p>
+
+
+<p>This routine verifies if the UCS-4 character is within the valid ranges of UCS-4 characters, as specified in the Unicode standard 4.0. BOM characters are NOT valid with this routine.</p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="ucs4_iswhitespace"></a><code>function <b>ucs4_iswhitespace</b>(c: <a   href="unicode.html#ucs4char">ucs4char</a>): boolean;</code></td>
+</tr>
+</table>
+<p>
+Determines if the specified character is a whitespace character</p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="ucs4_length"></a><code>function <b>ucs4_length</b>(const s: array of <a   href="unicode.html#ucs4char">ucs4char</a>): integer;</code></td>
+</tr>
+</table>
+<p>
+Returns the current length of an UCS-4 string</p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="ucs4_lowcase"></a><code>function <b>ucs4_lowcase</b>(c: <a   href="unicode.html#ucs4char">ucs4char</a>): <a   href="unicode.html#ucs4char">ucs4char</a>;</code></td>
+</tr>
+</table>
+<p>
+Converts a character to a lowercase character</p>
+<p>
+
+
+<p>This routine only supports the simple form case folding algorithm (e.g full form is not supported).</p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="ucs4_pos"></a><code>function <b>ucs4_pos</b>(const substr: <a   href="unicode.html#ucs4string">ucs4string</a>; const s: <a   href="unicode.html#ucs4string">ucs4string</a>): integer;</code></td>
+</tr>
+</table>
+<p>
+Searches for an UCS-4 substring in an UCS-4 string</p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="ucs4_posascii"></a><code>function <b>ucs4_posascii</b>(const substr: string; const s: <a   href="unicode.html#ucs4string">ucs4string</a>): integer;</code></td>
+</tr>
+</table>
+<p>
+Searches for an ASCII substring in an UCS-4 string</p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="ucs4_removeaccents"></a><code>procedure <b>ucs4_removeaccents</b>(var resultstr: <a   href="unicode.html#ucs4string">ucs4string</a>;s2: <a   href="unicode.html#ucs4string">ucs4string</a>);</code></td>
+</tr>
+</table>
+<p>
+Replaces all accented characters with their base representation</p>
+<p>
+. This routine is useful for converted multilangual strings to their ASCII equivalents.</p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="ucs4_setlength"></a><code>procedure <b>ucs4_setlength</b>(var s: array of <a   href="unicode.html#ucs4char">ucs4char</a>; l: integer);</code></td>
+</tr>
+</table>
+<p>
+Set the new dynamic length of an UCS-4 string</p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="ucs4_trim"></a><code>procedure <b>ucs4_trim</b>(var s: <a   href="unicode.html#ucs4string">ucs4string</a>);</code></td>
+</tr>
+</table>
+<p>
+Trims trailing and leading spaces and control characters from an UCS-4 string.</p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="ucs4_trimleft"></a><code>procedure <b>ucs4_trimleft</b>(var s: <a   href="unicode.html#ucs4string">ucs4string</a>);</code></td>
+</tr>
+</table>
+<p>
+Trims leading spaces and control characters from an UCS-4 string.</p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="ucs4_trimright"></a><code>procedure <b>ucs4_trimright</b>(var s: <a   href="unicode.html#ucs4string">ucs4string</a>);</code></td>
+</tr>
+</table>
+<p>
+Trims trailing spaces and control characters from an UCS-4 string.</p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="ucs4_upcase"></a><code>function <b>ucs4_upcase</b>(c: <a   href="unicode.html#ucs4char">ucs4char</a>): <a   href="unicode.html#ucs4char">ucs4char</a>;</code></td>
+</tr>
+</table>
+<p>
+Converts a character to an uppercase character</p>
+<p>
+
+
+<p>This routine only supports the simple form case folding algorithm (e.g full form is not supported).</p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="utf16_length"></a><code>function <b>utf16_length</b>(const s: array of <a   href="unicode.html#utf16char">utf16char</a>): integer;</code></td>
+</tr>
+</table>
+<p>
+Returns the current length of an UTF-16 string</p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="utf16_setlength"></a><code>procedure <b>utf16_setlength</b>(var s: array of <a   href="unicode.html#utf16char">utf16char</a>; l: integer);</code></td>
+</tr>
+</table>
+<p>
+Set the length of an UTF-16 string</p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="utf16_sizeencoding"></a><code>function <b>utf16_sizeencoding</b>(c: <a   href="unicode.html#utf16char">utf16char</a>): integer;</code></td>
+</tr>
+</table>
+<p>
+Returns the number of characters that are used to encode this character</p>
+<p>
+
+
+<p>Actually checks if this is a high-surrogate value, if not returns 1, indicating that the character is encoded a single <code>utf16</code> character, otherwise returns 2, indicating that 1 one other <code>utf16</code> character is required to encode this data.</p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="utf8strdispose"></a><code>function <b>utf8strdispose</b>(p: pchar): pchar;</code></td>
+</tr>
+</table>
+<p>
+Disposes of an UTF-8 null terminated string on the heap</p>
+<p>
+
+
+<p>Disposes of a string that was previously allocated with <code>utf8strnew</code>, and sets the pointer to nil.</p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="utf8stringdispose"></a><code>procedure <b>utf8stringdispose</b>(var p : <a   href="unicode.html#putf8shortstring">putf8shortstring</a>);</code></td>
+</tr>
+</table>
+<p>
+Frees an UTF-8 string that was allocated with <a class="normal" href="unicode.html#utf8strdispose">utf8strdispose</a></p>
+<p>
+
+
+<p>Verifies if the pointer is different than nil before freeing it.</p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="utf8stringdup"></a><code>function <b>utf8stringdup</b>(const s : string) : <a   href="unicode.html#putf8shortstring">putf8shortstring</a>;</code></td>
+</tr>
+</table>
+<p>
+Allocates and copies an UTF-8 string to a pointer to an UTF-8 string</p>
+<p>
+.
+
+<p>Even if the length of the string is of zero bytes, the string will still be allocated and returned.</p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="utf8strlcopyucs4"></a><code>function <b>utf8strlcopyucs4</b>(src: pchar; dst: <a   href="unicode.html#pucs4char">pucs4char</a>; maxlen: integer): <a   href="unicode.html#pucs4char">pucs4char</a>;</code></td>
+</tr>
+</table>
+<p>
+Convert an UTF-8 null terminated string to an UCS-4 null terminated string</p>
+<p>
+
+
+<p>This routine converts an UTF-8 null terminared string to an UCS-4 null terminated string that is stored in native byte order, up to length conversion.
+
+<p></p>
+<h6 class="return">returns</h6>
+<p class="return">nil if there was no error in the conversion</p><table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="utf8strlen"></a><code>function <b>utf8strlen</b>(s: <a   href="unicode.html#putf8char">putf8char</a>): integer;</code></td>
+</tr>
+</table>
+<p>
+Returns the length of the string, not counting the null character</p>
+<p>
+
+
+<p>If the pointer is nil, the value returned is zero.</p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="utf8strnew"></a><code>function <b>utf8strnew</b>(src: <a   href="unicode.html#pucs4char">pucs4char</a>): pchar;</code></td>
+</tr>
+</table>
+<p>
+Converts an UCS-4 null terminated string to an UTF-8 null terminated string</p>
+<p>
+
+
+<p>The memory for the buffer is allocated. Use <a class="normal" href="unicode.html#utf8strdispose">utf8strdispose</a> to dispose of the allocated string. The string is null terminated. If the parameter is nil, this routine returns nil and does not allocate anything.</p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="utf8strnewstr"></a><code>function <b>utf8strnewstr</b>(str: <a   href="unicode.html#utf8string">utf8string</a>): <a   href="unicode.html#putf8char">putf8char</a>;</code></td>
+</tr>
+</table>
+<p>
+Converts an UTF-8 string to a null terminated UTF-8 string.</p>
+<p>
+
+
+<p>The memory for the storage of the string is allocated by the routine, and the ending null character is also added.
+
+<p></p>
+<h6 class="return">returns</h6>
+<p class="return">The newly allocated UTF-8 null terminated string</p><table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="utf8strnewutf8"></a><code>function <b>utf8strnewutf8</b>(src: pchar): pchar;</code></td>
+</tr>
+</table>
+<p>
+Allocates and copies an UTF-8 null terminated string</p>
+<p>
+
+
+<p>The memory for the buffer is allocated. Use <a class="normal" href="unicode.html#utf8strdispose">utf8strdispose</a> to dispose of the allocated string. The string is copied from src and is null terminated. If the parameter is nil, this routine returns nil and does not allocate anything.</p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="utf8strpas"></a><code>function <b>utf8strpas</b>(src: pchar): string;</code></td>
+</tr>
+</table>
+<p>
+Converts a null-terminated UTF-8 string to a Pascal-style UTF-8 encoded string.</p>
+<p>
+
+
+<p>The string is empty if the pointer was nil.</p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="utf8strpastoASCII"></a><code>function <b>utf8strpastoASCII</b>(src: pchar): string;</code></td>
+</tr>
+</table>
+<p>
+Converts a null-terminated UTF-8 string to a Pascal-style ASCII encoded string.</p>
+<p>
+
+
+<p>Characters that cannot be converted are converted to escape sequences of the form : \uxxxxxxxx where xxxxxxxx is the hex representation of the character.</p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="utf8strpastoISO8859_1"></a><code>function <b>utf8strpastoISO8859_1</b>(src: pchar): string;</code></td>
+</tr>
+</table>
+<p>
+Converts a null-terminated UTF-8 string to a Pascal-style ISO 8859-1 encoded string.</p>
+<p>
+
+
+<p>Characters that cannot be converted are converted to escape sequences of the form : \uxxxxxxxx where xxxxxxxx is the hex representation of the character.</p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="utf8strpastostring"></a><code>function <b>utf8strpastostring</b>(src: pchar; desttype: string): string;</code></td>
+</tr>
+</table>
+<p>
+Converts an UTF-8 null terminated string to a string encoded to a different code page</p>
+<p>
+
+
+<p>Characters that cannot be converted are converted to escape sequences of the form : \uxxxxxxxx where xxxxxxxx is the hex representation of the character.
+
+<p>If the null character string does not fit in the resulting string, it is truncated.
+
+<p>  .</p>
+<h6 class="parameters">parameters</h6>
+<dl class="parameters">
+<dt>src</dt>
+<dd>Null terminated UTF-8 encoded string</dd>
+<dt>desttype</dt>
+<dd>Encoding type for resulting string</dd>
+</dl>
+<h6 class="return">returns</h6>
+<p class="return">an empty string on error, or a correctly encoded string</p><table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="utf8_islegal"></a><code>function <b>utf8_islegal</b>(const s: <a   href="unicode.html#utf8string">utf8string</a>): boolean;</code></td>
+</tr>
+</table>
+<p>
+Returns if the specified UTF-8 string is legal or not</p>
+<p>
+
+
+<p>Verifies that the UTF-8 encoded strings is encoded in a legal way.
+
+<p></p>
+<h6 class="return">returns</h6>
+<p class="return">FALSE if the string is illegal, otherwise returns TRUE</p><table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="utf8_length"></a><code>function <b>utf8_length</b>(const s: <a   href="unicode.html#utf8string">utf8string</a>): integer;</code></td>
+</tr>
+</table>
+<p>
+Returns the current length of an UTF-8 string</p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="utf8_setlength"></a><code>procedure <b>utf8_setlength</b>(var s: <a   href="unicode.html#utf8string">utf8string</a>; l: integer);</code></td>
+</tr>
+</table>
+<p>
+Set the length of an UTF-8 string</p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="utf8_sizeencoding"></a><code>function <b>utf8_sizeencoding</b>(c: <a   href="unicode.html#utf8char">utf8char</a>): integer;</code></td>
+</tr>
+</table>
+<p>
+Returns the number of characters that are used to encode this character</p>
+<h3 class="detail">Types</h3>
 <table class="detail">
 <tr class="list">
 <td class="itemcode"><a name="utf8char"></a><code><b>utf8char</b> = char;</code></td>
@@ -1434,6 +1474,6 @@ Byte order mark: UCS-4 little endian encoding signature</p>
 <ul class="authors">
 <li>Carl Eric Codère</li>
 </ul>
-<hr noshade size="1"><span class="appinfo"><em>Generated by <a  target="_parent" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8.3</a> on 2006-08-22 21:08:51</em>
+<hr noshade size="1"><span class="appinfo"><em>Generated by <a  target="_parent" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8.3</a> on 2006-10-16 20:10:14</em>
 </span>
 </body></html>

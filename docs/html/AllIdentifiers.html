@@ -17,7 +17,7 @@
 <tr class="list">
 <td class="itemname"><a class="bold"  href="utils.html#AddDoubleQuotes">AddDoubleQuotes</a></td>
 <td class="itemunit"><a class="bold"  href="utils.html">utils</a></td>
-<td class="itemdesc">This routine adds double quotes to the selected string, if the string contains any space character after the string has been trimmed.</td>
+<td class="itemdesc">Trims and adds double quotes to the string if it contains spaces</td>
 </tr>
 <tr class="list2">
 <td class="itemname"><a class="bold"  href="utils.html#AnsiDirectoryExists">AnsiDirectoryExists</a></td>
@@ -32,7 +32,7 @@
 <tr class="list2">
 <td class="itemname"><a class="bold"  href="unicode.html#ansistrdispose">ansistrdispose</a></td>
 <td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
-<td class="itemdesc">&nbsp;</td>
+<td class="itemdesc">Disposes of an ansi null-terminated string</td>
 </tr>
 <tr class="list">
 <td class="itemname"><a class="bold"  href="unicode.html#ansistrnew">ansistrnew</a></td>
@@ -42,7 +42,7 @@
 <tr class="list2">
 <td class="itemname"><a class="bold"  href="unicode.html#ansistrnewstr">ansistrnewstr</a></td>
 <td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
-<td class="itemdesc">&nbsp;</td>
+<td class="itemdesc">Allocates and copies an ansi string to a null-terminated string</td>
 </tr>
 <tr class="list">
 <td class="itemname"><a class="bold"  href="unicode.html#ansistrpas">ansistrpas</a></td>
@@ -57,7 +57,7 @@
 <tr class="list">
 <td class="itemname"><a class="bold"  href="unicode.html#asciistrnewstr">asciistrnewstr</a></td>
 <td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
-<td class="itemdesc">&nbsp;</td>
+<td class="itemdesc">Allocates and copies an ascii string to a null-terminated string</td>
 </tr>
 <tr class="list2">
 <td class="itemname"><a class="bold"  href="unicode.html#asciistrpas">asciistrpas</a></td>
@@ -209,119 +209,109 @@
 <td class="itemdesc">&nbsp;</td>
 </tr>
 <tr class="list">
-<td class="itemname"><a class="bold"  href="crc.html#crctable16">crctable16</a></td>
-<td class="itemunit"><a class="bold"  href="crc.html">crc</a></td>
-<td class="itemdesc">&nbsp;</td>
-</tr>
-<tr class="list2">
-<td class="itemname"><a class="bold"  href="crc.html#crctable16ccitt">crctable16ccitt</a></td>
-<td class="itemunit"><a class="bold"  href="crc.html">crc</a></td>
-<td class="itemdesc">&nbsp;</td>
-</tr>
-<tr class="list">
-<td class="itemname"><a class="bold"  href="crc.html#crctable32">crctable32</a></td>
-<td class="itemunit"><a class="bold"  href="crc.html">crc</a></td>
-<td class="itemdesc">&nbsp;</td>
-</tr>
-<tr class="list2">
 <td class="itemname"><a class="bold"  href="dateutil.html#CurrentYear">CurrentYear</a></td>
 <td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
 <td class="itemdesc">Returns the current year</td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemname"><a class="bold"  href="dateutil.html#Date">Date</a></td>
 <td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
 <td class="itemdesc">Returns the current date, with the time value equal to midnight.</td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemname"><a class="bold"  href="dateutil.html#DateOf">DateOf</a></td>
 <td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
 <td class="itemdesc">Strips the time portion from a TDateTime value.</td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemname"><a class="bold"  href="dateutil.html#DateTimeToStr">DateTimeToStr</a></td>
 <td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
-<td class="itemdesc">Converts a TDateTime value to a string in standard ISO 8601 format.</td>
-</tr>
-<tr class="list2">
-<td class="itemname"><a class="bold"  href="dateutil.html#DateTimeToStrExt">DateTimeToStrExt</a></td>
-<td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
-<td class="itemdesc">&nbsp;</td>
+<td class="itemdesc">Converts a TDateTime value to a string in extended ISO 8601 date and time representation.</td>
 </tr>
 <tr class="list">
-<td class="itemname"><a class="bold"  href="dateutil.html#DateToStr">DateToStr</a></td>
+<td class="itemname"><a class="bold"  href="dateutil.html#DateTimeToStrExt">DateTimeToStrExt</a></td>
 <td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
-<td class="itemdesc">Converts a TDatetime value to a string in ISO 8601 format</td>
+<td class="itemdesc">Converts a TDateTime value to a string in extended ISO 8601 date and time representation.</td>
 </tr>
 <tr class="list2">
+<td class="itemname"><a class="bold"  href="dateutil.html#DateToStr">DateToStr</a></td>
+<td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
+<td class="itemdesc">Converts a TDateTime value to a string in extended ISO 8601 date representation.</td>
+</tr>
+<tr class="list">
 <td class="itemname"><a class="bold"  href="dateutil.html#DayFriday">DayFriday</a></td>
 <td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
 <td class="itemdesc">&nbsp;</td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemname"><a class="bold"  href="dateutil.html#DayMonday">DayMonday</a></td>
 <td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
 <td class="itemdesc">&nbsp;</td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemname"><a class="bold"  href="dateutil.html#DayOf">DayOf</a></td>
 <td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
 <td class="itemdesc">Returns the day of the month represented by a TDateTime value.</td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemname"><a class="bold"  href="dateutil.html#DaySaturday">DaySaturday</a></td>
 <td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
 <td class="itemdesc">&nbsp;</td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemname"><a class="bold"  href="dateutil.html#DaysBetween">DaysBetween</a></td>
 <td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
 <td class="itemdesc">Returns the number of days between two specified TDateTime values.</td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemname"><a class="bold"  href="dateutil.html#DaySunday">DaySunday</a></td>
 <td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
 <td class="itemdesc">&nbsp;</td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemname"><a class="bold"  href="dateutil.html#DayThursday">DayThursday</a></td>
 <td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
 <td class="itemdesc">&nbsp;</td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemname"><a class="bold"  href="dateutil.html#DayTuesday">DayTuesday</a></td>
 <td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
 <td class="itemdesc">&nbsp;</td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemname"><a class="bold"  href="dateutil.html#DayWednesday">DayWednesday</a></td>
 <td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
 <td class="itemdesc">&nbsp;</td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemname"><a class="bold"  href="dateutil.html#DecodeDate">DecodeDate</a></td>
 <td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
 <td class="itemdesc">Returns Year, Month, and Day values for a TDateTime value.</td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemname"><a class="bold"  href="dateutil.html#DecodeDateTime">DecodeDateTime</a></td>
 <td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
 <td class="itemdesc">Returns Year, Month, Day, Hour, Minute, Second, and Millisecond values for a TDateTime.</td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemname"><a class="bold"  href="dateutil.html#DecodeTime">DecodeTime</a></td>
 <td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
 <td class="itemdesc">Breaks a TDateTime value into hours, minutes, seconds, and milliseconds.</td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemname"><a class="bold"  href="utils.html#decstr">decstr</a></td>
 <td class="itemunit"><a class="bold"  href="utils.html">utils</a></td>
 <td class="itemdesc">Convert a value to an ASCII decimal representation</td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemname"><a class="bold"  href="utils.html#decstrunsigned">decstrunsigned</a></td>
 <td class="itemunit"><a class="bold"  href="utils.html">utils</a></td>
 <td class="itemdesc">Convert a value to an ASCII decimal representation</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="extdos.html#DirectoryExists">DirectoryExists</a></td>
+<td class="itemunit"><a class="bold"  href="extdos.html">extdos</a></td>
+<td class="itemdesc">Verifies the existence of a directory</td>
 </tr>
 <tr class="list2">
 <td class="itemname"><a class="bold"  href="utils.html#EscapeToPascal">EscapeToPascal</a></td>
@@ -339,6 +329,26 @@
 <td class="itemname"><a class="bold"  href="utils.html#EXIT_ERROR">EXIT_ERROR</a></td>
 <td class="itemunit"><a class="bold"  href="utils.html">utils</a></td>
 <td class="itemdesc">&nbsp;</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="extdos.html#EXTDOS_STATUS_DATE_CONVERT_ERROR">EXTDOS_STATUS_DATE_CONVERT_ERROR</a></td>
+<td class="itemunit"><a class="bold"  href="extdos.html">extdos</a></td>
+<td class="itemdesc">Return code: Conversion operation from native date to TDateTime was invalid.</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="extdos.html#EXTDOS_STATUS_DATE_UNSUPPORTED">EXTDOS_STATUS_DATE_UNSUPPORTED</a></td>
+<td class="itemunit"><a class="bold"  href="extdos.html">extdos</a></td>
+<td class="itemdesc">Return code: Filesystem does not support this date</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="extdos.html#EXTDOS_STATUS_OK">EXTDOS_STATUS_OK</a></td>
+<td class="itemunit"><a class="bold"  href="extdos.html">extdos</a></td>
+<td class="itemdesc">Return code: No error in operation</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="extdos.html#EXTDOS_STATUS_UNSUPPORTED">EXTDOS_STATUS_UNSUPPORTED</a></td>
+<td class="itemunit"><a class="bold"  href="extdos.html">extdos</a></td>
+<td class="itemdesc">Return code: This routine is unsupported on this operating system.</td>
 </tr>
 <tr class="list">
 <td class="itemname"><a class="bold"  href="fileio.html#FileAssign">FileAssign</a></td>
@@ -361,54 +371,74 @@
 <td class="itemdesc">Close a previously opened file</td>
 </tr>
 <tr class="list">
+<td class="itemname"><a class="bold"  href="extdos.html#FileExists">FileExists</a></td>
+<td class="itemunit"><a class="bold"  href="extdos.html">extdos</a></td>
+<td class="itemdesc">Verifies the existence of a filename</td>
+</tr>
+<tr class="list2">
 <td class="itemname"><a class="bold"  href="fileio.html#FileGetPos">FileGetPos</a></td>
 <td class="itemunit"><a class="bold"  href="fileio.html">fileio</a></td>
 <td class="itemdesc">Return the current file pointer position</td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemname"><a class="bold"  href="fileio.html#FileGetSize">FileGetSize</a></td>
 <td class="itemunit"><a class="bold"  href="fileio.html">fileio</a></td>
 <td class="itemdesc">Get the size of a file in bytes</td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemname"><a class="bold"  href="fileio.html#FileIOResult">FileIOResult</a></td>
 <td class="itemunit"><a class="bold"  href="fileio.html">fileio</a></td>
 <td class="itemdesc">Return the result of the last I/O operation</td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemname"><a class="bold"  href="fileio.html#FileReset">FileReset</a></td>
 <td class="itemunit"><a class="bold"  href="fileio.html">fileio</a></td>
 <td class="itemdesc">Open a file for reading or writing</td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemname"><a class="bold"  href="fileio.html#FileRewrite">FileRewrite</a></td>
 <td class="itemunit"><a class="bold"  href="fileio.html">fileio</a></td>
 <td class="itemdesc">Open/Overwrite a file</td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemname"><a class="bold"  href="fileio.html#FileSeek">FileSeek</a></td>
 <td class="itemunit"><a class="bold"  href="fileio.html">fileio</a></td>
 <td class="itemdesc">Change the file pointer position of an opened file</td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemname"><a class="bold"  href="fileio.html#FileTruncate">FileTruncate</a></td>
 <td class="itemunit"><a class="bold"  href="fileio.html">fileio</a></td>
 <td class="itemdesc">Truncate a file at the current file position</td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemname"><a class="bold"  href="ietf.html#file_pathsplit">file_pathsplit</a></td>
 <td class="itemunit"><a class="bold"  href="ietf.html">ietf</a></td>
 <td class="itemdesc">Splits a path string returned by uri_split into its individual components for the file URI.</td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemname"><a class="bold"  href="utils.html#FillTo">FillTo</a></td>
 <td class="itemunit"><a class="bold"  href="utils.html">utils</a></td>
 <td class="itemdesc">&nbsp;</td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemname"><a class="bold"  href="utils.html#fillwithzero">fillwithzero</a></td>
 <td class="itemunit"><a class="bold"  href="utils.html">utils</a></td>
 <td class="itemdesc">&nbsp;</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="extdos.html#FindCloseEx">FindCloseEx</a></td>
+<td class="itemunit"><a class="bold"  href="extdos.html">extdos</a></td>
+<td class="itemdesc">Closes the search and frees the resources previously allocated by a call to <a class="normal" href="extdos.html#FindFirstEx">FindFirstEx</a>.</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="extdos.html#FindFirstEx">FindFirstEx</a></td>
+<td class="itemunit"><a class="bold"  href="extdos.html">extdos</a></td>
+<td class="itemdesc">Searches the specified directory for the first entry matching the specified file name and set of attributes.</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="extdos.html#FindNextEx">FindNextEx</a></td>
+<td class="itemunit"><a class="bold"  href="extdos.html">extdos</a></td>
+<td class="itemdesc">Returns the next entry that matches the name and name specified in a previous call to <a class="normal" href="extdos.html#FindFirstEx">FindFirstEx</a>.</td>
 </tr>
 <tr class="list">
 <td class="itemname"><a class="bold"  href="dateutil.html#float">float</a></td>
@@ -428,12 +458,12 @@
 <tr class="list2">
 <td class="itemname"><a class="bold"  href="iso3166.html#getcountryname_en">getcountryname_en</a></td>
 <td class="itemunit"><a class="bold"  href="iso3166.html">iso3166</a></td>
-<td class="itemdesc">&nbsp;</td>
+<td class="itemdesc">Returns the country name in english according to its country code.</td>
 </tr>
 <tr class="list">
 <td class="itemname"><a class="bold"  href="iso3166.html#getcountryname_fr">getcountryname_fr</a></td>
 <td class="itemunit"><a class="bold"  href="iso3166.html">iso3166</a></td>
-<td class="itemdesc">&nbsp;</td>
+<td class="itemdesc">Returns the country name in french according to its country code.</td>
 </tr>
 <tr class="list2">
 <td class="itemname"><a class="bold"  href="dateutil.html#GetCurrentDate">GetCurrentDate</a></td>
@@ -441,11 +471,56 @@
 <td class="itemdesc">Returns the current date set in the operating system</td>
 </tr>
 <tr class="list">
+<td class="itemname"><a class="bold"  href="extdos.html#GetCurrentDirectory">GetCurrentDirectory</a></td>
+<td class="itemunit"><a class="bold"  href="extdos.html">extdos</a></td>
+<td class="itemdesc">Returns the current active directory</td>
+</tr>
+<tr class="list2">
 <td class="itemname"><a class="bold"  href="dateutil.html#GetCurrentTime">GetCurrentTime</a></td>
 <td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
 <td class="itemdesc">Returns the current time set in the operating system</td>
 </tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="extdos.html#GetFileATime">GetFileATime</a></td>
+<td class="itemunit"><a class="bold"  href="extdos.html">extdos</a></td>
+<td class="itemdesc">Returns the last access date and time of a file</td>
+</tr>
 <tr class="list2">
+<td class="itemname"><a class="bold"  href="extdos.html#GetFileAttributes">GetFileAttributes</a></td>
+<td class="itemunit"><a class="bold"  href="extdos.html">extdos</a></td>
+<td class="itemdesc">Returns the attributes of a file</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="extdos.html#GetFileCTime">GetFileCTime</a></td>
+<td class="itemunit"><a class="bold"  href="extdos.html">extdos</a></td>
+<td class="itemdesc">Returns the creation date and time of a file</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="extdos.html#GetFileMTime">GetFileMTime</a></td>
+<td class="itemunit"><a class="bold"  href="extdos.html">extdos</a></td>
+<td class="itemdesc">Returns the last modification date and time of a file</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="extdos.html#GetFileOwner">GetFileOwner</a></td>
+<td class="itemunit"><a class="bold"  href="extdos.html">extdos</a></td>
+<td class="itemdesc">Returns the file owner account name</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="extdos.html#GetFilesize">GetFilesize</a></td>
+<td class="itemunit"><a class="bold"  href="extdos.html">extdos</a></td>
+<td class="itemdesc">Returns the size of a file</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="extdos.html#GetFilestats">GetFilestats</a></td>
+<td class="itemunit"><a class="bold"  href="extdos.html">extdos</a></td>
+<td class="itemdesc">Returns information on a file</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="extdos.html#GetGlobalConfigDirectory">GetGlobalConfigDirectory</a></td>
+<td class="itemunit"><a class="bold"  href="extdos.html">extdos</a></td>
+<td class="itemdesc">Returns the path of the current shared application data configuration directory</td>
+</tr>
+<tr class="list">
 <td class="itemname"><a class="bold"  href="locale.html#GetISODateString">GetISODateString</a></td>
 <td class="itemunit"><a class="bold"  href="locale.html">locale</a></td>
 <td class="itemdesc">Returns the extended format representation of a date as recommended by ISO 8601 (Gregorian Calendar).
@@ -454,7 +529,7 @@
 
 <p>  </td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemname"><a class="bold"  href="locale.html#GetISODateStringBasic">GetISODateStringBasic</a></td>
 <td class="itemunit"><a class="bold"  href="locale.html">locale</a></td>
 <td class="itemdesc">Returns the basic format representation of a date as recommended by ISO 8601 (Gregorian Calendar).
@@ -463,65 +538,66 @@
 
 <p>  </td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemname"><a class="bold"  href="locale.html#GetISODateTimeString">GetISODateTimeString</a></td>
 <td class="itemunit"><a class="bold"  href="locale.html">locale</a></td>
-<td class="itemdesc">&nbsp;</td>
+<td class="itemdesc">Returns the extended format representation of a date and time as recommended by ISO 8601 (Gregorian Calendar). The extended format ISO 8601 representation is of the form: YYYY-MM-DDTHH:mm:ss[Timezone offset]
+
+<p>Returns an empty string if there is an error.</td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemname"><a class="bold"  href="locale.html#GetISOTimeString">GetISOTimeString</a></td>
 <td class="itemunit"><a class="bold"  href="locale.html">locale</a></td>
 <td class="itemdesc">Returns the extended format representation of a time as recommended by ISO 8601 (Gregorian Calendar).
 
 <p>Returns an empty string if there is an error. The extended representation separates each member (hour,minute,second) with a colon (:).</td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemname"><a class="bold"  href="locale.html#GetISOTimeStringBasic">GetISOTimeStringBasic</a></td>
 <td class="itemunit"><a class="bold"  href="locale.html">locale</a></td>
 <td class="itemdesc">Returns the basic format representation of a time as recommended by ISO 8601 (Gregorian Calendar).
 
 <p>Returns an empty string if there is an error. The extended representation separates each member (hour,minute,second) with a colon (:).</td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemname"><a class="bold"  href="iso639.html#getlangcode_en">getlangcode_en</a></td>
 <td class="itemunit"><a class="bold"  href="iso639.html">iso639</a></td>
-<td class="itemdesc">This routine returns the 2 character code related to the english name of the language. The search is not case (according to ISO 639-1). If there is no 2 character language code for this language, or if the language name is not found, the routine returns an empty string.
-
-<p>The language name string should be encoded according to ISO-8859-1.
-
-<p> </td>
+<td class="itemdesc">Returns the 2 character code related to the english name of the language.</td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemname"><a class="bold"  href="iso639.html#getlangcode_fr">getlangcode_fr</a></td>
 <td class="itemunit"><a class="bold"  href="iso639.html">iso639</a></td>
-<td class="itemdesc">This routine returns the 2 character code related to the french name of the language. The search is not case (according to ISO 639-1). If there is no 2 character language code for this language, or if the language name is not found, the routine returns an empty string.
-
-<p>The language name string should be encoded according to ISO-8859-1.
-
-<p> </td>
-</tr>
-<tr class="list">
-<td class="itemname"><a class="bold"  href="iso639.html#getlangname_en">getlangname_en</a></td>
-<td class="itemunit"><a class="bold"  href="iso639.html">iso639</a></td>
-<td class="itemdesc">This routine returns the language name in english for the specified language code. The language code IS case insensitive and can be either 2 or 3 characters in length (according to ISO 639-1 and ISO 639-2 respectively).
-
-<p>The returned string is encoded according to ISO-8859-1.If there are alternate names for the language, only the first alternate name is returned.
-
-<p></td>
+<td class="itemdesc">Returns the 2 character code related to the french name of the language.</td>
 </tr>
 <tr class="list2">
-<td class="itemname"><a class="bold"  href="iso639.html#getlangname_fr">getlangname_fr</a></td>
+<td class="itemname"><a class="bold"  href="iso639.html#getlangname_en">getlangname_en</a></td>
 <td class="itemunit"><a class="bold"  href="iso639.html">iso639</a></td>
-<td class="itemdesc">This routine returns the language name in french for the specified language code. The language code IS case insensitive and can be either 2 or 3 characters in length (according to ISO 639-1 and ISO 639-2 respectively)
-
-<p>The returned string is encoded according to ISO-8859-1. If there are alternate names for the language, only the first alternate name is returned.
-
-<p></td>
+<td class="itemdesc">Returns the language name in english for the specified language code.</td>
 </tr>
 <tr class="list">
+<td class="itemname"><a class="bold"  href="iso639.html#getlangname_fr">getlangname_fr</a></td>
+<td class="itemunit"><a class="bold"  href="iso639.html">iso639</a></td>
+<td class="itemdesc">Returns the language name in french for the specified language code.</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="extdos.html#GetLoginConfigDirectory">GetLoginConfigDirectory</a></td>
+<td class="itemunit"><a class="bold"  href="extdos.html">extdos</a></td>
+<td class="itemdesc">Returns the path of the current user's application data configuration directory</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="extdos.html#GetLoginHomeDirectory">GetLoginHomeDirectory</a></td>
+<td class="itemunit"><a class="bold"  href="extdos.html">extdos</a></td>
+<td class="itemdesc">Returns the path of the user's home directory</td>
+</tr>
+<tr class="list2">
 <td class="itemname"><a class="bold"  href="dateutil.html#GetTime">GetTime</a></td>
 <td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
 <td class="itemdesc">Returns the current time.</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="extdos.html#GetUserFullName">GetUserFullName</a></td>
+<td class="itemunit"><a class="bold"  href="extdos.html">extdos</a></td>
+<td class="itemdesc">Returns a full name from an account name</td>
 </tr>
 <tr class="list2">
 <td class="itemname"><a class="bold"  href="utils.html#hexstr">hexstr</a></td>
@@ -651,17 +727,23 @@
 <tr class="list">
 <td class="itemname"><a class="bold"  href="locale.html#MicrosoftCodePageToMIMECharset">MicrosoftCodePageToMIMECharset</a></td>
 <td class="itemunit"><a class="bold"  href="locale.html">locale</a></td>
-<td class="itemdesc">Using a code page identifier (as defined by Microsoft and OS/2) return the resulting IANA encoding alias string</td>
+<td class="itemdesc">Using a code page identifier (as defined by Microsoft and OS/2) return the resulting IANA encoding alias string
+
+<p> </td>
 </tr>
 <tr class="list2">
 <td class="itemname"><a class="bold"  href="locale.html#MicrosoftLangageCodeToISOCode">MicrosoftLangageCodeToISOCode</a></td>
 <td class="itemunit"><a class="bold"  href="locale.html">locale</a></td>
-<td class="itemdesc">Using a code page identifier (as defined by Microsoft and OS/2) return the resulting IANA encoding alias string</td>
+<td class="itemdesc">Using a Microsoft language identifier (as defined by Microsoft and OS/2) return the resulting ISO 639-2 language code identifier.</td>
 </tr>
 <tr class="list">
 <td class="itemname"><a class="bold"  href="ietf.html#mime_isvalidcontenttype">mime_isvalidcontenttype</a></td>
 <td class="itemunit"><a class="bold"  href="ietf.html">ietf</a></td>
-<td class="itemdesc">&nbsp;</td>
+<td class="itemdesc">abstract(Validates the syntax of a MIME type)
+
+<p>This routine is used to validate if MIME content type signature consists of a constructed valid syntax. It does not validate if the MIME type is assigned or if it actually exists or not.
+
+<p> </td>
 </tr>
 <tr class="list2">
 <td class="itemname"><a class="bold"  href="dateutil.html#MinuteOf">MinuteOf</a></td>
@@ -669,344 +751,376 @@
 <td class="itemdesc">Returns the minute of the hour represented by a TDateTime value.</td>
 </tr>
 <tr class="list">
+<td class="itemname"><a class="bold"  href="extdos.html#MIN_FILE_YEAR">MIN_FILE_YEAR</a></td>
+<td class="itemunit"><a class="bold"  href="extdos.html">extdos</a></td>
+<td class="itemdesc">Minimal filesystem year for dates for this operating system **</td>
+</tr>
+<tr class="list2">
 <td class="itemname"><a class="bold"  href="dateutil.html#MonthOf">MonthOf</a></td>
 <td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
 <td class="itemdesc">Returns the month of the year represented by a TDateTime value.</td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemname"><a class="bold"  href="dateutil.html#Now">Now</a></td>
 <td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
 <td class="itemdesc">Returns the current date and time.</td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemname"><a class="bold"  href="collects.html#PExtendedCollection">PExtendedCollection</a></td>
 <td class="itemunit"><a class="bold"  href="collects.html">collects</a></td>
 <td class="itemdesc">&nbsp;</td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemname"><a class="bold"  href="collects.html#PExtendedSortedCollection">PExtendedSortedCollection</a></td>
 <td class="itemunit"><a class="bold"  href="collects.html">collects</a></td>
 <td class="itemdesc">&nbsp;</td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemname"><a class="bold"  href="collects.html#PExtendedSortedStringCollection">PExtendedSortedStringCollection</a></td>
 <td class="itemunit"><a class="bold"  href="collects.html">collects</a></td>
 <td class="itemdesc">&nbsp;</td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemname"><a class="bold"  href="collects.html#PExtendedStringCollection">PExtendedStringCollection</a></td>
 <td class="itemunit"><a class="bold"  href="collects.html">collects</a></td>
 <td class="itemdesc">&nbsp;</td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemname"><a class="bold"  href="collects.html#PItemList">PItemList</a></td>
 <td class="itemunit"><a class="bold"  href="collects.html">collects</a></td>
 <td class="itemdesc">&nbsp;</td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemname"><a class="bold"  href="dateutil.html#platformword">platformword</a></td>
 <td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
 <td class="itemdesc">&nbsp;</td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemname"><a class="bold"  href="utils.html#Printf">Printf</a></td>
 <td class="itemunit"><a class="bold"  href="utils.html">utils</a></td>
 <td class="itemdesc">Format a string and print it out to the console</td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemname"><a class="bold"  href="collects.html#ProcedureType">ProcedureType</a></td>
 <td class="itemunit"><a class="bold"  href="collects.html">collects</a></td>
 <td class="itemdesc">&nbsp;</td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemname"><a class="bold"  href="utils.html#PshortString">PshortString</a></td>
 <td class="itemunit"><a class="bold"  href="utils.html">utils</a></td>
 <td class="itemdesc">&nbsp;</td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemname"><a class="bold"  href="collects.html#PStack">PStack</a></td>
 <td class="itemunit"><a class="bold"  href="collects.html">collects</a></td>
 <td class="itemdesc">Stack object</td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemname"><a class="bold"  href="collects.html#PStackItem">PStackItem</a></td>
 <td class="itemunit"><a class="bold"  href="collects.html">collects</a></td>
 <td class="itemdesc">&nbsp;</td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemname"><a class="bold"  href="unicode.html#pucs2char">pucs2char</a></td>
 <td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
 <td class="itemdesc">&nbsp;</td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemname"><a class="bold"  href="unicode.html#pucs2strarray">pucs2strarray</a></td>
 <td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
 <td class="itemdesc">&nbsp;</td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemname"><a class="bold"  href="unicode.html#pucs4char">pucs4char</a></td>
 <td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
 <td class="itemdesc">UCS-4 null terminated string</td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemname"><a class="bold"  href="unicode.html#pucs4strarray">pucs4strarray</a></td>
 <td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
 <td class="itemdesc">&nbsp;</td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemname"><a class="bold"  href="unicode.html#putf8char">putf8char</a></td>
 <td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
 <td class="itemdesc">&nbsp;</td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemname"><a class="bold"  href="unicode.html#putf8shortstring">putf8shortstring</a></td>
 <td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
 <td class="itemdesc">UTF-8 string pointer declaration. This is always a shortstring value.</td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemname"><a class="bold"  href="utils.html#RemoveDoubleQuotes">RemoveDoubleQuotes</a></td>
 <td class="itemunit"><a class="bold"  href="utils.html">utils</a></td>
-<td class="itemdesc">This routine removes double quotes to the selected string (the leading and ending double quotes only)</td>
+<td class="itemdesc">Removes the leading and ending double quotes from a string</td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemname"><a class="bold"  href="utils.html#removenulls">removenulls</a></td>
 <td class="itemunit"><a class="bold"  href="utils.html">utils</a></td>
 <td class="itemdesc">Remove all null characters from a string.</td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemname"><a class="bold"  href="dateutil.html#SameDate">SameDate</a></td>
 <td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
 <td class="itemdesc">Indicates whether two TDateTime values represent the same year, month, and day.</td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemname"><a class="bold"  href="dateutil.html#SameDateTime">SameDateTime</a></td>
 <td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
 <td class="itemdesc">Indicates whether two TDateTime values represent the same year, month, day, hour, minute, second, and millisecond.</td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemname"><a class="bold"  href="dateutil.html#SameTime">SameTime</a></td>
 <td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
 <td class="itemdesc">Indicates whether two TDateTime values represent the same time of day, ignoring the date portion.</td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemname"><a class="bold"  href="dateutil.html#SecondOf">SecondOf</a></td>
 <td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
 <td class="itemdesc">Returns the second of the minute represented by a TDateTime value.</td>
 </tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="extdos.html#SetCurrentDirectory">SetCurrentDirectory</a></td>
+<td class="itemunit"><a class="bold"  href="extdos.html">extdos</a></td>
+<td class="itemdesc">Sets the current active directory</td>
+</tr>
 <tr class="list2">
+<td class="itemname"><a class="bold"  href="extdos.html#SetFileATime">SetFileATime</a></td>
+<td class="itemunit"><a class="bold"  href="extdos.html">extdos</a></td>
+<td class="itemdesc">Change the last access time of a file</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="extdos.html#SetFileCTime">SetFileCTime</a></td>
+<td class="itemunit"><a class="bold"  href="extdos.html">extdos</a></td>
+<td class="itemdesc">Change the creation time of a file</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="extdos.html#SetFileMTime">SetFileMTime</a></td>
+<td class="itemunit"><a class="bold"  href="extdos.html">extdos</a></td>
+<td class="itemdesc">Change the modification time of a file</td>
+</tr>
+<tr class="list">
 <td class="itemname"><a class="bold"  href="utils.html#StreamErrorProcedure">StreamErrorProcedure</a></td>
 <td class="itemunit"><a class="bold"  href="utils.html">utils</a></td>
 <td class="itemdesc">Generic stream error procedure</td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemname"><a class="bold"  href="utils.html#stringdispose">stringdispose</a></td>
 <td class="itemunit"><a class="bold"  href="utils.html">utils</a></td>
 <td class="itemdesc">&nbsp;</td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemname"><a class="bold"  href="utils.html#stringdup">stringdup</a></td>
 <td class="itemunit"><a class="bold"  href="utils.html">utils</a></td>
 <td class="itemdesc">&nbsp;</td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemname"><a class="bold"  href="utils.html#SwapLong">SwapLong</a></td>
 <td class="itemunit"><a class="bold"  href="utils.html">utils</a></td>
 <td class="itemdesc">Change the endian of a 32-bit value</td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemname"><a class="bold"  href="utils.html#SwapWord">SwapWord</a></td>
 <td class="itemunit"><a class="bold"  href="utils.html">utils</a></td>
 <td class="itemdesc">Change the endian of a 16-bit value</td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemname"><a class="bold"  href="fs.TAmigaFFSFileSystem.html">TAmigaFFSFileSystem</a></td>
 <td class="itemunit"><a class="bold"  href="fs.html">fs</a></td>
 <td class="itemdesc">FFS compatible filesystem validation object</td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemname"><a class="bold"  href="dateutil.TDateInfo.html">TDateInfo</a></td>
 <td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
 <td class="itemdesc">Useful structure that contains additional information on a date and time</td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemname"><a class="bold"  href="dateutil.html#TDatetime">TDatetime</a></td>
 <td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
 <td class="itemdesc">This is the Julian Day number</td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemname"><a class="bold"  href="fs.TDOSFileSystem.html">TDOSFileSystem</a></td>
 <td class="itemunit"><a class="bold"  href="fs.html">fs</a></td>
 <td class="itemdesc">FAT12/FAT16 MS-DOS compatible filesystem validation object</td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemname"><a class="bold"  href="collects.TExtendedCollection.html">TExtendedCollection</a></td>
 <td class="itemunit"><a class="bold"  href="collects.html">collects</a></td>
 <td class="itemdesc">Base collection object</td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemname"><a class="bold"  href="collects.TExtendedSortedCollection.html">TExtendedSortedCollection</a></td>
 <td class="itemunit"><a class="bold"  href="collects.html">collects</a></td>
 <td class="itemdesc">Base sorted collection object</td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemname"><a class="bold"  href="collects.TExtendedSortedStringCollection.html">TExtendedSortedStringCollection</a></td>
 <td class="itemunit"><a class="bold"  href="collects.html">collects</a></td>
 <td class="itemdesc">Sorted string pointer collection object</td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemname"><a class="bold"  href="collects.TExtendedStringCollection.html">TExtendedStringCollection</a></td>
 <td class="itemunit"><a class="bold"  href="collects.html">collects</a></td>
 <td class="itemdesc">String pointer collection object</td>
 </tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="extdos.TFileAssociation.html">TFileAssociation</a></td>
+<td class="itemunit"><a class="bold"  href="extdos.html">extdos</a></td>
+<td class="itemdesc">Information on file associations for the shell</td>
+</tr>
 <tr class="list">
+<td class="itemname"><a class="bold"  href="extdos.TFileStats.html">TFileStats</a></td>
+<td class="itemunit"><a class="bold"  href="extdos.html">extdos</a></td>
+<td class="itemdesc">Statistics for a resource on disk. as returned by <a class="normal" href="extdos.html#GetFilestats">getfilestats</a></td>
+</tr>
+<tr class="list2">
 <td class="itemname"><a class="bold"  href="dateutil.tfiletime.html">tfiletime</a></td>
 <td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
 <td class="itemdesc">Win32 FILETIME timestamp</td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemname"><a class="bold"  href="fs.THFSPlusFileSystem.html">THFSPlusFileSystem</a></td>
 <td class="itemunit"><a class="bold"  href="fs.html">fs</a></td>
 <td class="itemdesc">MacOS HFS+ compatible filesystem validation object</td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemname"><a class="bold"  href="dateutil.html#Time">Time</a></td>
 <td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
 <td class="itemdesc">Returns the current time.</td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemname"><a class="bold"  href="dateutil.html#TimeOf">TimeOf</a></td>
 <td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
 <td class="itemdesc">Strips the date portion from a TDatetime value</td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemname"><a class="bold"  href="dateutil.html#TimeToStr">TimeToStr</a></td>
 <td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
-<td class="itemdesc">Returns a string that represents a TDateTime value.</td>
+<td class="itemdesc">Converts a TDateTime value to a string in extended ISO 8601 time representation.</td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemname"><a class="bold"  href="fs.TISO9660Level1FileSystem.html">TISO9660Level1FileSystem</a></td>
 <td class="itemunit"><a class="bold"  href="fs.html">fs</a></td>
 <td class="itemdesc">ISO 9660 Level 1 compatible filesystem validation object</td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemname"><a class="bold"  href="fs.TISO9660Level2Filesystem.html">TISO9660Level2Filesystem</a></td>
 <td class="itemunit"><a class="bold"  href="fs.html">fs</a></td>
 <td class="itemdesc">ISO 9660 Level 2 compatible filesystem validation object</td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemname"><a class="bold"  href="collects.html#TItemList">TItemList</a></td>
 <td class="itemunit"><a class="bold"  href="collects.html">collects</a></td>
 <td class="itemdesc">&nbsp;</td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemname"><a class="bold"  href="fs.TJolietFileSystem.html">TJolietFileSystem</a></td>
 <td class="itemunit"><a class="bold"  href="fs.html">fs</a></td>
 <td class="itemdesc">CD-ROM Joliet extensions compatible filesystem validation object</td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemname"><a class="bold"  href="collects.TLongintCollection.html">TLongintCollection</a></td>
 <td class="itemunit"><a class="bold"  href="collects.html">collects</a></td>
 <td class="itemdesc">&nbsp;</td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemname"><a class="bold"  href="dateutil.html#Today">Today</a></td>
 <td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
 <td class="itemdesc">Returns a TDateTime value that represents the current date.</td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemname"><a class="bold"  href="fs.TOS2FileSystem.html">TOS2FileSystem</a></td>
 <td class="itemunit"><a class="bold"  href="fs.html">fs</a></td>
 <td class="itemdesc">HPFS compatible filesystem validation object</td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemname"><a class="bold"  href="fs.TPOSIXFileSystem.html">TPOSIXFileSystem</a></td>
 <td class="itemunit"><a class="bold"  href="fs.html">fs</a></td>
 <td class="itemdesc">Base POSIX-1995 filesystem validation object.</td>
 </tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="extdos.html#tresourceattribute">tresourceattribute</a></td>
+<td class="itemunit"><a class="bold"  href="extdos.html">extdos</a></td>
+<td class="itemdesc">Possible attributes of a resource</td>
+</tr>
 <tr class="list2">
+<td class="itemname"><a class="bold"  href="extdos.html#tresourceattributes">tresourceattributes</a></td>
+<td class="itemunit"><a class="bold"  href="extdos.html">extdos</a></td>
+<td class="itemdesc">&nbsp;</td>
+</tr>
+<tr class="list">
 <td class="itemname"><a class="bold"  href="utils.html#Trim">Trim</a></td>
 <td class="itemunit"><a class="bold"  href="utils.html">utils</a></td>
 <td class="itemdesc">Trim removes leading and trailing spaces and control characters from the given string S</td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemname"><a class="bold"  href="utils.html#TrimLeft">TrimLeft</a></td>
 <td class="itemunit"><a class="bold"  href="utils.html">utils</a></td>
 <td class="itemdesc">Remove all whitespace from the start of a string</td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemname"><a class="bold"  href="utils.html#TrimRight">TrimRight</a></td>
 <td class="itemunit"><a class="bold"  href="utils.html">utils</a></td>
 <td class="itemdesc">Remove all whitespace from the end of a string</td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemname"><a class="bold"  href="dateutil.html#TryEncodeDate">TryEncodeDate</a></td>
 <td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
 <td class="itemdesc">Returns a TDateTime value that represents a specified Year, Month, and Day.</td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemname"><a class="bold"  href="dateutil.html#TryEncodeDateAndTimeToStr">TryEncodeDateAndTimeToStr</a></td>
 <td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
 <td class="itemdesc">This routine encodes a complete date and time to its string representation. The encoded string conforms to the ISO 8601 complete representation extended format (YYYY-MM-DDTHH:MM:SS[Z]).
 
 <p>The year value is required, while all other fields are optional. The other fields can be set to EMPTY_DATETIME_FIELD to indicate that they are empty. It also adds the UTC marker if required and if it is set and time information is present.</td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemname"><a class="bold"  href="dateutil.html#TryEncodeDateTime">TryEncodeDateTime</a></td>
 <td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
 <td class="itemdesc">Returns a TDateTime that represents a specified year, month, day, hour, minute, second, and millisecond.</td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemname"><a class="bold"  href="dateutil.html#TryEncodeTime">TryEncodeTime</a></td>
 <td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
 <td class="itemdesc">Returns a TDateTime value for a specified Hour, Min, Sec, and MSec.</td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemname"><a class="bold"  href="dateutil.html#TryFileTimeToDateTimeExt">TryFileTimeToDateTimeExt</a></td>
 <td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
-<td class="itemdesc">&nbsp;</td>
+<td class="itemdesc">Converts a Win32 FILETIME to a TDateTime</td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemname"><a class="bold"  href="dateutil.html#TryStrToDate">TryStrToDate</a></td>
 <td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
-<td class="itemdesc">Converts a string to a TDateTime value, with a Boolean success code.
-
-<p>In the case where the date does not contain the full representation of a date (for examples, YYYY or YYYY-MM), then the missing values will be set to 1 to be legal.</td>
+<td class="itemdesc">Converts a string of date in ISO 8601 to a TDateTime value, with a Boolean success code.</td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemname"><a class="bold"  href="dateutil.html#TryStrToDateTime">TryStrToDateTime</a></td>
 <td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
-<td class="itemdesc">Converts a string to a TDateTime value with a Boolean success code.
-
-<p>Supported formats: 1) Format of Complete Representation for calendar dates (as specified in ISO 8601), which should include the Time designator character. 2) Format: 'YYYY-MM-DD HH:mm:ss [GMT|UTC|UT]' 3) Openoffice 1.1.x HTML date format: 'YYYYMMDD;HHmmssuu' 4) Adobe PDF 'D:YYYYMMDDHHMMSSOHH'mm'' format
-
-<p>The returned value will be according to UTC if timezone information is uncluded, otherwise, it will be left as is. To determine if the value was actually converted to UTC, use TryStrToDateTimeExt.
-
-<p>In the case where the date does not contain the full representation of a date (for examples, YYYY or YYYY-MM), then the missing values will be set to 1 to be legal.</td>
-</tr>
-<tr class="list2">
-<td class="itemname"><a class="bold"  href="dateutil.html#TryStrToDateTimeExt">TryStrToDateTimeExt</a></td>
-<td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
-<td class="itemdesc">Converts a string to a TDateTime value with a Boolean success code. This routine also gives information if the value was successfully converted to UTC time or not (if no timezone information was available in the string then the utc value will be false).
-
-<p>Supported formats: 1) Format of Complete Representation for calendar dates (as specified in ISO 8601), which should include the Time designator character. 3) Format: 'YYYY-MM-DD HH:mm:ss [GMT|UTC|UT]' 4) Openoffice 1.1.x HTML date format: 'YYYYMMDD;HHmmssuu' 5) Adobe PDF 'D:YYYYMMDDHHMMSSOHH'mm'' format
-
-<p>The returned value will be according to UTC if timezone information is specified.
-
-<p>In the case where the date does not contain the full representation of a date (for examples, YYYY or YYYY-MM), then the missing values will be set to 1 to be legal.</td>
+<td class="itemdesc">Converts a string date-time representation to a TDateTime value with a Boolean success code.</td>
 </tr>
 <tr class="list">
-<td class="itemname"><a class="bold"  href="dateutil.html#TryStrToTime">TryStrToTime</a></td>
+<td class="itemname"><a class="bold"  href="dateutil.html#TryStrToDateTimeExt">TryStrToDateTimeExt</a></td>
 <td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
-<td class="itemdesc">Converts a string to a TDateTime value with an error default,
-
-<p>Supported formats: 1) ISO 8601 time format (complete representation) with optional timezone designators. 2) Format: 'HH:mm:ss [GMT|UTC|UT]' 3) Openoffice 1.1.x HTML time format: 'HHmmssuu' 4) Adobe PDF 'D:YYYYMMDDHHMMSSOHH'mm'' format
-
-<p>The returned value will be according to UTC if timezone information is specified. The Date field is truncated and is equal to zero upon return.</td>
+<td class="itemdesc">Converts a string to a TDateTime value with a Boolean success code.</td>
 </tr>
 <tr class="list2">
+<td class="itemname"><a class="bold"  href="dateutil.html#TryStrToTime">TryStrToTime</a></td>
+<td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
+<td class="itemdesc">Converts a string time to a TDateTime value with an error default</td>
+</tr>
+<tr class="list">
 <td class="itemname"><a class="bold"  href="dateutil.html#TryUNIXToDateTimeExt">TryUNIXToDateTimeExt</a></td>
 <td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
-<td class="itemdesc">&nbsp;</td>
+<td class="itemdesc">Converts a UNIX time_t to a TDateTime</td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold"  href="extdos.TSearchRecExt.html">TSearchRecExt</a></td>
+<td class="itemunit"><a class="bold"  href="extdos.html">extdos</a></td>
+<td class="itemdesc">Returned by <a class="normal" href="extdos.html#FindFirstEx">FindFirstEx</a> and <a class="normal" href="extdos.html#FindNextEx">FindNextEx</a></td>
 </tr>
 <tr class="list">
 <td class="itemname"><a class="bold"  href="collects.TStack.html">TStack</a></td>
@@ -1098,7 +1212,7 @@
 <td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
 <td class="itemdesc">This routine checks the validity of an UCS-4 null terminated string. It first skips to the null character, and if maxcount is greater than the index, verifies that the values in memory are of value VALUE.
 
-<p>Otherwise, returns an ERROR. This routine is used with UCS4StrFill.</td>
+<p>Otherwise, returns an ERROR. This routine is used with ucs4strfill.</td>
 </tr>
 <tr class="list">
 <td class="itemname"><a class="bold"  href="unicode.html#ucs4strdispose">ucs4strdispose</a></td>
@@ -1108,7 +1222,7 @@
 <tr class="list2">
 <td class="itemname"><a class="bold"  href="unicode.html#ucs4strfill">ucs4strfill</a></td>
 <td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
-<td class="itemdesc">Fills a memory region consisting of ucs-4 characters with the specified UCS-4 character.</td>
+<td class="itemdesc">Fills an UCS-4 null terminated string with the specified UCS-4 character</td>
 </tr>
 <tr class="list">
 <td class="itemname"><a class="bold"  href="unicode.html#ucs4string">ucs4string</a></td>
@@ -1166,14 +1280,14 @@
 <td class="itemdesc">Copies a Pascal-style UCS-4 string to a null-terminated UCS-4 string.</td>
 </tr>
 <tr class="list2">
-<td class="itemname"><a class="bold"  href="unicode.html#ucs4StrPosISO8859_1">ucs4StrPosISO8859_1</a></td>
+<td class="itemname"><a class="bold"  href="unicode.html#ucs4strposISO8859_1">ucs4strposISO8859_1</a></td>
 <td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
 <td class="itemdesc">Returns a pointer to the first occurence of an ISO-8859-1 encoded null terminated string in a UCS-4 encoded null terminated string.</td>
 </tr>
 <tr class="list">
 <td class="itemname"><a class="bold"  href="unicode.html#ucs4strtrim">ucs4strtrim</a></td>
 <td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
-<td class="itemdesc">Allocates a new UCS-4 null terminated string, and copies the existing string, avoid a copy of the whitespace at the start and end of the string</td>
+<td class="itemdesc">Allocate and copy trimmed an UCS-4 null terminated string</td>
 </tr>
 <tr class="list2">
 <td class="itemname"><a class="bold"  href="unicode.html#ucs4_concat">ucs4_concat</a></td>
@@ -1341,29 +1455,9 @@
 <td class="itemdesc">Convert a string to uppercase ASCII</td>
 </tr>
 <tr class="list">
-<td class="itemname"><a class="bold"  href="ietf.html#URI_END_DELIMITER_CHAR">URI_END_DELIMITER_CHAR</a></td>
-<td class="itemunit"><a class="bold"  href="ietf.html">ietf</a></td>
-<td class="itemdesc">Suggested end delimiter character for an URI, c.f. RFC 2396</td>
-</tr>
-<tr class="list2">
-<td class="itemname"><a class="bold"  href="ietf.html#URI_SCHEME_NAME_EMAIL">URI_SCHEME_NAME_EMAIL</a></td>
-<td class="itemunit"><a class="bold"  href="ietf.html">ietf</a></td>
-<td class="itemdesc">&nbsp;</td>
-</tr>
-<tr class="list">
-<td class="itemname"><a class="bold"  href="ietf.html#URI_SCHEME_SEPARATOR">URI_SCHEME_SEPARATOR</a></td>
-<td class="itemunit"><a class="bold"  href="ietf.html">ietf</a></td>
-<td class="itemdesc">&nbsp;</td>
-</tr>
-<tr class="list2">
 <td class="itemname"><a class="bold"  href="ietf.html#uri_split">uri_split</a></td>
 <td class="itemunit"><a class="bold"  href="ietf.html">ietf</a></td>
 <td class="itemdesc">Extract information from an URI string</td>
-</tr>
-<tr class="list">
-<td class="itemname"><a class="bold"  href="ietf.html#URI_START_DELIMITER_CHAR">URI_START_DELIMITER_CHAR</a></td>
-<td class="itemunit"><a class="bold"  href="ietf.html">ietf</a></td>
-<td class="itemdesc">Suggested start delimiter character for an URI, c.f. RFC 2396</td>
 </tr>
 <tr class="list2">
 <td class="itemname"><a class="bold"  href="ietf.html#urn_isvalid">urn_isvalid</a></td>
@@ -1430,12 +1524,12 @@
 <tr class="list2">
 <td class="itemname"><a class="bold"  href="unicode.html#utf8stringdispose">utf8stringdispose</a></td>
 <td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
-<td class="itemdesc">&nbsp;</td>
+<td class="itemdesc">Frees an UTF-8 string that was allocated with <a class="normal" href="unicode.html#utf8strdispose">utf8strdispose</a></td>
 </tr>
 <tr class="list">
 <td class="itemname"><a class="bold"  href="unicode.html#utf8stringdup">utf8stringdup</a></td>
 <td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
-<td class="itemdesc">&nbsp;</td>
+<td class="itemdesc">Allocates and copies an UTF-8 string to a pointer to an UTF-8 string</td>
 </tr>
 <tr class="list2">
 <td class="itemname"><a class="bold"  href="unicode.html#utf8strlcopyucs4">utf8strlcopyucs4</a></td>
@@ -1533,6 +1627,6 @@
 <td class="itemdesc">Returns the year represented by a TDateTime value.</td>
 </tr>
 </table>
-<hr noshade size="1"><span class="appinfo"><em>Generated by <a  target="_parent" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8.3</a> on 2006-08-22 21:08:51</em>
+<hr noshade size="1"><span class="appinfo"><em>Generated by <a  target="_parent" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8.3</a> on 2006-10-16 20:10:15</em>
 </span>
 </body></html>

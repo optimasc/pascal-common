@@ -53,22 +53,34 @@ Date and time utility routines</p>
 <td class="itemcode"><code>function <b><a   href="dateutil.html#DateTimeToStr">DateTimeToStr</a></b>(DateTime: <a   href="dateutil.html#TDatetime">TDateTime</a>): string;</code></td>
 </tr>
 <tr class="list">
+<td class="itemcode"><code>function <b><a   href="dateutil.html#DateTimeToStrExt">DateTimeToStrExt</a></b>(DateTime: <a   href="dateutil.html#TDatetime">TDateTime</a>; utc: boolean): string;</code></td>
+</tr>
+<tr class="list2">
 <td class="itemcode"><code>function <b><a   href="dateutil.html#DateToStr">DateToStr</a></b>(date: <a   href="dateutil.html#TDatetime">TDatetime</a>): string;</code></td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemcode"><code>function <b><a   href="dateutil.html#DayOf">DayOf</a></b>(const AValue: <a   href="dateutil.html#TDatetime">TDateTime</a>): Word;</code></td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemcode"><code>function <b><a   href="dateutil.html#DaysBetween">DaysBetween</a></b>(const ANow, AThen: <a   href="dateutil.html#TDatetime">TDateTime</a>): integer;</code></td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemcode"><code>procedure <b><a   href="dateutil.html#DecodeDate">DecodeDate</a></b>(Date: <a   href="dateutil.html#TDatetime">TDateTime</a>; var Year, Month, Day: Word);</code></td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemcode"><code>procedure <b><a   href="dateutil.html#DecodeDateTime">DecodeDateTime</a></b>(const AValue: <a   href="dateutil.html#TDatetime">TDateTime</a>; var Year, Month, Day, Hour, Minute, Second, MilliSecond: Word);</code></td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemcode"><code>procedure <b><a   href="dateutil.html#DecodeTime">DecodeTime</a></b>(Time: <a   href="dateutil.html#TDatetime">TDateTime</a>; var Hour, Min, Sec, MSec: Word);</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code>procedure <b><a   href="dateutil.html#GetCurrentDate">GetCurrentDate</a></b>(var Year,Month,Day,DayOfWeek: integer);</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code>procedure <b><a   href="dateutil.html#GetCurrentTime">GetCurrentTime</a></b>(var Hour,Minute,Second,Sec100: integer);</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code>function <b><a   href="dateutil.html#GetTime">GetTime</a></b>: <a   href="dateutil.html#TDatetime">TDateTime</a>;</code></td>
 </tr>
 <tr class="list">
 <td class="itemcode"><code>function <b><a   href="dateutil.html#HourOf">HourOf</a></b>(const AValue: <a   href="dateutil.html#TDatetime">TDateTime</a>): Word;</code></td>
@@ -128,58 +140,46 @@ Date and time utility routines</p>
 <td class="itemcode"><code>function <b><a   href="dateutil.html#Time">Time</a></b>: <a   href="dateutil.html#TDatetime">TDateTime</a>;</code></td>
 </tr>
 <tr class="list2">
-<td class="itemcode"><code>function <b><a   href="dateutil.html#GetTime">GetTime</a></b>: <a   href="dateutil.html#TDatetime">TDateTime</a>;</code></td>
-</tr>
-<tr class="list">
 <td class="itemcode"><code>function <b><a   href="dateutil.html#TimeOf">TimeOf</a></b>(const AValue: <a   href="dateutil.html#TDatetime">TDateTime</a>): <a   href="dateutil.html#TDatetime">TDatetime</a>;</code></td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemcode"><code>function <b><a   href="dateutil.html#TimeToStr">TimeToStr</a></b>(Time: <a   href="dateutil.html#TDatetime">TDateTime</a>): string;</code></td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemcode"><code>function <b><a   href="dateutil.html#Today">Today</a></b>: <a   href="dateutil.html#TDatetime">TDateTime</a>;</code></td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemcode"><code>function <b><a   href="dateutil.html#TryEncodeDate">TryEncodeDate</a></b>(Year, Month, Day: Word; var Date: <a   href="dateutil.html#TDatetime">TDateTime</a>): Boolean;</code></td>
-</tr>
-<tr class="list">
-<td class="itemcode"><code>function <b><a   href="dateutil.html#TryEncodeTime">TryEncodeTime</a></b>(Hour, Min, Sec, MSec: Word; var Time: <a   href="dateutil.html#TDatetime">TDateTime</a>): Boolean;</code></td>
-</tr>
-<tr class="list2">
-<td class="itemcode"><code>function <b><a   href="dateutil.html#TryEncodeDateTime">TryEncodeDateTime</a></b>(const AYear, AMonth, ADay, AHour, AMinute, ASecond, AMilliSecond: Word; var AValue: <a   href="dateutil.html#TDatetime">TDateTime</a>): Boolean;</code></td>
-</tr>
-<tr class="list">
-<td class="itemcode"><code>function <b><a   href="dateutil.html#TryStrToDate">TryStrToDate</a></b>(const S: string; var Value: <a   href="dateutil.html#TDatetime">TDateTime</a>): Boolean;</code></td>
-</tr>
-<tr class="list2">
-<td class="itemcode"><code>function <b><a   href="dateutil.html#TryStrToDateTime">TryStrToDateTime</a></b>(const S: string; var Value: <a   href="dateutil.html#TDatetime">TDateTime</a>): Boolean;</code></td>
-</tr>
-<tr class="list">
-<td class="itemcode"><code>function <b><a   href="dateutil.html#TryStrToTime">TryStrToTime</a></b>(const S: string; var Value: <a   href="dateutil.html#TDatetime">TDateTime</a>): Boolean;</code></td>
-</tr>
-<tr class="list2">
-<td class="itemcode"><code>function <b><a   href="dateutil.html#YearOf">YearOf</a></b>(const AValue: <a   href="dateutil.html#TDatetime">TDateTime</a>): Word;</code></td>
-</tr>
-<tr class="list">
-<td class="itemcode"><code>function <b><a   href="dateutil.html#TryStrToDateTimeExt">TryStrToDateTimeExt</a></b>(const S: string; var Value: <a   href="dateutil.html#TDatetime">TDateTime</a>; var UTC: boolean) : Boolean;</code></td>
 </tr>
 <tr class="list2">
 <td class="itemcode"><code>function <b><a   href="dateutil.html#TryEncodeDateAndTimeToStr">TryEncodeDateAndTimeToStr</a></b>(const Year, Month, Day, Hour, Minute, Second, MilliSecond: word; UTC: boolean; var AValue: string):boolean;</code></td>
 </tr>
 <tr class="list">
-<td class="itemcode"><code>function <b><a   href="dateutil.html#DateTimeToStrExt">DateTimeToStrExt</a></b>(DateTime: <a   href="dateutil.html#TDatetime">TDateTime</a>; utc: boolean): string;</code></td>
+<td class="itemcode"><code>function <b><a   href="dateutil.html#TryEncodeDateTime">TryEncodeDateTime</a></b>(const AYear, AMonth, ADay, AHour, AMinute, ASecond, AMilliSecond: Word; var AValue: <a   href="dateutil.html#TDatetime">TDateTime</a>): Boolean;</code></td>
 </tr>
 <tr class="list2">
-<td class="itemcode"><code>procedure <b><a   href="dateutil.html#GetCurrentDate">GetCurrentDate</a></b>(var Year,Month,Day,DayOfWeek: integer);</code></td>
+<td class="itemcode"><code>function <b><a   href="dateutil.html#TryEncodeTime">TryEncodeTime</a></b>(Hour, Min, Sec, MSec: Word; var Time: <a   href="dateutil.html#TDatetime">TDateTime</a>): Boolean;</code></td>
 </tr>
 <tr class="list">
-<td class="itemcode"><code>procedure <b><a   href="dateutil.html#GetCurrentTime">GetCurrentTime</a></b>(var Hour,Minute,Second,Sec100: integer);</code></td>
+<td class="itemcode"><code>function <b><a   href="dateutil.html#TryFileTimeToDateTimeExt">TryFileTimeToDateTimeExt</a></b>(ftime: <a   href="dateutil.tfiletime.html">tfiletime</a>; var DateTime: <a   href="dateutil.html#TDatetime">TDateTime</a>; var UTC: boolean): boolean;</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code>function <b><a   href="dateutil.html#TryStrToDate">TryStrToDate</a></b>(const S: string; var Value: <a   href="dateutil.html#TDatetime">TDateTime</a>): Boolean;</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code>function <b><a   href="dateutil.html#TryStrToDateTime">TryStrToDateTime</a></b>(const S: string; var Value: <a   href="dateutil.html#TDatetime">TDateTime</a>): Boolean;</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code>function <b><a   href="dateutil.html#TryStrToDateTimeExt">TryStrToDateTimeExt</a></b>(const S: string; var Value: <a   href="dateutil.html#TDatetime">TDateTime</a>; var UTC: boolean) : Boolean;</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code>function <b><a   href="dateutil.html#TryStrToTime">TryStrToTime</a></b>(const S: string; var Value: <a   href="dateutil.html#TDatetime">TDateTime</a>): Boolean;</code></td>
 </tr>
 <tr class="list2">
 <td class="itemcode"><code>function <b><a   href="dateutil.html#TryUNIXToDateTimeExt">TryUNIXToDateTimeExt</a></b>(unixtime: big_integer_t; var DateTime: <a   href="dateutil.html#TDatetime">TDateTime</a>; var UTC: boolean): boolean;</code></td>
 </tr>
 <tr class="list">
-<td class="itemcode"><code>function <b><a   href="dateutil.html#TryFileTimeToDateTimeExt">TryFileTimeToDateTimeExt</a></b>(ftime: <a   href="dateutil.tfiletime.html">tfiletime</a>; var DateTime: <a   href="dateutil.html#TDatetime">TDateTime</a>; var UTC: boolean): boolean;</code></td>
+<td class="itemcode"><code>function <b><a   href="dateutil.html#YearOf">YearOf</a></b>(const AValue: <a   href="dateutil.html#TDatetime">TDateTime</a>): Word;</code></td>
 </tr>
 </table>
 <a name="@Types"></a><h3 class="summary">Types</h3>
@@ -247,14 +247,33 @@ Strips the time portion from a TDateTime value.</p>
 </tr>
 </table>
 <p>
-Converts a TDateTime value to a string in standard ISO 8601 format.</p>
+Converts a TDateTime value to a string in extended ISO 8601 date and time representation.</p>
+<p>
+
+
+<p>Returns the extended format representation of a date and time as recommended by ISO 8601 (Gregorian Calendar). The extended format ISO 8601 representation is of the form: YYYY-MM-DDThh:mm:ss</p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="DateTimeToStrExt"></a><code>function <b>DateTimeToStrExt</b>(DateTime: <a   href="dateutil.html#TDatetime">TDateTime</a>; utc: boolean): string;</code></td>
+</tr>
+</table>
+<p>
+Converts a TDateTime value to a string in extended ISO 8601 date and time representation.</p>
+<p>
+
+
+<p>Returns the extended format representation of a date and time as recommended by ISO 8601 (Gregorian Calendar). The extended format ISO 8601 representation is of the form: YYYY-MM-DDThh:mm:ss[Z]. Sets the timezone designator if required.</p>
 <table class="detail">
 <tr class="list">
 <td class="itemcode"><a name="DateToStr"></a><code>function <b>DateToStr</b>(date: <a   href="dateutil.html#TDatetime">TDatetime</a>): string;</code></td>
 </tr>
 </table>
 <p>
-Converts a TDatetime value to a string in ISO 8601 format</p>
+Converts a TDateTime value to a string in extended ISO 8601 date representation.</p>
+<p>
+
+
+<p>Returns the extended format representation of a date as recommended by ISO 8601 (Gregorian Calendar). The extended format ISO 8601 representation is of the form: YYYY-MM-DD</p>
 <table class="detail">
 <tr class="list">
 <td class="itemcode"><a name="DayOf"></a><code>function <b>DayOf</b>(const AValue: <a   href="dateutil.html#TDatetime">TDateTime</a>): Word;</code></td>
@@ -290,6 +309,31 @@ Returns Year, Month, Day, Hour, Minute, Second, and Millisecond values for a TDa
 </table>
 <p>
 Breaks a TDateTime value into hours, minutes, seconds, and milliseconds.</p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="GetCurrentDate"></a><code>procedure <b>GetCurrentDate</b>(var Year,Month,Day,DayOfWeek: integer);</code></td>
+</tr>
+</table>
+<p>
+Returns the current date set in the operating system</p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="GetCurrentTime"></a><code>procedure <b>GetCurrentTime</b>(var Hour,Minute,Second,Sec100: integer);</code></td>
+</tr>
+</table>
+<p>
+Returns the current time set in the operating system</p>
+<p>
+
+
+<p>Ranges of the values returned are Hour 0..23, Minute 0..59, Second 0..60, Sec100 0..99.</p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="GetTime"></a><code>function <b>GetTime</b>: <a   href="dateutil.html#TDatetime">TDateTime</a>;</code></td>
+</tr>
+</table>
+<p>
+Returns the current time.</p>
 <table class="detail">
 <tr class="list">
 <td class="itemcode"><a name="HourOf"></a><code>function <b>HourOf</b>(const AValue: <a   href="dateutil.html#TDatetime">TDateTime</a>): Word;</code></td>
@@ -425,13 +469,6 @@ Returns the second of the minute represented by a TDateTime value.</p>
 Returns the current time.</p>
 <table class="detail">
 <tr class="list">
-<td class="itemcode"><a name="GetTime"></a><code>function <b>GetTime</b>: <a   href="dateutil.html#TDatetime">TDateTime</a>;</code></td>
-</tr>
-</table>
-<p>
-Returns the current time.</p>
-<table class="detail">
-<tr class="list">
 <td class="itemcode"><a name="TimeOf"></a><code>function <b>TimeOf</b>(const AValue: <a   href="dateutil.html#TDatetime">TDateTime</a>): <a   href="dateutil.html#TDatetime">TDatetime</a>;</code></td>
 </tr>
 </table>
@@ -443,7 +480,11 @@ Strips the date portion from a TDatetime value</p>
 </tr>
 </table>
 <p>
-Returns a string that represents a TDateTime value.</p>
+Converts a TDateTime value to a string in extended ISO 8601 time representation.</p>
+<p>
+
+
+<p>Returns the extended format representation of a time as recommended by ISO 8601 (Gregorian Calendar). The extended format ISO 8601 representation is of the form: hh:mm:ss.</p>
 <table class="detail">
 <tr class="list">
 <td class="itemcode"><a name="Today"></a><code>function <b>Today</b>: <a   href="dateutil.html#TDatetime">TDateTime</a>;</code></td>
@@ -460,73 +501,6 @@ Returns a TDateTime value that represents the current date.</p>
 Returns a TDateTime value that represents a specified Year, Month, and Day.</p>
 <table class="detail">
 <tr class="list">
-<td class="itemcode"><a name="TryEncodeTime"></a><code>function <b>TryEncodeTime</b>(Hour, Min, Sec, MSec: Word; var Time: <a   href="dateutil.html#TDatetime">TDateTime</a>): Boolean;</code></td>
-</tr>
-</table>
-<p>
-Returns a TDateTime value for a specified Hour, Min, Sec, and MSec.</p>
-<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="TryEncodeDateTime"></a><code>function <b>TryEncodeDateTime</b>(const AYear, AMonth, ADay, AHour, AMinute, ASecond, AMilliSecond: Word; var AValue: <a   href="dateutil.html#TDatetime">TDateTime</a>): Boolean;</code></td>
-</tr>
-</table>
-<p>
-Returns a TDateTime that represents a specified year, month, day, hour, minute, second, and millisecond.</p>
-<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="TryStrToDate"></a><code>function <b>TryStrToDate</b>(const S: string; var Value: <a   href="dateutil.html#TDatetime">TDateTime</a>): Boolean;</code></td>
-</tr>
-</table>
-<p>
-Converts a string to a TDateTime value, with a Boolean success code.
-
-<p>In the case where the date does not contain the full representation of a date (for examples, YYYY or YYYY-MM), then the missing values will be set to 1 to be legal.</p>
-<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="TryStrToDateTime"></a><code>function <b>TryStrToDateTime</b>(const S: string; var Value: <a   href="dateutil.html#TDatetime">TDateTime</a>): Boolean;</code></td>
-</tr>
-</table>
-<p>
-Converts a string to a TDateTime value with a Boolean success code.
-
-<p>Supported formats: 1) Format of Complete Representation for calendar dates (as specified in ISO 8601), which should include the Time designator character. 2) Format: 'YYYY-MM-DD HH:mm:ss [GMT|UTC|UT]' 3) Openoffice 1.1.x HTML date format: 'YYYYMMDD;HHmmssuu' 4) Adobe PDF 'D:YYYYMMDDHHMMSSOHH'mm'' format
-
-<p>The returned value will be according to UTC if timezone information is uncluded, otherwise, it will be left as is. To determine if the value was actually converted to UTC, use TryStrToDateTimeExt.
-
-<p>In the case where the date does not contain the full representation of a date (for examples, YYYY or YYYY-MM), then the missing values will be set to 1 to be legal.</p>
-<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="TryStrToTime"></a><code>function <b>TryStrToTime</b>(const S: string; var Value: <a   href="dateutil.html#TDatetime">TDateTime</a>): Boolean;</code></td>
-</tr>
-</table>
-<p>
-Converts a string to a TDateTime value with an error default,
-
-<p>Supported formats: 1) ISO 8601 time format (complete representation) with optional timezone designators. 2) Format: 'HH:mm:ss [GMT|UTC|UT]' 3) Openoffice 1.1.x HTML time format: 'HHmmssuu' 4) Adobe PDF 'D:YYYYMMDDHHMMSSOHH'mm'' format
-
-<p>The returned value will be according to UTC if timezone information is specified. The Date field is truncated and is equal to zero upon return.</p>
-<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="YearOf"></a><code>function <b>YearOf</b>(const AValue: <a   href="dateutil.html#TDatetime">TDateTime</a>): Word;</code></td>
-</tr>
-</table>
-<p>
-Returns the year represented by a TDateTime value.</p>
-<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="TryStrToDateTimeExt"></a><code>function <b>TryStrToDateTimeExt</b>(const S: string; var Value: <a   href="dateutil.html#TDatetime">TDateTime</a>; var UTC: boolean) : Boolean;</code></td>
-</tr>
-</table>
-<p>
-Converts a string to a TDateTime value with a Boolean success code. This routine also gives information if the value was successfully converted to UTC time or not (if no timezone information was available in the string then the utc value will be false).
-
-<p>Supported formats: 1) Format of Complete Representation for calendar dates (as specified in ISO 8601), which should include the Time designator character. 3) Format: 'YYYY-MM-DD HH:mm:ss [GMT|UTC|UT]' 4) Openoffice 1.1.x HTML date format: 'YYYYMMDD;HHmmssuu' 5) Adobe PDF 'D:YYYYMMDDHHMMSSOHH'mm'' format
-
-<p>The returned value will be according to UTC if timezone information is specified.
-
-<p>In the case where the date does not contain the full representation of a date (for examples, YYYY or YYYY-MM), then the missing values will be set to 1 to be legal.</p>
-<table class="detail">
-<tr class="list">
 <td class="itemcode"><a name="TryEncodeDateAndTimeToStr"></a><code>function <b>TryEncodeDateAndTimeToStr</b>(const Year, Month, Day, Hour, Minute, Second, MilliSecond: word; UTC: boolean; var AValue: string):boolean;</code></td>
 </tr>
 </table>
@@ -536,38 +510,108 @@ This routine encodes a complete date and time to its string representation. The 
 <p>The year value is required, while all other fields are optional. The other fields can be set to EMPTY_DATETIME_FIELD to indicate that they are empty. It also adds the UTC marker if required and if it is set and time information is present.</p>
 <table class="detail">
 <tr class="list">
-<td class="itemcode"><a name="DateTimeToStrExt"></a><code>function <b>DateTimeToStrExt</b>(DateTime: <a   href="dateutil.html#TDatetime">TDateTime</a>; utc: boolean): string;</code></td>
-</tr>
-</table>
-&nbsp;<table class="detail">
-<tr class="list">
-<td class="itemcode"><a name="GetCurrentDate"></a><code>procedure <b>GetCurrentDate</b>(var Year,Month,Day,DayOfWeek: integer);</code></td>
+<td class="itemcode"><a name="TryEncodeDateTime"></a><code>function <b>TryEncodeDateTime</b>(const AYear, AMonth, ADay, AHour, AMinute, ASecond, AMilliSecond: Word; var AValue: <a   href="dateutil.html#TDatetime">TDateTime</a>): Boolean;</code></td>
 </tr>
 </table>
 <p>
-Returns the current date set in the operating system</p>
+Returns a TDateTime that represents a specified year, month, day, hour, minute, second, and millisecond.</p>
 <table class="detail">
 <tr class="list">
-<td class="itemcode"><a name="GetCurrentTime"></a><code>procedure <b>GetCurrentTime</b>(var Hour,Minute,Second,Sec100: integer);</code></td>
+<td class="itemcode"><a name="TryEncodeTime"></a><code>function <b>TryEncodeTime</b>(Hour, Min, Sec, MSec: Word; var Time: <a   href="dateutil.html#TDatetime">TDateTime</a>): Boolean;</code></td>
 </tr>
 </table>
 <p>
-Returns the current time set in the operating system</p>
+Returns a TDateTime value for a specified Hour, Min, Sec, and MSec.</p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="TryFileTimeToDateTimeExt"></a><code>function <b>TryFileTimeToDateTimeExt</b>(ftime: <a   href="dateutil.tfiletime.html">tfiletime</a>; var DateTime: <a   href="dateutil.html#TDatetime">TDateTime</a>; var UTC: boolean): boolean;</code></td>
+</tr>
+</table>
+<p>
+Converts a Win32 FILETIME to a TDateTime</p>
 <p>
 
 
-<p>Ranges of the values returned are Hour 0..23, Minute 0..59, Second 0..60, Sec100 0..99.</p>
+<p>This routine converts a 64-bit FILETIME format time into a TDateTime format. The value is always according to UTC, so the UTC value shall always return TRUE. Because floating point values are used, the precision of the returned timestamp will be +/- 2 seconds.</p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="TryStrToDate"></a><code>function <b>TryStrToDate</b>(const S: string; var Value: <a   href="dateutil.html#TDatetime">TDateTime</a>): Boolean;</code></td>
+</tr>
+</table>
+<p>
+Converts a string of date in ISO 8601 to a TDateTime value, with a Boolean success code.</p>
+<p>
+
+
+<p>In the case where the date does not contain the full representation of a date (for examples, YYYY or YYYY-MM), then the missing values will be set to 1 to be legal.
+
+<p>Most legal dates for Dates of ISO 8601 are supported by this routine.</p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="TryStrToDateTime"></a><code>function <b>TryStrToDateTime</b>(const S: string; var Value: <a   href="dateutil.html#TDatetime">TDateTime</a>): Boolean;</code></td>
+</tr>
+</table>
+<p>
+Converts a string date-time representation to a TDateTime value with a Boolean success code.</p>
+<p>
+
+
+<p>Supported formats: 1) Format of Complete Representation for calendar dates (as specified in ISO 8601), which should include the Time designator character. 2) Format: 'YYYY-MM-DD HH:mm:ss [GMT|UTC|UT]' 3) Openoffice 1.1.x HTML date format: 'YYYYMMDD;HHmmssuu' 4) Adobe PDF 'D:YYYYMMDDHHMMSSOHH'mm'' format
+
+<p>The returned value will be according to UTC if timezone information is uncluded, otherwise, it will be left as is. To determine if the value was actually converted to UTC, use TryStrToDateTimeExt.
+
+<p>In the case where the date does not contain the full representation of a date (for examples, YYYY or YYYY-MM), then the missing values will be set to 1 to be legal.</p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="TryStrToDateTimeExt"></a><code>function <b>TryStrToDateTimeExt</b>(const S: string; var Value: <a   href="dateutil.html#TDatetime">TDateTime</a>; var UTC: boolean) : Boolean;</code></td>
+</tr>
+</table>
+<p>
+Converts a string to a TDateTime value with a Boolean success code.</p>
+<p>
+
+
+<p>This routine also gives information if the value was successfully converted to UTC time or not (if no timezone information was available in the string then the utc value will be false).
+
+<p>Supported formats: 1) Format of Complete Representation for calendar dates (as specified in ISO 8601), which should include the Time designator character. 3) Format: 'YYYY-MM-DD HH:mm:ss [GMT|UTC|UT]' 4) Openoffice 1.1.x HTML date format: 'YYYYMMDD;HHmmssuu' 5) Adobe PDF 'D:YYYYMMDDHHMMSSOHH'mm'' format
+
+<p>The returned value will be according to UTC if timezone information is specified.
+
+<p>In the case where the date does not contain the full representation of a date (for examples, YYYY or YYYY-MM), then the missing values will be set to 1 to be legal.</p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="TryStrToTime"></a><code>function <b>TryStrToTime</b>(const S: string; var Value: <a   href="dateutil.html#TDatetime">TDateTime</a>): Boolean;</code></td>
+</tr>
+</table>
+<p>
+Converts a string time to a TDateTime value with an error default</p>
+<p>
+
+
+<p>Supported formats: 1) ISO 8601 time format (complete representation) with optional timezone designators. 2) Format: 'HH:mm:ss [GMT|UTC|UT]' 3) Openoffice 1.1.x HTML time format: 'HHmmssuu' 4) Adobe PDF 'D:YYYYMMDDHHMMSSOHH'mm'' format
+
+<p>The returned value will be according to UTC if timezone information is specified. The Date field is truncated and is equal to zero upon return.</p>
 <table class="detail">
 <tr class="list">
 <td class="itemcode"><a name="TryUNIXToDateTimeExt"></a><code>function <b>TryUNIXToDateTimeExt</b>(unixtime: big_integer_t; var DateTime: <a   href="dateutil.html#TDatetime">TDateTime</a>; var UTC: boolean): boolean;</code></td>
 </tr>
 </table>
-&nbsp;<table class="detail">
+<p>
+Converts a UNIX time_t to a TDateTime</p>
+<p>
+
+
+<p>This routine converts a UNIX time_t format time into a TDateTime format. The time_t is always according to UTC, so the UTC value shall always return TRUE.
+
+<p>On Turbo Pascal and Virtual Pascal this routine shall fail with all values greater that represent years greater than 2038.</p>
+<table class="detail">
 <tr class="list">
-<td class="itemcode"><a name="TryFileTimeToDateTimeExt"></a><code>function <b>TryFileTimeToDateTimeExt</b>(ftime: <a   href="dateutil.tfiletime.html">tfiletime</a>; var DateTime: <a   href="dateutil.html#TDatetime">TDateTime</a>; var UTC: boolean): boolean;</code></td>
+<td class="itemcode"><a name="YearOf"></a><code>function <b>YearOf</b>(const AValue: <a   href="dateutil.html#TDatetime">TDateTime</a>): Word;</code></td>
 </tr>
 </table>
-&nbsp;<h3 class="detail">Types</h3>
+<p>
+Returns the year represented by a TDateTime value.</p>
+<h3 class="detail">Types</h3>
 <table class="detail">
 <tr class="list">
 <td class="itemcode"><a name="TDatetime"></a><code><b>TDatetime</b> = real;</code></td>
@@ -625,6 +669,6 @@ This is the Julian Day number</p>
 <ul class="authors">
 <li>Carl Eric Codere</li>
 </ul>
-<hr noshade size="1"><span class="appinfo"><em>Generated by <a  target="_parent" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8.3</a> on 2006-08-22 21:08:50</em>
+<hr noshade size="1"><span class="appinfo"><em>Generated by <a  target="_parent" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8.3</a> on 2006-10-16 20:10:13</em>
 </span>
 </body></html>
