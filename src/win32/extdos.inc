@@ -157,9 +157,9 @@ type
   
    TFindFirstFileW = function(lpFileName: PWideChar; var lpFindFileData: TWIN32FindDataW): THandle; stdcall;
    TFindNextFileW = function(hFindFile: THandle; var lpFindFileData: TWIN32FindDataW): BOOL; stdcall;
-   TCreateFileW = function (lpFileName: PWideChar; dwDesiredAccess, dwShareMode: Integer;
-      lpSecurityAttributes: Pointer; dwCreationDisposition, dwFlagsAndAttributes: Integer;
-      hTemplateFile: Integer): Integer; stdcall;
+   TCreateFileW = function (lpFileName: PWideChar; dwDesiredAccess, dwShareMode: DWORD;
+      lpSecurityAttributes: Pointer; dwCreationDisposition, dwFlagsAndAttributes: DWORD;
+      hTemplateFile: THANDLE): THandle; stdcall;
       
    TGetCurrentDirectoryW = function(nBufferLength: DWORD; lpBuffer: PWideChar): DWORD; stdcall;
    TSetCurrentDirectoryW = function(lpPathName: PWideChar): BOOL; stdcall;
@@ -1431,6 +1431,10 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.7  2006/10/16 22:24:20  carl
+    * Device attributes were not correctly set
+    * FindFirstEx() would not expand the path, so the FindFirst could be wrong
+
   Revision 1.6  2006/08/31 03:09:38  carl
   * Bugfix with DirectoryExists, would sometimes give wrong results.
 
