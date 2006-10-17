@@ -1,5 +1,5 @@
 {
-    $Id: dateutil.pas,v 1.10 2006-08-31 03:08:05 carl Exp $
+    $Id: dateutil.pas,v 1.11 2006-10-17 01:03:28 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere (Optima SC Inc.)
 
     Date and time utility routines
@@ -141,7 +141,8 @@ function IsPM(const AValue: TDateTime): Boolean;
 {** @abstract(Indicates whether a specified year, month, and day represent a valid date.) }
 function IsValidDate(const AYear, AMonth, ADay: Word): Boolean;
 
-{** @abstract(Indicates whether a specified year, month, day, hour, minute, second, and millisecond represent a valid date and time.) }
+{** @abstract(Indicates whether a specified year, month, day, 
+     hour, minute, second, and millisecond represent a valid date and time.) }
 function IsValidDateTime(const AYear, AMonth, ADay, AHour, AMinute, ASecond, AMilliSecond: Word): Boolean;
 
 {** @abstract(Indicates whether a specified hour, minute, second, and millisecond represent a valid date and time.) }
@@ -161,7 +162,8 @@ function Now: TDateTime;
 {** @abstract(Indicates whether two TDateTime values represent the same year, month, and day.)}
 function SameDate(const A, B: TDateTime): Boolean;
 
-{** @abstract(Indicates whether two TDateTime values represent the same year, month, day, hour, minute, second, and millisecond.)}
+{** @abstract(Indicates whether two TDateTime values represent the same year, month, day, 
+    hour, minute, second, and millisecond.)}
 function SameDateTime(const A, B: TDateTime): Boolean;
 
 {** @abstract(Indicates whether two TDateTime values represent the same time of day, ignoring the date portion.)}
@@ -1440,6 +1442,9 @@ end;
 end.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.10  2006/08/31 03:08:05  carl
+  + Better documentation
+
   Revision 1.9  2005/11/21 00:18:12  carl
     - remove some compilation warnings/hints
     + speed optimizations
