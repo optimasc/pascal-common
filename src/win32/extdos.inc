@@ -401,7 +401,7 @@ begin
   { Convert the string to a UCS-2 character string }
   ucs4str:=ucs4strnew(fname,'UTF-8');
   ucs2str:=ucs2strnew(ucs4str);
-  filerec(f).handle:=PCreateFileW (pwidechar(ucs2str),FILE_READ_ATTRIBUTES,FILE_SHARE_READ,@security,OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL,0);
+  filerec(f).handle:=longint(PCreateFileW (pwidechar(ucs2str),FILE_READ_ATTRIBUTES,FILE_SHARE_READ,@security,OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL,0));
   ucs2strdispose(ucs2str);
   ucs4strdispose(ucs4str);
   status:=GetLastError;
@@ -628,21 +628,14 @@ const
 var
   ResultVal: BOOL;
   LastAccessTime: FILETIME;
-  F: File;
   status: integer;
   FileTimeInfo: SYSTEMTIME;
   security : TSecurityAttributes;
+  FileHandle: THandle;
   ucs4str: pucs4char;
   ucs2str: pucs2char;
 begin
-  FileAssign(F,utf8strpas(fname));
-  status:=FileIOResult;
-  if status <> 0 then
-    begin
-      setfileatime:=status;
-      exit;
-    end;
-{ We must open the file with a special access mode not 
+{ We must open the file with a special access mode not
 
   modify the last access time. }
   security.nLength := Sizeof(TSecurityAttributes);
@@ -651,12 +644,11 @@ begin
 
   ucs4str:=ucs4strnew(fname,'UTF-8');
   ucs2str:=ucs2strnew(ucs4str);
-  filerec(f).handle:=PCreateFileW(pwidechar(ucs2str),FILE_WRITE_ATTRIBUTES,FILE_SHARE_READ,@security,OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL,0);
+  FileHandle:=PCreateFileW(pwidechar(ucs2str),FILE_WRITE_ATTRIBUTES,FILE_SHARE_READ,@security,OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL,0);
   ucs2strdispose(ucs2str);
   ucs4strdispose(ucs4str);
-  
-  { handle -1 is returned sometimes !! (PM) }
-  if (filerec(f).handle=0) or (filerec(f).handle=-1) then
+
+  if (FileHandle=0) or (FileHandle=$FFFFFFFF) then
     begin
       status:=GetLastError;
     end;
@@ -673,13 +665,13 @@ begin
   if FileTimeInfo.wYear < MIN_FILE_YEAR then
     begin
       setfileatime:=EXTDOS_STATUS_DATE_UNSUPPORTED;
-      FileClose(F);
+      CloseHandle(FileHandle);
       exit;
     end;
   ResultVal:=SystemTimeToFileTime(FileTimeInfo,LastAccessTime);
   if ResultVal then
     begin
-      ResultVal:=SetFileTime(FileRec(F).handle,nil,@LastAccessTime,nil);
+      ResultVal:=SetFileTime(FileHandle,nil,@LastAccessTime,nil);
       if ResultVal then
         status:=EXTDOS_STATUS_OK
       else
@@ -691,8 +683,7 @@ begin
        exit;
     end;
   setfileatime:=status;
-  CloseHandle(filerec(F).handle);
-{  FileClose(F);}
+  CloseHandle(FileHandle);
 end;
 
 
@@ -1431,6 +1422,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.8  2006/10/17 01:02:48  carl
+   * Range check error bugfix
+
   Revision 1.7  2006/10/16 22:24:20  carl
     * Device attributes were not correctly set
     * FindFirstEx() would not expand the path, so the FindFirst could be wrong
