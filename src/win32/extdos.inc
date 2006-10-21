@@ -648,6 +648,7 @@ begin
   ucs2strdispose(ucs2str);
   ucs4strdispose(ucs4str);
 
+  status:=0;
   if (FileHandle=0) or (FileHandle=$FFFFFFFF) then
     begin
       status:=GetLastError;
@@ -1422,6 +1423,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.9  2006/10/20 00:23:21  carl
+    * Range check errors bugfixes
+
   Revision 1.8  2006/10/17 01:02:48  carl
    * Range check error bugfix
 
