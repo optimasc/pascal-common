@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: unicode.pas,v 1.39 2006-10-16 22:21:22 carl Exp $
+    $Id: unicode.pas,v 1.40 2006-10-23 01:37:06 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Unicode related routines
@@ -61,7 +61,7 @@ uses
 
 const
   {** Gives the number of characters that can be contained in a string }
-  MAX_STRING_LENGTH = 512;  
+  MAX_STRING_LENGTH = 4096; 
 
 type
 
@@ -3609,6 +3609,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.39  2006/10/16 22:21:22  carl
+  * ConvertFromUCS4()/ConvertToUCS4() would not work with UTF-8 strings
+
   Revision 1.38  2006/08/31 03:03:55  carl
   + Better documentation
   * Bugfixes when utf8string is declared as a standard shortstring, there could
