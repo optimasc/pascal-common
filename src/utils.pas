@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: utils.pas,v 1.23 2006-08-31 03:02:33 carl Exp $
+    $Id: utils.pas,v 1.24 2006-11-10 04:07:25 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Common utilities
@@ -37,7 +37,7 @@ uses
  gpautils,
  objects
  ;
- 
+
  
 TYPE
     PshortString = ^ShortString;
@@ -94,7 +94,7 @@ CONST
       to a string in lower case ASCII characters.
   }
   function LowString(s : string): string;
-  
+
   {** @abstract(Trims and adds double quotes to the string if 
        it contains spaces).
        
@@ -116,6 +116,19 @@ CONST
   }
   procedure StreamErrorProcedure(Var S: TStream);
 
+{** @abstract(Separates a string into its individual token representations)
+
+    @param(Text Text string to tokenize, deletes itself)
+    @param(Delimiter The character delimiter for tokens)
+    @param(UseQuotes Are Quotes allowed for escaping the delimiter)
+    @returns(The current token)
+
+    When Text returns an empty string, this indicates that all the
+    data has been parsed.
+}
+function StrToken(var Text: String; Delimiter: Char; UseQuotes: boolean) : String;
+
+
   {** @abstract(Remove all whitespace from the start of a string) }
   function TrimLeft(const S: string): string;
 
@@ -132,7 +145,7 @@ CONST
   {** @abstract(Convert a value to an ASCII decimal representation) 
   
       To avoid left padding with zeros, set @code(cnt) to zero.
-      
+
       @param(val Signed 32-bit value to convert)
   }      
   function decstr(val : longint;cnt : byte) : string;
@@ -151,7 +164,7 @@ CONST
       To avoid left padding with spaces, set @code(cnt) to zero.
   }      
   function boolstr(val: boolean; cnt: byte): string; 
-  
+
   function CompareByte(buf1,buf2: pchar;len:longint):integer;
    
  {** @abstract(Trim removes leading and trailing spaces and control 
@@ -227,7 +240,7 @@ CONST
       2) Trims spaces at the begining and end of the string. }   
   function CleanString(const s: string): string;
   
-  
+
   function ChangeFileExt(const FileName, Extension: string): string;
   
 
@@ -322,7 +335,7 @@ uses dos;
     if pos(' ',s) > 0 then
       AddDoubleQuotes:='"'+s+'"';
   end;
-  
+
   function RemoveDoubleQuotes(s: string): string;
   begin
      if s[length(s)] = '"' then
@@ -645,7 +658,7 @@ function fillwithspace(s: string; newlength: integer): string;
    fillwithspace:=s;
  end;
 
-function boolstr(val: boolean; cnt: byte): string; 
+function boolstr(val: boolean; cnt: byte): string;
 const
  vals:array[FALSE..TRUE] of string[16] =
    ('FALSE','TRUE');
@@ -683,7 +696,7 @@ begin
   decstrunsigned:=fillwithzero(s,cnt);
 end;
 
-function Trim(const S: string): string; 
+function Trim(const S: string): string;
 var
  s1: string;
 begin
@@ -740,7 +753,7 @@ function ChangeFileExt(const FileName, Extension: string): string;
 var i: longint;
 begin
   I := Length(FileName);
-  while (I > 0) and not(FileName[I] in ['/', '.', '\', ':']) do 
+  while (I > 0) and not(FileName[I] in ['/', '.', '\', ':']) do
     Dec(I);
   if (I = 0) or (FileName[I] <> '.') then 
     I := Length(FileName)+1;
@@ -968,11 +981,59 @@ begin
   CompareByte:=I;
 end;
 
+function StrToken(var Text: String; Delimiter: Char; UseQuotes: boolean) : String;
+var
+ apos: integer;
+ dqpos: integer;
+ qoutechar: char;
+ tmpstr: string;
+ idx: integer;
+begin
+ TmpStr:='';
+ apos := Pos(Delimiter, Text);
+ { Check if there are quotes }
+ if UseQuotes then
+   begin
+     dqpos:=pos('"',Text);
+     if (dqpos > 0) and (dqpos < apos) then
+       begin
+         tmpstr:=Copy(Text,1,dqpos);
+         delete(Text,1,dqpos);
+         idx:=1;
+         while (idx < length(Text)) and (Text[idx] <> '"') do
+           begin
+             tmpstr:=tmpstr+Text[idx];
+             inc(idx);
+           end;
+         tmpstr:=tmpstr+'"';
+         delete(Text,1,idx);
+         StrToken:=TmpStr;
+         apos := Pos(Delimiter, Text);
+       end;
+     { No special separation to do... }
+   end;
+
+ if (apos > 0) then
+ begin
+   StrToken := TmpStr+Copy(Text, 1, apos - 1);
+   Delete(Text, 1, apos);
+ end
+ else
+  begin
+      StrToken := Text;
+      Text := '';
+  end;
+end;
+
+
 
 
 end.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.23  2006/08/31 03:02:33  carl
+  + Better documentation
+
   Revision 1.22  2005/11/21 00:18:15  carl
     - remove some compilation warnings/hints
     + speed optimizations

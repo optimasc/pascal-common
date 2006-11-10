@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: unicode.pas,v 1.41 2006-10-24 03:41:15 carl Exp $
+    $Id: unicode.pas,v 1.42 2006-11-10 04:07:24 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Unicode related routines
@@ -45,6 +45,7 @@
 
 {$IFDEF TP}
 {$UNDEF ANSISTRINGS}
+{$D-}
 {$ENDIF}
 
 unit unicode;
@@ -150,6 +151,17 @@ type
   {** @abstract(Determines if the specified character is a whitespace character) }
   function ucs4_iswhitespace(c: ucs4char): boolean;
   
+  {** @abstract(Determines if the specified character is an hex-digit character) }
+  function ucs4_ishexdigit(c: ucs4char): boolean;
+  
+  {** @abstract(Determines if the specified character is a digit character) 
+      Represented by Unicode character class Decimal, Nd                     
+  }
+  function ucs4_isdigit(c: ucs4char): boolean;
+  
+  {** @abstract(Determines if the specified character is a sentence terminating character) }
+  function ucs4_isterminal(c: ucs4char): boolean;
+  
   {** @abstract(Converts a character to an uppercase character) 
   
       This routine only supports the simple form case folding
@@ -206,6 +218,20 @@ type
 
   {** @abstract(Checks if both UCS-4 strings are equal) }
   function ucs4_equal(const s1,s2: ucs4string): boolean;
+  
+  {** @abstract(Retrieves the Unicode numeric value of a character) 
+  
+      Returns the numeric value of a character that can be used
+      to represent a number.
+      
+      If a character does not have a numeric value, the routine
+      returns -1. If a character cannot be represented as a 
+      positive integer (such as fractional characters), -2
+      is returned.
+  }
+  function ucs4_getNumericValue(c: ucs4char): longint;
+  
+  
 
   {** @abstract(Checks if the UCS-4 character is valid)
 
@@ -577,15 +603,11 @@ type
 
   }
  function utf8strnewstr(str: utf8string): putf8char;
- 
-
 
 {---------------------------------------------------------------------------
-                          Other  string handling
+                           UTF-8 string handling
 -----------------------------------------------------------------------------}
-
-
-  
+ 
   {** @abstract(Frees an UTF-8 string that was allocated
        with @link(utf8strdispose))
        
@@ -603,8 +625,36 @@ type
       string will still be allocated and returned.
   }        
   function utf8stringdup(const s : string) : putf8shortstring;
-    
-    
+  
+  {** @abstract(Returns the number of characters that are used to encode this
+      character)
+
+  }
+  function utf8_sizeencoding(c: utf8char): integer;
+
+  {** @abstract(Returns the current length of an UTF-16 string) }
+  function utf16_length(const s: array of utf16char): integer;
+
+  {** @abstract(Returns the current length of an UTF-8 string) }
+  function utf8_length(const s: utf8string): integer;
+
+  {** @abstract(Returns if the specified UTF-8 string is legal or not)
+
+      Verifies that the UTF-8 encoded strings is encoded in a legal
+      way.
+
+      @returns(FALSE if the string is illegal, otherwise returns TRUE)
+  }
+  function utf8_islegal(const s: utf8string): boolean;
+
+  {** @abstract(Set the length of an UTF-8 string) }
+  procedure utf8_setlength(var s: utf8string; l: integer);
+  
+
+{---------------------------------------------------------------------------
+                          Other  string handling
+-----------------------------------------------------------------------------}
+
 
   {** @abstract(Converts a null-terminated ASCII string to a Pascal-style
        ASCII encoded string.)
@@ -672,29 +722,6 @@ type
   }
   function utf16_sizeencoding(c: utf16char): integer;
 
-  {** @abstract(Returns the number of characters that are used to encode this
-      character)
-
-  }
-  function utf8_sizeencoding(c: utf8char): integer;
-
-  {** @abstract(Returns the current length of an UTF-16 string) }
-  function utf16_length(const s: array of utf16char): integer;
-
-  {** @abstract(Returns the current length of an UTF-8 string) }
-  function utf8_length(const s: utf8string): integer;
-
-  {** @abstract(Returns if the specified UTF-8 string is legal or not)
-
-      Verifies that the UTF-8 encoded strings is encoded in a legal
-      way.
-
-      @returns(FALSE if the string is illegal, otherwise returns TRUE)
-  }
-  function utf8_islegal(const s: utf8string): boolean;
-
-  {** @abstract(Set the length of an UTF-8 string) }
-  procedure utf8_setlength(var s: utf8string; l: integer);
 
   {** @abstract(Set the length of an UTF-16 string) }
   procedure utf16_setlength(var s: array of utf16char; l: integer);
@@ -811,6 +838,22 @@ type
   function ConvertUCS2ToUCS4(src: array of ucs2char; var dst: ucs4string): integer;
 
 
+
+{ Case conversion table }
+{$i case.inc}
+{ Accented character conversion table }
+{$i canonic.inc}
+{ Digits }
+{$i digits.inc}
+{ Hex Digits }
+{$i hexdig.inc}
+{ Whitespace }
+{$i whitespc.inc}
+{ Terminals }
+{$i term.inc}
+{ Numeric values of characters }
+{$i numeric.inc}
+
 implementation
 
 uses strings;
@@ -818,19 +861,18 @@ uses strings;
 
 type
   pchararray = ^tchararray;
-  tchararray = array[#0..#255] of longint;
+  tchararray = array[#0..#255] of ucs2char;
   taliasinfo = record
     aliasname: string[32];
     table: pchararray;
   end;   
 
 
-{ Case conversion table }
-{$i case.inc}
-{ Accented character conversion table }
-{$i canonic.inc}
 
 const
+  {** We use the Private User Area to indicate a unmapped code point }
+  UNKNOWN_CODEPOINT = $E000;
+  
 {$i i8859_1.inc}
 {$i i8859_2.inc}
 {$i i8859_5.inc}
@@ -972,134 +1014,134 @@ const
 {7D} $007D,{ #  RIGHT CURLY BRACKET                                            }
 {7E} $007E,{ #  TILDE                                                          }
 {7F} $007F,{ #  DELETE                                                         }
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1,
-     -1
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT,
+     UNKNOWN_CODEPOINT
   );
 
 const
@@ -1136,7 +1178,7 @@ const
     (aliasname: 'MACROMAN';table: @RomantoUTF32),
     (aliasname: 'US-ASCII';table: @ASCIItoUTF32)
   );
-
+  
 const
   {* Some fundamental constants *}
   UNI_REPLACEMENT_CHAR = $0000FFFD;
@@ -1465,7 +1507,7 @@ const
     for i:=1 to strlength do
       begin
         l:=p^[source[i]];
-        if l = -1 then
+        if l = UNKNOWN_CODEPOINT then
           begin
             ConvertToUCS4:=UNICODE_ERR_INCOMPLETE_CONVERSION;
             continue;
@@ -1739,7 +1781,7 @@ var
   Pivot: Integer;
 begin
   First  := 1; {Sets the first item of the range}
-  Last   := MAX_CASETABLE_ENTRIES; {Sets the last item of the range}
+  Last   := MAX_CASETABLE; {Sets the last item of the range}
   ucs4_upcase := c; {Initializes the Result}
 
   { If First > Last then the searched item doesn't exist
@@ -1749,14 +1791,14 @@ begin
     { Gets the middle of the selected range }
     Pivot := (First + Last) div 2;
     { Compares the String in the middle with the searched one }
-    if UCS4CaseTable[Pivot].lower = c then
+    if CaseTable[Pivot].lower = c then
     begin
-      ucs4_upcase := UCS4CaseTable[Pivot].upper;
+      ucs4_upcase := CaseTable[Pivot].upper;
       exit;
     end
     { If the Item in the middle has a bigger value than
       the searched item, then select the first half }
-    else if UCS4CaseTable[Pivot].lower > c then
+    else if CaseTable[Pivot].lower > c then
       Last := Pivot - 1
         { else select the second half}
     else
@@ -1794,48 +1836,136 @@ end;
   begin
     { Assume there is no uppercase for this character }
     ucs4_lowcase:=c;
-    for i:=1 to MAX_CASETABLE_ENTRIES do
+    for i:=1 to MAX_CASETABLE do
       begin
-        if (c = UCS4CaseTable[i].upper) then
+        if (c = CaseTable[i].upper) then
           begin
-           ucs4_lowcase:=UCS4CaseTable[i].lower;
+           ucs4_lowcase:=CaseTable[i].lower;
            exit;
           end; 
       end;
   end;
 
 
+function ucs4_isterminal(c: ucs4char): boolean;
+var
+  First: Integer;
+  Last: Integer;
+  Pivot: Integer;
+begin
+  First  := 1; {Sets the first item of the range}
+  Last   := MAX_TERMINALS; {Sets the last item of the range}
+  ucs4_isterminal := false; {Initializes the Result}
+
+  { If First > Last then the searched item doesn't exist
+    If the item is found the loop will stop }
+  while (First <= Last) do
+  begin
+    { Gets the middle of the selected range }
+    Pivot := (First + Last) div 2;
+    { Compares the String in the middle with the searched one }
+    if (c >= terminals[Pivot].lower) and (c <= terminals[Pivot].upper) then
+    begin
+      ucs4_isterminal := true;
+      break;
+    end
+    { If the Item in the middle has a bigger value than
+      the searched item, then select the first half }
+    else if terminals[Pivot].lower > c then
+      Last := Pivot - 1
+        { else select the second half}
+    else
+      First := Pivot + 1;
+  end;
+end;
+
+function ucs4_ishexdigit(c: ucs4char): boolean;
+var
+ i: integer;
+begin
+  ucs4_ishexdigit:=true;
+  if chr(c) in ['A'..'F','a'..'f','0'..'9'] then 
+    exit;
+  { Fullwidth versions }  
+  for i:=1 to MAX_HEXDIGITS do
+   begin
+    if (c >= HexDigits[i].lower) and (c <= HexDigits[i].lower) then
+       exit;
+   end;
+  ucs4_ishexdigit:=false;  
+end;
+
+
+
+function ucs4_isdigit(c: ucs4char): boolean;
+var
+  First: Integer;
+  Last: Integer;
+  Pivot: Integer;
+begin
+  First  := 1; {Sets the first item of the range}
+  Last   := MAX_DIGITS; {Sets the last item of the range}
+  ucs4_isdigit := false; {Initializes the Result}
+
+  { If First > Last then the searched item doesn't exist
+    If the item is found the loop will stop }
+  while (First <= Last) do
+  begin
+    { Gets the middle of the selected range }
+    Pivot := (First + Last) div 2;
+    { Compares the String in the middle with the searched one }
+    if digits[Pivot] = c then
+    begin
+      ucs4_isdigit := true;
+      break;
+    end
+    { If the Item in the middle has a bigger value than
+      the searched item, then select the first half }
+    else if digits[Pivot] > c then
+      Last := Pivot - 1
+        { else select the second half}
+    else
+      First := Pivot + 1;
+  end;
+end;
+
+
+function ucs4_getNumericValue(c: ucs4char): longint;
+var
+  First: Integer;
+  Last: Integer;
+  Pivot: Integer;
+begin
+  First  := 1; {Sets the first item of the range}
+  Last   := MAX_NUMERIC_MAPPINGS; {Sets the last item of the range}
+  ucs4_getnumericvalue := -1; {Initializes the Result}
+
+  { If First > Last then the searched item doesn't exist
+    If the item is found the loop will stop }
+  while (First <= Last) do
+  begin
+    { Gets the middle of the selected range }
+    Pivot := (First + Last) div 2;
+    { Compares the String in the middle with the searched one }
+    if (c = NumericalMappings[Pivot].CodePoint) then
+    begin
+      ucs4_getnumericvalue := NumericalMappings[Pivot].Value;
+      break;
+    end
+    { If the Item in the middle has a bigger value than
+      the searched item, then select the first half }
+    else if NumericalMappings[Pivot].CodePoint > c then
+      Last := Pivot - 1
+        { else select the second half}
+    else
+      First := Pivot + 1;
+  end;
+end;
+
+
+
+
 function ucs4_iswhitespace(c: ucs4char): boolean;
- const
-   MAX_WHITESPACE = 25;
-   whitespace: array[1..MAX_WHITESPACE] of ucs4char =
-   (
-    $0009,  { control: TAB }
-    $000A,  { control: Linefeed }
-    $000B,  { control: Vertical TAB }
-    $000C,  { control: Formfeed }
-    $000D,  { control: Carriage return }
-    $0020,  { SPACE }
-    $0085,  { control:  }       
-    $1680,  { OGHAM SPACE MARK }
-    $180E,  { MONGOLIAN VOWEL SEPARATOR }
-    $2000,  { EN QUAD..HAIR SPACE }
-    $2001,
-    $2002,
-    $2003,
-    $2004,
-    $2005,
-    $2006,
-    $2007,
-    $2008,
-    $2009,
-    $200A,
-    $2028,  { LINE SEPARATOR }
-    $2029,  { PARAGRAPH SEPARATOR }
-    $202F,  { NARROW NO-BREAK SPACE }
-    $205F,  { MEDIUM MATHEMATICAL SPACE }
-    $3000   { IDEOGRAPHIC SPACE }
-   );
 var
   First: Integer;
   Last: Integer;
@@ -1852,14 +1982,14 @@ begin
     { Gets the middle of the selected range }
     Pivot := (First + Last) div 2;
     { Compares the String in the middle with the searched one }
-    if whitespace[Pivot] = c then
+    if (c >= whitespace[Pivot].lower) and (c <= whitespace[Pivot].upper) then
     begin
       ucs4_iswhitespace := true;
       break;
     end
     { If the Item in the middle has a bigger value than
       the searched item, then select the first half }
-    else if whitespace[Pivot] > c then
+    else if whitespace[Pivot].lower > c then
       Last := Pivot - 1
         { else select the second half}
     else
@@ -1882,13 +2012,6 @@ end;
       count:=slen-index+1;
     { don't forget the length character }
     Move(s[index],resultstr[1],count*sizeof(ucs4char));
-(*    if count <> 0 then
-      begin
-        for i:=1 to count do
-          begin
-            resultstr[i]:=s[i+index-1];
-          end;
-      end;*)
     ucs4_setlength(resultstr,count);
   end;
   
@@ -2069,11 +2192,14 @@ end;
   function ucs4_converttoutf8(const src: ucs4string): utf8string;
   var
    p: pucs4char;
+   len: integer;
   begin
-    Getmem(p,ucs4_length(src)*sizeof(ucs4char)+sizeof(ucs4char));
+    len:=ucs4_length(src)*sizeof(ucs4char)+sizeof(ucs4char);
+    Getmem(p,len);
     ucs4strpcopy(p,src);
     ucs4_converttoutf8:=ucs4strpastoutf8(p);
-    ucs4strdispose(p);
+    if assigned(p) then
+      Freemem(p,len);
   end;
   
   
@@ -2164,7 +2290,7 @@ var
   Pivot: Integer;
 begin
   First  := 1; {Sets the first item of the range}
-  Last   := MAX_CASETABLE_UCS2_ENTRIES; {Sets the last item of the range}
+  Last   := MAX_UCS2_CASETABLE; {Sets the last item of the range}
   ucs2_upcase := c; {Initializes the Result}
 
   { If First > Last then the searched item doesn't exist
@@ -2174,14 +2300,14 @@ begin
     { Gets the middle of the selected range }
     Pivot := (First + Last) div 2;
     { Compares the String in the middle with the searched one }
-    if UCS4CaseTable[Pivot].lower = c then
+    if CaseTable[Pivot].lower = c then
     begin
-      ucs2_upcase := UCS4CaseTable[Pivot].upper;
+      ucs2_upcase := CaseTable[Pivot].upper;
       exit;
     end
     { If the Item in the middle has a bigger value than
       the searched item, then select the first half }
-    else if UCS4CaseTable[Pivot].lower > c then
+    else if CaseTable[Pivot].lower > c then
       Last := Pivot - 1
         { else select the second half}
     else
@@ -2474,7 +2600,7 @@ end;
           begin
             l:=p^[str[i+1]];
             { invalid character }
-            if l = -1 then
+            if l = UNKNOWN_CODEPOINT then
               continue
             else
               inc(totalsize);
@@ -2487,7 +2613,7 @@ end;
           begin
             l:=p^[str[i+1]];
             { invalid character }
-            if l = -1 then
+            if l = UNKNOWN_CODEPOINT then
               continue
             else
               ch:=ucs4char(l);
@@ -2637,7 +2763,7 @@ end;
           begin
             l:=p^[str[i]];
             { invalid character }
-            if l = -1 then
+            if l = UNKNOWN_CODEPOINT then
               continue
             else
               inc(totalsize);
@@ -2651,7 +2777,7 @@ end;
           begin
             l:=p^[str[i]];
             { invalid character }
-            if l = -1 then
+            if l = UNKNOWN_CODEPOINT then
               begin
                 continue
               end
@@ -3609,6 +3735,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.41  2006/10/24 03:41:15  carl
+   + MAX_STRING_LENGTH compromise, set to 2048 characters.
+
   Revision 1.40  2006/10/23 01:37:06  carl
     + UCs4String length is now 4096 characters insatead of 512
 

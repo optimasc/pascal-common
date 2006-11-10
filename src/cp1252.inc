@@ -146,7 +146,7 @@ cp1252toUTF32: tchararray = (
 {7E} $007E,{ #TILDE                                                           }
 {7F} $007F,{ #DELETE                                                          }
 {80} $20AC,{ #EURO SIGN                                                       }
-{81} -1,
+{81} UNKNOWN_CODEPOINT,
 {82} $201A,{ #SINGLE LOW-9 QUOTATION MARK                                     }
 {83} $0192,{ #LATIN SMALL LETTER F WITH HOOK                                  }
 {84} $201E,{ #DOUBLE LOW-9 QUOTATION MARK                                     }
@@ -158,10 +158,10 @@ cp1252toUTF32: tchararray = (
 {8A} $0160,{ #LATIN CAPITAL LETTER S WITH CARON                               }
 {8B} $2039,{ #SINGLE LEFT-POINTING ANGLE QUOTATION MARK                       }
 {8C} $0152,{ #LATIN CAPITAL LIGATURE OE                                       }
-{8D} -1,
+{8D} UNKNOWN_CODEPOINT,
 {8E} $017D,{ #LATIN CAPITAL LETTER Z WITH CARON                               }
-{8F} -1,
-{90} -1,
+{8F} UNKNOWN_CODEPOINT,
+{90} UNKNOWN_CODEPOINT,
 {91} $2018,{ #LEFT SINGLE QUOTATION MARK                                      }
 {92} $2019,{ #RIGHT SINGLE QUOTATION MARK                                     }
 {93} $201C,{ #LEFT DOUBLE QUOTATION MARK                                      }
@@ -174,7 +174,7 @@ cp1252toUTF32: tchararray = (
 {9A} $0161,{ #LATIN SMALL LETTER S WITH CARON                                 }
 {9B} $203A,{ #SINGLE RIGHT-POINTING ANGLE QUOTATION MARK                      }
 {9C} $0153,{ #LATIN SMALL LIGATURE OE                                         }
-{9D} -1,
+{9D} UNKNOWN_CODEPOINT,
 {9E} $017E,{ #LATIN SMALL LETTER Z WITH CARON                                 }
 {9F} $0178,{ #LATIN CAPITAL LETTER Y WITH DIAERESIS                           }
 {A0} $00A0,{ #NO-BREAK SPACE                                                  }

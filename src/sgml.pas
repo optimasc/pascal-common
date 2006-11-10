@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: sgml.pas,v 1.8 2006-08-31 03:04:46 carl Exp $
+    $Id: sgml.pas,v 1.9 2006-11-10 04:07:20 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere (Optima SC Inc.)
 
     SGML related utility routines
@@ -91,143 +91,8 @@ type
    numeric: word;
   end;
   
-const
-  { Standard ISOLat entity table }
-  main_entities : array[MIN_ENTITIES..MAX_ENTITIES] of string[6] =
-  (
-   ' nbsp',
-    'iexcl',
-    'cent',
-    'pound', 
-    'curren',
-    'yen',
-    'brvbar',
-    'sect',
-    'uml',
-    'copy',
-    'ordf',
-    'laquo',
-    'not',
-    'shy',
-    'reg',
-    'macr',
-    'deg',
-    'plusmn',
-    'sup2',
-    'sup3',
-    'acute',
-    'micro',
-    'para',
-    'middot',
-    'cedil',
-    'sup1',
-    'ordm',
-    'raquo',
-    'frac14',
-    'frac12',
-    'frac34',
-    'iquest',
-    'Agrave',
-    'Aacute',
-    'Acirc',
-    'Atilde',
-    'Auml',
-    'Aring',
-    'AElig',
-    'Ccedil',
-    'Egrave',
-    'Eacute',
-    'Ecirc',
-    'Euml',
-    'Igrave',
-    'Iacute',
-    'Icirc',
-    'Iuml',
-    'ETH',
-    'Ntilde',
-    'Ograve',
-    'Oacute',
-    'Ocirc',
-    'Otilde',
-    'Ouml',
-    'times',
-    'Oslash',
-    'Ugrave',
-    'Uacute',
-    'Ucirc',
-    'Uuml',
-    'Yacute',
-    'THORN',
-    'szlig',
-    'agrave',
-    'aacute',
-    'acirc',
-    'atilde',
-    'auml',
-    'aring',
-    'aelig',
-    'ccedil',
-    'egrave',
-    'eacute',
-    'ecirc',
-    'euml',
-    'igrave',
-    'iacute',
-    'icirc',
-    'iuml',
-    'eth',
-    'ntilde',
-    'ograve',
-    'oacute',
-    'ocirc',
-    'otilde',
-    'ouml',
-    'divide',
-    'oslash',
-    'ugrave',
-    'uacute',
-    'ucirc',
-    'uuml',
-    'yacute',
-    'thorn',
-    'yuml'
-   );
-
-  extra_entities: array[MIN_EXTRA_ENTITIES..MAX_EXTRA_ENTITIES] of tentity =
-  (
-    (name: 'quot'; numeric:  34),   {  quotation mark = APL quote }
-    (name: 'amp'; numeric:  38),   {  ampersand, U+0026 ISOnum }
-    (name: 'lt'; numeric:  60),   {  less-than sign, U+003C ISOnum }
-    (name: 'gt'; numeric:  62),   {  greater-than sign, U+003E ISOnum }
-    (name: 'OElig'; numeric:  338),  {  latin capital ligature O }
-    (name: 'oelig'; numeric:  339),  {  latin small ligature oe, U+0153 ISOlat2 }
-    (name: 'Scaron'; numeric:  352),  {  latin capital letter S with caron }
-    (name: 'scaron'; numeric:  353),  {  latin small letter s with caron }
-    (name: 'Yuml'; numeric:  376),  {  latin capital letter Y with diaeresis }
-    (name: 'circ'; numeric:  710),  {  modifier letter circumflex accent }
-    (name: 'tilde'; numeric:  732),  {  small tilde, U+02DC ISOdia }
-    (name: 'ensp'; numeric:  8194), {  en space, U+2002 ISOpub }
-    (name: 'emsp'; numeric:  8195), {  em space, U+2003 ISOpub }
-    (name: 'thinsp'; numeric:  8201), {  thin space, U+2009 ISOpub }
-    (name: 'zwnj'; numeric:  8204), {  zero width non-joiner }
-    (name: 'zwj'; numeric:  8205), {  zero width joiner, U+200D NEW RFC 2070 }
-    (name: 'lrm'; numeric:  8206), {  left-to-right mark, U+200E NEW RFC 2070 }
-    (name: 'rlm'; numeric:  8207), {  right-to-left mark, U+200F NEW RFC 2070 }
-    (name: 'ndash'; numeric:  8211), {  en dash, U+2013 ISOpub }
-    (name: 'mdash'; numeric:  8212), {  em dash, U+2014 ISOpub }
-    (name: 'lsquo'; numeric:  8216), {  left single quotation mark, }
-    (name: 'rsquo'; numeric:  8217), {  right single quotation mark }
-    (name: 'sbquo'; numeric:  8218), {  single low-9 quotation mark, U+201A NEW }
-    (name: 'ldquo'; numeric:  8220), {  left double quotation mark }
-    (name: 'rdquo'; numeric:  8221), {  right double quotation mark }
-    (name: 'bdquo'; numeric:  8222), {  double low-9 quotation mark, U+201E NEW }
-    (name: 'dagger'; numeric:  8224), {  dagger, U+2020 ISOpub }
-    (name: 'Dagger'; numeric:  8225), {  double dagger, U+2021 ISOpub }
-    (name: 'permil'; numeric:  8240), {  per mille sign, U+2030 ISOtech }
-    (name: 'lsaquo'; numeric:  8249), {  single left-pointing angle quotation mark }
-    (name: 'rsaquo'; numeric:  8250), {  single right-pointing angle quotation mark }
-    (name: 'euro'; numeric:  8364)  {  euro sign, U+20AC NEW }
-  );    
+  
+{$i sgml.inc}  
   
 
 function SGMLGetDTDInfo(s: string; var top_element,availability,fpi: string): integer;
@@ -424,7 +289,6 @@ var
  inentity: boolean;
  code: integer;
  value: longint;
- found: boolean;
  strlength: integer;
 begin
   SGMLEntitiesToISO8859_1:=s;
@@ -482,29 +346,18 @@ begin
                   end
                 else
                   begin
-                    found:=false;
                     { Entity reference - search the tables }
                     { now search the entity lists and convert them to characters }
-                    for j:=MIN_ENTITIES to MAX_ENTITIES do
+                    for j:=1 to MAX_ENTITIES do
                       begin
-                        if main_entities[j] = entitystr then
+                        if SGMLMappings[j].EntityName = entitystr then
                           begin
-                            outstr:=outstr+chr(j);
-                            found:=true;
+                            if (SGMLMappings[j].CodePoint > $ff) then
+                              outstr:=outstr+'\u+'+HexStr(SGMLMappings[j].CodePoint,4)
+                            else
+                              outstr:=outstr+char(SGMLMappings[j].CodePoint);
                             break;
                           end;
-                      end;
-                    { special entities search? }
-                    if not found then
-                      begin
-                        for j:=MIN_EXTRA_ENTITIES to MAX_EXTRA_ENTITIES do
-                           begin
-                             if extra_entities[j].name = entitystr then
-                               begin
-                                 outstr:=outstr+chr(extra_entities[j].numeric);
-                                 break;
-                               end;
-                           end;
                       end;
                   end;
                { reset entity string }
@@ -539,7 +392,6 @@ var
  code: integer;
  value: longint;
  found: boolean;
- c: ucs4char;
  strlength: integer;
 begin
   UCS4_SetLength(outstr,0);
@@ -593,26 +445,13 @@ begin
                   begin
                     found:=false;
                     asciientitystr:=ucs4_converttoiso8859_1(entitystr);
-                    { Entity reference - search the tables }
-                    { now search the entity lists and convert them to characters }
-                    for j:=MIN_ENTITIES to MAX_ENTITIES do
-                      begin
-                        if main_entities[j] = asciientitystr then
-                          begin
-                            c:=ucs4char(j);
-                            ucs4_concat(outstr,outstr,c);
-                            found:=true;
-                            break;
-                          end;
-                      end;
-                    { special entities search? }
                     if not found then
                       begin
-                        for j:=MIN_EXTRA_ENTITIES to MAX_EXTRA_ENTITIES do
+                        for j:=1 to MAX_ENTITIES do
                            begin
-                             if extra_entities[j].name = asciientitystr then
+                             if SGMLMappings[j].EntityName = asciientitystr then
                                begin
-                                 value:=extra_entities[j].numeric;
+                                 value:=SGMLMappings[j].CodePoint;
                                  ucs4_concat(outstr,outstr,ucs4char(value));
                                  break;
                                end;
@@ -645,6 +484,9 @@ end;
 end.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.8  2006/08/31 03:04:46  carl
+  + Better documentation
+
   Revision 1.7  2006/08/23 00:50:02  carl
   * Modified SGMLGetDTDInfo() to return better error status
 
