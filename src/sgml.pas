@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: sgml.pas,v 1.9 2006-11-10 04:07:20 carl Exp $
+    $Id: sgml.pas,v 1.10 2006-12-03 22:10:43 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere (Optima SC Inc.)
 
     SGML related utility routines
@@ -56,7 +56,7 @@ function SGMLGetDTDInfo(s: string; var top_element,availability,fpi: string): in
 {** Parses and returns the name of an attribute as well as
     its value. Works with both SGML and XML syntax, assumes
     UTF-8 or SIO encoded characters }
-procedure SGMLGetAttributeValue(attr: string; var name,value: string);
+procedure SGMLGetAttributeValue(attr: string; var name,value: ansistring);
 
 {** Parses and returns the name of an attribute as well as
     its value. Works with both SGML and XML syntax. }
@@ -239,7 +239,7 @@ end;
   end;
   
 
-procedure SGMLGetAttributeValue(attr: string; var name,value: string);
+procedure SGMLGetAttributeValue(attr: string; var name,value: ansistring);
 var
  index: integer;
 begin
@@ -484,6 +484,13 @@ end;
 end.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.9  2006/11/10 04:07:20  carl
+     + Unicode: ucs4_iswhitespace(), ucs4_isterminal(), ucs4_getnumericvalue()
+        ucs4_ishexdigit(), ucs4_isdigit(). All tables are now public
+        for easier parsing for ISO-8859-1 and ASCII character sets.
+     + Utils: StrToken.
+     + SGML: Support for all known entities
+
   Revision 1.8  2006/08/31 03:04:46  carl
   + Better documentation
 
