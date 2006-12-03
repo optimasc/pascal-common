@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: utils.pas,v 1.24 2006-11-10 04:07:25 carl Exp $
+    $Id: utils.pas,v 1.25 2006-12-03 22:08:41 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Common utilities
@@ -127,6 +127,17 @@ CONST
     data has been parsed.
 }
 function StrToken(var Text: String; Delimiter: Char; UseQuotes: boolean) : String;
+
+{** @abstract(Returns the next-line in a possible multiple line string)
+
+    This routine is used to retrive a line that may contain end
+    of line ASCII characters in one of the standard Operating
+    System formats.
+    
+    @param(Text Text string to parse, deletes itself)
+    @returns(The string, excluding the EOLN characters)
+}
+function StrGetNextLine(var Text: String) : String;
 
 
   {** @abstract(Remove all whitespace from the start of a string) }
@@ -764,7 +775,7 @@ end;
 Function ValDecimal(const S:String; var code: integer):longint;
 { Converts a decimal string to longint }
 var
-  vs: big_integer_t;
+  vs: longint;
   c: longint;
 Begin
   vs:=0;
@@ -981,6 +992,59 @@ begin
   CompareByte:=I;
 end;
 
+function min(a,b, val: integer): integer;
+begin
+  if (a < val) then
+    begin
+      min:=b;
+      exit;
+    end;
+  if (b < val) then
+    begin
+      min:=a;
+      exit;
+    end;
+  if (a > b)  then
+    min:=b
+  else
+    min:=a;
+end;
+
+
+function StrGetNextLine(var Text: String) : String;
+var
+ c: char;
+ s: string;
+ dosidx: integer;
+ unixidx: integer;
+ macidx: integer;
+ idx: integer;
+ chars: integer;
+begin
+  StrGetNextLine:='';
+  dosidx:=pos(#13#10,Text);
+  unixidx:=pos(#10,Text);
+  macidx:=pos(#13,Text);
+  idx:=0;
+  { Now we must use the one which is closer }
+  idx:=min(dosidx,unixidx,1);
+  idx:=min(idx,macidx,1);
+  if idx = dosidx then
+    chars:=2
+  else
+    chars:=1;
+  if idx > 0 then
+    begin
+      StrGetNextLine:=Copy(Text,1,idx-1);
+      delete(Text,1,idx+chars-1);
+      exit;
+    end;
+  { No newline character - then return the entire string }
+  StrGetNextLine:=Text;
+  Text:='';
+end;
+
+
 function StrToken(var Text: String; Delimiter: Char; UseQuotes: boolean) : String;
 var
  apos: integer;
@@ -1031,6 +1095,13 @@ end;
 end.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.24  2006/11/10 04:07:25  carl
+     + Unicode: ucs4_iswhitespace(), ucs4_isterminal(), ucs4_getnumericvalue()
+        ucs4_ishexdigit(), ucs4_isdigit(). All tables are now public
+        for easier parsing for ISO-8859-1 and ASCII character sets.
+     + Utils: StrToken.
+     + SGML: Support for all known entities
+
   Revision 1.23  2006/08/31 03:02:33  carl
   + Better documentation
 
