@@ -35,6 +35,9 @@ const
     ASSOCF_REMAPRUNDLL = $00000080;
     ASSOCF_NOFIXUPS = $00000100;
     ASSOCF_IGNOREBASECLASS = $00000200;
+
+    FILE_READ_ATTRIBUTES = $080;
+
     
 
     { Constants used with SHGetFolderPath routines }
@@ -82,7 +85,7 @@ const
   CSIDL_PROFILES                = $003E; { %PROFILEPATH%                                                    }
 
   CSIDL_FLAG_CREATE             = $8000; { (force creation of requested folder if it doesn't exist yet)     }
-    
+
 
 
 var
@@ -370,8 +373,6 @@ end;
 
 
 function getfileatime(fname: putf8char; var atime: TDateTime): integer;
-const
-  FILE_READ_ATTRIBUTES = $080;
 var
   ResultVal: BOOL;
 {$IFNDEF FPC}  
@@ -401,7 +402,7 @@ begin
   { Convert the string to a UCS-2 character string }
   ucs4str:=ucs4strnew(fname,'UTF-8');
   ucs2str:=ucs2strnew(ucs4str);
-  filerec(f).handle:=longint(PCreateFileW (pwidechar(ucs2str),FILE_READ_ATTRIBUTES,FILE_SHARE_READ,@security,OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL,0));
+  filerec(f).handle:=longint(PCreateFileW (pwidechar(ucs2str),DWORD(FILE_READ_ATTRIBUTES),FILE_SHARE_READ,@security,OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL,0));
   ucs2strdispose(ucs2str);
   ucs4strdispose(ucs4str);
   status:=GetLastError;
@@ -812,7 +813,10 @@ begin
   fillchar(stats,sizeof(stats),#0);
   ucs4str:=ucs4strnew(fname,'UTF-8');
   ucs2str:=ucs2strnew(ucs4str);
-  filerec(f).handle:=PCreateFileW (pwidechar(ucs2str),GENERIC_READ,FILE_SHARE_READ,@security,OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL,0);
+  security.nLength := Sizeof(TSecurityAttributes);
+  security.bInheritHandle:=true;
+  security.lpSecurityDescriptor:=nil;
+  filerec(f).handle:=longint(PCreateFileW (pwidechar(ucs2str),DWORD(GENERIC_READ),FILE_SHARE_READ,@security,OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL,0));
   ucs2strdispose(ucs2str);
   ucs4strdispose(ucs4str);
   status:=GetLastError;
@@ -1418,11 +1422,23 @@ Begin
          found:=false;
        PSetCurrentDirectoryW:=tsetcurrentdirectoryw(p);
     end;
+  if IsConsole and (not found) then
+    begin
+      WriteLn('Missing unicode version of some API calls.');
+      WriteLn('Do you have the Microsoft Layer for Unicode on Windows 95/98/ME Systems installed?'); 
+      WriteLn('Download it from  http://go.microsoft.com/fwlink/?LinkId=14851');
+      Halt(255);
+    end;
   assert(found);  
+  if not found then
+     Halt(255);
 end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.10  2006/10/21 21:25:48  carl
+    + Bugfix with setfileatime()
+
   Revision 1.9  2006/10/20 00:23:21  carl
     * Range check errors bugfixes
 
