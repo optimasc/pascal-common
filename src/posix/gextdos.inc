@@ -226,9 +226,25 @@ begin
       move(s[1],stats.ino[0],length(s));
       {** Name of the resource on disk }
       s:=strpas(fname);
-      s:=FExpand(s);
-      FSplit(s,dir,name,ext);
-      s:=name+ext;
+      if s[length(s)] = '.' then
+        begin
+          dir:=s;
+          delete(dir,length(dir),1);
+          name:='.';
+          if dir[length(dir)] = '.' then
+            begin
+              name:=name+'.';
+              delete(dir,length(dir),1);
+            end; 
+          dir:=trim(dir);
+          s:=name;  
+        end
+      else
+        begin
+          s:=FExpand(s);
+          FSplit(s,dir,name,ext);
+          s:=name+ext;
+        end;
       stats.name:=s;
       stats.dirstr:=dir;
       { Fill up shell file assocations and comment strings }
@@ -238,7 +254,7 @@ begin
       stats.owner:=POSIXUIDToName(info.st_uid);
       stats.size:=big_integer_t(info.st_size);
       { Hidden files and directories always start with . }
-      if stats.name[1] = '.' then
+      if (stats.name[1] = '.') and (length(stats.name)>1) then
         stats.attributes:=stats.attributes + [attr_hidden];
       
       TryUNIXToDateTimeExt(info.st_ctime,stats.ctime,utc);
@@ -657,5 +673,8 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.1  2006/10/16 22:26:02  carl
+    + Generic POSIX templates for extdos
+
 
 }
