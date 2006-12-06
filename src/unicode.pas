@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: unicode.pas,v 1.42 2006-11-10 04:07:24 carl Exp $
+    $Id: unicode.pas,v 1.43 2006-12-06 21:13:53 ccodere Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Unicode related routines
@@ -195,11 +195,21 @@ type
   {** @abstract(Concatenates two UCS-4 strings, and gives a resulting UCS-4 string) }
   procedure ucs4_concat(var resultstr: ucs4string;const s1: ucs4string; const s2: array of ucs4char);
   
-  {** @abstract(Replaces all accented characters with their base representation).
+  {** @abstract(Returns the base string representation of a canonical string).
       This routine is useful for converted multilangual strings to their ASCII
-      equivalents.
+      equivalents. It removes all accented characters and replaces them with
+      their base equivalent.
   }
   procedure ucs4_removeaccents(var resultstr: ucs4string;s2: ucs4string);
+
+  
+  {** @abstract(Returns the base character representation of a canonical character).
+      This routine is useful for converted multilangual strings to their ASCII
+      equivalents. It converts an accented characters and replaces them with
+      the base equivalent or returns the input character if there is no 
+      base equivalent.
+  }
+  function ucs4_getbasechar(c: ucs4char): ucs4char;
   
 
   {** @abstract(Concatenates an UCS-4 string with an ASCII string, and gives
@@ -1827,6 +1837,23 @@ end;
            end;
       end;
     Move(s2,ResultStr, slen*sizeof(ucs4char)+sizeof(ucs4char));  
+  end;
+  
+  
+  function ucs4_getbasechar(c: ucs4char): ucs4char;
+  var
+   slen: integer;
+   j: integer;
+  begin
+    ucs4_getbasechar:=c;
+    for j:=1 to MAX_CANONICAL_MAPPINGS do
+      begin
+        if (CanonicalMappings[j].CodePoint = c) then
+           begin
+              ucs4_getbasechar := CanonicalMappings[j].BaseChar;
+              exit;
+           end;
+      end;
   end;
   
   
@@ -3735,6 +3762,13 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.42  2006/11/10 04:07:24  carl
+     + Unicode: ucs4_iswhitespace(), ucs4_isterminal(), ucs4_getnumericvalue()
+        ucs4_ishexdigit(), ucs4_isdigit(). All tables are now public
+        for easier parsing for ISO-8859-1 and ASCII character sets.
+     + Utils: StrToken.
+     + SGML: Support for all known entities
+
   Revision 1.41  2006/10/24 03:41:15  carl
    + MAX_STRING_LENGTH compromise, set to 2048 characters.
 
