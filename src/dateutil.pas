@@ -1,5 +1,5 @@
 {
-    $Id: dateutil.pas,v 1.11 2006-10-17 01:03:28 carl Exp $
+    $Id: dateutil.pas,v 1.12 2006-12-07 02:53:38 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere (Optima SC Inc.)
 
     Date and time utility routines
@@ -987,7 +987,7 @@ begin
  { The minutes are present here }
  i:=1;
  MinuteDigits:='';
- while s[i] in ['0'..'9'] do
+ while (i <= length(s)) and (s[i] in ['0'..'9']) do
    begin
      { Hmm.. invalid date/time format }
      if i > length(s) then exit;
@@ -999,7 +999,7 @@ begin
  { Check if the seconds are present here }
  SecondDigits:='';
  delete(s,1,i-1);
- if s[1] = RFC822_TIME_SEPARATOR then
+ if (length(s) > 0) and (s[1] = RFC822_TIME_SEPARATOR) then
    begin
       delete(s,1,1);
       i:=1;
@@ -1019,7 +1019,7 @@ begin
  found:=false;
  OffsetStr:='';
  { Check if we have a form +/- HHMM }
- if s[1] in ['+','-'] then
+ if (length(s) > 0) and (s[1] in ['+','-']) then
    begin
       offsetstr:=s[1];
       found:=true;
@@ -1442,6 +1442,9 @@ end;
 end.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.11  2006/10/17 01:03:28  carl
+   * Bugfix for compilation with BP (line too long error)
+
   Revision 1.10  2006/08/31 03:08:05  carl
   + Better documentation
 
