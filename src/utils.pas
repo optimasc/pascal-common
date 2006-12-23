@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: utils.pas,v 1.25 2006-12-03 22:08:41 carl Exp $
+    $Id: utils.pas,v 1.26 2006-12-23 23:15:39 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Common utilities
@@ -37,6 +37,16 @@ uses
  gpautils,
  objects
  ;
+ 
+{$IFDEF WIN32}
+{$DEFINE HAS_EXTDOS}
+{$ENDIF}
+{$IFDEF LINUX}
+{$IFDEF CPU86}
+{$DEFINE HAS_EXTDOS}
+{$ENDIF}
+{$ENDIF}
+ 
 
  
 TYPE
@@ -57,8 +67,8 @@ CONST
      
      Only works with the current active code page table.
 
-     @param FName Name of the file to check
-     @returns FALSE if the file cannot be opened or if it does not exist.
+     @param(FName Name of the file to check)
+     @returns(FALSE if the file cannot be opened or if it does not exist)
   }
   Function AnsiFileExists(const FName : string): Boolean;
   
@@ -225,6 +235,13 @@ function StrGetNextLine(var Text: String) : String;
       equal to zero.
   }
   function ValDecimal(const S:String; var code: integer):longint;
+  
+  {** Convert a decimal value represented by a string to its
+      numerical value. If there is no error, @code(code) will be
+      equal to zero.
+  }
+  function ValUnsignedDecimal(const S:String; var code: integer):longword;
+  
   {** Convert an octal value represented by a string to its
       numerical value. If there is no error, @code(code) will be
       equal to zero.
@@ -265,7 +282,11 @@ Const WhiteSpace = [' ',#10,#13,#9];
 
 Implementation
 
-uses dos;
+uses dos
+{$IFDEF HAS_EXTDOS}
+     ,extdos
+{$ENDIF}     
+     ;
 
 
 
@@ -772,6 +793,29 @@ begin
 end;
 
 
+function ValUnsignedDecimal(const S:String; var code: integer):longword;
+{ Converts a decimal string to longint }
+var
+  vs: longword;
+  c: longword;
+Begin
+  vs:=0;
+  code := 0;
+  for c:=1 to length(s) do
+   begin
+     vs:=vs*10;
+     if s[c] in ['0'..'9'] then
+      inc(vs,ord(s[c])-ord('0'))
+     else
+      begin
+        code := -1;
+        ValUnsignedDecimal:=0;
+        exit;
+      end;
+   end;
+  ValUnsignedDecimal:=longword(vs);
+end;
+
 Function ValDecimal(const S:String; var code: integer):longint;
 { Converts a decimal string to longint }
 var
@@ -1095,6 +1139,9 @@ end;
 end.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.25  2006/12/03 22:08:41  carl
+    + StrGetNextLine() added
+
   Revision 1.24  2006/11/10 04:07:25  carl
      + Unicode: ucs4_iswhitespace(), ucs4_isterminal(), ucs4_getnumericvalue()
         ucs4_ishexdigit(), ucs4_isdigit(). All tables are now public
