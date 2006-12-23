@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: unicode.pas,v 1.43 2006-12-06 21:13:53 ccodere Exp $
+    $Id: unicode.pas,v 1.44 2006-12-23 23:14:44 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Unicode related routines
@@ -3702,66 +3702,14 @@ end;
   
   
 
-begin
-
-(*
-    aliaslist[1].aliasname:= 'ISO-8859-1';
-    aliaslist[1].table:= i8859_1toUTF32;
-    aliaslist[2].aliasname:= 'latin1';
-    aliaslist[2].table:= i8859_1toUTF32;
-    aliaslist[3].aliasname:= 'CP819';
-    aliaslist[3].table:= i8859_1toUTF32;
-    aliaslist[4].aliasname:= 'IBM819';
-    aliaslist[4].table:= i8859_1toUTF32;
-    aliaslist[5].aliasname:= 'ISO_8859-1';
-    aliaslist[5].table:= i8859_1toUTF32;
-
-    aliaslist[6].aliasname:= 'ISO-8859-2';
-    aliaslist[6].table:= i8859_2toUTF32;
-    aliaslist[7].aliasname:= 'ISO_8859-2';
-    aliaslist[7].table:= i8859_2toUTF32;
-    aliaslist[9].aliasname:= 'ISO-8859-1';
-    aliaslist[9].table:= i8859_1toUTF32;
-    aliaslist[10].aliasname:= 'ISO-8859-1';
-    aliaslist[10].table:= i8859_1toUTF32;
-    aliaslist[11].aliasname:= 'ISO-8859-1';
-    aliaslist[11].table:= i8859_1toUTF32;
-    
-
-    (aliasname: 'ISO-8859-2';table: @i8859_2toUTF32),
-    (aliasname: 'ISO_8859-2';table: @i8859_2toUTF32),
-    (aliasname: 'latin2';    table: @i8859_2toUTF32),
-
-    (aliasname: 'ISO-8859-5';table: @i8859_5toUTF32),
-    (aliasname: 'ISO_8859-5';table: @i8859_5toUTF32),
-
-    (aliasname: 'ISO-8859-16';table: @i8859_16toUTF32),
-    (aliasname: 'ISO_8859-16';table: @i8859_16toUTF32),
-    (aliasname: 'latin10';   table: @i8859_16toUTF32),
-
-    (aliasname: 'windows-1252';table: @cp1252toUTF32),
-
-    (aliasname: 'IBM437';table: @cp437toUTF32),
-    (aliasname: 'cp437';table: @cp437toUTF32),
-
-    (aliasname: 'IBM850';table: @cp850toUTF32),
-    (aliasname: 'cp850';table: @cp850toUTF32),
-
-    (aliasname: 'macintosh';table: @RomantoUTF32),
-    (aliasname: 'MacRoman';table: @RomantoUTF32),
-
-    (aliasname: 'atari';table: @AtariSTtoUTF32),
-
-    (aliasname: 'ASCII';table: @ASCIItoUTF32),
-    (aliasname: 'US-ASCII';table: @ASCIItoUTF32),
-    (aliasname: 'IBM367';table: @ASCIItoUTF32),
-    (aliasname: 'cp367';table: @ASCIItoUTF32),
-    (aliasname: 'ISO646-US';table: @ASCIItoUTF32)
-{$endif}*)
 end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.43  2006/12/06 21:13:53  ccodere
+    + char based canonical analysis (unicode.pas)
+    + Boyer-Moore search algorithm
+
   Revision 1.42  2006/11/10 04:07:24  carl
      + Unicode: ucs4_iswhitespace(), ucs4_isterminal(), ucs4_getnumericvalue()
         ucs4_ishexdigit(), ucs4_isdigit(). All tables are now public
