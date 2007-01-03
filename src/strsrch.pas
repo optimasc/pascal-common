@@ -11,7 +11,7 @@
    been modified to be portable across different compilers.
 
 }
-unit strutils;
+unit strsrch;
 
 
 interface
@@ -40,7 +40,7 @@ type
        or ASCII. These are case-sensitive. If the CharSet parameter is 
        left empty, then it is considered being an ASCII binary comparison.
    }
-   TSearchBM = Object(TObject)
+   TStringSearch = Object(TObject)
    private
       FTranslate  : TTranslationTable;     { translation table }
       FJumpTable  : array[char] of Byte;   { Jumping table }
@@ -85,7 +85,7 @@ type
 implementation
 
 
-uses  unicode;
+uses  unicode,strings;
 
 
 
@@ -121,7 +121,7 @@ end;
    Preparation of the jumping table
 ------------------------------------------------------------------- *)
 
-procedure TSearchBM.Prepare( Pattern: pchar; PatternLen: size_t; CharSet: string;
+procedure TStringSearch.Prepare( Pattern: pchar; PatternLen: size_t; CharSet: string;
                              IgnoreCase: Boolean );
 var
    i: integer;
@@ -169,7 +169,7 @@ begin
 end;
 
 
-procedure TSearchBM.PrepareStr( const Pattern: string; CharSet: string; IgnoreCase: Boolean );
+procedure TStringSearch.PrepareStr( const Pattern: string; CharSet: string; IgnoreCase: Boolean );
 var
    str: pchar;
 begin
@@ -183,7 +183,7 @@ end;
 
 { Searching Last char & scanning right to left }
 
-function TSearchBM.Search( Text: pchar; TextLen: size_t ): pchar;
+function TStringSearch.Search( Text: pchar; TextLen: size_t ): pchar;
 var
    shift, m1, j: integer;
    jumps: size_t;
@@ -233,7 +233,7 @@ begin
 end;
 
 
-function TSearchBM.Pos( const S: string ): integer;
+function TStringSearch.Pos( const S: string ): integer;
 var
    str, p: pchar;
 begin
@@ -242,7 +242,7 @@ begin
       str := @S[1];
       p := Search( str, Length(S));
       if p <> nil then
-         Pos := 1 + p - str;
+         Pos := 1 + (p - str);
    end;
 end;
 
@@ -252,4 +252,8 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.1  2006/12/06 21:13:56  ccodere
+    + char based canonical analysis (unicode.pas)
+    + Boyer-Moore search algorithm
+
 }
