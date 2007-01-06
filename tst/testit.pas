@@ -494,6 +494,20 @@ begin
 end;
 
 
+procedure testbasechar;
+var
+ c: char;
+begin
+  c:=char(ucs4_getbasechar(ucs4char(' ')));
+  if c <> ' ' then
+    RunError(255);
+  { accented E character }  
+  c:=char(ucs4_getbasechar(ucs4char($E9)));
+  if c <> 'e' then
+    RunError(255);
+end;
+
+
 { Tests the ucs4_iswhitespace routine }
 procedure testwhitespace;
 const
@@ -858,12 +872,16 @@ Begin
   testdigit;
   testisterminal;
   testgetvalue;
+  testbasechar;
   TestStrGetNextLine;
   WriteLn(ErrOutput,'Std Error OUTPUT');
 end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.19  2007/01/06 15:56:54  carl
+    + add several unicode routines testsuit
+
   Revision 1.18  2005/10/10 17:43:56  carl
     + More testing software
 
