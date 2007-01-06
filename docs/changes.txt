@@ -1,5 +1,13 @@
 History of major changes in the releases:
 
+1.4.2:
+   + Unicode: ucs4_iswhitespace(), ucs4_isterminal(), ucs4_getnumericvalue()
+      ucs4_ishexdigit(), ucs4_isdigit(). All tables are now public
+      for easier parsing for ISO-8859-1 and ASCII character sets.
+   + Utils: StrToken.
+   + SGML: Support for all known entities 
+   + strsrch: Boyers-Moore routine for text searching
+   
 1.4.1:
    + Better documentation
    * Unicode: When utf8string is a shortstring, some memory corruption
