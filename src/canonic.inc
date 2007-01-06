@@ -1,5 +1,5 @@
 { Unicode character canonical character data
-  Generated on 2006-11-09
+  Generated on 2007-01-06
   Encoded in the ISO-8859-1 character set
 }
 const
@@ -13,6 +13,7 @@ type
     BaseChar: ucs4char;
   end;
 
+{$ifndef tp}
 
 const
   CanonicalMappings: array[1..MAX_CANONICAL_MAPPINGS] of TCanonicalInfo = (
@@ -4002,3 +4003,8 @@ const
    (CodePoint: $2FA1C; BaseChar: $9F3B),
    (CodePoint: $2FA1D; BaseChar: $2A600)
 );
+
+{$else}
+
+procedure canonicmapping;external; {$L canoninc.obj}
+{$endif}
