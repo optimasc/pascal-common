@@ -74,10 +74,16 @@ General utilities common to all platforms.</p>
 <td class="itemcode"><code>procedure <b><a   href="utils.html#StreamErrorProcedure">StreamErrorProcedure</a></b>(Var S: TStream);</code></td>
 </tr>
 <tr class="list">
-<td class="itemcode"><code>procedure <b><a   href="utils.html#stringdispose">stringdispose</a></b>(var p : <a   href="utils.html#PshortString">pShortstring</a>);</code></td>
+<td class="itemcode"><code>function <b><a   href="utils.html#StrGetNextLine">StrGetNextLine</a></b>(var Text: String) : String;</code></td>
 </tr>
 <tr class="list2">
+<td class="itemcode"><code>procedure <b><a   href="utils.html#stringdispose">stringdispose</a></b>(var p : <a   href="utils.html#PshortString">pShortstring</a>);</code></td>
+</tr>
+<tr class="list">
 <td class="itemcode"><code>function <b><a   href="utils.html#stringdup">stringdup</a></b>(const s : string) : <a   href="utils.html#PshortString">pShortstring</a>;</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code>function <b><a   href="utils.html#StrToken">StrToken</a></b>(var Text: String; Delimiter: Char; UseQuotes: boolean) : String;</code></td>
 </tr>
 <tr class="list">
 <td class="itemcode"><code>Procedure <b><a   href="utils.html#SwapLong">SwapLong</a></b>(var x : longword);</code></td>
@@ -108,6 +114,9 @@ General utilities common to all platforms.</p>
 </tr>
 <tr class="list2">
 <td class="itemcode"><code>function <b><a   href="utils.html#ValOctal">ValOctal</a></b>(const S:String;var code: integer):longint;</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code>function <b><a   href="utils.html#ValUnsignedDecimal">ValUnsignedDecimal</a></b>(const S:String; var code: integer):longword;</code></td>
 </tr>
 </table>
 <a name="@Types"></a><h3 class="summary">Types</h3>
@@ -177,7 +186,7 @@ Verifies the existence of a filename</p>
 <dd>Name of the file to check</dd>
 </dl>
 <h6 class="return">returns</h6>
-<p class="return">FALSE if the file cannot be opened or if it does not exist.</p><table class="detail">
+<p class="return">FALSE if the file cannot be opened or if it does not exist</p><table class="detail">
 <tr class="list">
 <td class="itemcode"><a name="boolstr"></a><code>function <b>boolstr</b>(val: boolean; cnt: byte): string;</code></td>
 </tr>
@@ -345,6 +354,25 @@ Generic stream error procedure</p>
  Generic stream error procedure that can be used to set <code>streamerror</code></p>
 <table class="detail">
 <tr class="list">
+<td class="itemcode"><a name="StrGetNextLine"></a><code>function <b>StrGetNextLine</b>(var Text: String) : String;</code></td>
+</tr>
+</table>
+<p>
+Returns the next-line in a possible multiple line string</p>
+<p>
+
+
+<p>This routine is used to retrive a line that may contain end of line ASCII characters in one of the standard Operating System formats.
+
+<p> </p>
+<h6 class="parameters">parameters</h6>
+<dl class="parameters">
+<dt>Text</dt>
+<dd>Text string to parse, deletes itself</dd>
+</dl>
+<h6 class="return">returns</h6>
+<p class="return">The string, excluding the EOLN characters</p><table class="detail">
+<tr class="list">
 <td class="itemcode"><a name="stringdispose"></a><code>procedure <b>stringdispose</b>(var p : <a   href="utils.html#PshortString">pShortstring</a>);</code></td>
 </tr>
 </table>
@@ -354,6 +382,29 @@ Generic stream error procedure</p>
 </tr>
 </table>
 &nbsp;<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="StrToken"></a><code>function <b>StrToken</b>(var Text: String; Delimiter: Char; UseQuotes: boolean) : String;</code></td>
+</tr>
+</table>
+<p>
+Separates a string into its individual token representations</p>
+<p>
+
+
+<p>   
+
+<p>When Text returns an empty string, this indicates that all the data has been parsed.</p>
+<h6 class="parameters">parameters</h6>
+<dl class="parameters">
+<dt>Text</dt>
+<dd>Text string to tokenize, deletes itself</dd>
+<dt>Delimiter</dt>
+<dd>The character delimiter for tokens</dd>
+<dt>UseQuotes</dt>
+<dd>Are Quotes allowed for escaping the delimiter</dd>
+</dl>
+<h6 class="return">returns</h6>
+<p class="return">The current token</p><table class="detail">
 <tr class="list">
 <td class="itemcode"><a name="SwapLong"></a><code>Procedure <b>SwapLong</b>(var x : longword);</code></td>
 </tr>
@@ -427,6 +478,13 @@ Convert an hexadecimal value represented by a string to its numerical value. If 
 </table>
 <p>
 Convert an octal value represented by a string to its numerical value. If there is no error, <code>code</code> will be equal to zero.</p>
+<table class="detail">
+<tr class="list">
+<td class="itemcode"><a name="ValUnsignedDecimal"></a><code>function <b>ValUnsignedDecimal</b>(const S:String; var code: integer):longword;</code></td>
+</tr>
+</table>
+<p>
+Convert a decimal value represented by a string to its numerical value. If there is no error, <code>code</code> will be equal to zero.</p>
 <h3 class="detail">Types</h3>
 <table class="detail">
 <tr class="list">
@@ -453,6 +511,6 @@ Convert an octal value represented by a string to its numerical value. If there 
 <ul class="authors">
 <li>Carl Eric Codere</li>
 </ul>
-<hr noshade size="1"><span class="appinfo"><em>Generated by <a  target="_parent" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8.3</a> on 2006-10-16 21:10:39</em>
+<hr noshade size="1"><span class="appinfo"><em>Generated by <a  target="_parent" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8.3</a> on 2007-01-06 15:01:51</em>
 </span>
 </body></html>
