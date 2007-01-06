@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: fileio.pas,v 1.6 2006-08-31 03:07:28 carl Exp $
+    $Id: fileio.pas,v 1.7 2007-01-06 15:54:24 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Generic portable file I/O routines with debug support.
@@ -29,7 +29,7 @@
 unit fileio;
 {$I-}
 {$B+}
-{$DEFINE DEBUG}
+{.$DEFINE DEBUG}
 
 
 
@@ -221,9 +221,9 @@ begin
    RunError(status and $ff);
 {$ENDIF}
   FRec:=FileRec(F);
+{$IFDEF DEBUG}
   s:=strpas(Frec.name);
   p:=stringdup(s);
-{$IFDEF DEBUG}
   if OpenedFileCollection.Search(p,Index) then
     begin
       OpenedFileCollection.Free(OpenedFileCollection.At(Index));
@@ -349,6 +349,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.6  2006/08/31 03:07:28  carl
+  + FileAssign also checks for last IOResult
+
   Revision 1.5  2004/11/21 19:52:22  carl
     * bugfix with FileReset, record size was 128, which is wrong, set to 1
     + const parameters for filenames
