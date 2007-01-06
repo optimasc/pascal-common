@@ -346,10 +346,11 @@ begin
       if not
          (
          (attr_directory in SearchInfo.stats.Attributes) or
-         (attr_directory in SearchInfo.stats.Attributes)
+         (attr_device in SearchInfo.stats.Attributes) or
+         (attr_offline in SearchInfo.stats.Attributes)
          )
          then
-         FileExists:=true;
+           FileExists:=true;
     end;
   FindCloseEx(SearchInfo);  
   utf8strdispose(utf);
@@ -673,6 +674,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.2  2006/12/03 22:10:10  carl
+    * Bugfix with special . directory
+
   Revision 1.1  2006/10/16 22:26:02  carl
     + Generic POSIX templates for extdos
 

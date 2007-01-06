@@ -981,7 +981,8 @@ begin
       if not
          (
          (attr_directory in SearchInfo.stats.Attributes) or
-         (attr_directory in SearchInfo.stats.Attributes)
+         (attr_device in SearchInfo.stats.Attributes) or
+         (attr_offline in SearchInfo.stats.Attributes)
          )
          then
          FileExists:=true;
@@ -1436,6 +1437,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.11  2006/12/03 22:09:27  carl
+    * Bugfix with reading attributes
+
   Revision 1.10  2006/10/21 21:25:48  carl
     + Bugfix with setfileatime()
 
