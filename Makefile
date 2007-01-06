@@ -35,7 +35,7 @@ USEDELPHI=1
 
 PACKAGENAME:=common
 DOCTITLE:=Common pascal units documentation
-UNITDIRS := ./src ./tst
+UNITDIRS := ./src ./tst ./src/$(OS)
 FILE:=./src/allunits.pas
 #BINFILES:=
 DOCFILES:=./docs/license.txt ./docs/changes.txt ./docs/copying ./docs/copying.fpc ./docs/readme.txt ./docs/$(PACKAGENAME).pdf ./docs/html
