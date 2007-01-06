@@ -1,11 +1,10 @@
-{ This program converts
-  an unicode casefolding.txt
-  to an include file.
+{ This program converts different character set properties
+  to include/assembler files.
 
   The output is written to different files.
 }
 {$X+}
-program cvtcase;
+program unconvert;
 
 uses
   fpautils,
@@ -561,6 +560,7 @@ begin
  WriteLn(T,'    BaseChar: ',TypeName,';');
  WriteLn(T,'  end;');
  WriteLn(T);
+ WriteLn(T,'{$ifndef tp}');
  WriteLn(T);
  WriteLn(T,'const');
  WriteLn(T,'  CanonicalMappings: array[1..MAX_CANONICAL_MAPPINGS] of TCanonicalInfo = (');
@@ -574,6 +574,31 @@ begin
        WriteLn(T)
    end;
  WriteLn(T,');');
+ WriteLn(T);
+ WriteLn(T,'{$else}');
+ WriteLn(T);
+ WriteLn(T,'procedure canonicmapping;external; {$L canoninc.obj}');
+ WriteLn(T,'{$endif}');
+ Close(T);
+
+ {-- Write the assembler file also --}
+ { First Turbo pascal assembler file }
+ Assign(T, 'Z:\canoninc.asm');
+ Rewrite(T);
+ WriteLn(T,'.MODEL LARGE, PASCAL');
+ WriteLn(T,'.CODE');
+ WriteLn(T,'canonicmapping PROC FAR');
+ WriteLn(T,#9'PUBLIC canonicmapping');
+ { Depending on the Unicode format used }
+ for i:=1 to MaxEntries do
+   begin
+     WriteLn(T,';-------------------------------------------------------');
+     WriteLn(T,';  (CodePoint: $',Data[i].upper_code,'; BaseChar: $',Data[i].lower_code,')' );
+     Write(T,#9'DD 0',Data[i].upper_code,'h, 0',Data[i].lower_code,'h' );
+     WriteLn(T)
+   end;
+ WriteLn(T,'canonicmapping ENDP');
+ WriteLn(T,'END');
  Close(T);
 end;
 
