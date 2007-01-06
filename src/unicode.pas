@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: unicode.pas,v 1.44 2006-12-23 23:14:44 carl Exp $
+    $Id: unicode.pas,v 1.45 2007-01-06 19:23:51 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Unicode related routines
@@ -851,8 +851,6 @@ type
 
 { Case conversion table }
 {$i case.inc}
-{ Accented character conversion table }
-{$i canonic.inc}
 { Digits }
 {$i digits.inc}
 { Hex Digits }
@@ -876,6 +874,23 @@ type
     aliasname: string[32];
     table: pchararray;
   end;   
+  
+
+{ Accented character conversion table }
+{$i canonic.inc}
+
+type  
+  tcanonicalmappings =  array[1..MAX_CANONICAL_MAPPINGS] of TCanonicalInfo;
+  pcanonicalmappings = ^tcanonicalmappings;
+  
+var
+  { Pointer to the canonical mapping table, had to do it, because in
+    TP it took too much space }
+  CanonicalMap: pcanonicalmappings;
+  ExitSave: pointer;
+{$ifdef tp}    
+  p: pchar;
+{$endif}
 
 
 
@@ -1153,6 +1168,8 @@ const
      UNKNOWN_CODEPOINT,
      UNKNOWN_CODEPOINT
   );
+  
+  
 
 const
   MAX_ALIAS = 26;
@@ -1828,9 +1845,9 @@ end;
       begin
          for j:=1 to MAX_CANONICAL_MAPPINGS do
            begin
-             if (CanonicalMappings[j].CodePoint = s2[i]) then
+             if (CanonicalMap^[j].CodePoint = s2[i]) then
                begin
-                 s2[i] := CanonicalMappings[j].BaseChar;
+                 s2[i] := CanonicalMap^[j].BaseChar;
                  { There cannot be more than one match }
                  break;
                end;
@@ -1848,9 +1865,9 @@ end;
     ucs4_getbasechar:=c;
     for j:=1 to MAX_CANONICAL_MAPPINGS do
       begin
-        if (CanonicalMappings[j].CodePoint = c) then
+        if (CanonicalMap^[j].CodePoint = c) then
            begin
-              ucs4_getbasechar := CanonicalMappings[j].BaseChar;
+              ucs4_getbasechar := CanonicalMap^[j].BaseChar;
               exit;
            end;
       end;
@@ -3700,12 +3717,31 @@ end;
  end;
 
   
-  
+procedure releaseresources;far;
+begin
+  ExitProc := ExitSave;
+  if assigned(CanonicalMap) then
+    Dispose(CanonicalMap);
+end;
 
+
+begin
+  ExitSave:= ExitProc;
+  ExitProc := @ReleaseResources;
+  new(CanonicalMap);
+{$ifdef tp}
+    p:=@canonicmapping;
+    move(p^,CanonicalMap^,sizeof(tcanonicalmappings));
+{$else}    
+    move(CanonicalMappings,CanonicalMap^,sizeof(tcanonicalmappings));
+{$endif}
 end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.44  2006/12/23 23:14:44  carl
+    * remove unused comments
+
   Revision 1.43  2006/12/06 21:13:53  ccodere
     + char based canonical analysis (unicode.pas)
     + Boyer-Moore search algorithm
