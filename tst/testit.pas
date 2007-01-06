@@ -493,6 +493,321 @@ begin
      RunError(255);
 end;
 
+
+{ Tests the ucs4_iswhitespace routine }
+procedure testwhitespace;
+const
+  ucs4char1 = ucs4char($08);
+  ucs4char2 = ucs4char($09);
+  ucs4char3 = ucs4char($0B);
+  ucs4char4 = ucs4char($0D);
+  ucs4char5 = ucs4char($19FF);
+  ucs4char6 = ucs4char($2028);
+  ucs4char7 = ucs4char($2009);
+  ucs4char8 = ucs4char($4000);
+  ucs4char9 = ucs4char($2000);
+Begin
+ if ucs4_iswhitespace(ucs4char1) = true then
+   RunError(255);
+ if ucs4_iswhitespace(ucs4char2) = false then
+   RunError(255);
+ if ucs4_iswhitespace(ucs4char3) = false then
+   RunError(255);
+ if ucs4_iswhitespace(ucs4char4) = false then
+   RunError(255);
+ if ucs4_iswhitespace(ucs4char5) = true then
+   RunError(255);
+ if ucs4_iswhitespace(ucs4char6) = false then
+   RunError(255);
+ if ucs4_iswhitespace(ucs4char7) = false then
+   RunError(255);
+ if ucs4_iswhitespace(ucs4char8) = true then
+   RunError(255);
+ if ucs4_iswhitespace(ucs4char9) = false then
+   RunError(255);
+end;
+
+
+procedure testhexdigit;
+Begin
+ if ucs4_ishexdigit($31) = false then
+   RunError(255);
+ if ucs4_ishexdigit($46) = false then
+   RunError(255);
+ if ucs4_ishexdigit($0A) = true then
+   RunError(255);
+end;
+
+procedure testdigit;
+Begin
+ if ucs4_isdigit($39) = false then
+   RunError(255);
+ if ucs4_isdigit($46) = true then
+   RunError(255);
+ if ucs4_isdigit($0A) = true then
+   RunError(255);
+end;
+
+
+procedure testisterminal;
+Begin
+ if ucs4_isterminal($39) = true then
+   RunError(255);
+ if ucs4_isterminal($46) = true then
+   RunError(255);
+ if ucs4_isterminal($0A) = true then
+   RunError(255);
+ if ucs4_isterminal($2E) = false then
+   RunError(255);
+ if ucs4_isterminal(ucs4char('!')) = false then
+   RunError(255);
+ if ucs4_isterminal($701) = false then
+   RunError(255);
+end;
+
+
+procedure testgetvalue;
+Begin
+ if ucs4_getnumericvalue($39) <> 9 then
+   RunError(255);
+ if ucs4_getnumericvalue($46) <> -1 then
+   RunError(255);
+ if ucs4_getnumericvalue($137C) <> 10000 then
+   RunError(255);
+ if ucs4_getnumericvalue($F2A) <> -2 then
+   RunError(255);
+end;
+
+const
+ NAME_1 = 'CARL';
+ NAME_2 = 'ERIC';
+ NAME_3 = 'VALERIE';
+ NAME_4 = ' VAL';
+ NAME_5 = '"ERIC,CARL  ,"';
+ NAME_6 = '"TEST"';
+
+ SIMPLE_CASE_1 = NAME_1;
+ SIMPLE_CASE_2 = ','+NAME_1+',';
+ SIMPLE_CASE_3 = NAME_1+','+NAME_2+','+NAME_3+',';
+ CASE_1 = NAME_5+','+NAME_3+','+NAME_6;
+ CASE_2 = CASE_1+',""';
+ { Invalid case }
+ CASE_3 = CASE_2+'","';
+
+{ Tests the stroken routine }
+procedure TestStrToken;
+var
+ s: string;
+ origstring: string;
+Begin
+ {********************** Case 1 ***********************}
+ origstring:=SIMPLE_CASE_1;
+ s:=StrToken(origstring,',',false);
+ if s <> SIMPLE_CASE_1 then
+   RunError(255);
+ s:=StrToken(origstring,',',false);
+ if s <> '' then
+   RunError(255);
+
+ if origString <> '' then
+   RunError(255);
+ {********************** Case 2 ***********************}
+ origstring:=SIMPLE_CASE_2;
+ s:=StrToken(origstring,',',false);
+ if s <> '' then
+   RunError(255);
+ if origString = '' then
+   RunError(255);
+ s:=StrToken(origstring,',',false);
+ if s <> NAME_1 then
+   RunError(255);
+ s:=StrToken(origstring,',',false);
+ if s <> '' then
+   RunError(255);
+ if origString <> '' then
+   RunError(255);
+ {********************** Case 3 ***********************}
+ origstring:=SIMPLE_CASE_3;
+ s:=StrToken(origstring,',',false);
+ if s <> NAME_1 then
+   RunError(255);
+ if origString = '' then
+   RunError(255);
+ s:=StrToken(origstring,',',false);
+ if s <> NAME_2 then
+   RunError(255);
+ if origString = '' then
+   RunError(255);
+ s:=StrToken(origstring,',',false);
+ if s <> NAME_3 then
+   RunError(255);
+ if origString <> '' then
+   RunError(255);
+ {********************** Case 4 ***********************}
+ origstring:='';
+ s:=StrToken(origstring,',',false);
+ if s <> '' then
+   RunError(255);
+ if origString <> '' then
+   RunError(255);
+ { Quotes are used.                                    }
+ {********************** Case 5 ***********************}
+ origstring:='';
+ s:=StrToken(origstring,',',true);
+ if s <> '' then
+   RunError(255);
+ if origString <> '' then
+   RunError(255);
+ {********************** Case 6 ***********************}
+ origstring:=SIMPLE_CASE_3;
+ s:=StrToken(origstring,',',true);
+ if s <> NAME_1 then
+   RunError(255);
+ if origString = '' then
+   RunError(255);
+ s:=StrToken(origstring,',',false);
+ if s <> NAME_2 then
+   RunError(255);
+ if origString = '' then
+   RunError(255);
+ s:=StrToken(origstring,',',false);
+ if s <> NAME_3 then
+   RunError(255);
+ if origString <> '' then
+   RunError(255);
+ {********************** Case 7 ***********************}
+ origstring:=CASE_1;
+ s:=StrToken(origstring,',',true);
+ if s <> NAME_5 then
+   RunError(255);
+ if origString = '' then
+   RunError(255);
+ s:=StrToken(origstring,',',true);
+ if s <> NAME_3 then
+   RunError(255);
+ if origString = '' then
+   RunError(255);
+ s:=StrToken(origstring,',',true);
+ if s <> NAME_6 then
+   RunError(255);
+ if origString <> '' then
+   RunError(255);
+ {********************** Case 8 ***********************}
+ origstring:=CASE_2;
+ s:=StrToken(origstring,',',true);
+ if s <> NAME_5 then
+   RunError(255);
+ if origString = '' then
+   RunError(255);
+ s:=StrToken(origstring,',',true);
+ if s <> NAME_3 then
+   RunError(255);
+ if origString = '' then
+   RunError(255);
+ s:=StrToken(origstring,',',true);
+ if s <> NAME_6 then
+   RunError(255);
+ if origString = '' then
+   RunError(255);
+ s:=StrToken(origstring,',',true);
+ if s <> '""' then
+   RunError(255);
+ if origString <> '' then
+   RunError(255);
+ {********************** Case 9 ***********************}
+ { Just make sure there is no range-check error        }
+ origstring:=CASE_3;
+ s:=StrToken(origstring,',',true);
+ if s <> NAME_5 then
+   RunError(255);
+ if origString = '' then
+   RunError(255);
+ s:=StrToken(origstring,',',true);
+ if s <> NAME_3 then
+   RunError(255);
+ if origString = '' then
+   RunError(255);
+ s:=StrToken(origstring,',',true);
+ if s <> NAME_6 then
+   RunError(255);
+ if origString = '' then
+   RunError(255);
+ s:=StrToken(origstring,',',true);
+ s:=StrToken(origstring,',',true);
+end;
+
+
+procedure TestStrGetNextLine;
+const
+  GETLINE_CASE_1 = #10#10;
+  GETLINE_CASE_2 = #10'c'#10'a';
+  GETLINE_CASE_3 = #13#10'Carl'#13#10'Eric'#10'a'#13#10;
+  GETLINE_CASE_4 = 'Caillou'#13#10'anchor';
+  GETLINE_CASE_5 = 'A simple sentence. Hello world';
+var
+ s: string;
+ s1: string;
+Begin
+ { Case 1 }
+ s:=GETLINE_CASE_1;
+ s1:=StrGetNextLine(s);
+ IF S1 <> '' then
+   RunError(255);
+ s1:=StrGetNextLine(s);
+ IF S1 <> '' then
+   RunError(255);
+ IF S <> '' then
+   RunError(255);
+ { Case 2 }
+ s:=GETLINE_CASE_2;
+ s1:=StrGetNextLine(s);
+ IF S1 <> '' then
+   RunError(255);
+ s1:=StrGetNextLine(s);
+ IF S1 <> 'c' then
+   RunError(255);
+ s1:=StrGetNextLine(s);
+ IF S1 <> 'a' then
+   RunError(255);
+ IF S <> '' then
+   RunError(255);
+ { Case 3 }
+ s:=GETLINE_CASE_3;
+ s1:=StrGetNextLine(s);
+ IF S1 <> '' then
+   RunError(255);
+ s1:=StrGetNextLine(s);
+ IF S1 <> 'Carl' then
+   RunError(255);
+ s1:=StrGetNextLine(s);
+ IF S1 <> 'Eric' then
+   RunError(255);
+ s1:=StrGetNextLine(s);
+ IF S1 <> 'a' then
+   RunError(255);
+ IF S <> '' then
+   RunError(255);
+ { Case 4 }
+ s:=GETLINE_CASE_4;
+ s1:=StrGetNextLine(s);
+ IF S1 <> 'Caillou' then
+   RunError(255);
+ s1:=StrGetNextLine(s);
+ IF S1 <> 'anchor' then
+   RunError(255);
+ IF S <> '' then
+   RunError(255);
+ { Case 5 }
+ s:=GETLINE_CASE_5;
+ s1:=StrGetNextLine(s);
+ IF S1 <> GETLINE_CASE_5 then
+   RunError(255);
+ IF S <> '' then
+   RunError(255);
+end;
+
+
+
 var
   s: string;
   b: boolean;
@@ -537,11 +852,21 @@ Begin
   testutfnull;
   testremovenulls;
   testucs4strtrim;
+  teststrtoken;
+  testwhitespace;
+  testhexdigit;
+  testdigit;
+  testisterminal;
+  testgetvalue;
+  TestStrGetNextLine;
   WriteLn(ErrOutput,'Std Error OUTPUT');
 end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.18  2005/10/10 17:43:56  carl
+    + More testing software
+
   Revision 1.17  2004/11/29 03:52:22  carl
     + Support for new routines of dateutil
 
