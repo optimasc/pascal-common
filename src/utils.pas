@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: utils.pas,v 1.26 2006-12-23 23:15:39 carl Exp $
+    $Id: utils.pas,v 1.27 2007-01-06 20:23:13 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Common utilities
@@ -38,16 +38,6 @@ uses
  objects
  ;
  
-{$IFDEF WIN32}
-{$DEFINE HAS_EXTDOS}
-{$ENDIF}
-{$IFDEF LINUX}
-{$IFDEF CPU86}
-{$DEFINE HAS_EXTDOS}
-{$ENDIF}
-{$ENDIF}
- 
-
  
 TYPE
     PshortString = ^ShortString;
@@ -283,9 +273,6 @@ Const WhiteSpace = [' ',#10,#13,#9];
 Implementation
 
 uses dos
-{$IFDEF HAS_EXTDOS}
-     ,extdos
-{$ENDIF}     
      ;
 
 
@@ -1139,6 +1126,9 @@ end;
 end.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.26  2006/12/23 23:15:39  carl
+    + Added support for ValUnsignedDecimal()
+
   Revision 1.25  2006/12/03 22:08:41  carl
     + StrGetNextLine() added
 
