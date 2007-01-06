@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: tpautils.pas,v 1.7 2005-11-09 05:18:26 carl Exp $
+    $Id: tpautils.pas,v 1.8 2007-01-06 15:54:54 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Turbo Pascal/Borland Pascal 7.0 compatibility unit
@@ -55,6 +55,7 @@ type
   smallint = integer;
   longword = longint;
   shortstring = string;
+  ansistring = shortstring;
   pstring = ^shortstring;
   cardinal = word;
   { An integer which has the size of a pointer }
@@ -150,6 +151,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.7  2005/11/09 05:18:26  carl
+    * small change for better debugging
+
   Revision 1.6  2004/11/23 03:45:24  carl
     + ErrOutput standard error stream support
 
