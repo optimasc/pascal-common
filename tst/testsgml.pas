@@ -46,6 +46,10 @@ begin
  s:=SGMLEntitiesToISO8859_1('Ceci est test repr&#233;sentatif &#38; un petit tour!');
  if s <> 'Ceci est test repr'#233'sentatif & un petit tour!' then
    RunError(255);
+ { Out of bound to ISO-8859-1 }
+ s:=SGMLEntitiesToISO8859_1('Ceci est test repr&b.Omega;sentatif un petit tour!');
+ if s <> 'Ceci est test repr\u03A9sentatif & un petit tour!' then
+   
 end;
 
 
@@ -59,6 +63,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.1  2004/10/13 23:40:54  carl
+    + added sgml unit testing
+
   Revision 1.1  2004/09/29 00:56:53  carl
     + update to include dateutil testing
 
