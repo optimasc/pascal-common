@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: fileio.pas,v 1.7 2007-01-06 15:54:24 carl Exp $
+    $Id: fileio.pas,v 1.8 2007-02-03 21:04:34 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Generic portable file I/O routines with debug support.
@@ -244,6 +244,7 @@ begin
  if status <> 0 then
    RunError(status and $ff);
 {$ENDIF}
+  _result:=0;
   BlockRead(F,Buf,count,_result);
   FileBlockRead:=_result;
   LastIOResult:=IOResult;
@@ -259,6 +260,8 @@ begin
  if status <> 0 then
    RunError(status and $ff);
 {$ENDIF}
+  {Bugfix under Windows and RTL, the value is never set! } 
+  _result:=0;
   BlockWrite(F,Buf,Count,_result);
   FileBlockWrite:=_result;
   LastIOResult:=IOResult;
@@ -349,6 +352,10 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.7  2007/01/06 15:54:24  carl
+    -  remove debug option
+    * bugfix without debug option, would fail
+
   Revision 1.6  2006/08/31 03:07:28  carl
   + FileAssign also checks for last IOResult
 
