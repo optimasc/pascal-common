@@ -35,9 +35,9 @@ USEDELPHI=1
 
 PACKAGENAME:=common
 DOCTITLE:=Common pascal units documentation
-UNITDIRS := ./src ./tst ./src/$(OS)
+UNITDIRS := ./src ./tst ./lib ./src/$(OS)
 FILE:=./src/allunits.pas
-#BINFILES:=
+BINFILES:=./bin/*
 DOCFILES:=./docs/license.txt ./docs/changes.txt ./docs/copying ./docs/copying.fpc ./docs/readme.txt ./docs/$(PACKAGENAME).pdf ./docs/html
 #LIBFILES
 SRCFILES:=./src/*
@@ -50,7 +50,7 @@ DOWNLOAD_URL:=http://www.optimasc.com/products/utilities/
 
 PATHSEP:=\\
 BINDIR := ./bin
-OUTDIR := ./lib
+OUTDIR := ./bin
 DATE := getdate.exe
 
 include ../makefile.cmn
