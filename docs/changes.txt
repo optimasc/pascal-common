@@ -7,6 +7,7 @@ History of major changes in the releases:
    + Utils: StrToken.
    + SGML: Support for all known entities 
    + strsrch: Boyers-Moore routine for text searching
+   * Fixes in fileio unit
    
 1.4.1:
    + Better documentation
