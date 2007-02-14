@@ -1044,7 +1044,7 @@ begin
       ucs2str:=ucs2strnew(ucs4str);
       if assigned(ucs2str) then
         begin
-          attributes:=PGetFileAttributesW({$IFDEF FPC}LPCWSTR{$ELSE}pwidechar{$ENDIF}(ucs2str));
+          attributes:=PGetFileAttributesW(pwidechar(ucs2str));
           { convert the attributes to our format }
           outattributes:=WinAttrToExtAttr(attributes);
           FSplit(utf8strpas(fname),Dir,Name,Ext);
@@ -1448,6 +1448,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.13  2007/02/14 04:45:25  carl
+    * GetFileAttributes would not work in Win85/98/ME Systems.
+
   Revision 1.12  2007/01/06 15:53:38  carl
     + devices and offline resources are no longer considered files in FileExists()
 
