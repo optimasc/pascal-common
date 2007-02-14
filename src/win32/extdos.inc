@@ -166,6 +166,8 @@ type
       
    TGetCurrentDirectoryW = function(nBufferLength: DWORD; lpBuffer: PWideChar): DWORD; stdcall;
    TSetCurrentDirectoryW = function(lpPathName: PWideChar): BOOL; stdcall;
+   
+   TGetFileAttributesW = function (lpFileName: PWideChar): DWORD; stdcall;
      
    ASSOCF = DWORD;
    
@@ -202,6 +204,7 @@ var
  PCreateFileW: TCreateFileW;
  PGetCurrentDirectoryW: TGetCurrentDirectoryW;
  PSetCurrentDirectoryW: TSetCurrentDirectoryW;
+ PGetFileAttributesW: TGetFileAttributesW;
      
 {**************************************************************************}
 
@@ -1041,7 +1044,7 @@ begin
       ucs2str:=ucs2strnew(ucs4str);
       if assigned(ucs2str) then
         begin
-          attributes:=GetFileAttributesW({$IFDEF FPC}LPCWSTR{$ELSE}pwidechar{$ENDIF}(ucs2str));
+          attributes:=PGetFileAttributesW({$IFDEF FPC}LPCWSTR{$ELSE}pwidechar{$ENDIF}(ucs2str));
           { convert the attributes to our format }
           outattributes:=WinAttrToExtAttr(attributes);
           FSplit(utf8strpas(fname),Dir,Name,Ext);
@@ -1396,6 +1399,10 @@ Begin
            if not assigned(p) then
              found:=false;
            PSetCurrentDirectoryW:=tsetcurrentdirectoryw(p);
+           p:=(GetProcAddress(UnicowsHandle,'GetFileAttributesW'));
+           if not assigned(p) then
+             found:=false;
+           PGetFileAttributesW:=TGetFileAttributesW(p);
          end;
     end
   else
@@ -1422,6 +1429,10 @@ Begin
        if not assigned(p) then
          found:=false;
        PSetCurrentDirectoryW:=tsetcurrentdirectoryw(p);
+       p:=(GetProcAddress(Kernel32Handle,'GetFileAttributesW'));
+       if not assigned(p) then
+         found:=false;
+       PGetFileAttributesW:=TGetFileAttributesW(p);
     end;
   if IsConsole and (not found) then
     begin
@@ -1437,6 +1448,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.12  2007/01/06 15:53:38  carl
+    + devices and offline resources are no longer considered files in FileExists()
+
   Revision 1.11  2006/12/03 22:09:27  carl
     * Bugfix with reading attributes
 
