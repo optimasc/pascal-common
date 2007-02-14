@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: utils.pas,v 1.27 2007-01-06 20:23:13 carl Exp $
+    $Id: utils.pas,v 1.28 2007-02-14 04:44:08 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Common utilities
@@ -27,7 +27,11 @@ Interface
  {$ENDIF}
  {====================================================================}
 
-
+{$IFNDEF TP}
+{$IFOPT H+}
+{$DEFINE ANSISTRINGS}
+{$ENDIF}
+{$ENDIF}
 
 uses
  tpautils,
@@ -370,6 +374,11 @@ uses dos
 
    Function FillTo(s : string; tolength: integer): string;
     Begin
+{$IFNDEF ANSISTRINGS}    
+    { Error limit checking }
+    if tolength > high(s) then
+       tolength:=high(s);
+{$ENDIF}
       while length(s) < tolength do
         s := s + ' ';
       FillTo := s;
@@ -664,6 +673,11 @@ end;
 
 function fillwithzero(s: string; newlength: integer): string;
  begin
+{$IFNDEF ANSISTRINGS}    
+    { Error limit checking }
+    if newlength > high(s) then
+       newlength:=high(s);
+{$ENDIF}
    while length(s) < newlength do
      s:='0'+s;
    fillwithzero:=s;
@@ -672,6 +686,11 @@ function fillwithzero(s: string; newlength: integer): string;
 
 function fillwithspace(s: string; newlength: integer): string;
  begin
+{$IFNDEF ANSISTRINGS}    
+    { Error limit checking }
+    if newlength > high(s) then
+       newlength:=high(s);
+{$ENDIF}
    while length(s) < newlength do
      s:=' '+s;
    fillwithspace:=s;
@@ -1126,6 +1145,9 @@ end;
 end.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.27  2007/01/06 20:23:13  carl
+    - Remove extdos reference
+
   Revision 1.26  2006/12/23 23:15:39  carl
     + Added support for ValUnsignedDecimal()
 
