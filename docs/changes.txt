@@ -1,5 +1,10 @@
 History of major changes in the releases:
 
+1.4.3:
+   * Bugfix with infinite loop in some string utilities in certain conditions
+     in utils.pas
+   * GetAttributes() now uses unicows version on Win95/98/ME in extdos for Win32  
+
 1.4.2:
    + Unicode: ucs4_iswhitespace(), ucs4_isterminal(), ucs4_getnumericvalue()
       ucs4_ishexdigit(), ucs4_isdigit(). All tables are now public
