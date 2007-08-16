@@ -1,5 +1,10 @@
 History of major changes in the releases:
 
+1.4.4
+    * Bugfix with range check error problem with delphi dos unit with
+      files greater than 2 Gbytes in size. Now all files greater than 2 GBytes
+      indicate 2 Gbytes in size.
+
 1.4.3:
    * Bugfix with infinite loop in some string utilities in certain conditions
      in utils.pas
