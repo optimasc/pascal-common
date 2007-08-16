@@ -2,7 +2,11 @@
     This file is part of the Free Pascal run time library.
     Copyright (c) 1999-2000 by the Free Pascal development team.
 
-    Dos unit for BP7 compatible RTL
+    Dos unit for BP7 compatible RTL.
+    
+    WARNING: Maximum sizes of files is limited to 2 Gbytes-1,
+    if the file is over that value, the value returned for
+    size shall be 2 Gb-1 anyways!
 
     See the file COPYING.FPC, included in this distribution,
     for details about the copyright.
@@ -185,6 +189,9 @@ finalization
 end.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.8  2005/03/21 00:22:53  carl
+    * exec/diskfree/disksize/fexpand bugfixes
+
   Revision 1.7  2004/12/26 23:33:45  carl
     + support for Kylix
 
