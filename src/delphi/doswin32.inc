@@ -1,5 +1,5 @@
 {
-    $Id: doswin32.inc,v 1.5 2005-11-21 00:17:36 carl Exp $
+    $Id: doswin32.inc,v 1.6 2007-08-16 02:50:42 carl Exp $
     Copyright (c) 2001 by members of the Free Pascal
     development team
 
@@ -400,7 +400,10 @@ begin
       end;
    end;
 { Convert some attributes back }
-  f.size:=F.W32FindData.NFileSizeLow;
+  if (longword(F.W32FindData.NFileSizeLow)) > (longword(high(longint))) then
+    f.size:=high(longint)
+  else
+    f.size:=longint(F.W32FindData.NFileSizeLow);
   f.attr:=WinToDosAttr(F.W32FindData.dwFileAttributes);
   WinToDosTime(F.W32FindData.ftLastWriteTime,f.Time);
   f.Name:=StrPas(F.W32FindData.cFileName);
@@ -903,6 +906,10 @@ end;
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.5  2005/11/21 00:17:36  carl
+    - remove some compilation warnings/hints
+    + speed optimizations
+
   Revision 1.4  2005/10/10 17:44:46  carl
     * Bugfix with double quote characters in Find routines
 
