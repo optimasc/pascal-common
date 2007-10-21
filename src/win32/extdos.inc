@@ -685,7 +685,8 @@ begin
   else
     begin
        setfileatime:=GetLastError;
-       exit;
+       CloseHandle(FileHandle);
+       exit; 
     end;
   setfileatime:=status;
   CloseHandle(FileHandle);
@@ -737,6 +738,7 @@ begin
   else
     begin
        setfilemtime:=GetLastError;
+       FileClose(F);
        exit;
     end;
   setfilemtime:=status;
@@ -789,6 +791,7 @@ begin
   else
     begin
        setfilectime:=GetLastError;
+       FileClose(F);
        exit;
     end;
   setfilectime:=status;
@@ -1448,6 +1451,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.14  2007/02/14 04:52:28  carl
+    * Small compilation bugfix under FPC
+
   Revision 1.13  2007/02/14 04:45:25  carl
     * GetFileAttributes would not work in Win85/98/ME Systems.
 
