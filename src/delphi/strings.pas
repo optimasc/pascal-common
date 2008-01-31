@@ -1,5 +1,5 @@
 {
-    $Id: strings.pas,v 1.7 2006-06-17 18:10:15 carl Exp $
+    $Id: strings.pas,v 1.8 2008-01-31 04:19:02 carl Exp $
     This file is part of the Free Pascal run time library.
     Copyright (c) 1999-2000 by Carl-Eric Codere,
     member of the Free Pascal development team.
@@ -13,9 +13,6 @@
 
  **********************************************************************}
 Unit Strings;
-
-{$H-}
-
 
   {*********************************************************************}
   { Strings unit, 100% portable.                                        }
@@ -215,8 +212,9 @@ uses sysutils;
 
  Function strpas(Str: pchar): string;
  Begin
-   SetLength(Result,strlen(str));
-   Move(Str^,Result[1],Length(Result));
+   strpas:=Sysutils.StrPas(str);
+{   SetLength(Result,strlen(str));
+   Move(Str^,Result[1],Length(Result));}
  end;
 
  Function StrEnd(Str: PChar): PChar;
@@ -418,6 +416,9 @@ uses sysutils;
 end.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.7  2006/06/17 18:10:15  carl
+  + Speed optimisations
+
   Revision 1.6  2005/11/21 00:17:39  carl
     - remove some compilation warnings/hints
     + speed optimizations
