@@ -1,9 +1,11 @@
 History of major changes in the releases:
 
+1.4.6:
+    * Delphi Strings unit can support ansistrings
+    
 1.4.5:
     * Bugfix of handle leak in extdos with setfileXtime(). This would 
       sometimes the file to get locked.
-    * Delphi Strings unit can support ansistrings
 
 1.4.4
     * Bugfix with range check error problem with delphi dos unit with
