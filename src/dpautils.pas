@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: dpautils.pas,v 1.4 2004-12-26 23:32:59 carl Exp $
+    $Id: dpautils.pas,v 1.5 2008-08-01 21:32:32 ccodere Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Routines for Delphi 6/7 (Win32 target) compatibility
@@ -29,6 +29,9 @@ Unit dpautils;
 {$DEFINE DELPHI_COMPILER}
 {$ENDIF}
 {$IFDEF VER160}
+{$DEFINE DELPHI_COMPILER}
+{$ENDIF}
+{$IFDEF VER180}
 {$DEFINE DELPHI_COMPILER}
 {$ENDIF}
 
@@ -83,6 +86,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.4  2004/12/26 23:32:59  carl
+    + support for Kylix
+
   Revision 1.3  2004/12/08 04:25:50  carl
     + make it compile under kylix
 
