@@ -3,11 +3,16 @@
   Encoded in the ISO-8859-1 character set
 }
 const
+  {** @exclude }
   MAX_WHITESPACE =12;
+  {** @exclude }
   MAX_UCS2_WHITESPACE =12;
+  {** @exclude }
   MAX_ANSI_WHITESPACE =4;
+  {** @exclude }
   MAX_ASCII_WHITESPACE =2;
 type
+  {** @exclude }
   TWhiteSpaceInfo = record
     lower: ucs2char;
     upper: ucs2char;
@@ -15,6 +20,7 @@ type
 
 
 const
+  {** @exclude }
   WhiteSpace: array[1..MAX_WHITESPACE] of TWhiteSpaceInfo = (
    (lower: $0009; upper: $000D),
    (lower: $0020; upper: $0020),

@@ -3,11 +3,16 @@
   Encoded in the ISO-8859-1 character set
 }
 const
+  {** @exclude }
   MAX_TERMINALS =30;
+  {** @exclude }
   MAX_UCS2_TERMINALS =30;
+  {** @exclude }
   MAX_ANSI_TERMINALS =3;
+  {** @exclude }
   MAX_ASCII_TERMINALS =3;
 type
+  {** @exclude }
   TTerminalsInfo = record
     lower: ucs2char;
     upper: ucs2char;
@@ -15,6 +20,7 @@ type
 
 
 const
+  {** @exclude }
   Terminals: array[1..MAX_TERMINALS] of TTerminalsInfo = (
    (lower: $0021; upper: $0021),
    (lower: $002E; upper: $002E),

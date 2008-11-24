@@ -3,11 +3,16 @@
   Encoded in the ISO-8859-1 character set
 }
 const
+  {** @exclude }
   MAX_CASETABLE =931;
+  {** @exclude }
   MAX_UCS2_CASETABLE =891;
+  {** @exclude }
   MAX_ANSI_CASETABLE =58;
+  {** @exclude }
   MAX_ASCII_CASETABLE =26;
 type
+  {** @exclude }
   TCaseTableInfo = record
     lower: ucs4char;
     upper: ucs4char;
@@ -15,6 +20,7 @@ type
 
 
 const
+  {** @exclude }
   CaseTable: array[1..MAX_CASETABLE] of TCaseTableInfo = (
    (lower: $0061; upper: $0041),
    (lower: $0062; upper: $0042),

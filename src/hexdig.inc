@@ -3,11 +3,16 @@
   Encoded in the ISO-8859-1 character set
 }
 const
+  {** @exclude }
   MAX_HEXDIGITS =6;
+  {** @exclude }
   MAX_UCS2_HEXDIGITS =6;
+  {** @exclude }
   MAX_ANSI_HEXDIGITS =3;
+  {** @exclude }
   MAX_ASCII_HEXDIGITS =3;
 type
+  {** @exclude }
   THexDigitsInfo = record
     lower: ucs2char;
     upper: ucs2char;
@@ -15,6 +20,7 @@ type
 
 
 const
+  {** @exclude }
   HexDigits: array[1..MAX_HEXDIGITS] of THexDigitsInfo = (
    (lower: $0030; upper: $0039),
    (lower: $0041; upper: $0046),

@@ -3,13 +3,18 @@
   Encoded in the ISO-8859-1 character set
 }
 const
+  {** @exclude }
   MAX_DIGITS =290;
+  {** @exclude }
   MAX_UCS2_DIGITS =230;
+  {** @exclude }
   MAX_ANSI_DIGITS =10;
+  {** @exclude }
   MAX_ASCII_DIGITS =10;
 
 
 const
+  {** @exclude }
   Digits: array[1..MAX_DIGITS] of ucs4char = (
    $0030,
    $0031,

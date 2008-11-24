@@ -3,11 +3,16 @@
   Encoded in the ISO-8859-1 character set
 }
 const
+  {** @exclude }
   MAX_NUMERIC_MAPPINGS =831;
+  {** @exclude }
   MAX_NUMERIC_UCS2_MAPPINGS =532;
+  {** @exclude }
   MAX_NUMERIC_ANSI_MAPPINGS =16;
+  {** @exclude }
   MAX_NUMERIC_ASCII_MAPPINGS =10;
 type
+  {** @exclude }
   TNumericInfo = record
     CodePoint: ucs4char;
     value: longint;
@@ -15,6 +20,7 @@ type
 
 
 const
+  {** @exclude }
   NumericalMappings: array[1..MAX_NUMERIC_MAPPINGS] of TNumericInfo = (
    (CodePoint: $0030; value: 0),
    (CodePoint: $0031; value: 1),
