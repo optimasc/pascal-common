@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: sgml.pas,v 1.10 2006-12-03 22:10:43 carl Exp $
+    $Id: sgml.pas,v 1.11 2008-11-24 00:35:18 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere (Optima SC Inc.)
 
     SGML related utility routines
@@ -51,7 +51,7 @@ const
     @returns(SGML_STATUS_OK = no error, SGML_STATUS_MALFORMED = malformed DTD, 
        SGML_STATUS_NO_DTD = no DTD)
 }
-function SGMLGetDTDInfo(s: string; var top_element,availability,fpi: string): integer;
+function SGMLGetDTDInfo(s: string; var top_element,availability,fpi: shortstring): integer;
 
 {** Parses and returns the name of an attribute as well as
     its value. Works with both SGML and XML syntax, assumes
@@ -95,7 +95,7 @@ type
 {$i sgml.inc}  
   
 
-function SGMLGetDTDInfo(s: string; var top_element,availability,fpi: string): integer;
+function SGMLGetDTDInfo(s: string; var top_element,availability,fpi: shortstring): integer;
 var
  idx: integer;
  i: integer;
@@ -484,6 +484,9 @@ end;
 end.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.10  2006/12/03 22:10:43  carl
+    + Small cosmetic change
+
   Revision 1.9  2006/11/10 04:07:20  carl
      + Unicode: ucs4_iswhitespace(), ucs4_isterminal(), ucs4_getnumericvalue()
         ucs4_ishexdigit(), ucs4_isdigit(). All tables are now public
