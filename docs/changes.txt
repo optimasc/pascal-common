@@ -5,6 +5,7 @@ History of major changes in the releases:
     + SGMLGetDTDInfo now explicitly uses shortstrings for its return
       values, otherwise would always cause compilation problems with
       other modules.
+    * Documentation cleanup  
       
 1.4.6:
     * Delphi Strings unit can support ansistrings
