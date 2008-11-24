@@ -1,5 +1,11 @@
 History of major changes in the releases:
 
+1.4.7:
+    + Add support for Turbo Delphi for Win32
+    + SGMLGetDTDInfo now explicitly uses shortstrings for its return
+      values, otherwise would always cause compilation problems with
+      other modules.
+      
 1.4.6:
     * Delphi Strings unit can support ansistrings
     
