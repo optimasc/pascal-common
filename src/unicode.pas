@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: unicode.pas,v 1.45 2007-01-06 19:23:51 carl Exp $
+    $Id: unicode.pas,v 1.46 2009-01-04 15:36:31 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Unicode related routines
@@ -547,6 +547,18 @@ type
 
   }
   function utf8strdispose(p: pchar): pchar;
+  
+  
+  {** @abstract(Validates the legality of an UTF-8 null terminated string)
+
+      Verifies that the UTF-8 encoded strings is encoded in a legal
+      way.
+
+      @returns(FALSE if the string is illegal, otherwise returns TRUE)
+
+  }
+  function utf8islegal(p: pchar): boolean;
+  
 
 
   {** @abstract(Convert an UTF-8 null terminated string to an UCS-4 null terminated string)
@@ -1396,6 +1408,31 @@ const
   end;
   
   
+  function utf8islegal(p: pchar): boolean;
+  var morebytes: integer;
+      i,j: integer;
+      len: integer;
+  begin
+    utf8islegal:=false;
+    len:=utf8strlen(p);
+    i:=0;
+    while i <= len do
+    begin
+        morebytes:=trailingBytesForUTF8[ord(p[i])];
+        inc(i);
+        if morebytes <> 0 then
+        begin
+           for j:=i to (i+morebytes-1) do
+             begin
+              if j > len then exit;
+              if ((ord(p[j]) and $C0) <> $80) then
+                 exit;
+             end;
+        end;
+        inc(i,morebytes);
+    end;
+    utf8islegal:=true;
+  end;
 
   function utf8_islegal(const s: utf8string): boolean;
   var morebytes: integer;
@@ -3739,6 +3776,10 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.45  2007/01/06 19:23:51  carl
+    + Turbo pascal support for canonical mapping without taking the full
+       data segment.
+
   Revision 1.44  2006/12/23 23:14:44  carl
     * remove unused comments
 
