@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: locale.pas,v 1.13 2006-08-31 03:05:02 carl Exp $
+    $Id: locale.pas,v 1.14 2009-01-04 15:37:06 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Localization and date/time unit
@@ -80,6 +80,21 @@ function GetISODateStringBasic(Year, Month, Day: Word): shortstring;
 }
 function IsValidISODateString(datestr: shortstring; strict: boolean): boolean;
 
+{** @abstract(Verifies if the date is in a valid ISO 8601 format and returns
+     the decoded values)
+
+    @param(datestr Date string in valid ISO 8601 format)
+    @param(strict If set, the format must exactly be
+      YYYYMMDD or YYYY-MM-DD. If not set, less precision
+      is allowed)
+    @param(Year The year value from, always valid)
+    @param(Month The month value from 0 to 12, 0 indicating that this parameter was not present)
+    @param(Day The day value from 0 to 31, 0 indicating that this parameter was not present)
+    @returns(TRUE if the date string is valid otherwise false)
+}
+function IsValidISODateStringExt(datestr: shortstring; strict: boolean; var Year, Month,Day: word): boolean;
+
+
 {** @abstract(Verifies if the time is in a valid ISO 8601 format)
 
     Currently does not support the fractional second parameters,
@@ -93,6 +108,23 @@ function IsValidISODateString(datestr: shortstring; strict: boolean): boolean;
     @returns(TRUE if the time string is valid otherwise false)
 }
 function IsValidISOTimeString(timestr: shortstring; strict: boolean): boolean;
+
+{** @abstract(Verifies if the time is in a valid ISO 8601 format)
+
+    Currently does not support the fractional second parameters,
+    and only the extemded time format recommended by W3C when used
+    with the time zone designator.
+
+    @param(timestr Time string in valid ISO 8601 format)
+    @param(strict The value must contain all the required
+      parameters with UTC, either in basic or extended format
+      to be valid)
+    @returns(TRUE if the time string is valid otherwise false)
+}
+function IsValidISOTimeStringExt(timestr: shortstring; strict: boolean; var hour,min,sec: word;
+  var offhour,offmin: smallint): boolean;
+
+
 
 {** @abstract(Verifies if the date and time is in a valid ISO 8601 format)
 
@@ -615,19 +647,19 @@ begin
  isdigits:=true;
 end;
 
-function IsValidISODateString(datestr: shortstring; strict: boolean): boolean;
+function IsValidISODateStringExt(datestr: shortstring; strict: boolean; var Year,Month,Day: word): boolean;
 const
  DATE_SEPARATOR = '-';
 var
  monthstr: string[2];
  yearstr: string[4];
  daystr: string[2];
- yearval: integer;
- monthval: integer;
- dayval: integer;
  code: integer;
 begin
-  IsValidIsoDateString:=false;
+  IsValidIsoDateStringExt:=false;
+  year:=0;
+  month:=0;
+  day:=0;
   monthstr:='';
   yearstr:='';
   daystr:='';
@@ -678,7 +710,7 @@ begin
     begin
       if not isdigits(yearstr) then
          exit;
-      val(yearstr,yearval,code);
+      val(yearstr,year,code);
       if code <> 0 then 
         exit;
     end;  
@@ -687,10 +719,10 @@ begin
     begin
       if not isdigits(monthstr) then
          exit;
-      val(monthstr,monthval,code);
+      val(monthstr,month,code);
       if code <> 0 then 
         exit;
-      if (monthval < 1) or (monthval > 12) then
+      if (month < 1) or (month > 12) then
         exit;
     end;  
   { verify the validity of the year }
@@ -698,34 +730,45 @@ begin
     begin
       if not isdigits(daystr) then
          exit;
-      val(daystr,dayval,code);
+      val(daystr,day,code);
       if code <> 0 then 
         exit;
-      if (dayval < 1) or (dayval > 31) then
+      if (day < 1) or (day > 31) then
         exit;
     end;  
     
-  IsValidIsoDateString:=true;
+  IsValidIsoDateStringExt:=true;
 end;    
 
 
-function IsValidISOTimeString(timestr: shortstring; strict: boolean): boolean;
+function IsValidISODateString(datestr: shortstring; strict: boolean): boolean;
+var
+ year,month,day: word;
+begin
+  IsValidIsoDateString:=IsValidISODateStringExt(datestr,strict,year,month,day);
+end;    
+
+
+function IsValidISOTimeStringExt(timestr: shortstring; strict: boolean; var hour,min,sec: word;
+ var offhour,offmin: smallint): boolean;
 const
  TIME_SEPARATOR = ':';
 var
  hourstr: string[2];
  secstr: string[2];
  minstr: string[2];
+ negative: boolean;
  offsetminstr: string[2];
  offsethourstr: string[2];
- offsetminval: integer;
- offsethourval: integer;
- minval: integer;
- secval: integer;
- hourval: integer;
  code: integer;
 begin
-  IsValidIsoTimeString:=false;
+  negative:=false;
+  IsValidIsoTimeStringExt:=false;
+  hour:=0;
+  min:=0;
+  sec:=0;
+  offhour:=0;
+  offmin:=0;
   minstr:='';
   secstr:='';
   hourstr:='';
@@ -754,6 +797,8 @@ begin
           begin
             if (timestr[9] in ['+','-']) and (timestr[12] = ':') then
               begin
+                if timestr[9] = '-' then
+                  negative:=true;
                 offsethourstr:=copy(timestr,10,2);
                 offsetminstr:=copy(timestr,13,2);
               end
@@ -765,6 +810,8 @@ begin
             if (timestr[9] in ['+','-']) then
               begin
                 if strict then exit;
+                if timestr[9] = '-' then
+                  negative:=true;
                 offsethourstr:=copy(timestr,10,2);
                 offsetminstr:='00';
               end
@@ -818,58 +865,72 @@ begin
     begin
       if not isdigits(minstr) then
          exit;
-      val(minstr,minval,code);
+      val(minstr,min,code);
       if code <> 0 then 
         exit;
-      if (minval < 0) or (minval > 59) then
-        exit;
-    end;  
-  { verify the validity of the year }
-  if offsetminstr <> '' then
-    begin
-      if not isdigits(offsetminstr) then
-         exit;
-      val(offsetminstr,offsetminval,code);
-      if code <> 0 then 
-        exit;
-      if (offsetminval < 0) or (offsetminval > 59) then
+      if (min < 0) or (min > 59) then
         exit;
     end;  
   if offsethourstr <> '' then
     begin
       if not isdigits(offsethourstr) then
          exit;
-      val(offsethourstr,offsethourval,code);
+      val(offsethourstr,offhour,code);
+      if code <> 0 then
+        exit;
+      if (offhour < 0) or (offhour > 23) then
+        exit;
+      if negative then
+        offhour:=-offhour;
+    end;
+  { verify the validity of the offset in minutes }
+  if offsetminstr <> '' then
+    begin
+      if not isdigits(offsetminstr) then
+         exit;
+      val(offsetminstr,offmin,code);
       if code <> 0 then 
         exit;
-      if (offsethourval < 0) or (offsethourval > 23) then
+      if (offmin < 0) or (offmin > 59) then
         exit;
-    end;  
-    
-  { verify the validity of the year }
+      { If offhour = 0 and negative change the sign of ther offmin }
+      if (offhour = 0) and (negative=true) then
+        offmin:=-offmin;
+    end;
+
   if secstr <> '' then
     begin
       if not isdigits(secstr) then
          exit;
-      val(secstr,secval,code);
+      val(secstr,sec,code);
       if code <> 0 then
         exit;
       { 60 because of possible leap seconds }  
-      if (secval < 0) or (secval > 60) then
+      if (sec < 0) or (sec > 60) then
         exit;
     end;
   if hourstr <> '' then
     begin
       if not isdigits(hourstr) then
          exit;
-      val(hourstr,hourval,code);
+      val(hourstr,hour,code);
       if code <> 0 then
         exit;
-      if (hourval < 0) or (hourval > 23) then
+      if (hour < 0) or (hour > 23) then
         exit;
     end;
 
-  IsValidIsoTimeString:=true;
+  IsValidIsoTimeStringExt:=true;
+end;
+
+
+
+function IsValidISOTimeString(timestr: shortstring; strict: boolean): boolean;
+var
+  hour,min,sec: word;
+  offhour,offmin: smallint;
+begin
+  IsValidISOTimeString:=IsValidISOTimeStringExt(timestr,strict,hour,min,sec,offhour,offmin);
 end;
 
 function IsValidISODateTimeString(str: shortstring; strict: boolean): boolean;
@@ -1037,6 +1098,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.13  2006/08/31 03:05:02  carl
+  + Better documentation
+
   Revision 1.12  2005/07/20 03:13:00  carl
    * Range check error bugfix
 
