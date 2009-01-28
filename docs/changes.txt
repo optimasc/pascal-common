@@ -6,6 +6,8 @@ History of major changes in the releases:
       values, otherwise would always cause compilation problems with
       other modules.
     * Documentation cleanup  
+    + Added utf8islegal in unicode.pas for validating utf-8 legal characters.
+    + Added ISO 8601 Date extraction routines in locale.pas
       
 1.4.6:
     * Delphi Strings unit can support ansistrings
