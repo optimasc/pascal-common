@@ -670,12 +670,22 @@
 <td class="itemdesc">Verifies if the date is in a valid ISO 8601 format</td>
 </tr>
 <tr class="list2">
+<td class="itemname"><a class="bold"  href="locale.html#IsValidISODateStringExt">IsValidISODateStringExt</a></td>
+<td class="itemunit"><a class="bold"  href="locale.html">locale</a></td>
+<td class="itemdesc">Verifies if the date is in a valid ISO 8601 format and returns the decoded values</td>
+</tr>
+<tr class="list">
 <td class="itemname"><a class="bold"  href="locale.html#IsValidISODateTimeString">IsValidISODateTimeString</a></td>
 <td class="itemunit"><a class="bold"  href="locale.html">locale</a></td>
 <td class="itemdesc">Verifies if the date and time is in a valid ISO 8601 format</td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemname"><a class="bold"  href="locale.html#IsValidISOTimeString">IsValidISOTimeString</a></td>
+<td class="itemunit"><a class="bold"  href="locale.html">locale</a></td>
+<td class="itemdesc">Verifies if the time is in a valid ISO 8601 format</td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold"  href="locale.html#IsValidISOTimeStringExt">IsValidISOTimeStringExt</a></td>
 <td class="itemunit"><a class="bold"  href="locale.html">locale</a></td>
 <td class="itemdesc">Verifies if the time is in a valid ISO 8601 format</td>
 </tr>
@@ -1547,126 +1557,131 @@
 <td class="itemdesc">UTF-8 base data type</td>
 </tr>
 <tr class="list">
+<td class="itemname"><a class="bold"  href="unicode.html#utf8islegal">utf8islegal</a></td>
+<td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
+<td class="itemdesc">Validates the legality of an UTF-8 null terminated string</td>
+</tr>
+<tr class="list2">
 <td class="itemname"><a class="bold"  href="unicode.html#utf8strdispose">utf8strdispose</a></td>
 <td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
 <td class="itemdesc">Disposes of an UTF-8 null terminated string on the heap</td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemname"><a class="bold"  href="unicode.html#utf8string">utf8string</a></td>
 <td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
 <td class="itemdesc">UTF-8 string declaration. This can either map to a short string or an ansi string depending on the compilation options.</td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemname"><a class="bold"  href="unicode.html#utf8stringdispose">utf8stringdispose</a></td>
 <td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
 <td class="itemdesc">Frees an UTF-8 string that was allocated with <a class="normal" href="unicode.html#utf8strdispose">utf8strdispose</a></td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemname"><a class="bold"  href="unicode.html#utf8stringdup">utf8stringdup</a></td>
 <td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
 <td class="itemdesc">Allocates and copies an UTF-8 string to a pointer to an UTF-8 string</td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemname"><a class="bold"  href="unicode.html#utf8strlcopyucs4">utf8strlcopyucs4</a></td>
 <td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
 <td class="itemdesc">Convert an UTF-8 null terminated string to an UCS-4 null terminated string</td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemname"><a class="bold"  href="unicode.html#utf8strlen">utf8strlen</a></td>
 <td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
 <td class="itemdesc">Returns the length of the string, not counting the null character</td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemname"><a class="bold"  href="unicode.html#utf8strnew">utf8strnew</a></td>
 <td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
 <td class="itemdesc">Converts an UCS-4 null terminated string to an UTF-8 null terminated string</td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemname"><a class="bold"  href="unicode.html#utf8strnewstr">utf8strnewstr</a></td>
 <td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
 <td class="itemdesc">Converts an UTF-8 string to a null terminated UTF-8 string.</td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemname"><a class="bold"  href="unicode.html#utf8strnewutf8">utf8strnewutf8</a></td>
 <td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
 <td class="itemdesc">Allocates and copies an UTF-8 null terminated string</td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemname"><a class="bold"  href="unicode.html#utf8strpas">utf8strpas</a></td>
 <td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
 <td class="itemdesc">Converts a null-terminated UTF-8 string to a Pascal-style UTF-8 encoded string.</td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemname"><a class="bold"  href="unicode.html#utf8strpastoASCII">utf8strpastoASCII</a></td>
 <td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
 <td class="itemdesc">Converts a null-terminated UTF-8 string to a Pascal-style ASCII encoded string.</td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemname"><a class="bold"  href="unicode.html#utf8strpastoISO8859_1">utf8strpastoISO8859_1</a></td>
 <td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
 <td class="itemdesc">Converts a null-terminated UTF-8 string to a Pascal-style ISO 8859-1 encoded string.</td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemname"><a class="bold"  href="unicode.html#utf8strpastostring">utf8strpastostring</a></td>
 <td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
 <td class="itemdesc">Converts an UTF-8 null terminated string to a string encoded to a different code page</td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemname"><a class="bold"  href="unicode.html#utf8_islegal">utf8_islegal</a></td>
 <td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
 <td class="itemdesc">Returns if the specified UTF-8 string is legal or not</td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemname"><a class="bold"  href="unicode.html#utf8_length">utf8_length</a></td>
 <td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
 <td class="itemdesc">Returns the current length of an UTF-8 string</td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemname"><a class="bold"  href="unicode.html#utf8_setlength">utf8_setlength</a></td>
 <td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
 <td class="itemdesc">Set the length of an UTF-8 string</td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemname"><a class="bold"  href="unicode.html#utf8_sizeencoding">utf8_sizeencoding</a></td>
 <td class="itemunit"><a class="bold"  href="unicode.html">unicode</a></td>
 <td class="itemdesc">Returns the number of characters that are used to encode this character</td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemname"><a class="bold"  href="utils.html#ValBinary">ValBinary</a></td>
 <td class="itemunit"><a class="bold"  href="utils.html">utils</a></td>
 <td class="itemdesc">Convert a binary value represented by a string to its numerical value. If there is no error, <code>code</code> will be equal to zero.</td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemname"><a class="bold"  href="utils.html#ValDecimal">ValDecimal</a></td>
 <td class="itemunit"><a class="bold"  href="utils.html">utils</a></td>
 <td class="itemdesc">Convert a decimal value represented by a string to its numerical value. If there is no error, <code>code</code> will be equal to zero.</td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemname"><a class="bold"  href="utils.html#ValHexadecimal">ValHexadecimal</a></td>
 <td class="itemunit"><a class="bold"  href="utils.html">utils</a></td>
 <td class="itemdesc">Convert an hexadecimal value represented by a string to its numerical value. If there is no error, <code>code</code> will be equal to zero.</td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemname"><a class="bold"  href="utils.html#ValOctal">ValOctal</a></td>
 <td class="itemunit"><a class="bold"  href="utils.html">utils</a></td>
 <td class="itemdesc">Convert an octal value represented by a string to its numerical value. If there is no error, <code>code</code> will be equal to zero.</td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemname"><a class="bold"  href="utils.html#ValUnsignedDecimal">ValUnsignedDecimal</a></td>
 <td class="itemunit"><a class="bold"  href="utils.html">utils</a></td>
 <td class="itemdesc">Convert a decimal value represented by a string to its numerical value. If there is no error, <code>code</code> will be equal to zero.</td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemname"><a class="bold"  href="utils.html#WhiteSpace">WhiteSpace</a></td>
 <td class="itemunit"><a class="bold"  href="utils.html">utils</a></td>
 <td class="itemdesc">&nbsp;</td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemname"><a class="bold"  href="dateutil.html#YearOf">YearOf</a></td>
 <td class="itemunit"><a class="bold"  href="dateutil.html">dateutil</a></td>
 <td class="itemdesc">Returns the year represented by a TDateTime value.</td>
 </tr>
 </table>
-<hr noshade size="1"><span class="appinfo"><em>Generated by <a  target="_parent" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8.3</a> on 2008-11-23 20:11:46</em>
+<hr noshade size="1"><span class="appinfo"><em>Generated by <a  target="_parent" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8.3</a> on 2009-01-27 22:01:37</em>
 </span>
 </body></html>

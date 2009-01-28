@@ -231,51 +231,54 @@ unicode support unit</p>
 <td class="itemcode"><code>function <b><a   href="unicode.html#utf16_sizeencoding">utf16_sizeencoding</a></b>(c: <a   href="unicode.html#utf16char">utf16char</a>): integer;</code></td>
 </tr>
 <tr class="list2">
+<td class="itemcode"><code>function <b><a   href="unicode.html#utf8islegal">utf8islegal</a></b>(p: pchar): boolean;</code></td>
+</tr>
+<tr class="list">
 <td class="itemcode"><code>function <b><a   href="unicode.html#utf8strdispose">utf8strdispose</a></b>(p: pchar): pchar;</code></td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemcode"><code>procedure <b><a   href="unicode.html#utf8stringdispose">utf8stringdispose</a></b>(var p : <a   href="unicode.html#putf8shortstring">putf8shortstring</a>);</code></td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemcode"><code>function <b><a   href="unicode.html#utf8stringdup">utf8stringdup</a></b>(const s : string) : <a   href="unicode.html#putf8shortstring">putf8shortstring</a>;</code></td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemcode"><code>function <b><a   href="unicode.html#utf8strlcopyucs4">utf8strlcopyucs4</a></b>(src: pchar; dst: <a   href="unicode.html#pucs4char">pucs4char</a>; maxlen: integer): <a   href="unicode.html#pucs4char">pucs4char</a>;</code></td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemcode"><code>function <b><a   href="unicode.html#utf8strlen">utf8strlen</a></b>(s: <a   href="unicode.html#putf8char">putf8char</a>): integer;</code></td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemcode"><code>function <b><a   href="unicode.html#utf8strnew">utf8strnew</a></b>(src: <a   href="unicode.html#pucs4char">pucs4char</a>): pchar;</code></td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemcode"><code>function <b><a   href="unicode.html#utf8strnewstr">utf8strnewstr</a></b>(str: <a   href="unicode.html#utf8string">utf8string</a>): <a   href="unicode.html#putf8char">putf8char</a>;</code></td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemcode"><code>function <b><a   href="unicode.html#utf8strnewutf8">utf8strnewutf8</a></b>(src: pchar): pchar;</code></td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemcode"><code>function <b><a   href="unicode.html#utf8strpas">utf8strpas</a></b>(src: pchar): string;</code></td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemcode"><code>function <b><a   href="unicode.html#utf8strpastoASCII">utf8strpastoASCII</a></b>(src: pchar): string;</code></td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemcode"><code>function <b><a   href="unicode.html#utf8strpastoISO8859_1">utf8strpastoISO8859_1</a></b>(src: pchar): string;</code></td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemcode"><code>function <b><a   href="unicode.html#utf8strpastostring">utf8strpastostring</a></b>(src: pchar; desttype: string): string;</code></td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemcode"><code>function <b><a   href="unicode.html#utf8_islegal">utf8_islegal</a></b>(const s: <a   href="unicode.html#utf8string">utf8string</a>): boolean;</code></td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemcode"><code>function <b><a   href="unicode.html#utf8_length">utf8_length</a></b>(const s: <a   href="unicode.html#utf8string">utf8string</a>): integer;</code></td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemcode"><code>procedure <b><a   href="unicode.html#utf8_setlength">utf8_setlength</a></b>(var s: <a   href="unicode.html#utf8string">utf8string</a>; l: integer);</code></td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemcode"><code>function <b><a   href="unicode.html#utf8_sizeencoding">utf8_sizeencoding</a></b>(c: <a   href="unicode.html#utf8char">utf8char</a>): integer;</code></td>
 </tr>
 </table>
@@ -1158,6 +1161,20 @@ Returns the number of characters that are used to encode this character</p>
 <p>Actually checks if this is a high-surrogate value, if not returns 1, indicating that the character is encoded a single <code>utf16</code> character, otherwise returns 2, indicating that 1 one other <code>utf16</code> character is required to encode this data.</p>
 <table class="detail">
 <tr class="list">
+<td class="itemcode"><a name="utf8islegal"></a><code>function <b>utf8islegal</b>(p: pchar): boolean;</code></td>
+</tr>
+</table>
+<p>
+Validates the legality of an UTF-8 null terminated string</p>
+<p>
+
+
+<p>Verifies that the UTF-8 encoded strings is encoded in a legal way.
+
+<p></p>
+<h6 class="return">returns</h6>
+<p class="return">FALSE if the string is illegal, otherwise returns TRUE</p><table class="detail">
+<tr class="list">
 <td class="itemcode"><a name="utf8strdispose"></a><code>function <b>utf8strdispose</b>(p: pchar): pchar;</code></td>
 </tr>
 </table>
@@ -1534,6 +1551,6 @@ Byte order mark: UCS-4 little endian encoding signature</p>
 <ul class="authors">
 <li>Carl Eric Codère</li>
 </ul>
-<hr noshade size="1"><span class="appinfo"><em>Generated by <a  target="_parent" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8.3</a> on 2008-11-23 20:11:46</em>
+<hr noshade size="1"><span class="appinfo"><em>Generated by <a  target="_parent" href="http://pasdoc.sourceforge.net/">PasDoc 0.8.8.3</a> on 2009-01-27 22:01:37</em>
 </span>
 </body></html>
