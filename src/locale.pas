@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: locale.pas,v 1.14 2009-01-04 15:37:06 carl Exp $
+    $Id: locale.pas,v 1.15 2010-01-21 11:57:37 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Localization and date/time unit
@@ -192,10 +192,25 @@ function GetCharEncoding(alias: string; var _name: string): integer;
 }    
 function MicrosoftCodePageToMIMECharset(cp: word): string;
 
+{** Using a IANA charactet set identifier, return the equivalent
+    the code page identifier (as defined by Microsoft and OS/2)
+    
+    @param(charset IANA String representation of the character encoding)
+    @return(cp Codepage)
+}    
+function MIMECharsetToMicrosoftCodePage(charset: string): word;
+
+
 {** Using a Microsoft language identifier (as defined by Microsoft and OS/2)
     return the resulting ISO 639-2 language code identifier.
 }    
 function MicrosoftLangageCodeToISOCode(langcode: integer): string;
+
+{** Using a ISO 639-2 language code identifier, return the 
+    resulting Microsoft language identifier 
+    (as defined by Microsoft and OS/2)
+}    
+function ISOLanguageCodeToMicrosoftCode(lang: string): integer;
 
 
 const
@@ -1077,6 +1092,23 @@ begin
        end;
     end;
 end;
+
+function MIMECharsetToMicrosoftCodePage(charset: string): word;
+var
+ i: integer;
+begin
+  { Set by default to ISO-8859-1 }
+  MIMECharsetToMicrosoftCodePage:=0;
+  for i:=1 to MAX_CODEPAGES do
+    begin
+     if mscodepageinfo[i].alias = charset then
+       begin
+         MIMECharsetToMicrosoftCodePage:=mscodepageinfo[i].value;
+         exit;
+       end;
+    end;
+end;
+
   
 function MicrosoftLangageCodeToISOCode(langcode: integer): string;
 var
@@ -1093,11 +1125,31 @@ begin
     end;
 end;
 
+function ISOLanguageCodeToMicrosoftCode(lang: string): integer;
+var
+ i: integer;
+begin
+  { Language neutral by default }
+  ISOLanguageCodeToMicrosoftCode:=0;
+  for i:=1 to MAX_MSLANGCODES do
+    begin
+       if mslanguagecodes[i].id = lang then
+        begin
+          ISOLanguageCodeToMicrosoftCode:=mslanguagecodes[i].code;
+          exit;
+        end;
+    end;
+end;
+
+
 
 end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.14  2009/01/04 15:37:06  carl
+   + Added ISO extraction version that returns decoded dates and times.
+
   Revision 1.13  2006/08/31 03:05:02  carl
   + Better documentation
 
