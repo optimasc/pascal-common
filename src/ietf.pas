@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: ietf.pas,v 1.10 2006-08-31 03:06:56 carl Exp $
+    $Id: ietf.pas,v 1.11 2010-01-21 11:56:56 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Unicode related routines
@@ -597,6 +597,9 @@ end;
    http_pathsplit:=true;
    directory:=trim(path);
    name:='';
+   { If the path is empty, do nothing - simply exit }
+   if length(directory) = 0 then
+     exit;
    { This is probably a filename }
    if directory[length(directory)] <> URI_PATH_SEPARATOR then
      begin
@@ -625,6 +628,10 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.10  2006/08/31 03:06:56  carl
+  + Better documentation
+  + Updated URN Namespace identifiers to list of 2006-08-28.
+
   Revision 1.9  2006/02/11 16:54:50  carl
     * Bugfix with URI validation
 
