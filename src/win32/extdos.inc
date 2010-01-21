@@ -934,41 +934,13 @@ end;
 function DirectoryExists(DName : utf8string): Boolean;
 var
  utf: putf8char;
- searchinfo: TSearchRecExt;
- Volume: boolean;
- status: integer;
+ attrs: TResourceAttributes;
 begin
-  Volume:=false;
   DirectoryExists:=false;
-  { Special handling for volume }
-  if (length(dname) = 3) and (dname[2] = ':') then
-    begin
-      Volume:=true;
-      Dname:=dname+'*';
-    end
-  else
-    begin
-      if Dname[length(Dname)] = DirectorySeparator then
-        delete(DName,length(DName),1);
-    end;
   utf:=utf8strnewstr(dname);
-  if not volume then
-    begin
-     status:=FindFirstEx(utf,[attr_directory],SearchInfo);
-     if (status = 0) and ((attr_directory in SearchInfo.stats.Attributes)) then
-       begin
-          DirectoryExists:=true;
-       end;
-    end
-  else
-    begin
-       status:=FindFirstEx(utf,[attr_any],SearchInfo);
-       if status = 0 then
-         begin
-          DirectoryExists:=true;
-         end;
-    end;
-  FindCloseEx(SearchInfo);
+  attrs := extdos.GetFileAttributes(utf);
+  if attr_directory in attrs then
+    DirectoryExists:=true;
   utf8strdispose(utf);
 end;
 
@@ -993,7 +965,7 @@ begin
          then
          FileExists:=true;
     end;
-  FindCloseEx(SearchInfo);  
+  FindCloseEx(SearchInfo);
   utf8strdispose(utf);
 end;
 
@@ -1048,6 +1020,9 @@ begin
       if assigned(ucs2str) then
         begin
           attributes:=PGetFileAttributesW(pwidechar(ucs2str));
+          { If there was an error, then return nothing }
+          if attributes = (DWORD(-1)) then
+            exit;
           { convert the attributes to our format }
           outattributes:=WinAttrToExtAttr(attributes);
           FSplit(utf8strpas(fname),Dir,Name,Ext);
@@ -1225,7 +1200,6 @@ begin
   { Expand wildcards }
   if path = '*' then
     path:='*.*';
-  
   ucs4str:=ucs4strnew(path,'UTF-8');
   ucs2str:=ucs2strnew(ucs4str);
   SearchRec.FindHandle:=PFindFirstFileW (pwidechar(ucs2str),SearchRec.W32FindData);
@@ -1451,6 +1425,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.15  2007/10/21 04:17:54  carl
+  + Bugfix with Win32 extdos - a resource was sometimes never closed.
+
   Revision 1.14  2007/02/14 04:52:28  carl
     * Small compilation bugfix under FPC
 
