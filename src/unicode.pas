@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: unicode.pas,v 1.46 2009-01-04 15:36:31 carl Exp $
+    $Id: unicode.pas,v 1.47 2010-01-21 12:00:26 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Unicode related routines
@@ -20,7 +20,9 @@
     schemes.
 
     All UNICODE/ISO 10646 pascal styled strings are limited to
-    MAX_STRING_LENGTH characters. Null terminated unicode strings are
+    MAX_STRING_LENGTH characters for normal strings and MAX_LONG_STRING_LENGTH
+    for long string types, both can be used in most of the routines thanks to
+    open array paraemters. Null terminated unicode strings are
     limited by the compiler and integer type size.
 
     Since all these encoding are variable length, except the UCS-4 
@@ -63,6 +65,12 @@ uses
 const
   {** Gives the number of characters that can be contained in a string }
   MAX_STRING_LENGTH = 2048; 
+  {** Gives the number of characters that can be contained in a longstring }
+{$IFDEF TP}
+  MAX_LONG_STRING_LENGTH = (high(smallint) div 2)-4;
+{$ELSE}
+  MAX_LONG_STRING_LENGTH = high(word);
+{$ENDIF}
 
 type
 
@@ -87,6 +95,20 @@ type
       of the string in characters.
   }
   ucs4string = array[0..MAX_STRING_LENGTH] of ucs4char;
+  {** UCS-4 long string declaration. Index 0 contains the active length
+      of the string in characters. This type takes a lot more memory 
+      than the regular ucs4string and should seldom be used..
+  }
+  longucs4string = array[0..MAX_LONG_STRING_LENGTH] of ucs4char;
+  plongucs4string = ^longucs4string;
+  
+  {** UCS-2 long string declaration. Index 0 contains the active length
+      of the string in characters. This type takes a lot more memory 
+      than the regular ucs2string and should seldom be used.
+  }
+  longucs2string = array[0..MAX_LONG_STRING_LENGTH] of ucs2char;
+  plongucs2strung = ^longucs2string;
+  
 
   {** UTF-8 string declaration. This can either map to 
       a short string or an ansi string depending on
@@ -104,6 +126,11 @@ type
   utf16string = array[0..MAX_STRING_LENGTH] of utf16char;
 
 const
+   {** Default fallback character when conversion of a character does not succeed
+       when converting to a single byte character set.
+   }
+   DEFAULT_FALLBACK_CHAR: string[1] = '?';
+   
    {** Maximum size of a null-terminated UCS-4 character string }
    MAX_UCS4_CHARS = high(smallint) div (sizeof(ucs4char));
    {** Maximum size of a null-terminated UCS-4 character string }
@@ -178,29 +205,29 @@ type
   function ucs4_lowcase(c: ucs4char): ucs4char;
 
   {** @abstract(Trims leading spaces and control characters from an UCS-4 string.) }
-  procedure ucs4_trimleft(var s: ucs4string);
+  procedure ucs4_trimleft(var s: array of ucs4char);
   
   {** @abstract(Trims trailing spaces and control characters from an UCS-4 string.) }
-  procedure ucs4_trimright(var s: ucs4string);
+  procedure ucs4_trimright(var s: array of ucs4char);
 
   {** @abstract(Trims trailing and leading spaces and control characters from an UCS-4 string.) }
-  procedure ucs4_trim(var s: ucs4string);
+  procedure ucs4_trim(var s: array of ucs4char);
 
   {** @abstract(Returns an UCS-4 substring of an UCS-4 string) }
-  procedure ucs4_copy(var resultstr: ucs4string; const s: ucs4string; index: integer; count: integer);
+  procedure ucs4_copy(var resultstr: array of ucs4char; const s: array of ucs4char; index: integer; count: integer);
 
   {** @abstract(Deletes a substring from a string) }
-  procedure ucs4_delete(var s: ucs4string; index: integer; count: integer);
+  procedure ucs4_delete(var s: array of ucs4char; index: integer; count: integer);
 
   {** @abstract(Concatenates two UCS-4 strings, and gives a resulting UCS-4 string) }
-  procedure ucs4_concat(var resultstr: ucs4string;const s1: ucs4string; const s2: array of ucs4char);
+  procedure ucs4_concat(var resultstr: array of ucs4char ;const s1: array of ucs4char; const s2: array of ucs4char);
   
   {** @abstract(Returns the base string representation of a canonical string).
       This routine is useful for converted multilangual strings to their ASCII
       equivalents. It removes all accented characters and replaces them with
       their base equivalent.
   }
-  procedure ucs4_removeaccents(var resultstr: ucs4string;s2: ucs4string);
+  procedure ucs4_removeaccents(var resultstr: array of ucs4char;s2: array of ucs4char);
 
   
   {** @abstract(Returns the base character representation of a canonical character).
@@ -215,19 +242,19 @@ type
   {** @abstract(Concatenates an UCS-4 string with an ASCII string, and gives
       a resulting UCS-4 string)
   }    
-  procedure ucs4_concatascii(var resultstr: ucs4string;const s1: ucs4string; const s2: string);
+  procedure ucs4_concatascii(var resultstr: array of ucs4char;const s1: array of ucs4char; const s2: string);
 
   {** @abstract(Searches for an ASCII substring in an UCS-4 string) }
-  function ucs4_posascii(const substr: string; const s: ucs4string): integer;
+  function ucs4_posascii(const substr: string; const s: array of ucs4char): integer;
 
   {** @abstract(Checks if an ASCII string is equal to an UCS-4 string ) }
   function ucs4_equalascii(const s1 : array of ucs4char; s2: string): boolean;
 
   {** @abstract(Searches for an UCS-4 substring in an UCS-4 string) }
-  function ucs4_pos(const substr: ucs4string; const s: ucs4string): integer;
+  function ucs4_pos(const substr: array of ucs4char; const s: array of ucs4char): integer;
 
   {** @abstract(Checks if both UCS-4 strings are equal) }
-  function ucs4_equal(const s1,s2: ucs4string): boolean;
+  function ucs4_equal(const s1,s2: array of ucs4char): boolean;
   
   {** @abstract(Retrieves the Unicode numeric value of a character) 
   
@@ -267,7 +294,7 @@ type
       @returns(The converted string with possible escape characters
         if a character could not be converted)
   }
-    function ucs4_converttoiso8859_1(const s: ucs4string): string;
+    function ucs4_converttoiso8859_1(const s: array of ucs4char): string;
 
   {** @abstract(Converts an UCS-4 string to an UTF-8 string)
 
@@ -277,8 +304,8 @@ type
       @param(s The UCS-4 string to convert)
       @returns(The converted string)
   }
-  function ucs4_converttoutf8(const src: ucs4string): utf8string;
-
+  function ucs4_converttoutf8(const src: array of ucs4char): utf8string;
+  
   
 
 {---------------------------------------------------------------------------
@@ -297,7 +324,7 @@ type
 
   {** @abstract(Converts a null-terminated UCS-4 string to a Pascal-style UCS-4 string.)
   }
- procedure ucs4strpas(str: pucs4char; var res:ucs4string);
+ procedure ucs4strpas(str: pucs4char; var res:array of ucs4char);
  
   {** @abstract(Converts a null-terminated UCS-4 string to a Pascal-style 
        ISO 8859-1 encoded string.)
@@ -307,8 +334,7 @@ type
        
        
       Characters that cannot be converted are converted to 
-      escape sequences of the form : \uxxxxxxxx where xxxxxxxx is
-      the hex representation of the character.
+      the default fallback character: DEFAULT_FALLBACK_CHAR
   }
  function ucs4strpastoISO8859_1(str: pucs4char): string;
  
@@ -319,9 +345,8 @@ type
        length, the string is truncated.
        
 
-      Characters that cannot be converted are converted to
-      escape sequences of the form : \uxxxxxxxx where xxxxxxxx is
-      the hex representation of the character.
+      Characters that cannot be converted are converted to 
+      the default fallback character: DEFAULT_FALLBACK_CHAR
   }
  function ucs4strpastoASCII(str: pucs4char): string;
  
@@ -343,7 +368,7 @@ type
 
       The destination buffer must have room for at least Length(Source)+1 characters.
   }
- function ucs4strpcopy(dest: pucs4char; source: ucs4string):pucs4char;
+ function ucs4strpcopy(dest: pucs4char; source: array of ucs4char):pucs4char;
 
 
   {** @abstract(Converts a pascal string to an UCS-4 null
@@ -379,6 +404,17 @@ type
    anything.
   }
   function ucs4strnewucs4(src: pucs4char): pucs4char;
+  
+  {** @abstract(Converts an UCS-4 string to a null terminated UCS-4 string.)
+  
+      The memory for the storage of the string is allocated by
+      the routine, and the ending null character is also added.
+      
+      @returns(The newly allocated UCS-4 null terminated string)
+
+  }
+   function ucs4strnewFromucs4(src: array of ucs4char): pucs4char;
+  
 
 
   {** @abstract(Converts an UCS-2 null terminated string to an UCS-4 null
@@ -574,27 +610,24 @@ type
   {** @abstract(Converts a null-terminated UTF-8 string to a Pascal-style
        ISO 8859-1 encoded string.)
 
-      Characters that cannot be converted are converted to
-      escape sequences of the form : \uxxxxxxxx where xxxxxxxx is
-      the hex representation of the character.
+      Characters that cannot be converted are converted to 
+      the default fallback character: DEFAULT_FALLBACK_CHAR
   }
  function utf8strpastoISO8859_1(src: pchar): string;
 
   {** @abstract(Converts a null-terminated UTF-8 string to a Pascal-style
        ASCII encoded string.)
 
-      Characters that cannot be converted are converted to
-      escape sequences of the form : \uxxxxxxxx where xxxxxxxx is
-      the hex representation of the character.
+      Characters that cannot be converted are converted to 
+      the default fallback character: DEFAULT_FALLBACK_CHAR
   }
  function utf8strpastoASCII(src: pchar): string;
  
   {** @abstract(Converts an UTF-8 null terminated string to a string 
       encoded to a different code page)
 
-      Characters that cannot be converted are converted to
-      escape sequences of the form : \uxxxxxxxx where xxxxxxxx is
-      the hex representation of the character.
+      Characters that cannot be converted are converted to 
+      the default fallback character: DEFAULT_FALLBACK_CHAR
       
       If the null character string does not fit in the
       resulting string, it is truncated.
@@ -777,20 +810,20 @@ type
      ISO-8859-2, ISO-8859-5, ISO-8859-16, macintosh, atari, cp437, cp850, ASCII
      and UTF-8.
 
+      @param(source Source UCS-4 string, such as ucs4string or longucs4string)
       @param(desttype Indicates the single byte encoding scheme - case-insensitive)
       @returns(@link(UNICODE_ERR_OK) if there was no error in the conversion)
   }
-  function ConvertFromUCS4(const source: ucs4string; var dest: string; desttype: string): integer;
+  function ConvertFromUCS4(const source: array of ucs4char; var dest: string; desttype: string): integer;
 
   {** @abstract(Convert a byte encoded string to an UCS-4 string)
 
      This routine converts a single byte encoded string to an UCS-4
      string stored in native byte order
 
-     Characters that cannot be converted are converted to escape
-     sequences of the form : \uxxxxxxxx where xxxxxxxx is the hex
-     representation of the character, an error code will also be
-     returned by the function
+      Characters that cannot be converted are converted to 
+      the default fallback character: DEFAULT_FALLBACK_CHAR and
+      an error code will also be returned by the function
 
      The string is limited to MAX_STRING_LENGTH characters, and if
      the conversion cannot be successfully be completed, it gives
@@ -801,7 +834,7 @@ type
       @param(srctype Indicates the single byte encoding scheme - case-insensitive)
       @returns(@link(UNICODE_ERR_OK) if there was no error in the conversion)
   }
-  function ConvertToUCS4(source: string; var dest: ucs4string; srctype: string): integer;
+  function ConvertToUCS4(source: string; var dest: array of ucs4char; srctype: string): integer;
 
   {** @abstract(Convert an UTF-16 string to an UCS-4 string)
 
@@ -810,7 +843,7 @@ type
 
       @returns(@link(UNICODE_ERR_OK) if there was no error in the conversion)
   }
-  function ConvertUTF16ToUCS4(src: utf16string; var dst: ucs4string): integer;
+  function ConvertUTF16ToUCS4(src: utf16string; var dst: array of ucs4char): integer;
 
   {** @abstract(Convert an UCS-4 string to an UTF-16 string)
 
@@ -830,7 +863,7 @@ type
 
       @returns(@link(UNICODE_ERR_OK) if there was no error in the conversion)
   }
-  function ConvertUTF8ToUCS4(src: utf8string; var dst: ucs4string): integer;
+  function ConvertUTF8ToUCS4(src: utf8string; var dst: array of ucs4char): integer;
 
   {** @abstract(Convert an UCS-4 string to an UCS-2 string)
 
@@ -843,7 +876,7 @@ type
       @returns(@link(UNICODE_ERR_OK) if there was no error in the conversion)
 
   }
-  function ConvertUCS4ToUCS2(src: array of ucs4char; var dst: ucs2string): integer;
+  function ConvertUCS4ToUCS2(src: array of ucs4char; var dst: array of ucs2char): integer;
 
 
   {** @abstract(Convert an UCS-2 string to an UCS-4 string)
@@ -857,7 +890,7 @@ type
       @returns(@link(UNICODE_ERR_OK) if there was no error in the conversion)
 
   }
-  function ConvertUCS2ToUCS4(src: array of ucs2char; var dst: ucs4string): integer;
+  function ConvertUCS2ToUCS4(src: array of ucs2char; var dst: array of ucs4char): integer;
 
 
 
@@ -1461,7 +1494,7 @@ const
   
 
   
-  function ConvertFromUCS4(const source: ucs4string; var dest: string; desttype: string): integer;
+  function ConvertFromUCS4(const source: array of ucs4char; var dest: string; desttype: string): integer;
   var
    i: integer;
    j: char;
@@ -1500,7 +1533,7 @@ const
             begin
               if (source[i] > ucs4char(high(char))) then
                 begin
-                 dest:=dest+'\u'+hexstr(longint(source[i]),8);
+                 dest:=dest+DEFAULT_FALLBACK_CHAR;
                  ConvertFromUCS4:=UNICODE_ERR_INCOMPLETE_CONVERSION;
                  continue;
                 end;
@@ -1523,13 +1556,13 @@ const
           end;
          if not found then
           begin
-            dest:=dest+'\u'+hexstr(longint(source[i]),8);
+            dest:=dest+DEFAULT_FALLBACK_CHAR;
             ConvertFromUCS4:=UNICODE_ERR_INCOMPLETE_CONVERSION;
           end;
       end;
   end;
   
-  function ConvertToUCS4(source: string; var dest: ucs4string; srctype: string): integer;
+  function ConvertToUCS4(source: string; var dest: array of ucs4char; srctype: string): integer;
   var
    i: integer;
    l: longint;
@@ -1584,7 +1617,7 @@ const
   end;
 
 
-  function ConvertUTF16ToUCS4(src: utf16string; var dst: ucs4string): integer;
+  function ConvertUTF16ToUCS4(src: utf16string; var dst: array of ucs4char): integer;
    var
      ch,ch2: ucs4char;
      i: integer;
@@ -1623,7 +1656,7 @@ const
   ucs4_setlength(dst,OutIndex-1);
 end;
 
-function ConvertUTF8ToUCS4(src: utf8string; var dst: ucs4string): integer;
+function ConvertUTF8ToUCS4(src: utf8string; var dst: array of ucs4char): integer;
   var
    ch: ucs4char;
    i: integer;
@@ -1642,7 +1675,7 @@ function ConvertUTF8ToUCS4(src: utf8string; var dst: ucs4string): integer;
       begin
         ch := 0;
         extrabytestoread:= trailingBytesForUTF8[ord(src[i])];
-        if (stringlength + extraBytesToRead) >= high(ucs4string) then
+        if (stringlength + extraBytesToRead) >= high(dst) then
           begin
             ConvertUTF8ToUCS4:=UNICODE_ERR_LENGTH_EXCEED;
             exit;
@@ -1743,7 +1776,7 @@ begin
 end;
 
 
-  function ConvertUCS4ToUCS2(src: array of ucs4char; var dst: ucs2string): integer;
+  function ConvertUCS4ToUCS2(src: array of ucs4char; var dst: array of ucs2char): integer;
   var
    ch: ucs4char;
    i: integer;
@@ -1781,7 +1814,7 @@ end;
   end;
   
   
-  function ConvertUCS2ToUCS4(src: array of ucs2char; var dst: ucs4string): integer;
+  function ConvertUCS2ToUCS4(src: array of ucs2char; var dst: array of ucs4char): integer;
   var
    ch: ucs4char;
    i: integer;
@@ -1871,7 +1904,7 @@ begin
 end;
 
 
-  procedure ucs4_removeaccents(var resultstr: ucs4string;s2: ucs4string);
+  procedure ucs4_removeaccents(var resultstr: array of ucs4char;s2: array of ucs4char);
   var
    slen: integer;
    i,j: integer;
@@ -2079,7 +2112,7 @@ begin
 end;
 
   
-  procedure ucs4_copy(var resultstr: ucs4string; const s: ucs4string; index: integer; count: integer);
+  procedure ucs4_copy(var resultstr: array of ucs4char; const s: array of ucs4char; index: integer; count: integer);
   var
    slen: integer;
   begin
@@ -2096,7 +2129,7 @@ end;
     ucs4_setlength(resultstr,count);
   end;
   
-  procedure ucs4_delete(var s: ucs4string; index: integer; count: integer);
+  procedure ucs4_delete(var s: array of ucs4char; index: integer; count: integer);
   begin
     if index<=0 then
       exit;
@@ -2111,7 +2144,7 @@ end;
   end;
   
 
-  procedure ucs4_concat(var resultstr: ucs4string;const s1: ucs4string; const s2: array of ucs4char);
+  procedure ucs4_concat(var resultstr: array of ucs4char;const s1: array of ucs4char ; const s2: array of ucs4char);
   var
     s1l, s2l : integer;
   begin
@@ -2120,7 +2153,7 @@ end;
       begin
         s2l:=1;
         s1l:=ucs4_length(s1);
-        if (s2l+s1l)>MAX_STRING_LENGTH then
+        if (s2l+s1l)>high(resultstr) then
           exit;
         move(s1[1],resultstr[1],s1l*sizeof(ucs4char));
         resultstr[s1l+1]:=s2[0];
@@ -2129,15 +2162,15 @@ end;
       end;
     s2l:=ucs4_length(s2);
     s1l:=ucs4_length(s1);
-    if (s2l+s1l)>MAX_STRING_LENGTH then
-      s2l:=MAX_STRING_LENGTH-s1l;
+    if (s2l+s1l)>(high(resultstr)+1) then
+      s2l:=high(resultstr)+1-s1l;
     move(s1[1],resultstr[1],s1l*sizeof(ucs4char));
     if s2l <> 0 then
       move(s2[1],resultstr[s1l+1],s2l*sizeof(ucs4char));
     ucs4_setlength(resultstr, s2l+s1l);
   end;
 
-  function ucs4_pos(const substr: ucs4string; const s: ucs4string): integer;
+  function ucs4_pos(const substr: array of ucs4char; const s: array of ucs4char): integer;
   var
     i,j : integer;
     e   : boolean;
@@ -2159,7 +2192,7 @@ end;
     ucs4_Pos:=j;
   end;
   
-  function ucs4_equal(const s1,s2: ucs4string): boolean;
+  function ucs4_equal(const s1,s2: array of ucs4char): boolean;
     var
      i: integer;
      s1length: integer;
@@ -2184,12 +2217,12 @@ end;
   
   procedure ucs4_setlength(var s: array of ucs4char; l: integer);
   begin
-   if l > MAX_STRING_LENGTH then
-     l:=MAX_STRING_LENGTH;
+   if l > high(s) then
+     l:=high(s);
    s[0]:=ucs4char(l);
   end;
 
-  procedure ucs4_concatascii(var resultstr: ucs4string;const s1: ucs4string; const s2: string);
+  procedure ucs4_concatascii(var resultstr: array of ucs4char;const s1: array of ucs4char; const s2: string);
   var
    utfstr: ucs4string;
   begin
@@ -2197,7 +2230,7 @@ end;
        ucs4_concat(resultstr,s1,utfstr);
   end;
 
-  function ucs4_posascii(const substr: string; const s: ucs4string): integer;
+  function ucs4_posascii(const substr: string; const s: array of ucs4char): integer;
   var
    utfstr: ucs4string;
   begin
@@ -2247,7 +2280,7 @@ end;
     end;
   end;
   
-  function ucs4_converttoiso8859_1(const s: ucs4string): string;
+  function ucs4_converttoiso8859_1(const s: array of ucs4char): string;
   var
    resultstr: string;
    i: integer;
@@ -2263,14 +2296,14 @@ end;
          end
        else
          begin
-           resultstr:=resultstr+'\u'+hexstr(longint(s[i]),8);
+           resultstr:=resultstr+DEFAULT_FALLBACK_CHAR;
          end;
      end;
    ucs4_converttoiso8859_1:=resultstr;  
   end;
   
   
-  function ucs4_converttoutf8(const src: ucs4string): utf8string;
+  function ucs4_converttoutf8(const src: array of ucs4char): utf8string;
   var
    p: pucs4char;
    len: integer;
@@ -2304,37 +2337,40 @@ end;
     ucs4_isvalid := true;
   end;
 
-  procedure ucs4_trim(var s: ucs4string);
+  procedure ucs4_trim(var s: array of ucs4char);
   begin
     ucs4_trimleft(s);
     ucs4_trimright(s);
   end;
 
 
-  procedure UCS4_TrimLeft(var S: ucs4string);
+  procedure UCS4_TrimLeft(var S: array of ucs4char);
   var i,l:integer;
-      outstr: ucs4string;
+      outp: pucs4char;
   begin
-    ucs4_setlength(outstr,0);
     l := ucs4_length(s);
+    outp:=ucs4strnewFromUcs4(s);
     i := 1;
     while (i<=l) and (ucs4_iswhitespace(s[i])) do
      inc(i);
-    ucs4_copy(outstr,s, i, l);
-    move(outstr,s,sizeof(ucs4string));
+    dec(i);
+    ucs4_setlength(s,l-i);
+    move(pucs4strarray(outp)^[i],s[1],(l-i)*sizeof(ucs4char));
+    ucs4strdispose(outp);
   end ;
 
 
-  procedure UCS4_TrimRight(var S: ucs4string);
+  procedure UCS4_TrimRight(var S: array of ucs4char);
   var l:integer;
-      outstr: ucs4string;
+      outp: pucs4char;
   begin
-    ucs4_setlength(outstr,0);
     l := ucs4_length(s);
+    outp:=ucs4strnewFromUcs4(s);
     while (l>0) and (ucs4_iswhitespace(s[l])) do
      dec(l);
-    ucs4_copy(outstr,s,1,l);
-    move(outstr,s,sizeof(ucs4string));
+    ucs4_setlength(s,l);
+    move(pucs4strarray(outp)^[0],s[1],l*sizeof(ucs4char));
+    ucs4strdispose(outp);
   end ;
 
 
@@ -2428,11 +2464,11 @@ end;
    setlength(lstr,0);
    for i:=1 to ucs4strlen(str) do
      begin
-       if i >= high(ucs4string) then break;
+       if i >= high(longucs4string) then break;
        if Stringarray^[i-1] <= MAX_STRING_LENGTH then
           lstr := lstr + chr(Stringarray^[i-1])
        else
-          lstr := lstr + '\u'+hexstr(Stringarray^[i-1],8);
+          lstr := lstr + DEFAULT_FALLBACK_CHAR;
      end;
    ucs4strpasToISO8859_1:= lstr;
  end;
@@ -2448,39 +2484,36 @@ end;
    if not assigned(str) then exit;
    stringarray := pointer(str);
    setlength(lstr,0);
-   while ((stringarray^[counter]) <> 0) and (counter < high(ucs4string)) do
+   while ((stringarray^[counter]) <> 0) and (counter < high(longucs4string)) do
    begin
      Inc(counter);
      if Stringarray^[counter-1] <= 127 then
         lstr := lstr + chr(Stringarray^[counter-1])
      else
-        lstr := lstr + '\u'+hexstr(Stringarray^[counter-1],8);
+        lstr := lstr + DEFAULT_FALLBACK_CHAR;
    end;
    ucs4strpasToASCII:= lstr;
  end;
  
 
 
- procedure ucs4strpas(Str: pucs4char; var res:ucs4string);
+ procedure ucs4strpas(Str: pucs4char; var res:array of ucs4char);
   var
    counter : integer;
-   lstr: ucs4string;
    stringarray: pucs4strarray;
  Begin
    counter := 0;
    stringarray := pointer(str);
    ucs4_setlength(res,0);
-   ucs4_setlength(lstr,0);
    if not assigned(str) then exit;
-   while ((stringarray^[counter]) <> 0) and (counter < high(ucs4string)) do
+   while ((stringarray^[counter]) <> 0) and (counter < high(res)) do
    begin
      Inc(counter);
-     ucs4_concat(lstr, lstr, Stringarray^[counter-1]);
+     ucs4_concat(res, res, Stringarray^[counter-1]);
    end;
-   UCS4_SetLength(lstr,counter);
-   res := lstr;
+   UCS4_SetLength(res,counter);
  end;
- 
+
 
   function ucs4StrPosISO8859_1(S: pucs4char; Str2: PChar): pucs4char;
  var
@@ -2722,27 +2755,45 @@ end;
     ucs4strnewucs4:=dst;
   end;
   
+  function ucs4strnewFromucs4(src: array of ucs4char): pucs4char;
+  var
+   lengthtoalloc: integer;
+   dst: pucs4char;
+   stringarray: pucs4strarray;
+  begin
+    ucs4strnewFromUCS4:=nil;
+    if ucs4_length(src)=0 then 
+      exit;
+    lengthtoalloc:=ucs4_length(src)*sizeof(ucs4char)+sizeof(ucs4char);
+    { also copy the null character }
+    Getmem(dst,lengthtoalloc);
+    move(src[1],dst^,ucs4_length(src)*sizeof(ucs4char));
+    stringarray:=pucs4strarray(dst);
+    { Add null character }
+    stringarray^[ucs4_length(src)]:=ucs4char(0);
+    ucs4strnewFromucs4:=dst;
+  end;
+  
+  
  
- procedure ucs4removenulls(s: ucs4string; var dest: ucs4string);
+ procedure ucs4removenulls(s: array of ucs4char; var dest: array of ucs4char);
  var
-  outstr: ucs4string;
   i,j: integer;
   endindex:integer;
  begin
   { Allocate at least enough memory if using ansistrings }
-  ucs4_setlength(outstr,ucs4_length(s));
+  ucs4_setlength(dest,ucs4_length(s));
   j:=1;
   endindex:=ucs4_length(s);
   for i:=1 to endindex do
     begin
       if s[i] <> 0 then
       begin
-        outstr[j]:=s[i];
+        dest[j]:=s[i];
         inc(j);
       end;
     end;
-  ucs4_setlength(outstr,j-1);
-  dest:=outstr;
+  ucs4_setlength(dest,j-1);
  end;
 
  function ucs4strnew(str: pchar; srctype: string): pucs4char;
@@ -2884,7 +2935,7 @@ end;
  end;
 
 
- Function UCS4StrPCopy(Dest: Pucs4char; Source: UCS4String):PUCS4Char;
+ Function UCS4StrPCopy(Dest: Pucs4char; Source: array of ucs4char):PUCS4Char;
    var
     counter : integer;
     stringarray: pucs4strarray;
@@ -3241,7 +3292,7 @@ end;
       begin
         ch := 0;
         extrabytestoread:= trailingBytesForUTF8[ord(src[i])];
-        if (stringlength + extraBytesToRead) >= high(ucs4string) then
+        if (stringlength + extraBytesToRead) >= high(longucs4string) then
           begin
             exit;
           end;
@@ -3348,7 +3399,7 @@ end;
       begin
         ch := 0;
         extrabytestoread:= trailingBytesForUTF8[ord(src[i])];
-        if (stringlength + extraBytesToRead) >= high(ucs4string) then
+        if (stringlength + extraBytesToRead) >= high(longucs4string) then
           begin
             exit;
           end;
@@ -3376,7 +3427,7 @@ end;
           end;
         if not found then
           begin
-            s:=s+'\u'+hexstr(longint(ch),8);
+            s:=s+DEFAULT_FALLBACK_CHAR;
           end;
       end;
      utf8strpastostring:=s;
@@ -3402,7 +3453,7 @@ end;
       begin
         ch := 0;
         extrabytestoread:= trailingBytesForUTF8[ord(src[i])];
-        if (stringlength + extraBytesToRead) >= high(ucs4string) then
+        if (stringlength + extraBytesToRead) >= high(longucs4string) then
           begin
             exit;
           end;
@@ -3419,7 +3470,7 @@ end;
           begin
             if ch > 255 then
               begin
-                s:= s + '\u' + hexstr(ch,8);
+                s:= s + DEFAULT_FALLBACK_CHAR;
               end
             else
                s:=s+chr(ch and $ff);
@@ -3428,7 +3479,7 @@ end;
           begin
             if ch > 255 then
               begin
-                s:= s + '\u' + hexstr(ch,8);
+                s:= s + DEFAULT_FALLBACK_CHAR;
               end
             else
                s:=s+chr(ch and $ff);
@@ -3459,7 +3510,7 @@ end;
       begin
         ch := 0;
         extrabytestoread:= trailingBytesForUTF8[ord(src[i])];
-        if (stringlength + extraBytesToRead) >= high(ucs4string) then
+        if (stringlength + extraBytesToRead) >= high(longucs4string) then
           begin
             exit;
           end;
@@ -3485,7 +3536,7 @@ end;
                 ch:=resultstr[1];
                 { Some of the characters might have been converted to ascii }
                 if ch > 127 then
-                  s:= s + '\u' + hexstr(longint(ch),8)
+                  s:= s + DEFAULT_FALLBACK_CHAR
                 else
                   s:=s+chr(ch and $7f);
               end
@@ -3504,7 +3555,7 @@ end;
                 ch:=resultstr[1];
                 { Some of the characters might have been converted to ascii }
                 if ch > 127 then
-                  s:= s + '\u' + hexstr(longint(ch),8)
+                  s:= s + DEFAULT_FALLBACK_CHAR
                 else
                   s:=s+chr(ch and $7f);
               end
@@ -3776,6 +3827,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.46  2009/01/04 15:36:31  carl
+   + utf8islegal for null terminated char strings.
+
   Revision 1.45  2007/01/06 19:23:51  carl
     + Turbo pascal support for canonical mapping without taking the full
        data segment.
