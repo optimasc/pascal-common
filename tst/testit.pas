@@ -23,7 +23,8 @@ uses dpautils,
      testdate,
      testsgml,
      testietf,
-     tiso639
+     tiso639,
+     collects
      ;
 
   var
@@ -149,6 +150,27 @@ uses dpautils,
     '012345678901234567890123456789012345678901234567890123456789'+
     '012345678901234'
   );
+   { Raw UCS-4 string containing whitespace padding left and right }
+   utf32string1: array[0..6] of ucs4char =
+   (
+    { Length }
+    6,
+    $20,$20,$30,$20,$20,$9
+   );
+   { Raw UCS-4 string containing no whitespace padding left and right }
+   utf32string2: array[0..6] of ucs4char =
+   (
+    { Length }
+    6,
+    $31,$32,$33,$34,$35,$36
+   );
+   { Raw UCS-4 string containing no length of data at all }
+   utf32string3: array[0..6] of ucs4char =
+   (
+    { Length }
+    0,
+    0,0,0,0,0,0
+   );
   procedure testutf32;
   var
    s1ascii: string;
@@ -259,6 +281,36 @@ uses dpautils,
      end;
    if s3ascii <> limitstr then
      RunError(255);
+     
+   { Test Trimming routines - with operation }
+   UCS4_TrimLeft(utf32string1);
+   if ucs4_length(utf32string1) <> 4 then
+     RunError(255);
+     
+   UCS4_TrimRight(utf32string1);
+   if ucs4_length(utf32string1) <> 1 then
+     RunError(255);
+     
+   { Test Trimming routines - no operation }
+     
+   UCS4_TrimLeft(utf32string2);
+   if ucs4_length(utf32string2) <> 6 then
+     RunError(255);
+     
+   UCS4_TrimRight(utf32string2);
+   if ucs4_length(utf32string2) <> 6 then
+     RunError(255);
+     
+   { Test Trimming routines - empty strings }
+     
+   UCS4_TrimLeft(utf32string3);
+   if ucs4_length(utf32string3) <> 0 then
+     RunError(255);
+
+   UCS4_TrimRight(utf32string3);
+   if ucs4_length(utf32string3) <> 0 then
+     RunError(255);
+
   end;
 
   procedure testisvalidisodatestring;
@@ -751,6 +803,99 @@ Begin
 end;
 
 
+{ This tests the Key Collection object }
+procedure TestKeys;
+var
+ KeyValues: THashTable;
+ count: integer;
+ p: PHashItem;
+ s: string;
+ b: Boolean;
+begin
+  KeyValues.init(16,16);
+
+  {-- Simple property verification --}
+
+  { Try to retrieve a non existent property when property list is empty }
+  p:=PHashItem(KeyValues.get(''));
+  if p<>nil then
+    RunError(255);
+  b:=KeyValues.containsKey('MyOtherkey');
+  if b then
+    RunError(255);
+  KeyValues.put('MyOtherkey',12,New(PStringHashItem, Init('value_new')));
+  KeyValues.put('Mykey',13,New(PStringHashItem, Init('value_old')));
+
+  p:=PHashItem(KeyValues.get('Mykey'));
+  if p^.toString <> 'value_old' then
+    RunError(255);
+  p:=PHashItem(KeyValues.getByFastIndex(13));
+  if p^.toString <> 'value_old' then
+    RunError(255);
+  { Try to retrieve a non existent property when property list is not empty }
+  p:=PHashItem(KeyValues.get('MyInvalidkey'));
+  if p<>nil then
+    RunError(255);
+  p:=PHashItem(KeyValues.getByFastIndex(12));
+  if p^.toString <> 'value_new'  then
+    RunError(255);
+  p:=PHashItem(KeyValues.get('MyOtherkey'));
+  if p^.toString <> 'value_new' then
+    RunError(255);
+  { Overwrite a property with an existing property }
+
+  KeyValues.put('MyOtherkey',12,new(PStringHashITem, Init('new_value')));
+  p:=nil;
+  p:=PHashItem(KeyValues.getByFastIndex(12));
+  if p^.toString <> 'new_value' then
+    RunError(255);
+  p:=nil;
+  p:=PHashItem(KeyValues.get('MyOtherkey'));
+  if p^.toString <> 'new_value' then
+    RunError(255);
+
+  { Overwrite a property with a new fast key index  }
+  p:=nil;
+  KeyValues.put('Mykey',14,new(PStringHashItem, Init('new_my_key_value')));
+
+  p:=nil;   
+  p:=PHashItem(KeyValues.getByFastIndex(14));
+  if p^.toString <> 'new_my_key_value' then
+    RunError(255);
+  p:=nil;
+  p:=PHashItem(KeyValues.get('Mykey'));
+  if p^.toString <> 'new_my_key_value'  then
+    RunError(255);
+
+
+  { Verify that we return the correct values as indexes }
+  s:=KeyValues.getKeyName(0);
+  if s<>'MyOtherkey' then
+    RunError(255);
+  s:=KeyValues.getKeyName(1);
+  if s<>'Mykey' then
+    RunError(255);
+  s:=KeyValues.getKeyName(2);
+  if s<>'' then
+    RunError(255);
+
+  { Delete a property }
+  if KeyValues.remove('MyOtherkey')<>true then
+    RunError(255);
+  s:=KeyValues.getKeyName(0);
+  if s<>'Mykey' then
+    RunError(255);
+  s:=KeyValues.getKeyName(1);
+  if s<>'' then
+    RunError(255);
+
+
+  { Verify that we get the correct number of items in count }
+  KeyValues.done;
+
+end;
+
+
 procedure TestStrGetNextLine;
 const
   GETLINE_CASE_1 = #10#10;
@@ -874,11 +1019,15 @@ Begin
   testgetvalue;
   testbasechar;
   TestStrGetNextLine;
+  testkeys;
   WriteLn(ErrOutput,'Std Error OUTPUT');
 end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.20  2007/01/06 19:17:20  carl
+    + Add testbasechar unicode testing
+
   Revision 1.19  2007/01/06 15:56:54  carl
     + add several unicode routines testsuit
 
