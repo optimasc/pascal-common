@@ -1,10 +1,10 @@
 {
-    $Id: collects.pas,v 1.7 2010-01-21 12:01:09 carl Exp $
+    $Id: collects.pas,v 1.8 2011-04-12 00:46:54 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Collections (Object style)
     
-    See License.txt for more information on the licensing terms
+    See license.txt for more information on the licensing terms
     for this source code.
     
  **********************************************************************}
@@ -26,6 +26,7 @@ uses
   fpautils,
   tpautils,
   dpautils,
+  objects,
   utils;
 
 
@@ -154,118 +155,80 @@ TYPE
   const KEY_NO_FASTKEY = high(word);
 
   type
-  TKeyType = (typ_element, typ_array);
-  PKeyValueArrayItems = ^TKeyValueArrayItems;
-  PKeyValueCollection = ^TKeyValueCollection;
+  PObject = ^TObject;
+  PHashTable = ^THashTable;
 
+  PHashItem = ^THashItem;  
+  THashItem = Object(TObject)
+    Constructor Init;
+    Destructor Done; virtual;
+    {** Returns the string representation of this item }
+    Function toString: string; virtual;
+  end;
+  
+  PStringHashItem = ^TStringHashItem;
+  {** Simple String hash item that stores strings for use in THashTable }
+  TStringHashItem = Object(THashItem)
+  public
+    Constructor Init(s: String);
+    Destructor Done; virtual;
+    Function toString: string; virtual;
+  private
+    value: String;
+  end;
+  
   PKeyValue = ^TKeyValue;  
   TKeyValue = record
     key: pshortstring;
     fastkey: word;
-    qualifiers: PKeyValueCollection;
-    case typ:TKeyType of
-     {** Contains an individual attribute }
-     typ_element: (value: pchar);
-     {** Contains a SEQ, ALT or BAG }
-     typ_array: (collection : PKeyValueCollection);
+    value: PObject;
   end;
 
-
-  TKeyValueArrayItems = object(TExtendedCollection)
-    procedure FreeItem(Item: pointer); virtual;
-  end;
-
-
-  TKeyValueCollection = Object(TExtendedSortedCollection)
+  THashTable = Object(TExtendedSortedCollection)
+  public
       CONSTRUCTOR Init (ALimit, ADelta: Integer);
       Destructor done; virtual;
-      FUNCTION Compare (Key1, Key2: Pointer): Integer;            Virtual;
-      PROCEDURE FreeItem (Item: Pointer); Virtual;
+      
+      {** Returns the value to which the specified key is mapped in this 
+          hashtable. 
 
-      {** Returns the property value associated with this key string. If the
-          property does not exist or is a type array of values,
-          this routine returns nil }
-      function getProperty(ns,key: string): pchar;
-      {** Returns the property value associated with this key index.
-          If the property does not exist or is a type array of values,
-          this routine returns nil. It returns the first value that has
-          this fastkey value.
+          @param(key A key in the hashtable)
+          @returns(the value to which the key is mapped in this hashtable; 
+           nil if the key is not mapped to any value in this hashtable).
+
       }
-      function getPropertyByFastIndex(fastkey: integer): pchar;
-      {** Returns the qualifier associated with this key string. If the
-          property does not exist or is a type array of values,
-          this routine returns nil, or if the qualifier does not exist,
-          the returned value is also nil. }
-      function getPropertyQualifier(ns,key: string; qualNS, qualName: string): pchar;
+      Function get(const key: string): PObject;
+      
+      {** Returns the value to which the specified fast key is mapped in this 
+          hashtable. 
+      
+          @param(key A key in the hashtable)
+          @returns(the value to which the key is mapped in this hashtable; 
+           nil if the key is not mapped to any value in this hashtable).
 
-
-      {** Sets the property value to associate with this key and fastkey.
-
-          It shall overwrite any other property with the same name and shall
-          return the old value associated with this property (possibly truncated).
-          If this property did not exist or if trying to set a value to
-          an array of values, the return value will be nil.
-
-          WARNING: There is no verification to determine if the fastKey value is
-          not already allocated in this key collection. The fastKey value can be from
-          0..65534.
-
-          The return value should be copied, since it may be destroyed
-          by another call to this method.
-
-          @param(key Key name associated with this value)
-          @param(fastkey Numeric identifier associated with this value, 65535 (KEY_NO_FASTKEY) if no fastKey association)
       }
-      function setProperty(ns,key: string; fastkey: integer; value: pchar): pchar;
-      {** Sets a qualifier to a specified element property.
+      Function getByFastIndex(fastkey: integer): PObject;
+      
+
+      {** Maps the specified key to the specified value in this hashtable. 
+          Neither the key nor the value can be nil. 
+          
       }
-      function setPropertyQualifier(ns,key, qualNS, qualName: string; value: pchar): pchar;
-
-
-      {** Deletes the specified property. This method deletes
-          the specified property, which can either be a simply property or
-          an array, in which it cases all its sub-elements are also deleted.
-
-          @param(key Key name to delete)
-          @returns(true if successfull deletion, otherwise false such as is
-            this property does not exist)
-      }
-
-      function deleteProperty(ns,key: string): boolean;
-
-      {** Deletes the specified qualifier of the specified property. }
-      function deletePropertyQualifier(ns,key: string; qualNS, qualName: string): boolean;
-(*
-      {** Deletes the specified array item of the specified property }
-      function deletePropertyArrayItem(key: string; index: integer): boolean;
-*)
-      {** Adds a value to a list of values of a specified key. If
-          the array does not exist, it is first created.
-
-          @param(key This is the key associated with this array)
-          @param(value  Actual value of the element in the array list)
-          @returns(The index of this element in the array)
-      }
-      function appendPropertyArrayItem(ns,key: string; value: pchar): integer;
-      {** Returns the number of items in the value array of a specified
-          key. Returns -1 if this key does not exist. If the value exists, 
-          but is not array type, this will always return 1.
-      }
-      function getPropertyArrayItemCount(ns,key: string): integer;
-      {** Returns the specified item in the value array at the specified index,
-          starting from index 0. If this is not an array type key, and the
-          key exists, it will always retun that key value, ignoring the
-          index parameter. Returns nil if the key does not exist.
-      }
-      function getPropertyArrayItem(ns,key: string;index: integer): pchar;
-(*      
-      function setPropertyArrayItem(key: string;index:integer; value: pchar): pchar;
-*)      
-
-      function setPropertyArrayItemQualifier(ns, key: string; qualNS, qualName: string; index: integer; value: pchar): pchar;
-      function getPropertyArrayItemQualifier(ns, key: string; qualNS, qualName: string; index: integer): pchar;
-
-
+      procedure put(key: string;fastkey: integer; obj: PObject);
+      
+      {** Removes the key (and its corresponding value) from this hashtable. 
+          This method does nothing if the key is not in the hashtable. }
+      Function remove(key: string): Boolean;
+      
+      {** Returns the number of elements in this hashtable }
+      Function size: integer;
+      
+      {** Determines whether a key is in this hash table }
+      function containsKey(const key: string): Boolean;
+      
+      {** Removes all keys and elements from this HashTable }
+      procedure clear;
+      
       {** Returns the key name associated with the specified index, the index starting at 0 to count -1. The
           returns an empty string if out of bounds. The index is an internal value and is not
           the same as the fastKey index.
@@ -275,7 +238,11 @@ TYPE
       returnedProperty: pchar;
       function getIndex(key: string): integer;
       function getFastKeyIndex(fastkey: integer): integer;
-   END;
+      FUNCTION Compare (Key1, Key2: Pointer): Integer;            Virtual;
+      PROCEDURE FreeItem (Item: Pointer); Virtual;
+  end;
+
+
 
 
 Implementation
@@ -697,7 +664,7 @@ end;
 {+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++}
 {                     TKeyValueCollection OBJECT METHODS                    }
 {+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++}
-FUNCTION TKeyValueCollection.Compare (Key1, Key2: Pointer): integer;
+FUNCTION THashTable.Compare (Key1, Key2: Pointer): integer;
 VAR I, J: integer; P1, P2: PShortString;
 BEGIN
    P1 := PShortString(PKeyValue(Key1)^.key);                               { String 1 pointer }
@@ -718,40 +685,25 @@ BEGIN
      Else Compare := 1;                               { String1 > String2 }
 END;
 
-destructor TKeyValueCollection.done;
+destructor THashTable.done;
 begin
   if assigned(returnedProperty) then
     strdispose(returnedProperty);
   Inherited Done;
-
 end;
 
 
 
-PROCEDURE TKeyValueCollection.FreeItem (Item: Pointer);
+PROCEDURE THashTable.FreeItem (Item: Pointer);
 var
  p: PKeyValue;
 BEGIN
    p:=PKeyValue(Item);
    if assigned(p) then
      begin
-        if p^.typ = typ_element then
-          begin
-           if assigned(p^.value) then
-             strdispose(p^.value);
-          end
-        else
-          begin
-            if assigned(p^.collection) then
-               Dispose(p^.collection,done);
-          end;
        if assigned(p^.key) then
          stringdispose(p^.key);
-       if assigned(p^.qualifiers) then
-         begin
-           Dispose(p^.qualifiers, done);
-           p^.qualifiers:=nil;
-         end;
+       Dispose(p^.value, done);  
        dispose(p);
      end;
 END;
@@ -760,7 +712,7 @@ END;
 {** This returns the index in the collection of the element
     associated with this key, or -1 if not found.
 }
-function TKeyValueCollection.getIndex(key: string): integer;
+function THashTable.getIndex(key: string): integer;
 var
  KeyValue: PkeyValue;
  i: integer;
@@ -784,7 +736,7 @@ end;
 {** This returns the index in the collection of the element
     associated with this fast key value, or -1 if not found.
 }
-function TKeyValueCollection.getFastKeyIndex(fastkey: integer): integer;
+function THashTable.getFastKeyIndex(fastkey: integer): integer;
 var
  KeyValue: PkeyValue;
  i: integer;
@@ -811,7 +763,7 @@ end;
 
 
 
-function TKeyValueCollection.getKeyName(index: integer): string;
+function THashTable.getKeyName(index: integer): string;
 var
  KeyValue: PKeyValue;
 begin
@@ -824,313 +776,133 @@ begin
   end;
 
 
-{** This returns the property associated with this key. If there
-    is no such key, then return nil.
-}
-function TKeyValueCollection.getProperty(ns,key: string): pchar;
+Function THashTable.get(const key: string): PObject;
 var
  idx: integer;
  KeyValue: PKeyValue;
 begin
-  getProperty:=nil;
+  get:=nil;
   idx:=getIndex(key);
   if idx = -1 then
     exit;
   KeyValue:=PKeyValue(At(idx));
-  if KeyValue^.typ <> typ_element then
-    exit;
-  getProperty:=KeyValue^.value;
+  get:=KeyValue^.value;
 end;
 
 
-{** This returns the property associated with this index. If there
-    is no such key, then return nil.
-}
-function TKeyValueCollection.getPropertyByFastIndex(fastkey: integer): pchar;
+function THashTable.getByFastIndex(fastkey: integer): PObject;
 var
  idx: integer;
  KeyValue: PKeyValue;
 begin
-  getPropertyByFastIndex:=nil;
+  getByFastIndex:=nil;
   idx:=getFastKeyIndex(fastkey);
   if idx = -1 then
     exit;
   KeyValue:=PKeyValue(At(idx));
-  if KeyValue^.typ <> typ_element then
-    exit;
-  getPropertyByFastIndex:=KeyValue^.value;
+  getByFastIndex:=KeyValue^.value;
 end;
 
-
-function TKeyValueCollection.setProperty(ns,key: string;fastkey: integer; value: pchar): pchar;
+Function THashTable.remove(key: string): Boolean;
 var
- Prop: pchar;
- attr: shortstring;
+ idx: integer;
+begin
+  remove := false;
+  idx:=getIndex(key);
+  if idx <> -1 then
+    begin
+      Free(At(idx));
+      remove := true;
+    end;
+end;
+
+procedure THashTable.put(key: string;fastkey: integer; obj: PObject);
+var
  KeyValue: PKeyValue;
  idx: integer;
 begin
-  setProperty:=nil;
   idx:=getIndex(key);
   if idx <> -1 then
     begin
       KeyValue:=PKeyValue(At(idx));
-      { This is an array of values, so you are using the wrong API }
-      if KeyValue^.typ = typ_array then
-        exit;
-      if assigned(returnedProperty) then
-        begin
-          strdispose(returnedProperty);
-          returnedProperty:=nil;
-        end;
-      returnedProperty:=strnew(KeyValue^.value);
-      setProperty:=returnedProperty;
       Free(At(idx));
     end;
   new(KeyValue);
   KeyValue^.key:=stringdup(key);
-  KeyValue^.value:=strnew(value);
-  KeyValue^.typ:=typ_element;
-  KeyValue^.Qualifiers:=nil;
+  KeyValue^.value:=obj;
   KeyValue^.fastkey:=FastKey;
   Insert(KeyValue);
 end;
 
-function TKeyValueCollection.appendPropertyArrayItem(ns,key: string; value: pchar): integer;
-var
- KeyArray: PKeyValue;
- KeyValue: PKeyValue;
- idx: integer;
+Function THashTable.size: integer;
 begin
-  appendPropertyArrayItem:=-1;
+  Size := Count;
+end;
+
+function THashTable.containsKey(const key: string): Boolean;
+var
+ idx: integer;
+Begin
+  containsKey := false;
   idx:=getIndex(key);
-  { Not allowed to recreate an array that already exists }
   if idx <> -1 then
-   begin
-     KeyArray:=PKeyValue(At(idx));
-   end
-  else
-   begin
-     new(KeyArray);
-     KeyArray^.typ:=typ_array;
-     KeyArray^.key:=stringdup(key);
-     KeyArray^.Qualifiers:=nil;
-     KeyArray^.FastKey:=KEY_NO_FASTKEY;
-     New(KeyArray^.collection,init(32,32));
-     Insert(KeyArray);
-   end;
-  new(KeyValue);
-  KeyValue^.key:=stringdup(key);
-  KeyValue^.value:=strnew(value);
-  KeyValue^.typ:=typ_element;
-  KeyValue^.Qualifiers:=nil;
-  KeyArray^.collection^.Insert(KeyValue);
-  { The index is always the last element in the collection }
-  appendPropertyArrayItem:=KeyArray^.collection^.count - 1;
-end;
-
-
-
-function TKeyValueCollection.getPropertyArrayItemCount(ns,key: string): integer;
-var
- idx:integer;
- KeyValue: PKeyValue;
-begin
-  getPropertyArrayItemCount:=-1;
-  idx:=getIndex(key);
-  { Not found, then simply return -1 }
-  if idx = -1 then
-    exit;
-  KeyValue:=PKeyValue(At(idx));
-  if KeyValue^.typ=typ_element then
     begin
-      getPropertyArrayItemCount:=1;
-      exit;
+      containsKey := true;
     end;
-  getPropertyArrayItemCount:=KeyValue^.collection^.Count;
+end;
+
+procedure THashTable.clear;
+begin
+ FreeAll;
 end;
 
 
-function TKeyValueCollection.getPropertyArrayItem(ns,key: string;index: integer): pchar;
-var
- idx:integer;
- KeyValue: PKeyValue;
- KeyElement: PKeyValue;
-begin
-  getPropertyArrayItem:=nil;
-  idx:=getIndex(key);
-  { Not found, then simply return nil }
-  if idx = -1 then
-    exit;
-  KeyValue:=PKeyValue(At(idx));
-  { Return always the property if this is not an array element }
-  if KeyValue^.typ=typ_element then
-    begin
-      getPropertyArrayItem:=getProperty(ns,key);
-      exit;
-    end;
-  if index > (KeyValue^.collection^.Count-1) then
-    exit;
-  KeyElement:=KeyValue^.collection^.at(index);
-  getPropertyArrayItem:=KeyElement^.value;
-end;
-
-(*
-function TKeyValueCollection.setPropertyArrayItem(key: string;index:integer; value: pchar): pchar;
-begin
-end;*)
-
-function TKeyValueCollection.deleteProperty(ns, key : string):Boolean;
- var
-  idx: integer;
- begin
-  deleteProperty:=false;
-  idx:=getIndex(key);
-  { Not found, then simply return nil }
-  if idx = -1 then
-    exit;
-  AtFree(idx);
-  deleteProperty:=true;  
- end;
-
-(*
-function TKeyValueCollection.deletePropertyArrayItem(key: string; index: integer):Boolean;
- begin
- end;*)
-
-function TKeyValueCollection.setPropertyQualifier(ns,key, qualNS, qualName: string; value: pchar): pchar;
-var
- Prop: pchar;
- KeyValue: PKeyValue;
- idx: integer;
-begin
-  setPropertyQualifier:=nil;
-  idx:=getIndex(key);
-  if idx = -1 then
-    exit;
-  KeyValue:=PKeyValue(At(idx));
-
-  if not assigned(KeyValue^.Qualifiers) then
-    New(KeyValue^.Qualifiers, init(1,4));
-  setPropertyQualifier:=keyValue^.Qualifiers^.setProperty(qualNS,qualName,KEY_NO_FASTKEY,value);
-end;
-
-
-function TKeyValueCollection.getPropertyQualifier(ns,key: string; qualNS, qualName: string): pchar;
-var
- Prop: pchar;
- KeyValue: PKeyValue;
- idx: integer;
-begin
-  getPropertyQualifier:=nil;
-  idx:=getIndex(key);
-  if idx = -1 then
-    exit;
-  KeyValue:=PKeyValue(At(idx));
-  if not assigned(KeyValue^.Qualifiers) then
-    exit;
-  getPropertyQualifier:=keyValue^.Qualifiers^.getProperty(qualNS,qualName);
-end;
-
-
-function TKeyValueCollection.deletePropertyQualifier(ns,key: string; qualNS, qualName: string): boolean;
-var
- Prop: pchar;
- KeyValue: PKeyValue;
- idx: integer;
-begin
-  deletePropertyQualifier:=false;
-  idx:=getIndex(key);
-  if idx = -1 then
-    exit;
-  KeyValue:=PKeyValue(At(idx));
-  if not assigned(KeyValue^.Qualifiers) then
-    exit;
-  deletePropertyQualifier:=keyValue^.Qualifiers^.deleteProperty(qualNS,qualName);
-end;
-
-
-
-function TKeyValueCollection.setPropertyArrayItemQualifier(ns, key: string; qualNS, qualName: string; index: integer; value: pchar): pchar;
-var
- idx:integer;
- KeyValue: PKeyValue;
- KeyElement: PKeyValue;
-begin
-  setPropertyArrayItemQualifier:=nil;
-  idx:=getIndex(key);
-  { Not found, then simply return nil }
-  if idx = -1 then
-    exit;
-  KeyValue:=PKeyValue(At(idx));
-  { Return always the property if this is not an array element }
-  if KeyValue^.typ=typ_element then
-    begin
-      exit;
-    end;
-  if index > (KeyValue^.collection^.Count-1) then
-    exit;
-  KeyElement:=KeyValue^.collection^.at(index);
-  KeyValue^.collection^.SetPropertyQualifier('',KeyElement^.value,qualNS,qualName,value);
-end;
-
-
-function TKeyValueCollection.getPropertyArrayItemQualifier(ns, key: string; qualNS, qualName: string; index: integer): pchar;
-var
- idx:integer;
- KeyValue: PKeyValue;
- KeyElement: PKeyValue;
-begin
-  getPropertyArrayItemQualifier:=nil;
-  idx:=getIndex(key);
-  { Not found, then simply return nil }
-  if idx = -1 then
-    exit;
-  KeyValue:=PKeyValue(At(idx));
-  { Return always the property if this is not an array element }
-  if KeyValue^.typ=typ_element then
-    begin
-      exit;
-    end;
-  if index > (KeyValue^.collection^.Count-1) then
-    exit;
-  KeyElement:=KeyValue^.collection^.at(index);
-  KeyValue^.collection^.GetPropertyQualifier('',KeyElement^.value,qualNS,qualName);
-end;
-
-
-
-CONSTRUCTOR TKeyValueCollection.Init (ALimit, ADelta: Integer);
+CONSTRUCTOR THashTable.Init (ALimit, ADelta: Integer);
 Begin
   Inherited Init(ALimit,ADelta);
 end;
 
-{+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++}
-{                              TKeyValueCollection                          }
-{+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++}
+{*****************************************************************************
+                             Hash Item
+*****************************************************************************}
 
 
-procedure TKeyValueArrayItems.FreeItem(Item: pointer);
-var
- p: PKeyValue;
-BEGIN
-   p:=PKeyValue(Item);
-   if assigned(p) then
-     begin
-        if p^.typ = typ_element then
-          begin
-           if assigned(p^.value) then
-             strdispose(p^.value);
-          end
-        else
-          begin
-            if assigned(p^.collection) then
-               Dispose(p^.collection,done);
-          end;
-       if assigned(p^.key) then
-         stringdispose(p^.key);
-       dispose(p);
-     end;
-END;
+Constructor THashItem.Init;
+Begin
+  Inherited Init;
+end;
+
+Destructor THashItem.Done;
+Begin
+  Inherited Done;
+end;
+
+Function THashItem.toString: string;
+Begin
+  toString := '';
+end;
+
+
+{*****************************************************************************
+                             Hash String Item
+*****************************************************************************}
+
+
+Constructor TStringHashItem.Init(s: String);
+Begin
+  Inherited Init;
+  value := s;
+end;
+
+Destructor TStringHashItem.Done;
+Begin
+  Inherited Done;
+end;
+
+Function TStringHashItem.toString: string;
+Begin
+  toString := value;
+end;
 
 
 {*****************************************************************************
@@ -1192,6 +964,9 @@ end;
 End.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.7  2010/01/21 12:01:09  carl
+   + Add TKeyValueCollection class
+
   Revision 1.6  2005/07/20 03:14:39  carl
    + Added TLongintCollection
 
