@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: utils.pas,v 1.28 2007-02-14 04:44:08 carl Exp $
+    $Id: utils.pas,v 1.29 2011-04-12 00:27:45 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Common utilities
@@ -164,6 +164,15 @@ function StrGetNextLine(var Text: String) : String;
       @param(val Signed 32-bit value to convert)
   }      
   function decstr(val : longint;cnt : byte) : string;
+  
+  {** @abstract(Convert a value to an ASCII decimal representation) 
+  
+      To avoid left padding with zeros, set @code(cnt) to zero.
+
+      @param(val Real value to convert)
+  }      
+  function realstr(val : real;cnt : byte) : string;
+  
   
   {** @abstract(Convert a value to an ASCII decimal representation) 
   
@@ -707,6 +716,15 @@ begin
   boolstr:=fillwithspace(s,cnt);
 end;
 
+function realstr(val : real;cnt : byte) : string;
+var
+  s: string;
+begin
+  str(val:2:2,s);
+  realstr:=fillwithzero(s,cnt);
+end;
+
+
 
 function decstr(val : longint;cnt : byte) : string;
 var
@@ -1145,6 +1163,9 @@ end;
 end.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.28  2007/02/14 04:44:08  carl
+    * Bugfix of infinite loop in certain instances with strings and when ansistrings are not enabled.
+
   Revision 1.27  2007/01/06 20:23:13  carl
     - Remove extdos reference
 
