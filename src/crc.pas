@@ -1,5 +1,5 @@
 {
-    $Id: crc.pas,v 1.6 2006-08-31 03:07:36 carl Exp $
+    $Id: crc.pas,v 1.7 2011-04-12 00:36:41 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     CRC and Chekcsum routines    
@@ -10,7 +10,7 @@
  **********************************************************************}
 {** @author(Carl Eric Codere) 
     @abstract(CRC and checksum generation unit)
-    
+
     CRC and checksum generation routines, 
     compatible with ISO 3309 and ITU-T-V42 among others.
     
@@ -86,13 +86,14 @@ uses utils,
     Normally to be compatible with the ISO 3309 standard,
     the first call to this routine should set @code(InitCRC)
     to @code($FFFFFFFF), and the final result of the
-    CRC-32 should be @code(XOR)'ed with $FFFFFFFF.
+    CRC-32 should be @code(XOR)'ed with $FFFFFFFF. The routine
+    can used on a single byte or on a byte array.
     
     @param(InitCRC The value of the previous CRC)
-    @param(b The data byte to get the CRC-32 of)
+    @param(b The data  to get the CRC-32 of)
     @returns(The updated CRC-32 value)
 }    
-function UpdateCrc32(InitCrc:longword; b: byte):longword;
+function UpdateCrc32(InitCrc:longword; const b: Array of byte):longword;
 
 {** @abstract(Calculates a CRC-16 CCITT value)
     Routine to get the CRC-16 CCITT value.
@@ -100,15 +101,16 @@ function UpdateCrc32(InitCrc:longword; b: byte):longword;
     Normally to be compatible with the CCITT standards,
     the first call to this routine should set @code(InitCRC)
     to @code($FFFF), and the final result of the
-    CRC-16 should be taken as is.
-    
+    CRC-16 should be taken as is. The routine
+    can used on a single byte or on a byte array.
+
     p.s : This has not been verified against hardware.
     
     @param(InitCRC The value of the previous CRC)
-    @param(b The data byte to get the CRC-16 of)
+    @param(b The data to get the CRC-16 of)
     @returns(The updated CRC-16 value)
 }    
-function UpdateCrc16(InitCrc: word; b: byte): word;
+function UpdateCrc16(InitCrc: word; const b: Array of byte): word;
 
 {** @abstract(Calculates an Adler-32 checksum value)
     Routine to get the Adler-32 checksum as
@@ -117,41 +119,44 @@ function UpdateCrc16(InitCrc: word; b: byte): word;
     Normally to be compatible with the standard,
     the first call to this routine should set @code(InitAdler)
     to @code(1), and the final result of the should be 
-    taken as is.
+    taken as is. The routine can used on a single byte or 
+    on a byte array.
     
     @param(InitAdler The value of the previous Adler32)
-    @param(b The data byte to get the Adler32 of)
+    @param(b The data to get the Adler32 of)
     @returns(The updated Adler32 value)
 }    
-function UpdateAdler32(InitAdler: longword; b: byte): longword;
+function UpdateAdler32(InitAdler: longword; const b: Array of byte): longword;
 
 {** @abstract(Calculates an 8-bit fletcher checksum value)
     Routine to get the Fletcher 8-bit checksum as
-    defined in IETF RFC 1146
+    defined in IETF RFC 1146. 
     
     Normally to be compatible with the standard,
     the first call to this routine should set @code(InitFletcher)
     to @code(0), and the final result of the should be 
-    taken as is.
+    taken as is. The routine can used on a single byte or 
+    on a byte array.
     
-    @param(InitCRC The value of the previous Adler32)
-    @param(b The data byte to get the Adler32 of)
-    @returns(The updated Adler32 value)
+    @param(InitFletcher The value of the previous Fletcher8)
+    @param(b The byte to get the Fletcher8 of)
+    @returns(The updated Fletcher8 value)
 }    
-function UpdateFletcher8(InitFletcher: word; b: byte): word;
+function UpdateFletcher8(InitFletcher: word; const b: Array of byte): word;
 
 {** @abstract(Calculates a standard 16-bit CRC)
     Standard CRC-16 bit algorithm as used in the ARC archiver.
     
     The first call to this routine should set @code(InitCRC)
     to @code(0), and the final result of the should be 
-    taken as is.
+    taken as is. The routine can used on a single byte or 
+    on a byte array.
     
     @param(InitCRC The value of the previous Crc)
-    @param(b The data byte to get the Crc of)
+    @param(b The data to get the Crc of)
     @returns(The updated Crc value)
-}    
-function UpdateCRC(InitCrc: word; b: byte): word;
+}
+function UpdateCRC(InitCrc: word; const b: array of byte): word;
 
 {** @exclude }
 const crctable32:array[0..255] of longword = (
@@ -297,6 +302,7 @@ CONST crctable16: ARRAY[0..255] OF WORD =
 );
 
 
+
 Implementation
 
 
@@ -309,10 +315,17 @@ Implementation
 {$define Range_Check_On}
 {$R-}
 {$endif}
-Function UpdateCrc32(InitCrc:longword;b: byte):longword;
+Function UpdateCrc32(InitCrc:longword;const b: Array of byte):longword;
+var
+ i: longword;
+ crc: longword;
 begin
-  InitCRC := longword(InitCRC shr 8) xor longword(crctable32[byte(InitCRC) xor b]);
-  UpdateCrc32:=InitCRC;
+  crc:=InitCRC;
+  for i:=0 to High(b) do
+    begin
+     CRC := longword(CRC shr 8) xor longword(crctable32[byte(CRC) xor b[i]]);
+    end;
+  UpdateCrc32:=CRC;
 end;
 
 
@@ -324,10 +337,17 @@ end;
 {$endif Range_check_on}
 
 
-function UpdateCrc16(InitCrc: word; b: byte): word;
+function UpdateCrc16(InitCrc: word; const b: Array of byte): word;
+var
+ i: longword;
+ crc: word;
 begin
-   UpdateCrc16 := crctable16ccitt[(((InitCrc SHR 8) XOR B) AND 255)] 
-    XOR (InitCrc SHL 8);
+   crc:=InitCRC;
+   for i:=0 to High(b) do
+     begin
+       crc := crctable16ccitt[(((Crc SHR 8) XOR B[I]) AND 255)]  XOR (Crc SHL 8);
+     end;
+   UpdateCRC16:=crc; 
 end;
 
 
@@ -338,42 +358,56 @@ end;
 const
   BASE = 65521;
   
-function UpdateAdler32(InitAdler: longword; b: byte):longword;
+function UpdateAdler32(InitAdler: longword; const b: Array of byte):longword;
 var
+ i: longword;
  s1,s2: longword;
 begin
- s1:=InitAdler and $ffff;
- s2:= (InitAdler shr 16) and $ffff;
- s1:= (s1 + b) mod BASE;
- s2:= (s2 + s1) mod BASE;
- UpdateAdler32:=(s2 shl 16) +s1;
+  for i:=0 to High(b) do
+    Begin
+      s1:=InitAdler and $ffff;
+      s2:= (InitAdler shr 16) and $ffff;
+      s1:= (s1 + b[i]) mod BASE;
+      s2:= (s2 + s1) mod BASE;
+      InitAdler:=(s2 shl 16) +s1;
+   end;
+ UpdateAdler32:=InitAdler;
 end;
 {$ifdef Range_check_on}
 {$R+}
 {$undef Range_check_on}
 {$endif Range_check_on}
 
-function UpdateFletcher8(InitFletcher: word; b: byte): word;
+function UpdateFletcher8(InitFletcher: word; const b: Array of byte): word;
 var
+ i: longword;
  a,c: byte;
 begin
-  { 1st byte of data in memory }
-  a:=(InitFletcher shr 8) and $ff;
-  c:=InitFletcher and $ff;
-  a:=(a + b) and $ff;
-  c:=(c + a) and $ff;
-  UpdateFletcher8:=(a shl 8) or c;
+  for i:=0 to High(b) do
+    begin
+     { 1st byte of data in memory }
+     a:=(InitFletcher shr 8) and $ff;
+     c:=InitFletcher and $ff;
+     a:=(a + b[i]) and $ff;
+     c:=(c + a) and $ff;
+     InitFletcher:=(a shl 8) or c;
+   end;
+  UpdateFletcher8:=InitFletcher;
 end;
 
-function UpdateCRC(InitCrc: word; b: byte): word;
+function UpdateCRC(InitCrc: word; const b: Array of byte): word;
 var
+ i: longword;
  crc: word;
  idx: integer;
 begin
   crc:=InitCRC;
-  idx:=(crc and $ff) xor b;
-  crc:=crc shr 8;
-  crc:= (crc xor crctable16[idx]) and $ffff;
+  for i:=0 to High(b) do
+    begin
+     idx:=(crc and $ff) xor b[i];
+     crc:=crc shr 8;
+     crc:= (crc xor crctable16[idx]) and $ffff;
+    end;
   UpdateCrc:=crc;
 end;
 
@@ -381,6 +415,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.6  2006/08/31 03:07:36  carl
+  + Better documentation
+
   Revision 1.5  2005/07/20 03:14:11  carl
    * Make the CRC tables public
 
