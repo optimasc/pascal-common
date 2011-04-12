@@ -1,5 +1,15 @@
 History of major changes in the releases:
 
+1.5.0:
+    + DEFAULT_FALLBACK_CHAR is used when unicode conversion produces
+      an unknown character in a local character set (The default
+      character is ? which is consistent with most libraries).
+    + Added Properties collection in collects unit (TKeyValueCollection)
+    + CRC unit now support open array values
+
+1.4.8:
+    * Bugfix of http_pathsplit, would crash if path input parameter
+      was empty.
 1.4.7:
     + Add support for Turbo Delphi for Win32
     + SGMLGetDTDInfo now explicitly uses shortstrings for its return
