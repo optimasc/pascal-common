@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: locale.pas,v 1.15 2010-01-21 11:57:37 carl Exp $
+    $Id: locale.pas,v 1.16 2011-11-23 23:10:47 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Localization and date/time unit
@@ -14,7 +14,7 @@
 {** 
     @author(Carl Eric Codere)
     @abstract(Localisation unit)
-    This unit is used to convert different 
+    This unit is used to convert different
     locale information. ISO Standards are
     used where appropriate.
 
@@ -179,7 +179,7 @@ procedure UNIXToDateTime(epoch: big_integer_t; var year, month, day, hour, minut
 
 {** Using a registered ALIAS name for a specific character encoding,
     return the common or MIME name associated with this character set, 
-    and indicate the type of stream format used. The type of stream 
+    and indicate the type of stream format used. The type of stream
     format used can be one of the @code(CHAR_ENCODING_XXXX) constants.
 }
 function GetCharEncoding(alias: string; var _name: string): integer;
@@ -206,11 +206,80 @@ function MIMECharsetToMicrosoftCodePage(charset: string): word;
 }    
 function MicrosoftLangageCodeToISOCode(langcode: integer): string;
 
-{** Using a ISO 639-2 language code identifier, return the 
+{** Using a ISO 639-2 language code identifier, return the
     resulting Microsoft language identifier 
     (as defined by Microsoft and OS/2)
 }    
 function ISOLanguageCodeToMicrosoftCode(lang: string): integer;
+
+
+{** @abstract(Convert a string representation of a date to a TDateTime according
+    to a specified template)
+
+    Date and time formats are specified by date and time pattern strings.
+    Within date and time pattern strings, unquoted letters from 'A' to 'Z'
+    and from 'a' to 'z' are interpreted as pattern letters representing
+    the components of a date or time string. Text can be quoted using
+    single quotes (') or double quotes (") to avoid interpretation.
+    "''" represents a single quote. All other characters are not
+    interpreted; they're simply copied into the output string during
+    formatting or matched against the input string during parsing. The format
+    is a subset of the SimpleDateFormat Java Class.
+
+    The following pattern letters are defined (all other characters
+    from 'A' to 'Z' and from 'a' to 'z' are reserved):
+
+    Letter 	Date or Time Component 	Presentation 	Examples
+    y 	    Year 	                  Year 	        1996; 96
+    M 	    Month in year 	        Number 	      07
+    w       Week in year 	          Number 	      27
+    D 	    Day in year 	          Number 	      189
+    d 	    Day in month 	          Number 	      10
+    a 	    Am/pm marker 	          Text 	        PM
+    H 	    Hour in day (0-23) 	    Number 	      0
+    h 	    Hour in am/pm (1-12) 	  Number 	      12
+    m 	    Minute in hour 	        Number 	      30
+    s 	    Second in minute 	      Number 	      55
+    S 	    Millisecond 	          Number 	      978
+
+    Year: For formatting, if the number of pattern letters is 2, the year is
+    truncated to 2 digits; otherwise it is interpreted as a number.
+
+    For parsing, if the number of pattern letters is more than 2, the year is
+    interpreted literally, regardless of the number of digits.
+
+    For parsing with the abbreviated year pattern ("y" or "yy"), the year is assumed
+    to be in the 20th century.
+
+    Month: If the number of pattern letters is 3 or more, the month is
+    interpreted as text; otherwise, it is interpreted as a number.
+}
+function DateTimeStrFormat(const DateTimeFormat : string;
+                         const DateTimeStr : string) : TDateTime;
+
+function EvaluateDateTime(const DateTimeFormat : string;
+                         dt: TDateTime): string;
+
+
+const
+  YEAR_CHAR = 'y';              { Numeric }
+  DAY_IN_MONTH = 'd';           { Numeric }
+  DAY_IN_WEEK = 'E';            { Text }
+  AM_PM_INDICATOR = 'a';
+  HOUR_IN_DAY_24 = 'H';         { Numeric 0-23}
+  HOUR_IN_DAY_12 = 'h';         { Numeric 1-12}
+  MINUTE_IN_HOUR = 'm';         { Number      }
+  SECOND_IN_MINUTE = 's';       { Number      }
+  MILLISECOND_CHAR = 'S';            { Numner      }
+  WEEK_IN_YEAR_CHAR = 'w';           { Number      }
+  DAY_IN_YEAR_CHAR = 'D';            { Number      }
+  MONTH_IN_YEAR_CHAR = 'M';          { Number or Text }
+
+  PatternChars: set of char = [
+  YEAR_CHAR, DAY_IN_MONTH, DAY_IN_WEEK, AM_PM_INDICATOR, HOUR_IN_DAY_24,
+  HOUR_IN_DAY_12, MINUTE_IN_HOUR, SECOND_IN_MINUTE, MILLISECOND_CHAR, WEEK_IN_YEAR_CHAR,
+  DAY_IN_YEAR_CHAR, MONTH_IN_YEAR_CHAR];
+
 
 
 const
@@ -237,7 +306,7 @@ const
 
 implementation
 
-uses utils,strings;
+uses utils,strings,dateutils;
 
 { IANA Registered character set table }
 {$i charset.inc}
@@ -279,7 +348,7 @@ const
     (value:   855; alias: 'IBM855'),      { OEM - Cyrillic (primarily Russian) }
     (value:   857; alias: 'IBM857'),      { OEM - Turkish                    }
     (value:   858; alias: 'IBM00858'),    { OEM - Multlingual Latin I + Euro symbol }
-    (value:   860; alias: 'IBM860'),      { OEM - Portuguese                 }  
+    (value:   860; alias: 'IBM860'),      { OEM - Portuguese                 }
     (value:   861; alias: 'IBM861'),      { OEM - Icelandic                  }
     (value:   862; alias: 'IBM862'),      { OEM - Hebrew                     }
     (value:   863; alias: 'IBM863'),      { OEM - Canadian-French            }
@@ -499,6 +568,13 @@ mslanguagecodes: array[1..MAX_MSLANGCODES] of tmslangcode =
    (code: $65 ;id:'dv'), {  LANG_DIVEHI Divehi }
    (code: $7f ;id:  '')  {  LANG_INVARIANT   }
 );
+
+
+months: Array[1..12] of string[12] =
+  ('January'  ,  'February' ,  'March'  ,  'April',
+    'May'     ,  'June' ,  'July'  ,  'August',
+    'September'  ,  'October' ,  'November'  ,  'December');
+
 
 function fillwithzeros(s: shortstring; newlength: Integer): shortstring;
 begin
@@ -976,7 +1052,7 @@ VAR I, J: integer; P1, P2: ^shortString;
     P2 := @s2;                               { String 2 pointer }
     If (Length(P1^)<Length(P2^)) Then 
       J := Length(P1^)
-    Else 
+    Else
       J := Length(P2^);                           { Shortest length }
     I := 1;                                            { First character }
     While (I<J) AND (P1^[I]=P2^[I]) Do 
@@ -1142,11 +1218,256 @@ begin
 end;
 
 
+{** Returns the current position of this token, as well
+    as the start position and end position within the
+    string, if the token does not exist, then the function
+    returns false. Characters within single quotes or double
+    quotes are not considered as patterns
+    }
+function GetToken(s: String; var startPos,endPos: integer): char;
+var
+ patternChar: char;
+ i: integer;
+Begin
+  i:=startPos;
+  patternChar := #0;
+  while i <= length(s) do
+    Begin
+      if s[i] in patternChars then
+        Begin
+          patternChar:=s[i];
+          startPos:=i;
+          while (i <= length(s)) and (s[i] = patternChar) do
+            inc(i);
+          endPos:=i;
+          break;
+        end
+      else
+       Inc(i);
+    end;
+  GetToken:=patternChar;
+end;
+
+function DateTimeStrFormat(const DateTimeFormat : string;
+                         const DateTimeStr : string) : TDateTime;
+var
+ s: string;
+ patternChar: char;
+ Year, Month, Day, Hour, Minute, Second, Millisecond: integer;
+ Week, DayOfYear: integer;
+ startPos, endPos: integer;
+ len: integer;
+ Code: integer;
+ Dt: TDateTime;
+Begin
+ s:=DateTimeStr;
+ Year:=1;
+ Month:=1;
+ Day:=1;
+ Hour:=0;
+ Minute:=0;
+ Second:=0;
+ Week:=0;
+ DayOfYear:=0;
+ Millisecond:=0;
+ startPos:=1;
+ while startPos < length(dateTimeFormat) do
+  Begin
+     patternChar:=GetToken(dateTimeFormat,startPos,endPos);
+     len:=endPos-startPos;
+     if len < 0 then
+       len:=0;
+     case patternChar of
+      YEAR_CHAR:
+         Begin
+           Code:=0;
+           Val(Copy(s,startPos,len),Year,Code);
+           if len = 2 then
+             Year:=Year+1900;
+         end;
+      DAY_IN_MONTH:
+         Begin
+           Code:=0;
+           Val(Copy(s,startPos,len),Day,Code);
+         end;
+      HOUR_IN_DAY_24:
+         Begin
+           Code:=0;
+           Val(Copy(s,startPos,len),Hour,Code);
+         end;
+      HOUR_IN_DAY_12:
+         Begin
+           Code:=0;
+           Val(Copy(s,startPos,len),Hour,Code);
+         end;
+      MINUTE_IN_HOUR:
+         Begin
+           Code:=0;
+           Val(Copy(s,startPos,len),Minute,Code);
+         end;
+      SECOND_IN_MINUTE:
+         Begin
+           Code:=0;
+           Val(Copy(s,startPos,len),Second,Code);
+         end;
+      MILLISECOND_CHAR:
+         Begin
+           Code:=0;
+           Val(Copy(s,startPos,len),MilliSecond,Code);
+         end;
+      WEEK_IN_YEAR_CHAR:
+         Begin
+           Code:=0;
+           Val(Copy(s,startPos,len),Week,Code);
+         end;
+      DAY_IN_YEAR_CHAR:
+         Begin
+           Code:=0;
+           Val(Copy(s,startPos,len),DayOfYear,Code);
+         end;
+      MONTH_IN_YEAR_CHAR:
+         Begin
+           Code:=0;
+           { if less than 3 characters }
+           if len >= 3 then
+             Begin
+             end
+           else
+             Begin
+              { Actual digits }
+              s:=Copy(s,startPos,len);
+              Val(s,Month,Code);
+             end;
+         end;
+     end;
+        startPos:=endPos; 
+  end;
+  { Normal encoding }
+  if Week <> 0 then
+     dt:=EncodeDateWeek(Year, Week)
+  else
+  if DayOfYear <> 0 then
+     dt:=EncodeDateDay(Year, DayOfYear)
+  else
+     TryEncodeDateTime(Year,Month,Day,Hour,Minute,Second,Millisecond,Dt);
+  DateTimeStrFormat:=Dt;
+end;
+
+{ Truncate the leading characters or pad with leading zeros
+  to go to the required length }
+function PadTruncate(s: string; len: integer): string;
+Begin
+  if length(s) > len then
+    delete(s,1,len-length(s))
+  else
+  if length(s) < len then
+   begin
+     while length(s) < len do
+       s:='0'+s;
+   end;
+  PadTruncate:=s;
+end;
+
+procedure Replace(var outStr: string; inS: string; startPos, endPos: integer);
+var
+ i: integer;
+Begin
+ for i:=1 to length(InS) do
+   Begin
+    outStr[startPos+i-1]:=inS[i];
+   end;
+end;
+
+function EvaluateDateTime(const DateTimeFormat : string;
+                         dt: TDateTime): string;
+var
+ Year,Month,Day,Hour,Minute,Second,Millisecond: word;
+ startPos, endPos: integer;
+ outStr: string;
+ patternChar: char;
+ len: integer;
+ s1: string;
+Begin
+  outStr:=DateTimeFormat;
+  DecodeDateTime(dt,Year,Month,Day,Hour,Minute,Second,MilliSecond);
+  startPos:=1;
+  while startPos < length(dateTimeFormat) do
+  Begin
+     patternChar:=GetToken(dateTimeFormat,startPos,endPos);
+     len:=endPos-startPos;
+     if len < 0 then
+       len:=0;
+     { Pad with leading with zeros or truncate depending on
+       the number of characters }
+     case patternChar of
+      YEAR_CHAR:
+         Begin
+           Str(Year,s1);
+           s1:=PadTruncate(s1,len);
+           Replace(outStr,s1,startPos,endPos);
+         end;
+      DAY_IN_MONTH:
+         Begin
+           Str(Day,s1);
+           s1:=PadTruncate(s1,len);
+           Replace(outStr,s1,startPos,endPos);
+         end;
+      HOUR_IN_DAY_24:
+         Begin
+           Str(Hour,s1);
+           s1:=PadTruncate(s1,len);
+           Replace(outStr,s1,startPos,endPos);
+         end;
+      HOUR_IN_DAY_12:
+         Begin
+           Str(Hour,s1);
+           s1:=PadTruncate(s1,len);
+           Replace(outStr,s1,startPos,endPos);
+         end;
+      MINUTE_IN_HOUR:
+         Begin
+           Str(Minute,s1);
+           s1:=PadTruncate(s1,len);
+           Replace(outStr,s1,startPos,endPos);
+         end;
+      SECOND_IN_MINUTE:
+         Begin
+           Str(Second,s1);
+           s1:=PadTruncate(s1,len);
+           Replace(outStr,s1,startPos,endPos);
+         end;
+      MILLISECOND_CHAR:
+         Begin
+           Str(MilliSecond,s1);
+           s1:=PadTruncate(s1,len);
+           Replace(outStr,s1,startPos,endPos);
+         end;
+      WEEK_IN_YEAR_CHAR:
+         Begin
+         end;
+      DAY_IN_YEAR_CHAR:
+         Begin
+         end;
+      MONTH_IN_YEAR_CHAR:
+         Begin
+           Str(Month,s1);
+           s1:=PadTruncate(s1,len);
+           Replace(outStr,s1,startPos,endPos);
+         end;
+     end;
+        startPos:=endPos;
+  end;
+  EvaluateDateTime:=outStr;
+end;
+
 
 end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.15  2010/01/21 11:57:37  carl
+   + More character set conversions from MS to/from ISO 639.
+
   Revision 1.14  2009/01/04 15:37:06  carl
    + Added ISO extraction version that returns decoded dates and times.
 

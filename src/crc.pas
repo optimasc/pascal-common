@@ -1,5 +1,5 @@
 {
-    $Id: crc.pas,v 1.7 2011-04-12 00:36:41 carl Exp $
+    $Id: crc.pas,v 1.8 2011-11-23 23:10:47 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     CRC and Chekcsum routines    
@@ -16,7 +16,7 @@
     
     
 }
-Unit crc;
+Unit sums;
 
 Interface
 
@@ -415,6 +415,10 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.7  2011/04/12 00:36:41  carl
+  + Added support for passing open array parameters to gain performance
+     when validating a complete buffer.
+
   Revision 1.6  2006/08/31 03:07:36  carl
   + Better documentation
 
