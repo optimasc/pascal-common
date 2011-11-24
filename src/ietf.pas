@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: ietf.pas,v 1.11 2010-01-21 11:56:56 carl Exp $
+    $Id: ietf.pas,v 1.12 2011-11-24 00:27:37 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Unicode related routines
@@ -24,13 +24,7 @@ unit ietf;
 
 interface
 
-uses
- tpautils,
- vpautils,
- dpautils,
- fpautils,
- gpautils
- ;
+uses cmntyp;
 
 {----------------- MIME related routines ----------------}
 
@@ -628,6 +622,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.11  2010/01/21 11:56:56  carl
+   * Bugfix with uri_pathsplit when the path is empty, avoids runtime error.
+
   Revision 1.10  2006/08/31 03:06:56  carl
   + Better documentation
   + Updated URN Namespace identifiers to list of 2006-08-28.

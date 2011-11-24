@@ -159,7 +159,7 @@ end;
 {**************************************************************************}
 
 
-function getfileatime(fname: putf8char; var atime: TDateTime): integer;
+function getfileatime(fname: putf8char; var atime: TJulianDateTime): integer;
 var
   F: File;
   status: integer;
@@ -193,7 +193,7 @@ begin
   FileClose(F);
 end;
 
-function getfilectime(fname: putf8char; var ctime: TDateTime): integer;
+function getfilectime(fname: putf8char; var ctime: TJulianDateTime): integer;
 var
   F: File;
   status: integer;
@@ -227,7 +227,7 @@ begin
   FileClose(F);
 end;
 
-function getfilemtime(fname: putf8char; var mtime: TDateTime): integer;
+function getfilemtime(fname: putf8char; var mtime: TJulianDateTime): integer;
 var
   F: File;
   status: integer;
@@ -261,7 +261,7 @@ begin
   getfileowner:='';
 end;
 
-function setfileatime(fname: putf8char; newatime: tdatetime): integer;
+function setfileatime(fname: putf8char; newatime: TJulianDateTime): integer;
 const
   FILE_WRITE_ATTRIBUTES = $100;
 var
@@ -335,7 +335,7 @@ begin
 end;
 
 
-function setfilemtime(fname: putf8char; newmtime: tdatetime): integer;
+function setfilemtime(fname: putf8char; newmtime: TJulianDateTime): integer;
 var
   ResultVal: BOOL;
   LastWriteTime: FILETIME;
@@ -387,7 +387,7 @@ begin
 end;
 
 
-function setfilectime(fname: putf8char; newctime: tdatetime): integer;
+function setfilectime(fname: putf8char; newctime: TJulianDateTime): integer;
 var
   ResultVal: BOOL;
   CreationTime: FILETIME;
@@ -889,5 +889,8 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.1  2006/06/17 18:09:14  carl
+  + Initial revision
+
 
 }

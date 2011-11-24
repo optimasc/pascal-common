@@ -10,19 +10,19 @@ type
   end;
 
 
-{** Returns Year, Month, Day, Hour, Minute, Second, and Millisecond values for a TDateTime.
+{** Returns Year, Month, Day, Hour, Minute, Second, and Millisecond values for a TJulianDateTime.
     This routine uses extended format which permits negative years.
 }
-{procedure DecodeDateTimeExt(const AValue: TDateTime; var Year, Month, Day, Hour, Minute, Second, MilliSecond: Integer);}
+{procedure DecodeDateTimeExt(const AValue: TJulianDateTime; var Year, Month, Day, Hour, Minute, Second, MilliSecond: Integer);}
 
-{** Returns Year, Month, and Day values for a TDateTime value. This is
+{** Returns Year, Month, and Day values for a TJulianDateTime value. This is
     the same as DecodeDateExt except that it also permits years in
     the negative range.
 }
-{procedure DecodeDateExt(Date: TDateTime; var Year, Month, Day: integer);}
+{procedure DecodeDateExt(Date: TJulianDateTime; var Year, Month, Day: integer);}
 
 
-{** @abstract(Converts a string to a TDateTime value with a Boolean success code.)
+{** @abstract(Converts a string to a TJulianDateTime value with a Boolean success code.)
 
     This routine also gives information if the value was successfully
     converted to UTC time or not (if no timezone information was
@@ -44,7 +44,7 @@ type
     will be set to 1 to be legal.
 
 }
-function TryStrToDateTimeExt(const S: string; var Value: TDateTime; var UTC: boolean) : Boolean;
+function TryStrToDateTimeExt(const S: string; var Value: TJulianDateTime; var UTC: boolean) : Boolean;
 
 {** This routine encodes a complete date and time to its string
     representation. The encoded string conforms to the ISO 8601
@@ -72,14 +72,14 @@ function TryEncodeDateAndTimeToStr(const Year, Month, Day, Hour, Minute, Second,
   integer; UTC: boolean):string;}
 
 
-{** @abstract(Converts a TDateTime value to a string in extended ISO 8601 date and time representation.)
+{** @abstract(Converts a TJulianDateTime value to a string in extended ISO 8601 date and time representation.)
 
     Returns the extended format representation of a date and time as recommended
     by ISO 8601 (Gregorian Calendar). The extended format ISO 8601 representation
     is of the form: YYYY-MM-DDThh:mm:ss[Z]. Sets the timezone designator
     if required.
 }
-function DateTimeToStrExt(DateTime: TDateTime; utc: boolean): string; 
+function DateTimeToStrExt(DateTime: TJulianDateTime; utc: boolean): string; 
 
 
 {** @abstract(Returns the current date set in the operating system) }
@@ -92,32 +92,35 @@ procedure GetCurrentDate(var Year,Month,Day,DayOfWeek: integer);
 }
 procedure GetCurrentTime(var Hour,Minute,Second,Sec100: integer);
 
-{** @abstract(Converts a UNIX time_t to a TDateTime)
+{** @abstract(Converts a UNIX time_t to a TJulianDateTime)
 
   This routine converts a UNIX time_t format time into a
-  TDateTime format. The time_t is always according to UTC,
+  TJulianDateTime format. The time_t is always according to UTC,
   so the UTC value shall always return TRUE.
   
   On Turbo Pascal and Virtual Pascal this routine shall fail
   with all values greater that represent years greater than
   2038.
 }
-function TryUNIXToDateTimeExt(unixtime: big_integer_t; var DateTime: TDateTime; var UTC: boolean): boolean;
+function TryUNIXToDateTimeExt(unixtime: big_integer_t; var DateTime: TJulianDateTime; var UTC: boolean): boolean;
 
-{** @abstract(Converts a Win32 FILETIME to a TDateTime)
+{** @abstract(Converts a Win32 FILETIME to a TJulianDateTime)
 
   This routine converts a 64-bit FILETIME format time into a
-  TDateTime format. The value is always according to UTC,
+  TJulianDateTime format. The value is always according to UTC,
   so the UTC value shall always return TRUE. Because floating
   point values are used, the precision of the returned timestamp
   will be +/- 2 seconds.
 
 }
-function TryFileTimeToDateTimeExt(ftime: tfiletime; var DateTime: TDateTime; var UTC: boolean): boolean;
+function TryFileTimeToDateTimeExt(ftime: tfiletime; var DateTime: TJulianDateTime; var UTC: boolean): boolean;
 
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.4  2006/08/31 03:08:41  carl
+  + Better documentation
+
   Revision 1.3  2004/11/29 03:50:24  carl
     + UNIX and FILETIME to DateTime conversion
 

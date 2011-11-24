@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: fileio.pas,v 1.8 2007-02-03 21:04:34 carl Exp $
+    $Id: fileio.pas,v 1.9 2011-11-24 00:27:37 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Generic portable file I/O routines with debug support.
@@ -35,12 +35,7 @@ unit fileio;
 
 interface
 
-uses
-  dpautils,
-  vpautils,
-  fpautils,
-  gpautils,
-  tpautils;
+uses cmntyp;
   
 {** @abstract(Assign a filename to a file)
 
@@ -352,6 +347,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.8  2007/02/03 21:04:34  carl
+   Workaround for Delphi 7 RTL bug
+
   Revision 1.7  2007/01/06 15:54:24  carl
     -  remove debug option
     * bugfix without debug option, would fail

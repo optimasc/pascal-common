@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: iso639.pas,v 1.4 2006-08-31 03:05:18 carl Exp $
+    $Id: iso639.pas,v 1.5 2011-11-24 00:27:38 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Language code unit
@@ -28,13 +28,7 @@ unit iso639;
 
 interface
 
-uses
-  dpautils,
-  vpautils,
-  fpautils,
-  gpautils,
-  tpautils,
-  utils;
+uses cmntyp, utils;
 
 
 {** @abstract(Verifies if the 2 or 3 letter language code is valid)
@@ -339,6 +333,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.4  2006/08/31 03:05:18  carl
+  + Better documentation
+
   Revision 1.3  2004/11/21 19:54:25  carl
     * 10-25% speed optimizations (change some parameter types to const, code folding)
 

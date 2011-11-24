@@ -1,5 +1,5 @@
 { See documentation in header file }
-function TryStrToDateTimeExt(const S: string; var Value: TDateTime; var UTC: boolean) : Boolean;
+function TryStrToDateTimeExt(const S: string; var Value: TJulianDateTime; var UTC: boolean) : Boolean;
 var
  idx: integer;
  minval,
@@ -164,7 +164,7 @@ end;
 function TryEncodeDateAndTimeToStr(const Year, Month, Day, Hour, Minute, Second, MilliSecond: 
   word; UTC: boolean; var AValue: string):boolean;
  var
-  ADateTime: TDateTime;
+  ADateTime: TJulianDateTime;
   finalstring: string;
  begin
    FinalString:='' ;
@@ -180,7 +180,7 @@ function TryEncodeDateAndTimeToStr(const Year, Month, Day, Hour, Minute, Second,
    AValue:=FinalString;     
  end;
 
-function DateTimeToStrExt(DateTime: TDateTime; utc: boolean): string; 
+function DateTimeToStrExt(DateTime: TJulianDateTime; utc: boolean): string; 
 var
  tzstr: string;
 begin
@@ -213,7 +213,7 @@ begin
   Sec100:=integer(aSec100);
 end;
 
-function TryUNIXToDateTimeExt(unixtime: big_integer_t; var DateTime: TDateTime; var UTC: boolean): boolean;
+function TryUNIXToDateTimeExt(unixtime: big_integer_t; var DateTime: TJulianDateTime; var UTC: boolean): boolean;
 var
   year,month,day,minute,hour,second: word;
 begin
@@ -223,7 +223,7 @@ begin
    DateTime);
 end;
 
-function TryFileTimeToDateTimeExt(ftime: tfiletime; var DateTime: TDateTime; var UTC: boolean): boolean;
+function TryFileTimeToDateTimeExt(ftime: tfiletime; var DateTime: TJulianDateTime; var UTC: boolean): boolean;
 var
   julianday: float;
   d: float;
@@ -264,6 +264,9 @@ end;
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.3  2004/11/29 03:50:23  carl
+    + UNIX and FILETIME to DateTime conversion
+
   Revision 1.2  2004/11/23 03:44:51  carl
     * fixes for compilation with Virtual Pascal 2.x
 

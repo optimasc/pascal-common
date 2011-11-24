@@ -1,5 +1,5 @@
 {
-    $Id: collects.pas,v 1.8 2011-04-12 00:46:54 carl Exp $
+    $Id: collects.pas,v 1.9 2011-11-24 00:27:36 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Collections (Object style)
@@ -21,13 +21,7 @@ Unit collects;
 
 Interface
 
-uses
-  vpautils,
-  fpautils,
-  tpautils,
-  dpautils,
-  objects,
-  utils;
+uses cmntyp, objects, utils;
 
 
 
@@ -167,7 +161,7 @@ TYPE
   end;
   
   PStringHashItem = ^TStringHashItem;
-  {** Simple String hash item that stores strings for use in THashTable }
+  {** Simple String hash item that stores strings for use in THashTable. }
   TStringHashItem = Object(THashItem)
   public
     Constructor Init(s: String);
@@ -184,6 +178,7 @@ TYPE
     value: PObject;
   end;
 
+  {** Hash table that is used to store and retrieve key-value pairs. }
   THashTable = Object(TExtendedSortedCollection)
   public
       CONSTRUCTOR Init (ALimit, ADelta: Integer);
@@ -860,6 +855,7 @@ end;
 CONSTRUCTOR THashTable.Init (ALimit, ADelta: Integer);
 Begin
   Inherited Init(ALimit,ADelta);
+  returnedProperty:=nil;
 end;
 
 {*****************************************************************************
@@ -964,6 +960,9 @@ end;
 End.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.8  2011/04/12 00:46:54  carl
+  + String Hash Key value collection
+
   Revision 1.7  2010/01/21 12:01:09  carl
    + Add TKeyValueCollection class
 

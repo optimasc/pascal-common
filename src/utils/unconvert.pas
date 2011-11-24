@@ -7,8 +7,7 @@
 program unconvert;
 
 uses
-  fpautils,
-  tpautils,
+  cmntyp,
   utils,
   classes,
   dos,locale;

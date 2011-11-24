@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: iso3166.pas,v 1.4 2006-08-31 03:05:36 carl Exp $
+    $Id: iso3166.pas,v 1.5 2011-11-24 00:27:38 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Country code unit
@@ -28,13 +28,7 @@ unit iso3166;
 
 interface
 
-uses
-  dpautils,
-  vpautils,
-  fpautils,
-  gpautils,
-  tpautils,
-  utils;
+uses cmntyp, utils;
 
 
 {** @abstract(Verifies if the 2 letter country code is valid)
@@ -179,6 +173,9 @@ end;
 end.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.4  2006/08/31 03:05:36  carl
+  + Better documentation
+
   Revision 1.3  2006/08/23 00:50:40  carl
   * Small change in names
 

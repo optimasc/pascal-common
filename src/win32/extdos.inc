@@ -375,7 +375,7 @@ end;
 {**************************************************************************}
 
 
-function getfileatime(fname: putf8char; var atime: TDateTime): integer;
+function getfileatime(fname: putf8char; var atime: TJulianDateTime): integer;
 var
   ResultVal: BOOL;
 {$IFNDEF FPC}  
@@ -445,7 +445,7 @@ begin
 end;
 
 
-function getfilectime(fname: putf8char; var ctime: TDateTime): integer;
+function getfilectime(fname: putf8char; var ctime: TJulianDateTime): integer;
 var
   ResultVal: BOOL;
 {$IFNDEF FPC}  
@@ -500,7 +500,7 @@ begin
   FileClose(F);
 end;
 
-function getfilemtime(fname: putf8char; var mtime: TDateTime): integer;
+function getfilemtime(fname: putf8char; var mtime: TJulianDateTime): integer;
 var
   ResultVal: BOOL;
 {$IFDEF FPC}
@@ -626,7 +626,7 @@ function SetFileTime(hFile: THandle;
         external 'kernel32.dll' name 'SetFileTime';
 
 
-function setfileatime(fname: putf8char; newatime: tdatetime): integer;
+function setfileatime(fname: putf8char; newatime: TJulianDateTime): integer;
 const
   FILE_WRITE_ATTRIBUTES = $100;
 var
@@ -693,7 +693,7 @@ begin
 end;
 
 
-function setfilemtime(fname: putf8char; newmtime: tdatetime): integer;
+function setfilemtime(fname: putf8char; newmtime: TJulianDateTime): integer;
 var
   ResultVal: BOOL;
   LastWriteTime: FILETIME;
@@ -746,7 +746,7 @@ begin
 end;
 
 
-function setfilectime(fname: putf8char; newctime: tdatetime): integer;
+function setfilectime(fname: putf8char; newctime: TJulianDateTime): integer;
 var
   ResultVal: BOOL;
   CreationTime: FILETIME;
@@ -1425,6 +1425,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.16  2010/01/21 11:56:09  carl
+   * Bugfix with DirectoryExists and root directory for volumes
+
   Revision 1.15  2007/10/21 04:17:54  carl
   + Bugfix with Win32 extdos - a resource was sometimes never closed.
 

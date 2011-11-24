@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: locale.pas,v 1.16 2011-11-23 23:10:47 carl Exp $
+    $Id: locale.pas,v 1.17 2011-11-24 00:27:38 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Localization and date/time unit
@@ -38,12 +38,8 @@ unit locale;
 
 interface
 
-uses
-  dpautils,
-  vpautils,
-  fpautils,
-  gpautils,
-  tpautils;
+uses cmntyp,dateutil;
+  
 
 {** Returns the extended format representation of a date as recommended
     by ISO 8601 (Gregorian Calendar).
@@ -213,7 +209,7 @@ function MicrosoftLangageCodeToISOCode(langcode: integer): string;
 function ISOLanguageCodeToMicrosoftCode(lang: string): integer;
 
 
-{** @abstract(Convert a string representation of a date to a TDateTime according
+{** @abstract(Convert a string representation of a date to a TJulianDateTime according
     to a specified template)
 
     Date and time formats are specified by date and time pattern strings.
@@ -229,18 +225,18 @@ function ISOLanguageCodeToMicrosoftCode(lang: string): integer;
     The following pattern letters are defined (all other characters
     from 'A' to 'Z' and from 'a' to 'z' are reserved):
 
-    Letter 	Date or Time Component 	Presentation 	Examples
-    y 	    Year 	                  Year 	        1996; 96
-    M 	    Month in year 	        Number 	      07
-    w       Week in year 	          Number 	      27
-    D 	    Day in year 	          Number 	      189
-    d 	    Day in month 	          Number 	      10
-    a 	    Am/pm marker 	          Text 	        PM
-    H 	    Hour in day (0-23) 	    Number 	      0
-    h 	    Hour in am/pm (1-12) 	  Number 	      12
-    m 	    Minute in hour 	        Number 	      30
-    s 	    Second in minute 	      Number 	      55
-    S 	    Millisecond 	          Number 	      978
+    Letter  Date or Time Component  Presentation   Examples
+    y        Year                      Year          1996; 96
+    M        Month in year            Number          07
+    w       Week in year             Number        27
+    D        Day in year             Number        189
+    d        Day in month            Number        10
+    a        Am/pm marker            Text            PM
+    H        Hour in day (0-23)      Number        0
+    h        Hour in am/pm (1-12)     Number          12
+    m        Minute in hour           Number          30
+    s        Second in minute          Number         55
+    S        Millisecond             Number        978
 
     Year: For formatting, if the number of pattern letters is 2, the year is
     truncated to 2 digits; otherwise it is interpreted as a number.
@@ -255,10 +251,10 @@ function ISOLanguageCodeToMicrosoftCode(lang: string): integer;
     interpreted as text; otherwise, it is interpreted as a number.
 }
 function DateTimeStrFormat(const DateTimeFormat : string;
-                         const DateTimeStr : string) : TDateTime;
+                         const DateTimeStr : string) : TJulianDateTime;
 
 function EvaluateDateTime(const DateTimeFormat : string;
-                         dt: TDateTime): string;
+                         dt: TJulianDateTime): string;
 
 
 const
@@ -271,14 +267,14 @@ const
   MINUTE_IN_HOUR = 'm';         { Number      }
   SECOND_IN_MINUTE = 's';       { Number      }
   MILLISECOND_CHAR = 'S';            { Numner      }
-  WEEK_IN_YEAR_CHAR = 'w';           { Number      }
-  DAY_IN_YEAR_CHAR = 'D';            { Number      }
+{  WEEK_IN_YEAR_CHAR = 'w';}           { Number      }
+{  DAY_IN_YEAR_CHAR = 'D'; }           { Number      }
   MONTH_IN_YEAR_CHAR = 'M';          { Number or Text }
 
   PatternChars: set of char = [
   YEAR_CHAR, DAY_IN_MONTH, DAY_IN_WEEK, AM_PM_INDICATOR, HOUR_IN_DAY_24,
-  HOUR_IN_DAY_12, MINUTE_IN_HOUR, SECOND_IN_MINUTE, MILLISECOND_CHAR, WEEK_IN_YEAR_CHAR,
-  DAY_IN_YEAR_CHAR, MONTH_IN_YEAR_CHAR];
+  HOUR_IN_DAY_12, MINUTE_IN_HOUR, SECOND_IN_MINUTE, MILLISECOND_CHAR, {WEEK_IN_YEAR_CHAR,}
+  {DAY_IN_YEAR_CHAR,} MONTH_IN_YEAR_CHAR];
 
 
 
@@ -306,7 +302,7 @@ const
 
 implementation
 
-uses utils,strings,dateutils;
+uses utils,strings;
 
 { IANA Registered character set table }
 {$i charset.inc}
@@ -1177,7 +1173,7 @@ begin
   MIMECharsetToMicrosoftCodePage:=0;
   for i:=1 to MAX_CODEPAGES do
     begin
-     if mscodepageinfo[i].alias = charset then
+     if strpas(mscodepageinfo[i].alias) = charset then
        begin
          MIMECharsetToMicrosoftCodePage:=mscodepageinfo[i].value;
          exit;
@@ -1249,7 +1245,7 @@ Begin
 end;
 
 function DateTimeStrFormat(const DateTimeFormat : string;
-                         const DateTimeStr : string) : TDateTime;
+                         const DateTimeStr : string) : TJulianDateTime;
 var
  s: string;
  patternChar: char;
@@ -1258,7 +1254,7 @@ var
  startPos, endPos: integer;
  len: integer;
  Code: integer;
- Dt: TDateTime;
+ Dt: TJulianDateTime;
 Begin
  s:=DateTimeStr;
  Year:=1;
@@ -1315,6 +1311,7 @@ Begin
            Code:=0;
            Val(Copy(s,startPos,len),MilliSecond,Code);
          end;
+{         
       WEEK_IN_YEAR_CHAR:
          Begin
            Code:=0;
@@ -1324,7 +1321,7 @@ Begin
          Begin
            Code:=0;
            Val(Copy(s,startPos,len),DayOfYear,Code);
-         end;
+         end;}
       MONTH_IN_YEAR_CHAR:
          Begin
            Code:=0;
@@ -1343,12 +1340,12 @@ Begin
         startPos:=endPos; 
   end;
   { Normal encoding }
-  if Week <> 0 then
+{  if Week <> 0 then
      dt:=EncodeDateWeek(Year, Week)
   else
   if DayOfYear <> 0 then
      dt:=EncodeDateDay(Year, DayOfYear)
-  else
+  else}
      TryEncodeDateTime(Year,Month,Day,Hour,Minute,Second,Millisecond,Dt);
   DateTimeStrFormat:=Dt;
 end;
@@ -1379,7 +1376,7 @@ Begin
 end;
 
 function EvaluateDateTime(const DateTimeFormat : string;
-                         dt: TDateTime): string;
+                         dt: TJulianDateTime): string;
 var
  Year,Month,Day,Hour,Minute,Second,Millisecond: word;
  startPos, endPos: integer;
@@ -1442,12 +1439,12 @@ Begin
            s1:=PadTruncate(s1,len);
            Replace(outStr,s1,startPos,endPos);
          end;
-      WEEK_IN_YEAR_CHAR:
+{      WEEK_IN_YEAR_CHAR:
          Begin
          end;
       DAY_IN_YEAR_CHAR:
          Begin
-         end;
+         end;}
       MONTH_IN_YEAR_CHAR:
          Begin
            Str(Month,s1);
@@ -1465,6 +1462,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.16  2011/11/23 23:10:47  carl
+  Rename crc to sums to avoid compatibility problems with lazarus
+
   Revision 1.15  2010/01/21 11:57:37  carl
    + More character set conversions from MS to/from ISO 639.
 

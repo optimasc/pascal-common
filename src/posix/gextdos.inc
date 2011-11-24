@@ -64,7 +64,7 @@ begin
   ExtAttrToPOSIXAttr:=dwAttr;
 end;
 
-function DateTimeToPOSIXTime(DateTime: TDateTime): time_t;
+function DateTimeToPOSIXTime(DateTime: TJulianDateTime): time_t;
 var
  uday: big_integer_t;
 begin
@@ -101,7 +101,7 @@ end;
 {**************************************************************************}
 
 
-function getfileatime(fname: putf8char; var atime: TDateTime): integer;
+function getfileatime(fname: putf8char; var atime: TJulianDateTime): integer;
 var
  stats:TFileStats;
 begin
@@ -110,7 +110,7 @@ begin
 end;
 
 
-function getfilectime(fname: putf8char; var ctime: TDateTime): integer;
+function getfilectime(fname: putf8char; var ctime: TJulianDateTime): integer;
 var
  stats:TFileStats;
 begin
@@ -118,7 +118,7 @@ begin
   ctime:=stats.ctime;
 end;
 
-function getfilemtime(fname: putf8char; var mtime: TDateTime): integer;
+function getfilemtime(fname: putf8char; var mtime: TJulianDateTime): integer;
 var
  stats:TFileStats;
 begin
@@ -139,7 +139,7 @@ begin
     end;
 end;
 
-function setfileatime(fname: putf8char; newatime: tdatetime): integer;
+function setfileatime(fname: putf8char; newatime: TJulianDateTime): integer;
 var
  info: posix.stat_t;
  res: cint;
@@ -163,7 +163,7 @@ begin
 end;
 
 
-function setfilemtime(fname: putf8char; newmtime: tdatetime): integer;
+function setfilemtime(fname: putf8char; newmtime: TJulianDateTime): integer;
 var
  info: posix.stat_t;
  res: cint;
@@ -187,7 +187,7 @@ begin
 end;
 
 
-function setfilectime(fname: putf8char; newctime: tdatetime): integer;
+function setfilectime(fname: putf8char; newctime: TJulianDateTime): integer;
 begin
  setfilectime:=EXTDOS_STATUS_UNSUPPORTED;
 end;
@@ -674,6 +674,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.3  2007/01/06 15:53:31  carl
+    + devices and offline resources are no longer considered files in FileExists()
+
   Revision 1.2  2006/12/03 22:10:10  carl
     * Bugfix with special . directory
 

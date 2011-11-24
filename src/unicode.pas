@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: unicode.pas,v 1.47 2010-01-21 12:00:26 carl Exp $
+    $Id: unicode.pas,v 1.48 2011-11-24 00:27:39 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Unicode related routines
@@ -54,13 +54,7 @@ unit unicode;
 
 interface
 
-uses 
-  tpautils,
-  vpautils,
-  dpautils,
-  gpautils,
-  fpautils,
-  utils;
+uses cmntyp, utils;
 
 const
   {** Gives the number of characters that can be contained in a string }
@@ -3827,6 +3821,10 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.47  2010/01/21 12:00:26  carl
+   + More routines use open array for better compatibility.
+   + when unknown character is found in conversion, use ? character instead of \\xNNNN
+
   Revision 1.46  2009/01/04 15:36:31  carl
    + utf8islegal for null terminated char strings.
 

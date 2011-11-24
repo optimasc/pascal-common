@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: extdos.pas,v 1.8 2006-10-16 22:21:51 carl Exp $
+    $Id: extdos.pas,v 1.9 2011-11-24 00:27:37 carl Exp $
     Copyright (c) 2004-2006 by Carl Eric Codere
 
     Extended Operating system routines
@@ -29,10 +29,7 @@ interface
 
 
 uses 
-   tpautils,
-   fpautils,
-   dpautils,
-   vpautils,
+   cmntyp,
    utils,
    unicode,
    dateutil,
@@ -53,7 +50,7 @@ const
   EXTDOS_STATUS_OK = 0;
   {** Return code: This routine is unsupported on this operating system. }
   EXTDOS_STATUS_UNSUPPORTED = -1;
-  {** Return code: Conversion operation from native date to TDateTime was invalid. }
+  {** Return code: Conversion operation from native date to TJulianDateTime was invalid. }
   EXTDOS_STATUS_DATE_CONVERT_ERROR = -2;
   {** Return code: Filesystem does not support this date }
   EXTDOS_STATUS_DATE_UNSUPPORTED = -3;
@@ -116,11 +113,11 @@ type
     {** Owner (User name) of the resource on disk }
     owner: utf8string;
     {** Creation time of the resource }
-    ctime: TDateTime;
+    ctime: TJulianDateTime;
     {** Last modification time of the resource }
-    mtime: TDateTime;
+    mtime: TJulianDateTime;
     {** Last access time of the resource }
-    atime: TDateTime;
+    atime: TJulianDateTime;
     {** Number of links to resource }
     nlink: integer;
     {** Attributes for this file }
@@ -184,7 +181,7 @@ function GetFileOwner(fname: putf8char): utf8string;
    @param(atime The file access date in UTC/GMT format)
    @returns(0 on success, otherwise an error code)
 }
-function GetFileATime(fname: putf8char; var atime: TDateTime): integer;
+function GetFileATime(fname: putf8char; var atime: TJulianDateTime): integer;
 
 {** @abstract(Returns the last modification date and time of a file) 
 
@@ -197,7 +194,7 @@ function GetFileATime(fname: putf8char; var atime: TDateTime): integer;
    @param(atime The file modification date in UTC/GMT format)
    @returns(0 on success, otherwise an error code)
 }
-function GetFileMTime(fname: putf8char; var mtime: TDateTime): integer;
+function GetFileMTime(fname: putf8char; var mtime: TJulianDateTime): integer;
 
 {** @abstract(Returns the creation date and time of a file) 
 
@@ -210,7 +207,7 @@ function GetFileMTime(fname: putf8char; var mtime: TDateTime): integer;
    @param(atime The file creation date in UTC/GMT format)
    @returns(0 on success, otherwise an error code)
 }
-function GetFileCTime(fname: putf8char; var ctime: TDateTime): integer;
+function GetFileCTime(fname: putf8char; var ctime: TJulianDateTime): integer;
 
 {** @abstract(Returns the size of a file).
 
@@ -289,7 +286,7 @@ function SetCurrentDirectory(const DirStr: utf8string): boolean;
    @param(atime The new access time)
    @returns(0 on success, otherwise an error code)
 }
-function SetFileATime(fname: putf8char; newatime: tdatetime): integer;
+function SetFileATime(fname: putf8char; newatime: TJulianDateTime): integer;
 
 {** @abstract(Change the modification time of a file) 
 
@@ -304,7 +301,7 @@ function SetFileATime(fname: putf8char; newatime: tdatetime): integer;
    @param(mtime The new modification time)
    @returns(0 on success, otherwise an error code)
 }
-function SetFileMTime(fname: putf8char; newmtime: tdatetime): integer;
+function SetFileMTime(fname: putf8char; newmtime: TJulianDateTime): integer;
 
 {** @abstract(Change the creation time of a file) 
 
@@ -319,7 +316,7 @@ function SetFileMTime(fname: putf8char; newmtime: tdatetime): integer;
    @param(mtime The new modification time)
    @returns(0 on success, otherwise an error code)
 }
-function SetFileCTime(fname: putf8char; newctime: tdatetime): integer;
+function SetFileCTime(fname: putf8char; newctime: TJulianDateTime): integer;
 
 {** @abstract(Searches the specified directory for the first entry
      matching the specified file name and set of attributes.)
@@ -420,6 +417,9 @@ implementation
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.8  2006/10/16 22:21:51  carl
+  + extdos Initial Linux support
+
   Revision 1.7  2006/08/31 03:08:31  carl
   + Better documentation
   * Change case of some routines so they are consistent with other routines of this unit

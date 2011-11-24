@@ -1,5 +1,5 @@
 {
-    $Id: crc.pas,v 1.8 2011-11-23 23:10:47 carl Exp $
+    $Id: crc.pas,v 1.9 2011-11-24 00:27:38 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     CRC and Chekcsum routines    
@@ -20,13 +20,7 @@ Unit sums;
 
 Interface
 
-uses utils,
-   tpautils,
-   vpautils,
-   fpautils,
-   dpautils,
-   gpautils
-   ;
+uses cmntyp;
 
 
 { Some information:
@@ -415,6 +409,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.8  2011/11/23 23:10:47  carl
+  Rename crc to sums to avoid compatibility problems with lazarus
+
   Revision 1.7  2011/04/12 00:36:41  carl
   + Added support for passing open array parameters to gain performance
      when validating a complete buffer.

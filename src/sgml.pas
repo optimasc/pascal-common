@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: sgml.pas,v 1.11 2008-11-24 00:35:18 carl Exp $
+    $Id: sgml.pas,v 1.12 2011-11-24 00:27:38 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere (Optima SC Inc.)
 
     SGML related utility routines
@@ -24,12 +24,7 @@ interface
  {$J+} { Writeable constants }
  {$ENDIF}
  {====================================================================}
-uses 
- tpautils,
- fpautils,
- vpautils,
- dpautils,
- unicode;
+uses  cmntyp, unicode;
 
  
 const
@@ -484,6 +479,9 @@ end;
 end.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.11  2008/11/24 00:35:18  carl
+   + SGMLGetDTDInfo() now returns its values as explicit shortstrings.
+
   Revision 1.10  2006/12/03 22:10:43  carl
     + Small cosmetic change
 

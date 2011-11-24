@@ -1,5 +1,5 @@
 {
-    $Id: dateutil.pas,v 1.12 2006-12-07 02:53:38 carl Exp $
+    $Id: dateutil.pas,v 1.13 2011-11-24 00:27:37 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere (Optima SC Inc.)
 
     Date and time utility routines
@@ -20,8 +20,8 @@
     There are subtle differences with the Delphi implementation:
     1. All string related parameters and function results use ISO 8601
     formatted date and time strings. 
-    2. The internal format of TDatetime is not the same as on the Delphi
-    compilers (Internally TDateTime is stored as a Julian date)
+    2. The internal format of TJulianDateTime is not the same as on the Delphi
+    compilers (Internally TJulianDateTime is stored as a Julian date)
     3. The milliseconds field is only an approximation, and should not
     be considered as accurate.
     4. Becasue everything is coded with floats, the seconds field has
@@ -39,19 +39,15 @@ uses
 {$IFDEF VPASCAL}
  use32,
 {$ENDIF}
- tpautils,
- dpautils,
- fpautils,
- vpautils
- ;
+ cmntyp;
 
 type
  {** This is the Julian Day number }
- TDatetime = real;
+ TJulianDateTime = real;
  {** Useful structure that contains additional information on a date and time }
  TDateInfo = record
    {** Actual date and time value }
-   DateTime: TDateTime;
+   DateTime: TJulianDateTime;
    {** Is this value local or according to UTC? }
    UTC: boolean;
  end;
@@ -78,65 +74,65 @@ const
 function CurrentYear: word;
 
 {** @abstract(Returns the current date, with the time value equal to midnight.) }
-function Date: TDatetime;
+function Date: TJulianDateTime;
 
-{** @abstract(Strips the time portion from a TDateTime value.)}
-function DateOf(const AValue: TDateTime): TDateTime;
+{** @abstract(Strips the time portion from a TJulianDateTime value.)}
+function DateOf(const AValue: TJulianDateTime): TJulianDateTime;
 
-{** @abstract(Converts a TDateTime value to a string in extended ISO 8601 date and time representation.)
+{** @abstract(Converts a TJulianDateTime value to a string in extended ISO 8601 date and time representation.)
 
     Returns the extended format representation of a date and time as recommended
     by ISO 8601 (Gregorian Calendar). The extended format ISO 8601 representation
     is of the form: YYYY-MM-DDThh:mm:ss
 }
-function DateTimeToStr(DateTime: TDateTime): string; 
+function DateTimeToStr(DateTime: TJulianDateTime): string; 
 
-{** @abstract(Converts a TDateTime value to a string in extended ISO 8601 date representation.)
+{** @abstract(Converts a TJulianDateTime value to a string in extended ISO 8601 date representation.)
 
     Returns the extended format representation of a date as recommended
     by ISO 8601 (Gregorian Calendar). The extended format ISO 8601 representation
     is of the form: YYYY-MM-DD
 }
-function DateToStr(date: TDatetime): string;
+function DateToStr(date: TJulianDateTime): string;
 
-{** @abstract(Returns the day of the month represented by a TDateTime value.)}
-function DayOf(const AValue: TDateTime): Word;
+{** @abstract(Returns the day of the month represented by a TJulianDateTime value.)}
+function DayOf(const AValue: TJulianDateTime): Word;
 
-{** @abstract(Returns the number of days between two specified TDateTime values.)}
-function DaysBetween(const ANow, AThen: TDateTime): integer;
+{** @abstract(Returns the number of days between two specified TJulianDateTime values.)}
+function DaysBetween(const ANow, AThen: TJulianDateTime): integer;
 
-{** @abstract(Returns Year, Month, and Day values for a TDateTime value.) }
-procedure DecodeDate(Date: TDateTime; var Year, Month, Day: Word);
+{** @abstract(Returns Year, Month, and Day values for a TJulianDateTime value.) }
+procedure DecodeDate(Date: TJulianDateTime; var Year, Month, Day: Word);
 
-{** @abstract(Returns Year, Month, Day, Hour, Minute, Second, and Millisecond values for a TDateTime.) }
-procedure DecodeDateTime(const AValue: TDateTime; var Year, Month, Day, Hour, Minute, Second, MilliSecond: Word);
+{** @abstract(Returns Year, Month, Day, Hour, Minute, Second, and Millisecond values for a TJulianDateTime.) }
+procedure DecodeDateTime(const AValue: TJulianDateTime; var Year, Month, Day, Hour, Minute, Second, MilliSecond: Word);
 
-{** @abstract(Breaks a TDateTime value into hours, minutes, seconds, and milliseconds.)}
-procedure DecodeTime(Time: TDateTime; var Hour, Min, Sec, MSec: Word);
+{** @abstract(Breaks a TJulianDateTime value into hours, minutes, seconds, and milliseconds.)}
+procedure DecodeTime(Time: TJulianDateTime; var Hour, Min, Sec, MSec: Word);
 
-{** @abstract(Returns the hour of the day represented by a TDateTime value.)}
-function HourOf(const AValue: TDateTime): Word;
+{** @abstract(Returns the hour of the day represented by a TJulianDateTime value.)}
+function HourOf(const AValue: TJulianDateTime): Word;
 
 {** @abstract(Returns a date shifted by a specified number of days.)}
-function IncDay(const AValue: TDateTime; const ANumberOfDays: Integer): TDateTime;
+function IncDay(const AValue: TJulianDateTime; const ANumberOfDays: Integer): TJulianDateTime;
 
 {** @abstract(Returns a date/time value shifted by a specified number of hours.) }
-function IncHour(const AValue: TDateTime; const ANumberOfHours: longint): TDateTime;
+function IncHour(const AValue: TJulianDateTime; const ANumberOfHours: longint): TJulianDateTime;
 
 {** @abstract(Returns a date/time value shifted by a specified number of milliseconds.)}
-function IncMilliSecond(const AValue: TDateTime; const ANumberOfMilliSeconds: big_integer_t): TDateTime;
+function IncMilliSecond(const AValue: TJulianDateTime; const ANumberOfMilliSeconds: big_integer_t): TJulianDateTime;
 
 {** @abstract(Returns a date/time value shifted by a specified number of minutes.) }
-function IncMinute(const AValue: TDateTime; const ANumberOfMinutes: big_integer_t): TDateTime;
+function IncMinute(const AValue: TJulianDateTime; const ANumberOfMinutes: big_integer_t): TJulianDateTime;
 
 {** @abstract(Returns a date/time value shifted by a specified number of seconds.)}
-function IncSecond(const AValue: TDateTime; const ANumberOfSeconds: big_integer_t): TDateTime;
+function IncSecond(const AValue: TJulianDateTime; const ANumberOfSeconds: big_integer_t): TJulianDateTime;
 
 {** @abstract(Returns a date shifted by a specified number of weeks.)}
-function IncWeek(const AValue: TDateTime; const ANumberOfWeeks: Integer): TDateTime;
+function IncWeek(const AValue: TJulianDateTime; const ANumberOfWeeks: Integer): TJulianDateTime;
 
-{** @abstract(Indicates whether the time portion of a specified TDateTime value occurs after noon.)}
-function IsPM(const AValue: TDateTime): Boolean;
+{** @abstract(Indicates whether the time portion of a specified TJulianDateTime value occurs after noon.)}
+function IsPM(const AValue: TJulianDateTime): Boolean;
 
 {** @abstract(Indicates whether a specified year, month, and day represent a valid date.) }
 function IsValidDate(const AYear, AMonth, ADay: Word): Boolean;
@@ -149,59 +145,59 @@ function IsValidDateTime(const AYear, AMonth, ADay, AHour, AMinute, ASecond, AMi
 function IsValidTime(const AHour, AMinute, ASecond, AMilliSecond: Word): Boolean;
 
 
-{** @abstract(Returns the minute of the hour represented by a TDateTime value.)}
-function MinuteOf(const AValue: TDateTime): Word;
+{** @abstract(Returns the minute of the hour represented by a TJulianDateTime value.)}
+function MinuteOf(const AValue: TJulianDateTime): Word;
 
-{** @abstract(Returns the month of the year represented by a TDateTime value.)}
-function MonthOf(const AValue: TDateTime): Word;
+{** @abstract(Returns the month of the year represented by a TJulianDateTime value.)}
+function MonthOf(const AValue: TJulianDateTime): Word;
 
 {** @abstract(Returns the current date and time.)}
-function Now: TDateTime;
+function Now: TJulianDateTime;
 
 
-{** @abstract(Indicates whether two TDateTime values represent the same year, month, and day.)}
-function SameDate(const A, B: TDateTime): Boolean;
+{** @abstract(Indicates whether two TJulianDateTime values represent the same year, month, and day.)}
+function SameDate(const A, B: TJulianDateTime): Boolean;
 
-{** @abstract(Indicates whether two TDateTime values represent the same year, month, day, 
+{** @abstract(Indicates whether two TJulianDateTime values represent the same year, month, day, 
     hour, minute, second, and millisecond.)}
-function SameDateTime(const A, B: TDateTime): Boolean;
+function SameDateTime(const A, B: TJulianDateTime): Boolean;
 
-{** @abstract(Indicates whether two TDateTime values represent the same time of day, ignoring the date portion.)}
-function SameTime(const A, B: TDateTime): Boolean;
+{** @abstract(Indicates whether two TJulianDateTime values represent the same time of day, ignoring the date portion.)}
+function SameTime(const A, B: TJulianDateTime): Boolean;
 
-{** @abstract(Returns the second of the minute represented by a TDateTime value.)}
-function SecondOf(const AValue: TDateTime): Word;
+{** @abstract(Returns the second of the minute represented by a TJulianDateTime value.)}
+function SecondOf(const AValue: TJulianDateTime): Word;
 
 {** @abstract(Returns the current time.)}
-function Time: TDateTime;
+function Time: TJulianDateTime;
 {** @abstract(Returns the current time.)}
-function GetTime: TDateTime;
+function GetTime: TJulianDateTime;
 
-{** @abstract(Strips the date portion from a TDatetime value) }
-function TimeOf(const AValue: TDateTime): TDatetime;
+{** @abstract(Strips the date portion from a TJulianDateTime value) }
+function TimeOf(const AValue: TJulianDateTime): TJulianDateTime;
 
-{** @abstract(Converts a TDateTime value to a string in extended ISO 8601 time representation.)
+{** @abstract(Converts a TJulianDateTime value to a string in extended ISO 8601 time representation.)
 
     Returns the extended format representation of a time as recommended
     by ISO 8601 (Gregorian Calendar). The extended format ISO 8601 representation
     is of the form: hh:mm:ss.
 }
-function TimeToStr(Time: TDateTime): string;
+function TimeToStr(Time: TJulianDateTime): string;
 
-{** @abstract(Returns a TDateTime value that represents the current date.) }
-function Today: TDateTime;
+{** @abstract(Returns a TJulianDateTime value that represents the current date.) }
+function Today: TJulianDateTime;
 
-{** @abstract(Returns a TDateTime value that represents a specified Year, Month, and Day.)}
-function TryEncodeDate(Year, Month, Day: Word; var Date: TDateTime): Boolean;
+{** @abstract(Returns a TJulianDateTime value that represents a specified Year, Month, and Day.)}
+function TryEncodeDate(Year, Month, Day: Word; var Date: TJulianDateTime): Boolean;
 
-{** @abstract(Returns a TDateTime value for a specified Hour, Min, Sec, and MSec.) }
-function TryEncodeTime(Hour, Min, Sec, MSec: Word; var Time: TDateTime): Boolean;
+{** @abstract(Returns a TJulianDateTime value for a specified Hour, Min, Sec, and MSec.) }
+function TryEncodeTime(Hour, Min, Sec, MSec: Word; var Time: TJulianDateTime): Boolean;
 
-{** @abstract(Returns a TDateTime that represents a specified year, month, day, hour, minute, second, and millisecond.) }
+{** @abstract(Returns a TJulianDateTime that represents a specified year, month, day, hour, minute, second, and millisecond.) }
 function TryEncodeDateTime(const AYear, AMonth, ADay, AHour, AMinute, ASecond, AMilliSecond: Word;
-   var AValue: TDateTime): Boolean;
+   var AValue: TJulianDateTime): Boolean;
 
-{** @abstract(Converts a string of date in ISO 8601 to a TDateTime value, with a Boolean success code.)
+{** @abstract(Converts a string of date in ISO 8601 to a TJulianDateTime value, with a Boolean success code.)
 
     In the case where the date does not contain the full representation
     of a date (for examples, YYYY or YYYY-MM), then the missing values
@@ -209,9 +205,9 @@ function TryEncodeDateTime(const AYear, AMonth, ADay, AHour, AMinute, ASecond, A
     
     Most legal dates for Dates of ISO 8601 are supported by this routine.
 }
-function TryStrToDate(const S: string; var Value: TDateTime): Boolean;
+function TryStrToDate(const S: string; var Value: TJulianDateTime): Boolean;
 
-{** @abstract(Converts a string date-time representation to a TDateTime value with a Boolean success code.)
+{** @abstract(Converts a string date-time representation to a TJulianDateTime value with a Boolean success code.)
 
     Supported formats:
     1) Format of Complete Representation for calendar dates
@@ -231,9 +227,9 @@ function TryStrToDate(const S: string; var Value: TDateTime): Boolean;
     will be set to 1 to be legal.
 
 }
-function TryStrToDateTime(const S: string; var Value: TDateTime): Boolean;
+function TryStrToDateTime(const S: string; var Value: TJulianDateTime): Boolean;
 
-{** @abstract(Converts a string time to a TDateTime value with an error default)
+{** @abstract(Converts a string time to a TJulianDateTime value with an error default)
 
     Supported formats:
     1) ISO 8601 time format (complete representation) with
@@ -246,10 +242,10 @@ function TryStrToDateTime(const S: string; var Value: TDateTime): Boolean;
     if timezone information is specified. The Date field is
     truncated and is equal to zero upon return.
 }
-function TryStrToTime(const S: string; var Value: TDateTime): Boolean;
+function TryStrToTime(const S: string; var Value: TJulianDateTime): Boolean;
 
-{** @abstract(Returns the year represented by a TDateTime value.)}
-function YearOf(const AValue: TDateTime): Word;
+{** @abstract(Returns the year represented by a TJulianDateTime value.)}
+function YearOf(const AValue: TJulianDateTime): Word;
 
 {$i dateexth.inc}
 
@@ -1090,7 +1086,7 @@ begin
   CurrentYear:=Year;
 end;
 
-function Date: TDatetime;
+function Date: TJulianDateTime;
 var
  Year,Month,Day,DayOfWeek: platformword;
 begin
@@ -1098,13 +1094,13 @@ begin
   Date:=datetojd(Year,Month,Day,0,0,0,0);
 end;
 
-function DateOf(const AValue: TDateTime): TDateTime;
+function DateOf(const AValue: TJulianDateTime): TJulianDateTime;
 begin
   DateOf:=Round(AValue);
 end;
 
 
-function DateTimeToStr(DateTime: TDateTime): string; 
+function DateTimeToStr(DateTime: TJulianDateTime): string; 
 var
  year,month,day,hour,minute,second,msec: word;
 begin
@@ -1113,7 +1109,7 @@ begin
     Minute, Second, false);
 end;
 
-function DateToStr(date: TDatetime): string;
+function DateToStr(date: TJulianDateTime): string;
 var
  year,month,day,hour,minute,second,msec: word;
 begin
@@ -1121,7 +1117,7 @@ begin
   DateToStr:=GetISODateString(Year, Month, Day);
 end;
 
-function DayOf(const AValue: TDateTime): Word;
+function DayOf(const AValue: TJulianDateTime): Word;
 var
  year,month,day,hour,minute,second,msec: word;
 begin
@@ -1129,24 +1125,24 @@ begin
   DayOf:=Day;
 end;
 
-function DaysBetween(const ANow, AThen: TDateTime): integer;
+function DaysBetween(const ANow, AThen: TJulianDateTime): integer;
 begin
   DaysBetween:=abs(Trunc(Anow)-Trunc(AThen));
 end;
 
-procedure DecodeDate(Date: TDateTime; var Year, Month, Day: Word);
+procedure DecodeDate(Date: TJulianDateTime; var Year, Month, Day: Word);
 var
  hour,minute,second,msec: word;
 begin
   jdtodate (Date,year,month,day,hour,minute,second,msec);
 end;
 
-procedure DecodeDateTime(const AValue: TDateTime; var Year, Month, Day, Hour, Minute, Second, MilliSecond: Word);
+procedure DecodeDateTime(const AValue: TJulianDateTime; var Year, Month, Day, Hour, Minute, Second, MilliSecond: Word);
 begin
   jdtodate (AValue,year,month,day,hour,minute,second,millisecond);
 end;
 
-procedure DecodeTime(Time: TDateTime; var Hour, Min, Sec, MSec: Word);
+procedure DecodeTime(Time: TJulianDateTime; var Hour, Min, Sec, MSec: Word);
 var
  year,month,day: word;
 begin
@@ -1154,7 +1150,7 @@ begin
   jdtodate (Time,year,month,day,hour,min,sec,msec);
 end;
 
-function HourOf(const AValue: TDateTime): Word;
+function HourOf(const AValue: TJulianDateTime): Word;
 var
  year,month,day,hour,minute,second,msec: word;
 begin
@@ -1163,40 +1159,40 @@ begin
 end;
 
 
-function IncDay(const AValue: TDateTime; const ANumberOfDays: Integer): TDateTime;
+function IncDay(const AValue: TJulianDateTime; const ANumberOfDays: Integer): TJulianDateTime;
 begin
   IncDay:=AValue + ANumberOfDays;
 end;
 
-function IncHour(const AValue: TDateTime; const ANumberOfHours: longint): TDateTime;
+function IncHour(const AValue: TJulianDateTime; const ANumberOfHours: longint): TJulianDateTime;
 begin
   IncHour:=AValue + (ANumberOfHours / 24.0);
 end;
 
-function IncMilliSecond(const AValue: TDateTime; const ANumberOfMilliSeconds: big_integer_t): TDateTime;
+function IncMilliSecond(const AValue: TJulianDateTime; const ANumberOfMilliSeconds: big_integer_t): TJulianDateTime;
 begin
   IncMillisecond:= AValue+(ANumberOfMilliSeconds / 24.0) / (60.0*60.0*1000.0);
 end;
 
-function IncMinute(const AValue: TDateTime; const ANumberOfMinutes: big_integer_t): TDateTime;
+function IncMinute(const AValue: TJulianDateTime; const ANumberOfMinutes: big_integer_t): TJulianDateTime;
 begin
  IncMinute:= AValue + (ANumberOfMinutes / 24.0) / 60.0;
 end;
 
 
-function IncSecond(const AValue: TDateTime; const ANumberOfSeconds: big_integer_t): TDateTime;
+function IncSecond(const AValue: TJulianDateTime; const ANumberOfSeconds: big_integer_t): TJulianDateTime;
 begin
   IncSecond:= AValue + (ANumberOfSeconds / 24.0) / (60.0*60.0);
 end;
 
-function IncWeek(const AValue: TDateTime; const ANumberOfWeeks: Integer): TDateTime;
+function IncWeek(const AValue: TJulianDateTime; const ANumberOfWeeks: Integer): TJulianDateTime;
 begin
   IncWeek:= AValue + ANumberOfWeeks*7;
 end;
 
-function IsPM(const AValue: TDateTime): Boolean;
+function IsPM(const AValue: TJulianDateTime): Boolean;
 var
- d: TDatetime;
+ d: TJulianDateTime;
 begin
  d:=frac(Avalue);
  if d >= 0.5 then
@@ -1244,7 +1240,7 @@ begin
   IsValidTime:=true;
 end;
 
-function MinuteOf(const AValue: TDateTime): Word;
+function MinuteOf(const AValue: TJulianDateTime): Word;
 var
  year,month,day,hour,minute,second,msec: word;
 begin
@@ -1252,7 +1248,7 @@ begin
   MinuteOf:=Minute;
 end;
 
-function MonthOf(const AValue: TDateTime): Word;
+function MonthOf(const AValue: TJulianDateTime): Word;
 var
  year,month,day,hour,minute,second,msec: word;
 begin
@@ -1261,7 +1257,7 @@ begin
 end;
 
 
-function Now: TDatetime;
+function Now: TJulianDateTime;
 var
  Year,Month,Day,DayOfWeek: platformword;
  Hour,Minute,Sec,Sec100: platformword;
@@ -1271,7 +1267,7 @@ begin
   Now:=datetojd(Year,Month,Day,Hour,Minute,Sec,Sec100);
 end;
 
-function SameDate(const A, B: TDateTime): Boolean;
+function SameDate(const A, B: TJulianDateTime): Boolean;
 begin
   if trunc(A) = trunc(B) then
     SameDate:=true
@@ -1279,7 +1275,7 @@ begin
     SameDate:=false;
 end;
 
-function SameDateTime(const A, B: TDateTime): Boolean;
+function SameDateTime(const A, B: TJulianDateTime): Boolean;
 begin
   SameDateTime:=true;
   if A-B=0 then
@@ -1288,7 +1284,7 @@ begin
 end;
 
 
-function SameTime(const A, B: TDateTime): Boolean;
+function SameTime(const A, B: TJulianDateTime): Boolean;
 begin
   if (abs(frac(A))-abs(frac(B))) = 0 then
     SameTime:=true
@@ -1296,7 +1292,7 @@ begin
     SameTime:=false;
 end;
 
-function SecondOf(const AValue: TDateTime): Word;
+function SecondOf(const AValue: TJulianDateTime): Word;
 var
  year,month,day,hour,minute,second,msec: word;
 begin
@@ -1304,7 +1300,7 @@ begin
   SecondOf:=Second;
 end;
 
-function Time: TDateTime;
+function Time: TJulianDateTime;
 var
   Hour,Minute,Second,Sec100: platformword;
 begin
@@ -1312,18 +1308,18 @@ begin
   Time:=datetojd(0,0,0,Hour,Minute,Second,Sec100);
 end;
 
-function GetTime: TDateTime;
+function GetTime: TJulianDateTime;
 begin
   GetTime:=Time;
 end;
 
-function TimeOf(const AValue: TDateTime): TDatetime;
+function TimeOf(const AValue: TJulianDateTime): TJulianDateTime;
 begin
   TimeOf:=frac(AValue);
 end;
 
 
-function TimeToStr(Time: TDateTime): string;
+function TimeToStr(Time: TJulianDateTime): string;
 var
  year,month,day,hour,minute,second,msec: word;
 begin
@@ -1331,7 +1327,7 @@ begin
   TimeToStr:=GetISOTimeString(Hour,Minute, Second, false);
 end;
 
-function Today: TDatetime;
+function Today: TJulianDateTime;
 var
  Year,Month,Day,DayOfWeek: platformword;
  Hour,Minute,Sec,Sec100: platformword;
@@ -1342,7 +1338,7 @@ begin
 end;
 
 
-function TryEncodeDate(Year, Month, Day: Word; var Date: TDateTime): Boolean;
+function TryEncodeDate(Year, Month, Day: Word; var Date: TJulianDateTime): Boolean;
 begin
   TryEncodeDate:=false;
   if IsValidDate(Year,Month,Day) then
@@ -1353,7 +1349,7 @@ begin
     end;
 end;
 
-function TryEncodeTime(Hour, Min, Sec, MSec: Word; var Time: TDateTime): Boolean;
+function TryEncodeTime(Hour, Min, Sec, MSec: Word; var Time: TJulianDateTime): Boolean;
 begin
   TryEncodeTime:=false;
   if IsValidTime(Hour,Min,Sec,Msec) then
@@ -1365,7 +1361,7 @@ begin
 end;
 
 function TryEncodeDateTime(const AYear, AMonth, ADay, AHour, AMinute, ASecond, AMilliSecond: Word;
-   var AValue: TDateTime): Boolean;
+   var AValue: TJulianDateTime): Boolean;
 begin
   TryEncodeDateTime:=false;
   if IsValidTime(AHour,AMinute,ASecond,AMillisecond) and IsValidDate(AYear,AMonth,ADay) then
@@ -1377,7 +1373,7 @@ begin
 end;
 
 
-function TryStrToDate(const S: string; var Value: TDateTime): Boolean;
+function TryStrToDate(const S: string; var Value: TJulianDateTime): Boolean;
 var
   yearval,monthval,dayval: word;
 begin
@@ -1395,7 +1391,7 @@ end;
 
 
 
-function TryStrToDateTime(const S: string; var Value: TDateTime): Boolean;
+function TryStrToDateTime(const S: string; var Value: TJulianDateTime): Boolean;
   var
    utc: boolean;
   begin
@@ -1403,7 +1399,7 @@ function TryStrToDateTime(const S: string; var Value: TDateTime): Boolean;
   end;
 
 
-function TryStrToTime(const S: string; var Value: TDateTime): Boolean;
+function TryStrToTime(const S: string; var Value: TJulianDateTime): Boolean;
 var
     minval,
     secval,
@@ -1430,7 +1426,7 @@ end;
 
 
 
-function YearOf(const AValue: TDateTime): Word;
+function YearOf(const AValue: TJulianDateTime): Word;
 var
  year,month,day,hour,minute,second,msec: word;
 begin
@@ -1442,6 +1438,9 @@ end;
 end.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.12  2006/12/07 02:53:38  carl
+    * Avoid range check errors when validating RFC 822 invalid dates.
+
   Revision 1.11  2006/10/17 01:03:28  carl
    * Bugfix for compilation with BP (line too long error)
 
@@ -1475,7 +1474,7 @@ end.
    - avoid range check error warning
 
   Revision 1.2  2004/10/13 23:23:50  carl
-    * change TDatetime type from extended to real.
+    * change TJulianDateTime type from extended to real.
 
   Revision 1.1  2004/09/29 00:57:46  carl
     + added dateutil unit

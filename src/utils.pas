@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: utils.pas,v 1.29 2011-04-12 00:27:45 carl Exp $
+    $Id: utils.pas,v 1.30 2011-11-24 00:27:39 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Common utilities
@@ -33,14 +33,7 @@ Interface
 {$ENDIF}
 {$ENDIF}
 
-uses
- tpautils,
- vpautils,
- fpautils,
- dpautils,
- gpautils,
- objects
- ;
+uses cmntyp, objects;
  
  
 TYPE
@@ -1163,6 +1156,9 @@ end;
 end.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.29  2011/04/12 00:27:45  carl
+  + Added realstr routine to convert floating point values to a string representation.
+
   Revision 1.28  2007/02/14 04:44:08  carl
     * Bugfix of infinite loop in certain instances with strings and when ansistrings are not enabled.
 

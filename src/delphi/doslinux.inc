@@ -1,5 +1,5 @@
 {
-    $Id: doslinux.inc,v 1.2 2005-03-21 00:22:54 carl Exp $
+    $Id: doslinux.inc,v 1.3 2011-11-24 00:27:40 carl Exp $
     Copyright (c) 2001 by members of the Free Pascal
     development team
 
@@ -13,7 +13,7 @@
 
 
 Uses
-  Strings,dpautils,libc;
+  Strings,cmntyp,libc;
 
 
   { Used by AddDisk(), DiskFree() and DiskSize() }
@@ -1019,6 +1019,9 @@ end;
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.2  2005/03/21 00:22:54  carl
+    * exec/diskfree/disksize/fexpand bugfixes
+
   Revision 1.1  2004/12/26 23:34:05  carl
     + support for Kylix
 
