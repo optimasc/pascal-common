@@ -8,10 +8,7 @@ procedure test_unit;
 implementation
 
 uses
-  dpautils,
-  fpautils,
-  tpautils,
-  vpautils,
+  cmntyp,
   iso639,
   utils
   ;

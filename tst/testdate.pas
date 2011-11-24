@@ -11,16 +11,13 @@ uses
 {$IFDEF VPASCAL}
  use32,
 {$ENDIF}
- fpautils,
- dpautils,
- vpautils,
- tpautils,
+ cmntyp,
  dateutil;
 
 
 procedure test_date;
 var
- d: TDatetime;
+ d: TJulianDateTime;
  Hour,Minute,Second,Year,Month,Day,Msec: word;
 begin
   { Testing Date }
@@ -43,9 +40,9 @@ procedure test_tryencode;
 var
  Year,Month,Day: word;
  Hour,Minute,Second,MSecond: word;
- AValue: TDateTime;
- DateValue:TDateTime;
- TimeValue:TDatetime;
+ AValue: TJulianDateTime;
+ DateValue:TJulianDateTime;
+ TimeValue:TJulianDateTime;
  AYear,AMonth,ADay: word;
  AHour,AMinute,ASecond,AMSecond: word;
  s: string;
@@ -208,8 +205,8 @@ procedure test_same;
 var
  Year,Month,Day: word;
  Hour,Minute,Second,MSecond: word;
- AValueA: TDatetime;
- AValueB: TDatetime;
+ AValueA: TJulianDateTime;
+ AValueB: TJulianDateTime;
 begin
  Year:=0;
  Month:=06;
@@ -253,7 +250,7 @@ procedure test_encode;
 var
  Year,Month,Day: word;
  Hour,Minute,Second,MSecond: word;
- AValue: TDatetime;
+ AValue: TJulianDateTime;
 begin
 
  {*********************** ISO 8601 compatible *************************}
@@ -413,7 +410,7 @@ procedure test_encodeext;
 var
  Year,Month,Day: word;
  Hour,Minute,Second,MSecond: word;
- AValue: TDatetime;
+ AValue: TJulianDateTime;
  UTC: boolean;
 begin
  {*********************** ISO 8601 compatible *************************}
@@ -518,7 +515,7 @@ end;
 procedure test_filetimedate;
 var
  ft: tfiletime;
- DateTime:TDateTime;
+ DateTime:TJulianDateTime;
  utc:boolean;
  Year,Month,Day,Hour,Minute,Second,Millisecond: word;
 Begin
@@ -604,6 +601,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.4  2004/11/29 03:52:21  carl
+    + Support for new routines of dateutil
+
   Revision 1.3  2004/11/23 03:51:40  carl
     * more date testing / fixes for VP compilation
 

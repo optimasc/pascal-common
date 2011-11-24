@@ -8,11 +8,7 @@ Program Testit;
 {$I+}
 {$X+}
 {$T+}
-uses dpautils,
-     vpautils,
-     fpautils,
-     tpautils,
-     gpautils,
+uses cmntyp,
      locale,
      ietf,
      unicode,
@@ -1025,6 +1021,10 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.21  2011/04/12 00:46:03  carl
+  + Hash Key value collection unitary tests
+  + UCS4 Trim routine unitary tests
+
   Revision 1.20  2007/01/06 19:17:20  carl
     + Add testbasechar unicode testing
 

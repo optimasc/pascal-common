@@ -1,6 +1,6 @@
 program tstlocal;
 
-uses locale,tpautils,dpautils,fpautils;
+uses locale,cmntyp;
 
 
 var
@@ -85,4 +85,7 @@ end.
 
 {
  $Log: not supported by cvs2svn $
+ Revision 1.1  2009/01/28 03:47:35  carl
+ Added ISO Date tests.
+
 } 
