@@ -1,5 +1,5 @@
 {
-    $Id: doswin32.inc,v 1.6 2007-08-16 02:50:42 carl Exp $
+    $Id: doswin32.inc,v 1.7 2012-02-16 05:37:42 carl Exp $
     Copyright (c) 2001 by members of the Free Pascal
     development team
 
@@ -12,7 +12,7 @@
  **********************************************************************}
 
 {$H-}
-uses strings;
+uses sysutils;
 
 type
    OSVERSIONINFO = record
@@ -906,6 +906,9 @@ end;
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.6  2007/08/16 02:50:42  carl
+  * Bugfix for filesizes greater than 2 Gbytes
+
   Revision 1.5  2005/11/21 00:17:36  carl
     - remove some compilation warnings/hints
     + speed optimizations

@@ -233,7 +233,7 @@ var
  MaxEntries: integer;
 begin
  GetDate(Year,Month,Day,DayOfWeek);
- upname:=upstring(name);
+ upname:=UpperCase(name);
  UCS2Entries:=-1;
  ANSIEntries:=-1;
  ASCIIEntrieS:=-1;

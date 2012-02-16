@@ -2748,6 +2748,10 @@ END;
 END.
 {
    $Log: not supported by cvs2svn $
+   Revision 1.8  2005/11/21 00:17:38  carl
+     - remove some compilation warnings/hints
+     + speed optimizations
+
    Revision 1.7  2005/01/06 03:20:13  carl
      * serious bugfix with uninitialized variable.
 
