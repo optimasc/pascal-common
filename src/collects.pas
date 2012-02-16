@@ -1,5 +1,5 @@
 {
-    $Id: collects.pas,v 1.9 2011-11-24 00:27:36 carl Exp $
+    $Id: collects.pas,v 1.10 2012-02-16 05:38:27 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Collections (Object style)
@@ -11,17 +11,16 @@
 {** @author(Carl Eric Codere) 
     @abstract(Collection units)
     
-    This routine contains collection objects, being quite
-    similar to those included in the objects unit. The only
-    difference being that they compile on all compiler
-    targets.
+    This unit contains collection and utility objects, being quite
+    similar to those included in the objects and classes units. The only
+    difference being that they compile on all compiler targets.
     
 }
 Unit collects;
 
 Interface
 
-uses cmntyp, objects, utils;
+uses cmntyp, objects, cmnutils;
 
 
 
@@ -37,29 +36,32 @@ CONST
 
 
 TYPE
+  {** @exclude }
   TItemList = Array [0..MaxCollectionSize - 1] Of Pointer;
+  {** @exclude }
   PItemList = ^TItemList;
-  
-    PStackItem = ^TStackItem;
-    TStackItem = record
-      next: PStackItem;
-      data: pointer;
-    end;
 
-  {** @abstract(Stack object)
-      This implement an object that is used as a LIFO stack
-      containing pointers as data. 
-  }
+
+type
+ 
   PStack = ^TStack;
+  {** @abstract(Stack object)
+      Implement an object that is used as a LIFO stack containing 
+      pointers as data. 
+  }
   TStack = object
     constructor init;
     destructor done;
+    {** Push the specified data on the stack. }
     procedure push(p: pointer);
+    {** Pop the last element pushed from the stack }
     function pop: pointer;
+    {** Peek at the element on top of the stack }
     function peek: pointer;
+    {** Returns true if the stack is empty. }
     function isEmpty: boolean;
   private
-     head: PStackItem;
+     head: Pointer; { Pointer to PStackItem }
   end;
   
 TYPE
@@ -140,7 +142,13 @@ TYPE
    END;
    PExtendedSortedStringCollection = ^TExtendedSortedStringCollection;
    
-   
+  
+  {** @abstract(Collection of numeric longint values.) 
+  
+      This collection is a collection of longint values instead of pointers, 
+      so instead of pointers you pass it directly the value to store in the
+      collection.
+  }
   TLongintCollection = object(TExtendedCollection)
     procedure FreeItem(Item: pointer); virtual;
   end;
@@ -152,33 +160,23 @@ TYPE
   PObject = ^TObject;
   PHashTable = ^THashTable;
 
-  PHashItem = ^THashItem;  
-  THashItem = Object(TObject)
-    Constructor Init;
-    Destructor Done; virtual;
-    {** Returns the string representation of this item }
-    Function toString: string; virtual;
-  end;
-  
-  PStringHashItem = ^TStringHashItem;
-  {** Simple String hash item that stores strings for use in THashTable. }
-  TStringHashItem = Object(THashItem)
-  public
-    Constructor Init(s: String);
-    Destructor Done; virtual;
-    Function toString: string; virtual;
-  private
-    value: String;
-  end;
-  
+
+
+
+  {** @exclude }
   PKeyValue = ^TKeyValue;  
+  {** @exclude }
   TKeyValue = record
     key: pshortstring;
     fastkey: word;
     value: PObject;
   end;
 
-  {** Hash table that is used to store and retrieve key-value pairs. }
+  {** @abstract(Hash table that is used to store and retrieve key-value pairs.)
+  
+      The key is a string, while the value is any old styled object data. Duplicates
+      are not allowed.
+  }
   THashTable = Object(TExtendedSortedCollection)
   public
       CONSTRUCTOR Init (ALimit, ADelta: Integer);
@@ -207,6 +205,9 @@ TYPE
 
       {** Maps the specified key to the specified value in this hashtable. 
           Neither the key nor the value can be nil. 
+          
+          If not faskey is required, set the fastKey parameter to
+          KEY_NO_FASTKEY.
           
       }
       procedure put(key: string;fastkey: integer; obj: PObject);
@@ -239,10 +240,73 @@ TYPE
 
 
 
+  PCollectionItem = ^TCollectionItem;  
+  {** @abstract(Basic item that stores data for use in THashTable/TCollection.) }
+  TCollectionItem = Object(TObject)
+    Constructor Init;
+    Destructor Done; virtual;
+    {** Returns the string representation of this item }
+    Function toString: string; virtual;
+  end;
+  
+  PStringItem = ^TStringItem;
+  {** @abstract(Simple String item that stores strings for use in THashTable/TCollection.) }
+  TStringItem = Object(TCollectionItem)
+  public
+    Constructor Init(s: String);
+    Destructor Done; virtual;
+    Function toString: string; virtual;
+  private
+    value: String;
+  end;
+
+  PPCharItem = ^TPCharItem;
+  {** @abstract(Simple PCHAR item that stores strings for use in THashTable/TCollection.)
+
+      The pchar is simply stored and the value is disposed when the object is freed.
+  }
+  TPCharItem = Object(TCollectionItem)
+  public
+    Constructor Init(p: pchar);
+    Destructor Done; virtual;
+    Function toString: string; virtual;
+  private
+    value: pchar;
+  end;
+  
+  
+  PKeyValueItem = ^TKeyValueItem;
+  {** @abstract(Simple item that stores a key-value pair for use in THashTable/TCollection.)
+
+      The pchar is simply stored and the value is disposed when the object is freed.
+  }
+  TKeyValueItem = Object(TCollectionItem)
+  public
+    Constructor Init(k: shortstring; p: pchar);
+    Destructor Done; virtual;
+    Function toString: string; virtual;
+    Function getKey: string;
+    Function getValue: pchar;
+  private
+    key: pshortstring;
+    value: pchar;
+  end;
+  
+
 
 Implementation
 
-uses strings;
+uses sysutils,unicode;
+
+
+type
+  {** Internal type information for the stack. Each element on the
+      stack is of this structure. }
+  PStackItem = ^TStackItem;
+  TStackItem = record
+    next: PStackItem;
+    data: pointer;
+  end;
 
 
      procedure TLongintCollection.FreeItem(Item: pointer);
@@ -863,17 +927,17 @@ end;
 *****************************************************************************}
 
 
-Constructor THashItem.Init;
+Constructor TCollectionItem.Init;
 Begin
   Inherited Init;
 end;
 
-Destructor THashItem.Done;
+Destructor TCollectionItem.Done;
 Begin
   Inherited Done;
 end;
 
-Function THashItem.toString: string;
+Function TCollectionItem.toString: string;
 Begin
   toString := '';
 end;
@@ -884,22 +948,106 @@ end;
 *****************************************************************************}
 
 
-Constructor TStringHashItem.Init(s: String);
+Constructor TStringItem.Init(s: String);
 Begin
   Inherited Init;
   value := s;
 end;
 
-Destructor TStringHashItem.Done;
+Destructor TStringItem.Done;
 Begin
   Inherited Done;
 end;
 
-Function TStringHashItem.toString: string;
+Function TStringItem.toString: string;
 Begin
   toString := value;
 end;
 
+
+{*****************************************************************************
+                             Hash PChar Item
+*****************************************************************************}
+
+
+Constructor TPCharItem.Init(p: pchar);
+Begin
+  Inherited Init;
+  value := p;
+end;
+
+Destructor TPCharItem.Done;
+Begin
+  Inherited Done;
+  if assigned(Value) then
+    Begin
+      Strdispose(value);
+      value:=nil;
+    end;
+end;
+
+Function TPCharItem.toString: string;
+Begin
+  toString:='';
+  if assigned(value) then
+     toString := strpas(value);
+end;
+
+
+{*****************************************************************************
+                             Key-Value Item
+*****************************************************************************}
+
+Constructor TKeyValueItem.Init(k: shortstring; p: pchar);
+Begin
+  Inherited Init;
+  value := p;
+  key:=stringdup(k);
+end;
+
+Destructor TKeyValueItem.Done;
+Begin
+  Inherited Done;
+  if assigned(Value) then
+    Begin
+      FreeMem(value,StrLen(value)+sizeof(char));
+      value:=nil;
+    end;
+  if assigned(Key) then
+    Begin
+      Stringdispose(key);
+      key:=nil;
+    end;
+end;
+
+Function TKeyValueItem.getKey: string;
+ Begin
+   getKey:='';
+   if assigned(key) then
+     getKey:=Key^; 
+ end;
+ 
+Function TKeyValueItem.getValue: pchar;
+ Begin
+   getValue:=nil;
+   if assigned(value) then
+     getValue:=value;
+ end;
+ 
+
+Function TKeyValueItem.toString: string;
+var
+ s1: string;
+ s2: string;
+Begin
+  toString:='';
+  if assigned(value) and assigned(key) then
+    Begin
+     s1:=key^;
+     s2:=ansistrpas(value);
+     toString := s1 + s2;
+    end;
+end;
 
 {*****************************************************************************
                                  Stack
@@ -927,8 +1075,8 @@ begin
   pop := peek;
   if assigned(head) then
     begin
-      s := head^.next;
-      dispose(head);
+      s := PStackItem(head)^.next;
+      dispose(PStackItem(head));
       head := s;
     end
 end;
@@ -936,7 +1084,7 @@ end;
 function TStack.peek: pointer;
 begin
   if not isEmpty then
-    peek := head^.data
+    peek := PStackItem(head)^.data
   else peek := NIL;
 end;
 
@@ -950,8 +1098,8 @@ var temp: PStackItem;
 begin
   while head <> nil do
     begin
-      temp := head^.next;
-      dispose(head);
+      temp := PStackItem(head)^.next;
+      dispose(PStackItem(head));
       head := temp;
     end;
 end;
@@ -960,6 +1108,9 @@ end;
 End.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.9  2011/11/24 00:27:36  carl
+  + update to new architecture of dates and times, as well as removal of some duplicate files.
+
   Revision 1.8  2011/04/12 00:46:54  carl
   + String Hash Key value collection
 
