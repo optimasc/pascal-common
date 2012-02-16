@@ -1,5 +1,5 @@
 {
-    $Id: crc.pas,v 1.9 2011-11-24 00:27:38 carl Exp $
+    $Id: crc.pas,v 1.10 2012-02-16 05:40:10 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     CRC and Chekcsum routines    
@@ -409,6 +409,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.9  2011/11/24 00:27:38  carl
+  + update to new architecture of dates and times, as well as removal of some duplicate files.
+
   Revision 1.8  2011/11/23 23:10:47  carl
   Rename crc to sums to avoid compatibility problems with lazarus
 

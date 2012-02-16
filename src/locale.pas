@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: locale.pas,v 1.17 2011-11-24 00:27:38 carl Exp $
+    $Id: locale.pas,v 1.18 2012-02-16 05:40:09 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Localization and date/time unit
@@ -32,7 +32,22 @@
     Credits where credits are due, information
     on the ISO and date formats where taken from
     http://www.cl.cam.ac.uk/~mgk25/iso-time.html
+
 }
+{==== Compiler directives ===========================================}
+{$B-} { Full boolean evaluation          }
+{$I-} { IO Checking                      }
+{$F+} { FAR routine calls                }
+{$P-} { Implicit open strings            }
+{$T-} { Typed pointers                   }
+{$V+} { Strict VAR strings checking      }
+{$X+} { Extended syntax                  }
+{$IFNDEF TP}
+ {$H+} { Memory allocated strings        }
+ {$J+} { Writeable constants             }
+ {$METHODINFO OFF} 
+{$ENDIF}
+{====================================================================}
 unit locale;
 
 
@@ -40,6 +55,12 @@ interface
 
 uses cmntyp,dateutil;
   
+TYPE
+ {** ISO 639 2-character language code identifier type }
+ TISOLangCode = string[2];
+ TISODateString  = string[16];
+ TISOTimeString  = string[16];
+ TISODateTimeString = string[32];
 
 {** Returns the extended format representation of a date as recommended
     by ISO 8601 (Gregorian Calendar).
@@ -52,7 +73,7 @@ uses cmntyp,dateutil;
     @param(month Month of the date - valid values are from 0 to 12)
     @param(day Day of the month - valid values are from 1 to 31)
 }
-function GetISODateString(Year, Month, Day: Word): shortstring;
+function GetISODateString(Year, Month, Day: Word): TISODateString;
 
 {** Returns the basic format representation of a date as recommended
     by ISO 8601 (Gregorian Calendar).
@@ -63,7 +84,7 @@ function GetISODateString(Year, Month, Day: Word): shortstring;
     @param(month Month of the date - valid values are from 0 to 12)
     @param(day Day of the month - valid values are from 1 to 31)
 }
-function GetISODateStringBasic(Year, Month, Day: Word): shortstring;
+function GetISODateStringBasic(Year, Month, Day: Word): TISODateString;
 
 
 {** @abstract(Verifies if the date is in a valid ISO 8601 format)
@@ -74,7 +95,7 @@ function GetISODateStringBasic(Year, Month, Day: Word): shortstring;
       is allowed)
     @returns(TRUE if the date string is valid otherwise false)
 }
-function IsValidISODateString(datestr: shortstring; strict: boolean): boolean;
+function IsValidISODateString(const datestr: string; strict: boolean): boolean;
 
 {** @abstract(Verifies if the date is in a valid ISO 8601 format and returns
      the decoded values)
@@ -88,7 +109,7 @@ function IsValidISODateString(datestr: shortstring; strict: boolean): boolean;
     @param(Day The day value from 0 to 31, 0 indicating that this parameter was not present)
     @returns(TRUE if the date string is valid otherwise false)
 }
-function IsValidISODateStringExt(datestr: shortstring; strict: boolean; var Year, Month,Day: word): boolean;
+function IsValidISODateStringExt(const datestr: string; strict: boolean; var Year, Month,Day: word): boolean;
 
 
 {** @abstract(Verifies if the time is in a valid ISO 8601 format)
@@ -103,7 +124,7 @@ function IsValidISODateStringExt(datestr: shortstring; strict: boolean; var Year
       to be valid)
     @returns(TRUE if the time string is valid otherwise false)
 }
-function IsValidISOTimeString(timestr: shortstring; strict: boolean): boolean;
+function IsValidISOTimeString(const timestr: string; strict: boolean): boolean;
 
 {** @abstract(Verifies if the time is in a valid ISO 8601 format)
 
@@ -117,7 +138,7 @@ function IsValidISOTimeString(timestr: shortstring; strict: boolean): boolean;
       to be valid)
     @returns(TRUE if the time string is valid otherwise false)
 }
-function IsValidISOTimeStringExt(timestr: shortstring; strict: boolean; var hour,min,sec: word;
+function IsValidISOTimeStringExt(const timestr: string; strict: boolean; var hour,min,sec: word;
   var offhour,offmin: smallint): boolean;
 
 
@@ -135,7 +156,26 @@ function IsValidISOTimeStringExt(timestr: shortstring; strict: boolean; var hour
       the date and time valid)
     @returns(TRUE if the date-time string is valid otherwise false)
 }
-function IsValidISODateTimeString(str: shortstring; strict: boolean): boolean;
+function IsValidISODateTimeString(const str: string; strict: boolean): boolean;
+
+{** @abstract(Verifies if the date and time is in a valid ISO 8601 format)
+
+    Currently does not support the fractional second parameters,
+    and only the format recommended by W3C when used with the
+    time zone designator. Also validates an entry if it only
+    contains the date component (it is automatically detected).
+    
+    Each value which is invalid is set to zero on exit.
+
+    @param(str Date-Time string in valid ISO 8601 format)
+    @param(strict If set to TRUE then the complete representation must
+      be present, either in basic or extended format to consider
+      the date and time valid)
+    @returns(TRUE if the date-time string is valid otherwise false)
+}
+function IsValidISODateTimeStringExt(const str: string; strict: boolean; 
+  var year,month,day, hour,min,sec: word; var offhour,offmin: smallint): boolean;
+
 
 {** Returns the extended format representation of a time as recommended
     by ISO 8601 (Gregorian Calendar).
@@ -144,8 +184,7 @@ function IsValidISODateTimeString(str: shortstring; strict: boolean): boolean;
     representation separates each member (hour,minute,second) with a colon
     (:).
 }
-function GetISOTimeString(Hour, Minute, Second: Word; UTC: Boolean):
-  shortstring;
+function GetISOTimeString(Hour, Minute, Second: Word; UTC: Boolean): TISOTimeString;
 
 {** Returns the basic format representation of a time as recommended
     by ISO 8601 (Gregorian Calendar).
@@ -154,8 +193,8 @@ function GetISOTimeString(Hour, Minute, Second: Word; UTC: Boolean):
     representation separates each member (hour,minute,second) with a colon
     (:).
 }
-function GetISOTimeStringBasic(Hour, Minute, Second: Word; UTC: Boolean):
-  shortstring;
+function GetISOTimeStringBasic(Hour, Minute, Second: Word; UTC: Boolean): TISOTimeString;
+  
 
 
 {** Returns the extended format representation of a date and time as recommended
@@ -165,7 +204,7 @@ function GetISOTimeStringBasic(Hour, Minute, Second: Word; UTC: Boolean):
     Returns an empty string if there is an error.
 }
 function GetISODateTimeString(Year, Month, Day, Hour, Minute, Second: Word; UTC:
-  Boolean): shortstring;
+  Boolean): TISODateTimeString;
 
 {** Converts a UNIX styled time (the number of seconds since 1970)
     to a standard date and time representation.
@@ -194,22 +233,22 @@ function MicrosoftCodePageToMIMECharset(cp: word): string;
     @param(charset IANA String representation of the character encoding)
     @return(cp Codepage)
 }    
-function MIMECharsetToMicrosoftCodePage(charset: string): word;
+function MIMECharsetToMicrosoftCodePage(const charset: string): word;
 
 
 {** Using a Microsoft language identifier (as defined by Microsoft and OS/2)
     return the resulting ISO 639-2 language code identifier.
 }    
-function MicrosoftLangageCodeToISOCode(langcode: integer): string;
+function MicrosoftLangageCodeToISOCode(langcode: integer): TISOLangCode;
 
 {** Using a ISO 639-2 language code identifier, return the
     resulting Microsoft language identifier 
     (as defined by Microsoft and OS/2)
 }    
-function ISOLanguageCodeToMicrosoftCode(lang: string): integer;
+function ISOLanguageCodeToMicrosoftCode(const lang: TISOLangCode): integer;
 
 
-{** @abstract(Convert a string representation of a date to a TJulianDateTime according
+{** @abstract(Convert a string representation of a date to a TJuliandDate according
     to a specified template)
 
     Date and time formats are specified by date and time pattern strings.
@@ -226,17 +265,17 @@ function ISOLanguageCodeToMicrosoftCode(lang: string): integer;
     from 'A' to 'Z' and from 'a' to 'z' are reserved):
 
     Letter  Date or Time Component  Presentation   Examples
-    y        Year                      Year          1996; 96
+    y        Year                     Year          1996; 96
     M        Month in year            Number          07
-    w       Week in year             Number        27
-    D        Day in year             Number        189
-    d        Day in month            Number        10
-    a        Am/pm marker            Text            PM
-    H        Hour in day (0-23)      Number        0
+    w        Week in year             Number        27
+    D        Day in year              Number        189
+    d        Day in month             Number        10
+    a        Am/pm marker             Text            PM
+    H        Hour in day (0-23)       Number        0
     h        Hour in am/pm (1-12)     Number          12
     m        Minute in hour           Number          30
-    s        Second in minute          Number         55
-    S        Millisecond             Number        978
+    s        Second in minute         Number         55
+    S        Millisecond              Number        978
 
     Year: For formatting, if the number of pattern letters is 2, the year is
     truncated to 2 digits; otherwise it is interpreted as a number.
@@ -251,10 +290,11 @@ function ISOLanguageCodeToMicrosoftCode(lang: string): integer;
     interpreted as text; otherwise, it is interpreted as a number.
 }
 function DateTimeStrFormat(const DateTimeFormat : string;
-                         const DateTimeStr : string) : TJulianDateTime;
+                         const DateTimeStr : string; 
+                         var Year, Month, Day, Hour, Minute, Second, MSec: Word) : Boolean;
 
 function EvaluateDateTime(const DateTimeFormat : string;
-                         dt: TJulianDateTime): string;
+                         const Year, Month, Day, Hour, Minute, Second, MSec: Word): string;
 
 
 const
@@ -302,7 +342,7 @@ const
 
 implementation
 
-uses utils,strings;
+uses sysutils;
 
 { IANA Registered character set table }
 {$i charset.inc}
@@ -320,7 +360,7 @@ type
     to an ISO 639 2-character language identifier }
 tmslangcode = record
   code: byte;
-  id: string[2];   
+  id: TISOLangCode;   
 end;
 
   
@@ -579,7 +619,7 @@ begin
 end;
 
 
-function GetISODateString(Year,Month,Day:Word): shortstring;
+function GetISODateString(Year,Month,Day:Word): TISODateString;
 var
   yearstr:string[4];
   monthstr: string[2];
@@ -596,7 +636,7 @@ begin
     '-'+ fillwithzeros(daystr,2);
 end;
 
-function GetISODateStringBasic(Year,Month,Day:Word): shortstring;
+function GetISODateStringBasic(Year,Month,Day:Word): TISODateString;
 var
   yearstr:string[4];
   monthstr: string[2];
@@ -614,12 +654,12 @@ begin
 end;
 
 function GetISOTimeString(Hour,Minute,Second: Word; UTC: Boolean):
-  shortstring;
+  TISOTimeString;
 var
   hourstr: string[2];
   minutestr: string[2];
   secstr: string[2];
-  s: shortstring;
+  s: string;
 begin
   GetISOTimeString := '';
   if Hour > 23 then exit;
@@ -636,12 +676,12 @@ begin
 end;
 
 function GetISOTimeStringBasic(Hour,Minute,Second: Word; UTC: Boolean):
-  shortstring;
+  TISOTimeString;
 var
   hourstr: string[2];
   minutestr: string[2];
   secstr: string[2];
-  s: shortstring;
+  s: string;
 begin
   GetISOTimeStringBasic := '';
   if Hour > 23 then exit;
@@ -659,9 +699,10 @@ end;
 
 
 function GetISODateTimeString(Year,Month,Day,Hour,Minute,Second: Word; UTC:
-  Boolean): shortstring;
+  Boolean): TISODateTimeString;
 var
-  s1,s2: shortstring;
+  s1: TISODateString;
+  s2: TISOTimeString;
 begin
   GetISODateTimeString:='';
   s1:=GetISODateString(year,month,day);
@@ -734,7 +775,7 @@ begin
  isdigits:=true;
 end;
 
-function IsValidISODateStringExt(datestr: shortstring; strict: boolean; var Year,Month,Day: word): boolean;
+function IsValidISODateStringExt(const datestr: string; strict: boolean; var Year,Month,Day: word): boolean;
 const
  DATE_SEPARATOR = '-';
 var
@@ -828,7 +869,7 @@ begin
 end;    
 
 
-function IsValidISODateString(datestr: shortstring; strict: boolean): boolean;
+function IsValidISODateString(const datestr: string; strict: boolean): boolean;
 var
  year,month,day: word;
 begin
@@ -836,7 +877,7 @@ begin
 end;    
 
 
-function IsValidISOTimeStringExt(timestr: shortstring; strict: boolean; var hour,min,sec: word;
+function IsValidISOTimeStringExt(const timestr: string; strict: boolean; var hour,min,sec: word;
  var offhour,offmin: smallint): boolean;
 const
  TIME_SEPARATOR = ':';
@@ -1012,7 +1053,7 @@ end;
 
 
 
-function IsValidISOTimeString(timestr: shortstring; strict: boolean): boolean;
+function IsValidISOTimeString(const timestr: string; strict: boolean): boolean;
 var
   hour,min,sec: word;
   offhour,offmin: smallint;
@@ -1020,7 +1061,7 @@ begin
   IsValidISOTimeString:=IsValidISOTimeStringExt(timestr,strict,hour,min,sec,offhour,offmin);
 end;
 
-function IsValidISODateTimeString(str: shortstring; strict: boolean): boolean;
+function IsValidISODateTimeString(const str: string; strict: boolean): boolean;
 var
  idx:integer;
 begin
@@ -1039,10 +1080,37 @@ begin
     end;
 end;
 
+function IsValidISODateTimeStringExt(const str: string; strict: boolean; 
+  var year,month,day, hour,min,sec: word; var offhour,offmin: smallint): boolean;
+var
+ idx:integer;
+begin
+  IsValidISODateTimeStringExt:=false;
+  Year:=0;
+  Month:=0;
+  Day:=0;
+  Hour:=0;
+  Min:=0;
+  Sec:=0;
+  OffHour:=0;
+  OffMin:=0;
+  idx:=pos('T',str);
+  if idx <> 0 then
+    begin
+      if IsValidISODateStringExt(copy(str,1,idx-1),strict,Year,Month,Day) then
+         if IsValidISOTimeStringExt(copy(str,idx+1,length(str)),strict,Hour,Min,Sec,OffHour,OffMin) then
+           IsValidISODateTimeStringExt:=true;
+    end
+  else
+    begin
+      if IsValidISODateStringExt(str,strict,year,month,day) then
+         IsValidISODateTimeStringExt:=true;
+    end;
+end;
 
 
-function CompareString(s1,s2: shortstring): integer;
-VAR I, J: integer; P1, P2: ^shortString;
+function CompareString(s1,s2: string): integer;
+VAR I, J: integer; P1, P2: ^string;
   BEGIN
     P1 := @s1;                               { String 1 pointer }
     P2 := @s2;                               { String 2 pointer }
@@ -1089,7 +1157,7 @@ function GetCharEncoding(alias: string; var _name: string): integer;
 {$endif}    
   begin
     _name:='';
-    alias:=upstring(alias);
+    alias:=UpperCase(alias);
     { Search for the appropriate name }
     GetCharEncoding:=CHAR_ENCODING_UNKNOWN;
     if alias = '' then exit;
@@ -1165,7 +1233,7 @@ begin
     end;
 end;
 
-function MIMECharsetToMicrosoftCodePage(charset: string): word;
+function MIMECharsetToMicrosoftCodePage(const charset: string): word;
 var
  i: integer;
 begin
@@ -1182,7 +1250,7 @@ begin
 end;
 
   
-function MicrosoftLangageCodeToISOCode(langcode: integer): string;
+function MicrosoftLangageCodeToISOCode(langcode: integer): TISOLangCode;
 var
  i: integer;
 begin
@@ -1197,7 +1265,7 @@ begin
     end;
 end;
 
-function ISOLanguageCodeToMicrosoftCode(lang: string): integer;
+function ISOLanguageCodeToMicrosoftCode(const lang: TISOLangCode): integer;
 var
  i: integer;
 begin
@@ -1245,17 +1313,17 @@ Begin
 end;
 
 function DateTimeStrFormat(const DateTimeFormat : string;
-                         const DateTimeStr : string) : TJulianDateTime;
+                         const DateTimeStr : string; 
+                         var Year, Month, Day, Hour, Minute, Second, MSec: Word) : Boolean;
 var
  s: string;
  patternChar: char;
- Year, Month, Day, Hour, Minute, Second, Millisecond: integer;
- Week, DayOfYear: integer;
  startPos, endPos: integer;
  len: integer;
  Code: integer;
- Dt: TJulianDateTime;
+ Dt: TJulianDate;
 Begin
+ DateTimeStrFormat:=False;
  s:=DateTimeStr;
  Year:=1;
  Month:=1;
@@ -1263,9 +1331,7 @@ Begin
  Hour:=0;
  Minute:=0;
  Second:=0;
- Week:=0;
- DayOfYear:=0;
- Millisecond:=0;
+ MSec:=0;
  startPos:=1;
  while startPos < length(dateTimeFormat) do
   Begin
@@ -1309,7 +1375,7 @@ Begin
       MILLISECOND_CHAR:
          Begin
            Code:=0;
-           Val(Copy(s,startPos,len),MilliSecond,Code);
+           Val(Copy(s,startPos,len),MSec,Code);
          end;
 {         
       WEEK_IN_YEAR_CHAR:
@@ -1346,8 +1412,8 @@ Begin
   if DayOfYear <> 0 then
      dt:=EncodeDateDay(Year, DayOfYear)
   else}
-     TryEncodeDateTime(Year,Month,Day,Hour,Minute,Second,Millisecond,Dt);
-  DateTimeStrFormat:=Dt;
+  if TryEncodeDateTime(Year,Month,Day,Hour,Minute,Second,MSec,Dt) then
+    DateTimeStrFormat:=True;
 end;
 
 { Truncate the leading characters or pad with leading zeros
@@ -1376,9 +1442,8 @@ Begin
 end;
 
 function EvaluateDateTime(const DateTimeFormat : string;
-                         dt: TJulianDateTime): string;
+                         const Year, Month, Day, Hour, Minute, Second, MSec: Word): string;
 var
- Year,Month,Day,Hour,Minute,Second,Millisecond: word;
  startPos, endPos: integer;
  outStr: string;
  patternChar: char;
@@ -1386,7 +1451,6 @@ var
  s1: string;
 Begin
   outStr:=DateTimeFormat;
-  DecodeDateTime(dt,Year,Month,Day,Hour,Minute,Second,MilliSecond);
   startPos:=1;
   while startPos < length(dateTimeFormat) do
   Begin
@@ -1435,7 +1499,7 @@ Begin
          end;
       MILLISECOND_CHAR:
          Begin
-           Str(MilliSecond,s1);
+           Str(MSec,s1);
            s1:=PadTruncate(s1,len);
            Replace(outStr,s1,startPos,endPos);
          end;
@@ -1462,6 +1526,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.17  2011/11/24 00:27:38  carl
+  + update to new architecture of dates and times, as well as removal of some duplicate files.
+
   Revision 1.16  2011/11/23 23:10:47  carl
   Rename crc to sums to avoid compatibility problems with lazarus
 

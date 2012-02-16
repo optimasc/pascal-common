@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: sgml.pas,v 1.12 2011-11-24 00:27:38 carl Exp $
+    $Id: sgml.pas,v 1.13 2012-02-16 05:40:09 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere (Optima SC Inc.)
 
     SGML related utility routines
@@ -11,19 +11,25 @@
  ****************************************************************************
 }
 {** @abstract(SGML, HTML and XML Related routines) }
+
+{==== Compiler directives ===========================================}
+{$B-} { Full boolean evaluation          }
+{$I-} { IO Checking                      }
+{$F+} { FAR routine calls                }
+{$P-} { Implicit open strings            }
+{$T-} { Typed pointers                   }
+{$V-} { Strict VAR strings checking      }
+{$X-} { Extended syntax                  }
+{$IFNDEF TP}
+ {$H-} { Memory allocated strings        }
+ {$J+} { Writeable constants             }
+ {$METHODINFO OFF} 
+{$ENDIF}
+{====================================================================}
 unit sgml;
 
 interface
- {==== Compiler directives ===========================================}
- {$X+} { Extended syntax }
- {$V-} { Strict VAR strings }
- {$P-} { Implicit open strings }
- {$B-} { No full boolean evaluation }
- {$T+} { Typed pointers }
- {$IFNDEF TP}
- {$J+} { Writeable constants }
- {$ENDIF}
- {====================================================================}
+
 uses  cmntyp, unicode;
 
  
@@ -69,7 +75,7 @@ procedure SGMLEntitiesToUCS4String(instr: ucs4string; var outstr:ucs4string);
 
 implementation
 
-uses utils;
+uses sysutils,cmnutils;
 
 const
   space_character = [#9,#32];
@@ -101,10 +107,10 @@ begin
   if idx = 1 then
       SGMLGetDTDInfo:=SGML_STATUS_OK
   else
-  if pos(DOCTYPE_STR,upstring(s))=1 then
+  if pos(DOCTYPE_STR,UpperCase(s))=1 then
     begin
-      idx:=pos(DOCTYPE_STR,upstring(s));
-      s:=upstring(s);
+      idx:=pos(DOCTYPE_STR,UpperCase(s));
+      s:=UpperCase(s);
   { Check it is malformed }
       SGMLGetDTDInfo:=SGML_STATUS_MALFORMED;
      end;
@@ -479,6 +485,9 @@ end;
 end.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.12  2011/11/24 00:27:38  carl
+  + update to new architecture of dates and times, as well as removal of some duplicate files.
+
   Revision 1.11  2008/11/24 00:35:18  carl
    + SGMLGetDTDInfo() now returns its values as explicit shortstrings.
 

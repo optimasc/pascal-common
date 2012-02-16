@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: iso639.pas,v 1.5 2011-11-24 00:27:38 carl Exp $
+    $Id: iso639.pas,v 1.6 2012-02-16 05:40:09 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Language code unit
@@ -22,13 +22,33 @@
     http://www.loc.gov/standards/iso639-2/ISO-639-2_values_8bits.txt
     
     The database used is from 2004-10-19.
+    
+    The unit is compiled with shortstring types instead of string
+    types for optimization purposes.
+    
 }
+{==== Compiler directives ===========================================}
+{$B-} { Full boolean evaluation          }
+{$I-} { IO Checking                      }
+{$F+} { FAR routine calls                }
+{$P-} { Implicit open strings            }
+{$T-} { Typed pointers                   }
+{$V+} { Strict VAR strings checking      }
+{$X-} { Extended syntax                  }
+{$IFNDEF TP}
+ {$H-} { Memory allocated strings        }
+ {$DEFINE ANSISTRINGS}
+ {$J+} { Writeable constants             }
+ {$METHODINFO OFF} 
+{$ENDIF}
+{====================================================================}
 unit iso639;
+
 
 
 interface
 
-uses cmntyp, utils;
+uses cmntyp;
 
 
 {** @abstract(Verifies if the 2 or 3 letter language code is valid)
@@ -42,7 +62,7 @@ uses cmntyp, utils;
 }
 function isvalidlangcode(s: shortstring): boolean;
 
-{** @abstract(Returns the language name in french for the specified language code.) 
+{** @abstract(Returns the language name in french for the specified language code.)
 
   The language code IS case insensitive and can be either 2 or 3 characters
   in length (according to ISO 639-1 and ISO 639-2 respectively)
@@ -76,7 +96,7 @@ function getlangname_en(s: shortstring): shortstring;
     
     The search is not case sensitive (according to ISO 639-1). 
     If there is no 2 character language code for this language, or
-    if the language name is not found, the routine 
+    if the language name is not found, the routine
     returns an empty string.
   
     The language name string should be encoded according to
@@ -107,7 +127,7 @@ function getlangcode_fr(name: shortstring): shortstring;
 
 implementation
 
-uses iso639d;
+uses iso639d,sysutils;
 
 
 type
@@ -127,7 +147,7 @@ var
        name, it removes any extra information (that
        is in parenthesis), as well as removing all
        extra whitespace }
-   Function CleanName(s: string): string;
+   Function CleanName(s: shortstring): shortstring;
    var
     index: integer;
    begin
@@ -177,11 +197,12 @@ begin
       { Check the 2-digit code }
       if Lang_Info^[i].code = s then
          begin
-            index:=pos(';',Lang_Info^[i].name_fr);
+            name:=strpas(Lang_Info^[i].name_fr);
+            index:=pos(';',name);
             if index<>0 then
-                name:=CleanName(copy(Lang_Info^[i].name_fr,1,index-1))
+                name:=CleanName(copy(name,1,index-1))
             else
-                name:=CleanName(Lang_Info^[i].name_fr);
+                name:=CleanName(name);
             getlangname_fr:=name;
             exit;
          end
@@ -189,11 +210,12 @@ begin
       { Check the 3-digit code }
       if Lang_Info^[i].biblio_code = s then
          begin
-            index:=pos(';',Lang_Info^[i].name_fr);
+            name:=strpas(Lang_Info^[i].name_fr);
+            index:=pos(';',name);
             if index<>0 then
-                name:=CleanName(copy(Lang_Info^[i].name_fr,1,index-1))
+                name:=CleanName(copy(name,1,index-1))
             else
-                name:=CleanName(Lang_Info^[i].name_fr);
+                name:=CleanName(name);
             getlangname_fr:=name;
             exit;
          end;
@@ -214,11 +236,12 @@ begin
       { Check the 2-digit code }
       if Lang_Info^[i].code = s then
          begin
-            index:=pos(';',Lang_Info^[i].name_en);
+            name:=strpas(Lang_Info^[i].name_en);
+            index:=pos(';',name);
             if index<>0 then
-                name:=CleanName(copy(Lang_Info^[i].name_en,1,index-1))
+                name:=CleanName(copy(name,1,index-1))
             else
-                name:=CleanName(Lang_Info^[i].name_en);
+                name:=CleanName(name);
             getlangname_en:=name;
             exit;
          end
@@ -226,11 +249,12 @@ begin
       { Check the 3-digit code }
       if Lang_Info^[i].biblio_code = s then
          begin
-            index:=pos(';',Lang_Info^[i].name_en);
+            name:=strpas(Lang_Info^[i].name_en);
+            index:=pos(';',name);
             if index<>0 then
-                name:=CleanName(copy(Lang_Info^[i].name_en,1,index-1))
+                name:=CleanName(copy(name,1,index-1))
             else
-                name:=CleanName(Lang_Info^[i].name_en);
+                name:=CleanName(name);
             getlangname_en:=name;
             exit;
          end;
@@ -244,11 +268,11 @@ var
  s: string;
  index: integer;
 begin
-  name:=upstring(name);
+  name:=UpperCase(name);
   getlangcode_en:='';
   for i:=1 to MAX_ENTRIES do
     begin
-      name_en:=CleanName(Lang_Info^[i].name_en);
+      name_en:=CleanName(strpas(Lang_Info^[i].name_en));
       repeat
         index:=pos(';',name_en);
         if index<>0 then
@@ -264,7 +288,7 @@ begin
            character.
          }
          { Check the 2-digit code }
-         if upstring(trim(s)) = name then
+         if UpperCase(trim(s)) = name then
          begin
             getlangcode_en:=Lang_Info^[i].code;
             exit;
@@ -281,10 +305,10 @@ var
  index: integer;
 begin
   getlangcode_fr:='';
-  name:=upstring(name);
+  name:=UpperCase(name);
   for i:=1 to MAX_ENTRIES do
     begin
-      name_fr:=CleanName(Lang_Info^[i].name_fr);
+      name_fr:=CleanName(strpas(Lang_Info^[i].name_fr));
       repeat
         index:=pos(';',name_fr);
         if index<>0 then
@@ -300,7 +324,7 @@ begin
            character.
          }
          { Check the 2-digit code }
-         if upstring(trim(s)) = name then
+         if UpperCase(trim(s)) = name then
          begin
             getlangcode_fr:=Lang_Info^[i].code;
             exit;
@@ -333,6 +357,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.5  2011/11/24 00:27:38  carl
+  + update to new architecture of dates and times, as well as removal of some duplicate files.
+
   Revision 1.4  2006/08/31 03:05:18  carl
   + Better documentation
 

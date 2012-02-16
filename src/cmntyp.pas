@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: cmntyp.pas,v 1.1 2011-11-24 00:05:08 carl Exp $
+    $Id: cmntyp.pas,v 1.2 2012-02-16 05:40:07 carl Exp $
     Copyright (c) 2004-2011 by Carl Eric Codere
 
     Common compatibility units for different compilers
@@ -183,7 +183,7 @@ uses SysUtils;
     Integer = longint;
     { An integer which has the size of a pointer }
     ptrint = longint;
-    
+
 const
 {$IFDEF WIN32}
  LineEnding : string = #13#10;
@@ -214,7 +214,9 @@ const
 {*****************************  Turbo Pascal  *******************************}
 {$ifdef tp}
 
-uses dos;
+{$IFNDEF WINDOWS}
+uses Dos;
+{$ENDIF}
 
 const
  LineEnding : string = #13#10;
@@ -249,13 +251,17 @@ type
   { An integer which has the size of a pointer }
   ptrint = longint;
   TDateTime = Double;
+  ansichar = char;
+  pbyte = ^byte;
 
 
 
 
- procedure SetLength(var s: string; l: longint);
- 
+ procedure SetLength(var s: OpenString; l: longint);
+
+{$IFNDEF WINDOWS}
  Procedure FindClose(Var f: SearchRec);
+{$ENDIF}
 
  {** @abstract(Reallocates a dynamic variable) 
  
@@ -311,14 +317,20 @@ end;
 
 
 
- procedure SetLength(var s: string; l: longint);
+ procedure SetLength(var s: OpenString; l: longint);
   begin
-   s[0] := char(l and $ff);
+   if l < 0 then
+     l:=0;
+   if l > 255 then
+     l:=255;
+   s[0] := char(l);
   end;
-  
+
+{$IFNDEF WINDOWS}
  Procedure FindClose(Var f: SearchRec);
  begin
  end;
+{$ENDIF}
 
  procedure Assert(b: boolean);
  begin

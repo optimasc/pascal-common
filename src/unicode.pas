@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: unicode.pas,v 1.48 2011-11-24 00:27:39 carl Exp $
+    $Id: unicode.pas,v 1.49 2012-02-16 05:40:10 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Unicode related routines
@@ -35,26 +35,32 @@
     Unicode tables are based on Unicode 4.1
 
 }
-{$T-}
-{$X+}
-{$Q-}
-
+{==== Compiler directives ===========================================}
+{$B-} { Full boolean evaluation          }
+{$I-} { IO Checking                      }
+{$F+} { FAR routine calls                }
+{$P+} { Implicit open strings            }
+{$T-} { Typed pointers                   }
+{$V-} { Strict VAR strings checking      }
+{$X+} { Extended syntax                  }
 {$IFNDEF TP}
-{$IFOPT H+}
-{$DEFINE ANSISTRINGS}
+ {$H+} { Memory allocated strings        }
+ {$DEFINE ANSISTRINGS}
+ {$J+} { Writeable constants             }
+ {$METHODINFO OFF} 
 {$ENDIF}
-{$ENDIF}
+{====================================================================}
+{$Q-}
 
 {$IFDEF TP}
 {$UNDEF ANSISTRINGS}
-{$D-}
 {$ENDIF}
 
 unit unicode;
 
 interface
 
-uses cmntyp, utils;
+uses cmntyp, cmnutils;
 
 const
   {** Gives the number of characters that can be contained in a string }
@@ -85,10 +91,12 @@ type
       of the string in characters.
   }
   ucs2string = array[0..MAX_STRING_LENGTH] of ucs2char;
+  pucs2string = ^ucs2string;
   {** UCS-4 string declaration. Index 0 contains the active length
       of the string in characters.
   }
   ucs4string = array[0..MAX_STRING_LENGTH] of ucs4char;
+  pucs4string = ^ucs4string;
   {** UCS-4 long string declaration. Index 0 contains the active length
       of the string in characters. This type takes a lot more memory 
       than the regular ucs4string and should seldom be used..
@@ -407,7 +415,7 @@ type
       @returns(The newly allocated UCS-4 null terminated string)
 
   }
-   function ucs4strnewFromucs4(src: array of ucs4char): pucs4char;
+   function ucs4strnewFromucs4(const src: array of ucs4char): pucs4char;
   
 
 
@@ -665,7 +673,16 @@ type
   }      
   procedure utf8stringdispose(var p : putf8shortstring);
 
-
+  {** @abstract(Converts an ISO-8859-1 encoded string to an UTF-8 encoded string)
+       
+  }    
+  function ISO88591ToUtf8(const S: string): utf8string;
+  
+  {** @abstract(Verifies if the UTF-8 string contains only valid UTF-8 characters)
+       
+  }    
+  function UTF8IsLegalISO88591(const S: UTF8String): boolean;
+  
   
   {** @abstract(Allocates and copies an UTF-8 string to a pointer 
         to an UTF-8 string).
@@ -903,7 +920,7 @@ type
 
 implementation
 
-uses strings;
+uses sysutils;
 
 
 type
@@ -1301,6 +1318,59 @@ const
     byteMark: ucs4char = $80;
     
     
+  function ISO88591ToUtf8(const S: string): utf8string;
+    var
+     s1: utf8string;
+     i: integer;
+     outIndex: integer;
+    Begin
+      SetLength(s1, Length(s)*2);
+      outIndex := 0;
+      for i:=1 to Length(s) do
+        Begin
+          if s[i] < chr(128) then
+            Begin
+              inc(OutIndex);
+              s1[outIndex]:=s[i];
+            end
+          else
+            Begin
+              Inc(OutIndex);
+              s1[outIndex] := chr($c0+((byte(s[i]) and $c0) shr 6));
+              Inc(OutIndex);
+              s1[outIndex] := chr((byte(s[i]) and $3F)+ord($80));
+            end;
+        end;
+      SetLength(s1, outIndex);  
+      ISO88591ToUtf8:=s1;       
+    end;
+    
+    
+  function UTF8IsLegalISO88591(const S: UTF8String): boolean;
+   var
+    i: integer;
+   Begin
+     UTF8IsLegalISO88591:=True;
+     i:=1;
+     while i<=length(s) do
+      Begin
+        if s[i] <= chr(127) then
+          Begin
+            inc(i);
+            continue;
+          end;
+        if ((ord(s[i]) and $E0)=$C0) and ((ord(s[i+1]) and $C0)=$80) then
+          Begin
+            inc(i,2);
+            continue;
+          end;
+        UTF8IsLegalISO88591:=False;
+        exit;
+      end;
+   end;
+    
+    
+    
   function convertUCS4toUTF8(s: array of ucs4char; var outstr: utf8string): integer;
   var
    i: integer;
@@ -1499,7 +1569,7 @@ const
     dest:='';
     ConvertFromUCS4:=UNICODE_ERR_OK;  
     p:=nil;
-    desttype:=upstring(desttype);
+    desttype:=UpperCase(desttype);
     if desttype = 'UTF-8' then
       begin
         ConvertFromUCS4:=convertUCS4toUTF8(source,dest);
@@ -1566,7 +1636,7 @@ const
   begin
     ConvertToUCS4:=UNICODE_ERR_OK;
     source:=removenulls(source);
-    srctype:=upstring(srctype);
+    srctype:=UpperCase(srctype);
     p:=nil;
     { Check if we have a null length, then set the length and exit }
     if length(source) = 0 then
@@ -2255,7 +2325,7 @@ end;
   var
    i: integer;
   begin
-    s:=upstring(s);
+    s:=UpperCase(s);
     ucs4_issupported := true;
     if (s = 'UTF-16') or (s = 'UTF-16BE') or (s = 'UTF-16LE') or
        (s = 'UCS-4') or (s = 'UCS-4BE') or (s = 'UCS-4LE') or
@@ -2304,7 +2374,7 @@ end;
   begin
     len:=ucs4_length(src)*sizeof(ucs4char)+sizeof(ucs4char);
     Getmem(p,len);
-    ucs4strpcopy(p,src);
+    p:=ucs4strpcopy(p,src);
     ucs4_converttoutf8:=ucs4strpastoutf8(p);
     if assigned(p) then
       Freemem(p,len);
@@ -2350,7 +2420,7 @@ end;
     dec(i);
     ucs4_setlength(s,l-i);
     move(pucs4strarray(outp)^[i],s[1],(l-i)*sizeof(ucs4char));
-    ucs4strdispose(outp);
+    outp:=ucs4strdispose(outp);
   end ;
 
 
@@ -2364,7 +2434,7 @@ end;
      dec(l);
     ucs4_setlength(s,l);
     move(pucs4strarray(outp)^[0],s[1],l*sizeof(ucs4char));
-    ucs4strdispose(outp);
+    outp:=ucs4strdispose(outp);
   end ;
 
 
@@ -2626,7 +2696,7 @@ end;
   begin
     str:=removenulls(str);
     ucs4strnewstr:=nil;
-    srctype:=upstring(srctype);
+    srctype:=UpperCase(srctype);
     dest:=nil;
     p:=nil;
     { Check if we have an empty string }
@@ -2749,7 +2819,7 @@ end;
     ucs4strnewucs4:=dst;
   end;
   
-  function ucs4strnewFromucs4(src: array of ucs4char): pucs4char;
+  function ucs4strnewFromucs4(const src: array of ucs4char): pucs4char;
   var
    lengthtoalloc: integer;
    dst: pucs4char;
@@ -2807,7 +2877,7 @@ end;
   begin
     ucs4strnew:=nil;
     dest:=nil;
-    srctype:=upstring(srctype);
+    srctype:=UpperCase(srctype);
     p:=nil;
     if not assigned(str) then exit;
     stringlength:=strlen(str);
@@ -3369,7 +3439,7 @@ end;
     if not assigned(src) then
        exit;
     p:=nil;
-    desttype:=upstring(desttype);
+    desttype:=UpperCase(desttype);
     { If the desitnation type if UTF-8, simple, directly convert and exit }
     if desttype = 'UTF-8' then
       begin
@@ -3608,7 +3678,7 @@ end;
    if utf8_length(str) > 0 then
      begin
         getmem(p,utf8_length(str)+sizeof(utf8char));
-        strpcopy(p,str);
+        p:=strpcopy(p,str);
         asciistrnewstr:=p;
      end;
  end;
@@ -3624,7 +3694,7 @@ end;
    if utf8_length(str) > 0 then
      begin
         getmem(p,utf8_length(str)+sizeof(utf8char));
-        strpcopy(p,str);
+        p:=strpcopy(p,str);
         ansistrnewstr:=p;
      end;
  end;
@@ -3679,7 +3749,7 @@ end;
    if utf8_length(str) > 0 then
      begin
         getmem(p,utf8_length(str)+sizeof(utf8char));
-        strpcopy(p,str);
+        p:=strpcopy(p,str);
         utf8strnewstr:=p;
      end;
  end;
@@ -3821,6 +3891,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.48  2011/11/24 00:27:39  carl
+  + update to new architecture of dates and times, as well as removal of some duplicate files.
+
   Revision 1.47  2010/01/21 12:00:26  carl
    + More routines use open array for better compatibility.
    + when unknown character is found in conversion, use ? character instead of \\xNNNN

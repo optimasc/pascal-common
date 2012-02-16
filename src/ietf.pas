@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: ietf.pas,v 1.12 2011-11-24 00:27:37 carl Exp $
+    $Id: ietf.pas,v 1.13 2012-02-16 05:40:08 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Unicode related routines
@@ -15,16 +15,31 @@
 {** @author(Carl Eric Codere)
     @abstract(ietf/web related support unit)
 
-    This unit contains routines to validate
-    strings, and characters according to different
-    IETF standards (such as URL's, URI's and MIME types).
+    This unit contains routines to validate strings, and characters 
+    according to different IETF standards 
+    (such as URL's, URI's and MIME types).
     
 }
+
+{==== Compiler directives ===========================================}
+{$B-} { Full boolean evaluation          }
+{$I-} { IO Checking                      }
+{$F+} { FAR routine calls                }
+{$P-} { Implicit open strings            }
+{$T-} { Typed pointers                   }
+{$V+} { Strict VAR strings checking      }
+{$X-} { Extended syntax                  }
+{$IFNDEF TP}
+ {$H+} { Memory allocated strings        }
+ {$DEFINE ANSISTRINGS}
+ {$J+} { Writeable constants             }
+ {$METHODINFO OFF} 
+{$ENDIF}
+{====================================================================}
 unit ietf;
 
-interface
 
-uses cmntyp;
+interface
 
 {----------------- MIME related routines ----------------}
 
@@ -38,13 +53,53 @@ uses cmntyp;
     @param(s MIME type signature to verify)
     @return(TRUE if the signature has valid syntax)
 }
-function mime_isvalidcontenttype(const s: shortstring): boolean;
+function mime_isvalidcontenttype(const s: string): boolean;
 
-{------- RFC 1766 (language tags) related routines --------}
 
+(*
+{**abstract(Validates and splits the syntax of a MIME Type tag into its components)
+
+   The validation is according to IETF RFC 2045 allowed syntax.
+   
+   @param(s MIME content type value to validate)
+   @param(typ The major MIME category type)
+   @param(subtype The subtype in this category)
+   @param(parameters The list of parameters for this content type)
+
+}
+function mime_split(s: shortstring var typ,subtype,parameter:shortstring): boolean;
+*)
+
+{------- RFC 3066 (language tags) related routines --------}
+
+{**abstract(Validates the syntax of a language tag)
+
+   The validation is according to IETF RFC 3066 with restrictions,
+   since the original IETF recommendation. All private tags starting
+   with i- x- must have at maximum 8 characters after the special
+   characters.
+
+   Also supports the extensions and syntax of IETF RFC 5646,
+   even though only the region and primary language tag are validated.
+
+}
 function langtag_isvalid(const s: string): boolean;
 
-function langtag_split(const s: string; var primary,sub: string): boolean;
+{**abstract(Validates and splits the syntax of a language tag into its components)
+
+   The validation is according to IETF RFC 3066 with restrictions,
+   since the original IETF recommendation was not clear. 
+   
+   Only validates the primary language tag as well as the 
+   region tag, even though the extended IETF RFC 5646 sytnax
+   shall be accepted and will not cause errors.
+
+   @param(s The language tag to split and validate)
+   @param(primary The primary language tag, or empty if not valid)
+   @param(region The associated region or empty if not valid or not present)
+
+}
+function langtag_split(const s: string; var primary,region: string): boolean;
 
 {----------------- URI related routines ----------------}
 const
@@ -58,18 +113,16 @@ const
   URI_SCHEME_SEPARATOR = ':';
   
 
- {** @abstract(Extract information from an URI string)
+{** abstract(Validates and splits the syntax of an URI tag into its components)
 
-     Given an URI complete absolute specification string, extract
-     and return the scheme, authority, path and query
-     components of the URI. The exact definition of
-     these terms is specified in IETF RFC 2396.
+   Given an URI complete absolute specification string, extract and return 
+   the scheme, authority, path and query components of the URI. The exact 
+   definition of these terms is specified in IETF RFC 2396.
      
-     @param(url URI to check)
-     @returns(FALSE if the URI is not valid, otherwise
-       returns TRUE)
+   @param(url URI to check)
+   @returns(FALSE if the URI is not valid, otherwise returns TRUE)
  }
- function uri_split(url: string; var scheme, authority,path, query: string): boolean;
+function uri_split(uri: string; var scheme, authority,path, query: string): boolean;
 
 
 
@@ -83,7 +136,7 @@ const
 
     @returns(TRUE if this is a valid URN string)
 }
-function urn_isvalid(s: shortstring): boolean;
+function urn_isvalid(s: string): boolean;
 
 {function urn_split(var sig, nid, nss: string): boolean;}
 
@@ -127,7 +180,7 @@ function urn_pathsplit(path: string; var namespace, nss: string): boolean;
 
 implementation
 
-uses utils,iso639;
+uses sysutils,cmnutils;
 
 const
  alphaupper = ['A'..'Z'];
@@ -238,9 +291,12 @@ const
 
 
  uri_scheme_chars = ['a'..'z','0'..'9','+','-','.'];
+ uri_scheme_start_chars = alphalower;
+ langcode_chars = alphalower;
+ 
  uri_host_chars = ['a'..'z','0'..'9','.','-'];
 
-function mime_isvalidcontenttype(const s: shortstring): boolean;
+function mime_isvalidcontenttype(const s: string): boolean;
 var
  idx: integer;
  typestr: string;
@@ -283,7 +339,7 @@ var
  i: integer;
 begin
   urn_isvalidnid := false;
-  nid:=upstring(nid);
+  nid:=UpperCase(nid);
   for i:=1 to NID_MAX_REG do
     begin
       if nid = NID_IANA[i] then
@@ -305,7 +361,7 @@ begin
 end;
 
 
-function urn_isvalid(s: shortstring): boolean;
+function urn_isvalid(s: string): boolean;
 const
  URN_MAGIC = 'URN:';
 var
@@ -320,7 +376,7 @@ begin
    exit;
  urnid:=copy(s,1,4);
  delete(s,1,4);
- if upstring(urnid) <> URN_MAGIC then
+ if UpperCase(urnid) <> URN_MAGIC then
    exit;
  { verify the NID }
  idx:=pos(':',s);
@@ -370,7 +426,7 @@ end;
  begin
    { verify the NID }
    idx:=pos(':',path);
-   namespace:=lowstring(copy(path,1,idx-1));
+   namespace:=LowerCase(copy(path,1,idx-1));
    delete(path,1,idx);
    nss:=path;
    urn_pathsplit:=true;
@@ -387,65 +443,126 @@ begin
       urn_split := false;
       exit;
     end;
- urnidstr:=upstring(copy(urn,1,4));
+ urnidstr:=UpperCase(copy(urn,1,4));
  delete(urn,1,4);
  { verify the NID }
  idx:=pos(':',urn);
- nidstr:=upstring(copy(urn,1,idx-1));
+ nidstr:=UpperCase(copy(urn,1,idx-1));
  delete(urn,1,idx);
  nssstr:=urn;
  urn_split:=true;
 end;
 
 
-function langtag_split(const s: string; var primary,sub: string): boolean;
+
+function IsValidLangCode(const s: string): boolean;
+ var
+  i: integer;
+ Begin
+   isValidLangCode:=False;
+   { ISO 638 only allows 2 or characters language tags }
+   if not ((length(s)=2) or (length(s)=3)) then
+     exit;
+   for i:=1 to length(s) do
+     begin
+       if not (s[i] in langcode_chars) then
+          exit;
+     end;
+   IsValidLangCode:=True;
+ end;
+
+
+function langtag_split(const s: string; var primary,region: string): boolean;
 const
-  LANGTAG_MAX_LENGTH = 17; { 8 Alpha + 8 aLPHA + SEPARATOR }
-  PRIMARY_TAG_PRIVATE = 'x';
-  PRIMARY_TAG_RESERVED= 'i';
+  PRIMARY_TAG_PRIVATE = 'x-';
+  PRIMARY_TAG_RESERVED= 'i-';
 var
- index: integer;
+ tmpStr: string;
+ isInternal: string;
+ res: string;
  i: integer;
 begin
   primary:='';
-  sub:='';
+  region:='';
   langtag_split:=false;
-  if length(s) > LANGTAG_MAX_LENGTH then
-    exit;
-  { ISO 639 code, i, or x }
-  if (length(s) = 2) or (length(s) = 1) then
-    begin
-     primary:=lowstring(copy(s,1,length(s)));
-     if (primary = PRIMARY_TAG_PRIVATE) or
-         (primary = PRIMARY_TAG_RESERVED) or IsValidLangCode(primary) then
-         begin
-           langtag_split:=true;
-           exit;
-         end;
-
-    end
-  else
-    begin
-      { Is there a subtype separator ? }
-      index:=pos('-',s);
-      if index = 0 then
-         exit;
-      primary:=lowstring(copy(s,1,index-1));
-      sub:=copy(s,index+1,length(s));
-      if (primary = PRIMARY_TAG_PRIVATE) or
-         (primary = PRIMARY_TAG_RESERVED) or IsValidLangCode(primary) then
-        begin
-          { Seems to be valid - now check the subtag,
-            simply check if there is whitespace }
-          for i:=1 to length(sub) do
-            begin
-              if sub[i] in whitespace then
-                exit;
-            end;
-          langtag_split:=true;
+     
+  { Private/Reserved tag? }
+  isInternal:='';
+  tmpStr:=s;
+  if (pos(PRIMARY_TAG_PRIVATE,tmpStr)=1) or (pos(PRIMARY_TAG_RESERVED,tmpStr)=1) then
+    Begin
+      isInternal:=Copy(tmpStr,1,length(PRIMARY_TAG_PRIVATE));
+      delete(tmpStr,1,length(PRIMARY_TAG_PRIVATE));
+    end;
+  { Now get the primary tag value }
+  res:=StrToken(TmpStr,'-',False);
+  { If the primary tag value more than 8 characters, then it is surely invalid }
+  if (length(res) > 8) then
+    Begin
+      exit;
+    end;
+  res:=LowerCase(res);
+  if isInternal='' then
+    Begin
+      if not IsValidLangCode(res) then
+        Begin
           exit;
         end;
+    end
+  else
+    Begin
+      res:=isInternal+res;
     end;
+  { Nothing else! }
+  primary:=res;
+  {** We only have a primary language value }
+  if length(TmpStr) = 0 then
+    Begin
+      langtag_split:=True;
+      exit;
+    end;
+  {** Try to find the region }
+  while (length(TmpStr) > 0) do
+   Begin
+     {** Verify if we have a subtag, but verify if it is a private tag }
+     isInternal:='';
+      if (pos(PRIMARY_TAG_PRIVATE,tmpStr)=1) or (pos(PRIMARY_TAG_RESERVED,tmpStr)=1) then
+        Begin
+          isInternal:=Copy(tmpStr,1,length(PRIMARY_TAG_PRIVATE));
+          delete(tmpStr,1,length(PRIMARY_TAG_PRIVATE));
+        end;
+      res:=StrToken(TmpStr,'-',False);
+      res:=trim(res);
+      { If we just an empty string, there is a problem! }
+       if (length(res) = 0) or (length(res) > 8) then
+         exit;
+      { 3 digihts, probably a region code }
+       if (length(res) = 3) then
+         begin
+            if  (res[1] in ['0'..'9']) and
+                (res[2] in ['0'..'9']) and
+                (res[3] in ['0'..'9']) then
+                  Begin
+                    region:=res;
+                    break;
+                  end;
+         end;
+
+       { If there are 2 characters, then this is the region code! }
+       if (length(res) = 2) then
+        Begin
+          { Verify if the values are valid }
+          { If 2 characters, only composed to alphabetic characters }
+             for i:=1 to length(res) do
+               Begin
+                if not (res[i] in ['A'..'Z','a'..'z']) then
+                   exit;
+               end;
+          region:=res;
+          break;
+        end;
+   end;
+  langtag_split:=True;         
 end;
 
 
@@ -460,19 +577,29 @@ end;
                             URI
 ***********************************************************************}
 
- {** Checks if the URL is conformant to the specification
-     defined in IETFC RFC 1738.
+ {** Checks if the URI is conformant to the specification defined in IETFC 
+     IETF RFC 3986.
      @param(scheme The scheme to check)
-     @returns(TRUE if the scheme is valid, or false if
-         the scheme has an invalid syntax).
+     @returns(True if the scheme is valid, or false if the scheme has 
+       an invalid syntax).
  }
  function uri_isvalidscheme(scheme: string): boolean;
  var
   i: integer;
  begin
-   scheme:=lowstring(scheme);
    uri_isvalidscheme:=false;
-   for i:=1 to length(scheme) do
+   scheme:=LowerCase(scheme);
+   if length(scheme) < 1 then
+     exit;
+   { Check the first character }
+   if not (scheme[1] in uri_scheme_start_chars) then
+      exit;
+   if length(scheme) = 1 then
+      begin
+        uri_isvalidscheme:=True;
+        exit;
+      end;
+   for i:=2 to length(scheme) do
      begin
        if not (scheme[i] in uri_scheme_chars) then
           exit;
@@ -484,7 +611,7 @@ end;
  var
   i: integer;
  begin
-   host:=lowstring(host);
+   host:=LowerCase(host);
    uri_isvalidhost:=false;
    for i:=1 to length(host) do
      begin
@@ -495,7 +622,7 @@ end;
  end;
 
 
- function uri_split(url: string; var scheme,
+ function uri_split(uri: string; var scheme,
    authority,path, query: string): boolean;
  var
   idx: integer;
@@ -512,60 +639,60 @@ end;
    present_path:=false;
    present_authority:=false;
    { Verify if there is a scheme present }
-   idx:=pos(':',url);
+   idx:=pos(':',uri);
    { There is a scheme - extract it and check its validity }
    if idx > 1 then
      begin
-       scheme:=copy(url,1,idx-1);
-       delete(url,1,idx);
+       scheme:=copy(uri,1,idx-1);
+       delete(uri,1,idx);
        { Determine the scheme type }
-       scheme:=lowstring(scheme);
+       scheme:=LowerCase(scheme);
        uri_split:=uri_isvalidscheme(scheme);
        {********* Check presence of the authority **********}
-       if pos('//',url) = 1 then
+       if pos('//',uri) = 1 then
        begin
          { This seems to be valid! }
-         delete(url,1,2);
+         delete(uri,1,2);
          {** Extract the authority information }
-         for i:=1 to length(url) do
+         for i:=1 to length(uri) do
            begin
              { The authority component is terminated
                by one of these characters }
-             if url[i] in ['?','/'] then
+             if uri[i] in ['?','/'] then
                 break;
-             authority:=authority+url[i];
+             authority:=authority+uri[i];
            end;
          { delete the authority part of the URI }
-         delete(url,1,i-1);
+         delete(uri,1,i-1);
          present_authority:=true;
        end;
        {********* Check presence path **********}
-       idx:=pos(URI_PATH_SEPARATOR,url);
+       idx:=pos(URI_PATH_SEPARATOR,uri);
        if (idx = 1) then
        begin
-            path:=url[1];
+            path:=uri[1];
             {** Extract the path information }
-            for i:=2 to length(url) do
+            for i:=2 to length(uri) do
              begin
                { The path component is terminated
                  by a query separator or end of string }
-               if url[i] in ['?'] then
+               if uri[i] in ['?'] then
                   break;
-               path:=path+url[i];
+               path:=path+uri[i];
            end;
-           delete(url,1,i-1);
+           delete(uri,1,i-1);
            path:=trim(path);
            present_path:=true;
        end;
        {********* Check presence of query **********}
        { Query is only available if there is an     }
        { authority, or abs_path                     }
-       idx:=pos(URI_QUERY_SEPARATOR,url);
+       idx:=pos(URI_QUERY_SEPARATOR,uri);
        if (idx = 1) and (present_path or present_authority) then
          begin
            { Do not keep the query separator }
-           query:=copy(url,idx+1,length(url));
-           delete(url,idx,length(url));
+           query:=copy(uri,idx+1,length(uri));
+           delete(uri,idx,length(uri));
            { Copy the actual name of the resource to
              access from the directories }
            query:=trim(query);
@@ -575,8 +702,8 @@ end;
        if (present_path=false) and (present_authority=false) then
          begin
            { Keep the path separator }
-           path:=copy(url,idx,length(url));
-           delete(url,idx,length(url));
+           path:=copy(uri,idx,length(uri));
+           delete(uri,idx,length(uri));
            { Copy the actual name of the resource to
              access from the directories }
            path:=trim(path);
@@ -622,6 +749,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.12  2011/11/24 00:27:37  carl
+  + update to new architecture of dates and times, as well as removal of some duplicate files.
+
   Revision 1.11  2010/01/21 11:56:56  carl
    * Bugfix with uri_pathsplit when the path is empty, avoids runtime error.
 

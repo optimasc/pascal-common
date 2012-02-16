@@ -12,6 +12,22 @@
 
 }
 unit strsrch;
+{==== Compiler directives ===========================================}
+{$B-} { Full boolean evaluation          }
+{$I-} { IO Checking                      }
+{$F+} { FAR routine calls                }
+{$P-} { Implicit open strings            }
+{$T-} { Typed pointers                   }
+{$V+} { Strict VAR strings checking      }
+{$X+} { Extended syntax                  }
+{$IFNDEF TP}
+ {$H+} { Memory allocated strings        }
+ {$DEFINE ANSISTRINGS}
+ {$J+} { Writeable constants             }
+ {$METHODINFO OFF} 
+{$ENDIF}
+{====================================================================}
+
 
 
 interface
@@ -85,7 +101,7 @@ type
 implementation
 
 
-uses  unicode,strings;
+uses  unicode,sysutils;
 
 
 
@@ -252,6 +268,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.1  2007/01/03 01:40:29  carl
+   - Remove and rename for better delphi compatibility
+
   Revision 1.1  2006/12/06 21:13:56  ccodere
     + char based canonical analysis (unicode.pas)
     + Boyer-Moore search algorithm

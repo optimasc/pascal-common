@@ -1,9 +1,9 @@
 {
  ****************************************************************************
-    $Id: utils.pas,v 1.30 2011-11-24 00:27:39 carl Exp $
-    Copyright (c) 2004 by Carl Eric Codere
+    $Id: cmnutils.pas,v 1.1 2012-02-16 05:40:10 carl Exp $
+    Copyright (c) 2004-2011 by Carl Eric Codere
 
-    Common utilities
+    Common string, numeric and pchar related utilities
 
     See License.txt for more information on the licensing terms
     for this source code.
@@ -13,25 +13,26 @@
 
 
 {** @author(Carl Eric Codere)
-    @abstract(General utilities common to all platforms.)}
-Unit utils;
+    @abstract(General string utilities common to all platforms.)}
+    
+{==== Compiler directives ===========================================}
+{$B-} { Full boolean evaluation          }
+{$I-} { IO Checking                      }
+{$F+} { FAR routine calls                }
+{$P-} { Implicit open strings            }
+{$T-} { Typed pointers                   }
+{$V+} { Strict VAR strings checking      }
+{$X+} { Extended syntax                  }
+{$IFNDEF TP}
+ {$H+} { Memory allocated strings        }
+ {$DEFINE ANSISTRINGS}
+ {$J+} { Writeable constants             }
+ {$METHODINFO OFF} 
+{$ENDIF}
+{====================================================================}
+Unit cmnutils;
 
 Interface
- {==== Compiler directives ===========================================}
- {$X+} { Extended syntax }
- {$V-} { Strict VAR strings }
- {$P-} { Implicit open strings }
- {$T+} { Typed pointers }
- {$IFNDEF TP}
- {$J+} { Writeable constants }
- {$ENDIF}
- {====================================================================}
-
-{$IFNDEF TP}
-{$IFOPT H+}
-{$DEFINE ANSISTRINGS}
-{$ENDIF}
-{$ENDIF}
 
 uses cmntyp, objects;
  
@@ -47,50 +48,14 @@ CONST
   EXIT_ERROR = 1;
 
 
-  {** 
-     @abstract(Verifies the existence of a filename)
-     This routine verifies if the file named can be
-     opened or if it actually exists.
-     
-     Only works with the current active code page table.
-
-     @param(FName Name of the file to check)
-     @returns(FALSE if the file cannot be opened or if it does not exist)
-  }
-  Function AnsiFileExists(const FName : string): Boolean;
-  
-  {** 
-     @abstract(Verifies the existence of a directory)
-     This routine verifies if the directory named can be
-     opened or if it actually exists.
-     
-     Only works with the current active code page table.
-
-     @param DName Name of the directory to check
-     @returns FALSE if the directory cannot be opened or if it does not exist.
-  }
-  Function AnsiDirectoryExists(DName : string): Boolean;
-  
-
   {** @abstract(Change the endian of a 32-bit value) }
   Procedure SwapLong(var x : longword);
 
   {** @abstract(Change the endian of a 16-bit value) }
   Procedure SwapWord(var x : word);
-
-  {** @abstract(Convert a string to uppercase ASCII) 
-   
-      Converts a string containing ASCII characters
-      to a string in upper case ASCII characters. 
-  }
-  function UpString(s : string): string;
-
-  {** @abstract(Convert a string to lowercase ASCII) 
   
-      Converts a string containing ASCII characters
-      to a string in lower case ASCII characters.
-  }
-  function LowString(s : string): string;
+  
+  {-------------------------- String utilities --------------------------}
 
   {** @abstract(Trims and adds double quotes to the string if 
        it contains spaces).
@@ -107,12 +72,6 @@ CONST
   function RemoveDoubleQuotes(s: string): string;
 
 
-  {** @abstract(Generic stream error procedure)
-      Generic stream error procedure that
-      can be used to set @code(streamerror)
-  }
-  procedure StreamErrorProcedure(Var S: TStream);
-
 {** @abstract(Separates a string into its individual token representations)
 
     @param(Text Text string to tokenize, deletes itself)
@@ -121,9 +80,10 @@ CONST
     @returns(The current token)
 
     When Text returns an empty string, this indicates that all the
-    data has been parsed.
+    data has been parsed. If no separater exists within the string,
+    then the entire string is returned and Text is immediately empty.
 }
-function StrToken(var Text: String; Delimiter: Char; UseQuotes: boolean) : String;
+function StrToken(var Text: String; Delimiter: string; UseQuotes: boolean) : String;
 
 {** @abstract(Returns the next-line in a possible multiple line string)
 
@@ -137,11 +97,33 @@ function StrToken(var Text: String; Delimiter: Char; UseQuotes: boolean) : Strin
 function StrGetNextLine(var Text: String) : String;
 
 
+  function FillTo(s : string; tolength: integer): string;
+
+  function stringdup(const s : string) : PShortString;
+  procedure stringdispose(var p : pShortString);
+  
+
+  {** Converts a C style string (containing escape characters), to
+      a pascal style string. Returns the converted string. If there
+      is no error in the conversion, @code(code) will be equal to
+      zero.
+
+      @param(s String to convert)
+      @param(code Result of operation, 0 when there is no error)
+  }
+  function EscapeToPascal(const s:string; var code: integer): string;
+
+
+ {** @abstract(Trim removes leading and trailing spaces and control 
+     characters from the given string S)}
+{  function Trim(const S: string): string;  }
+
+
   {** @abstract(Remove all whitespace from the start of a string) }
-  function TrimLeft(const S: string): string;
+{  function TrimLeft(const S: string): string; }
 
   {** @abstract(Remove all whitespace from the end of a string) }
-  function TrimRight(const S: string): string;
+{  function TrimRight(const S: string): string; }
 
   {** @abstract(Convert a value to an ASCII hexadecimal representation) 
   
@@ -182,11 +164,6 @@ function StrGetNextLine(var Text: String) : String;
   }      
   function boolstr(val: boolean; cnt: byte): string; 
 
-  function CompareByte(buf1,buf2: pchar;len:longint):integer;
-   
- {** @abstract(Trim removes leading and trailing spaces and control 
-     characters from the given string S)}
-  function Trim(const S: string): string; 
   
   {** 
      @abstract(Format a string and print it out to the console)
@@ -212,20 +189,16 @@ function StrGetNextLine(var Text: String) : String;
   function Printf(const s : string; var Buf; size : word): string;
 
 
-  function FillTo(s : string; tolength: integer): string;
 
-  function stringdup(const s : string) : pShortstring;
-  procedure stringdispose(var p : pShortstring);
-
-  {** Converts a C style string (containing escape characters), to
-      a pascal style string. Returns the converted string. If there
-      is no error in the conversion, @code(code) will be equal to
-      zero.
-
-      @param(s String to convert)
-      @param(code Result of operation, 0 when there is no error)
+  {** @abstract(Generic stream error procedure)
+      Generic stream error procedure that
+      can be used to set @code(streamerror)
   }
-  function EscapeToPascal(const s:string; var code: integer): string;
+  procedure StreamErrorProcedure(Var S: TStream);
+
+
+  
+  
   {** Convert a decimal value represented by a string to its
       numerical value. If there is no error, @code(code) will be
       equal to zero.
@@ -274,14 +247,33 @@ function fillwithzero(s: string; newlength: integer): string;
   }
 function removenulls(const s: string): string;  
 
+
+
+const
+ WHITESPACE_PRESERVE = 1;
+ WHITESPACE_REPLACE  = 2;
+ WHITESPACE_COLLAPSE = 3;
+
+{** This routine is used to normalize the whitespace in a string. It can be
+    used in three different ways:
+    
+    If normtype is WHITESPACE_PRESERVE nothing is done on the string and it is returned as is,
+    if normtype is WHITESPACE_REPLACE all occurrences of #x9 (tab), #xA (line feed) and #xD
+    (carriage return) are replaced with #x20 (space).
+    if normtype is WHITESPACE_COLLAPSE after the processing implied by WHITESPACE_REPLACE, contiguous
+    sequences of #x20's are collapsed to a single #x20, and leading and trailing #x20's 
+    are removed.
+    
+    The values returned is a newly allocated string.
+*}
+function NormalizeString(instr: pchar; normtype: word): pchar;
+
+
 Const WhiteSpace = [' ',#10,#13,#9];
 
 Implementation
 
-uses dos
-     ;
-
-
+uses sysutils;
 
   Function RemoveUpToNull(const s: string): string;
    Begin
@@ -314,26 +306,6 @@ uses dos
   End;
 
 
-  function UpString(s : string): string;
-    var
-     i : integer;
-    Begin
-      for I:=1 to length(s) do
-        if s[i] in ['a'..'z'] then
-          s[i]:=chr(ord(s[i])-ord(#$20));
-      UpString := s;
-    End;
-
-  function LowString(s : string): string;
-    var
-     i : integer;
-    Begin
-      for I:=1 to length(s) do
-        if s[i] in ['A'..'Z'] then
-          s[i]:=chr(ord(s[i])+ord(#$20));
-      LowString := s;
-    End;
-    
     
   function CleanString(const s: string): string;
   var
@@ -524,70 +496,6 @@ uses dos
      Printf := LeftStr;
    End;
    
-function AnsiDirectoryExists(DName : string): Boolean;
-var
- searchinfo: SearchRec;
- Volume: boolean;
- status: integer;
-begin
-  Volume:=false;
-  AnsiDirectoryExists:=false;
-  { Special handling for volume }
-  if (length(dname) = 3) and (dname[2] = ':') then
-    begin
-      Volume:=true;
-      Dname:=dname+'*';
-    end
-  else
-    begin
-      if (length(Dname)>0) and (Dname[length(Dname)] = DirectorySeparator) then
-        delete(DName,length(DName),1);
-    end;
-  if not volume then
-     FindFirst(Dname,Directory,SearchInfo)
-  else
-     FindFirst(Dname,AnyFile,SearchInfo);
-  status:=DosError;   
-  if (status = 0) and (SearchInfo.attr and Directory = Directory) then
-    begin
-      AnsiDirectoryExists:=true;
-    end;
-  FindClose(SearchInfo);  
-end;
-
-    Function AnsiFileExists(const FName: String) : Boolean;
-     Var
-      F: File;
-      OldMode : Byte;
-      value: integer;
-     Begin
-{$IFOPT I+}
-{$DEFINE IO_ON}
-{$I-}
-{$ENDIF}
-       AnsiFileExists:=false;
-       if length(FName) = 0 then
-         exit;
-       value:=IOResult;
-       { Bug, would not detect read only files }
-       { therefore try in read only mode       }
-       OldMode := FileMode;
-       FileMode := fmOpenRead or fmShareDenyWrite;;
-       Assign(F,FName);
-       Reset(F,1);
-       FileMode := OldMode;
-       value:=IOResult;
-       If value <> 0 then
-         AnsiFileExists := FALSE
-       else
-       Begin
-         AnsiFileExists := TRUE;
-         Close(F);
-       End;
-{$IFDEF IO_ON}
-{$I+}
-{$ENDIF}
-     end;
 
  
  function removenulls(const s: string): string;  
@@ -1029,29 +937,6 @@ Begin
 end;
 
 
-function CompareByte(buf1,buf2: pchar;len:longint):integer;
-var
-  I : longint;
-begin
-  I:=0;
-  if (Len<>0) and (Buf1<>Buf2) then
-   begin
-     while (Buf1[I]=Buf2[I]) and (I<Len) do
-      inc(I);
-     if I=Len then  {No difference}
-      I:=0
-     else
-      begin
-        I:=ord(Buf1[I])-ord(Buf2[I]);
-        if I>0 then
-         I:=1
-        else
-         if I<0 then
-          I:=-1;
-      end;
-   end;
-  CompareByte:=I;
-end;
 
 function min(a,b, val: integer): integer;
 begin
@@ -1074,7 +959,6 @@ end;
 
 function StrGetNextLine(var Text: String) : String;
 var
- c: char;
  s: string;
  dosidx: integer;
  unixidx: integer;
@@ -1106,14 +990,14 @@ begin
 end;
 
 
-function StrToken(var Text: String; Delimiter: Char; UseQuotes: boolean) : String;
+function StrToken(var Text: String; Delimiter: String; UseQuotes: boolean) : String;
 var
  apos: integer;
  dqpos: integer;
- qoutechar: char;
  tmpstr: string;
  idx: integer;
 begin
+ StrToken:='';
  TmpStr:='';
  apos := Pos(Delimiter, Text);
  { Check if there are quotes }
@@ -1141,7 +1025,7 @@ begin
  if (apos > 0) then
  begin
    StrToken := TmpStr+Copy(Text, 1, apos - 1);
-   Delete(Text, 1, apos);
+   Delete(Text, 1, apos - 1 + length(Delimiter));
  end
  else
   begin
@@ -1151,11 +1035,90 @@ begin
 end;
 
 
+function NormalizeString(instr: pchar; normtype: word): pchar;
+var
+ p,p1: pchar;
+ inlen: integer;
+ outidx: integer;
+ 
+ outlen: integer;
+ outstr: pchar;
+ i: integer;
+type
+ utf8char = ansichar;
+const
+ SPACE_CHARACTER = #32;
+begin
+ inlen:=strlen(instr);
+ { Do not forget the terminating null character }
+ Getmem(p, inlen+sizeof(utf8char));
+ if normtype = WHITESPACE_PRESERVE then
+   begin
+     NormalizeString:=strnew(instr);
+     exit;
+   end;
+ i:=0;
+ { We have here at least WHITESPACE_REPLACE }
+ outidx:=0;
+ while instr[i] <> #0 do
+   begin
+     if instr[i] in [#9,#10,#13] then
+        p[outidx]:=#$20
+     else   
+        p[outidx]:=instr[i];
+     inc(outidx);
+     inc(i);
+   end;
+ p[outidx]:=#0;
+ if normtype = WHITESPACE_REPLACE then
+   begin
+     { Add one more byte for the null character }
+     outlen:=strlen(p)+sizeof(utf8char);
+     getmem(outstr,outlen);
+     move(p^,outstr^,outlen);
+     freemem(p,inlen);
+     NormalizeString:=outstr;
+     exit;
+   end;
+ i:=0;
+ outidx:=0;
+ if normtype = WHITESPACE_COLLAPSE then
+   begin
+    getmem(p1,inlen);       
+    while p[i] <> #0 do
+     begin
+       if p[i] = SPACE_CHARACTER then
+         begin
+           inc(i);
+           p1[outidx]:=SPACE_CHARACTER;
+           while p[i] = SPACE_CHARACTER do
+             inc(i);
+         end
+       else
+         begin
+          p1[outidx]:=p[i];
+          inc(i);
+         end;
+       inc(outidx);
+     end; { end while }
+     p1[outidx]:=#0;
+     { Add one more byte for the null character }
+     outlen:=strlen(p1)+sizeof(utf8char);
+     getmem(outstr,outlen);
+     move(p1^,outstr^,outlen);
+     freemem(p1,inlen);
+     NormalizeString:=outstr;
+     exit;
+   end;
+end;
 
 
 end.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.30  2011/11/24 00:27:39  carl
+  + update to new architecture of dates and times, as well as removal of some duplicate files.
+
   Revision 1.29  2011/04/12 00:27:45  carl
   + Added realstr routine to convert floating point values to a string representation.
 

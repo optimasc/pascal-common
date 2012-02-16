@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: iso3166.pas,v 1.5 2011-11-24 00:27:38 carl Exp $
+    $Id: iso3166.pas,v 1.6 2012-02-16 05:40:08 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Country code unit
@@ -17,18 +17,37 @@
     This unit is used to check the country codes
     as well as return information on the country,
     according to ISO 3166.
-    
+
     The lists were converted from the semicolon delimited
     version available here:
-    http://www.iso.org/iso/en/prods-services/iso3166ma/    
-    
+    http://www.iso.org/iso/en/prods-services/iso3166ma/
+
     The version used is based on version of 2004-04-26.
+
+    The unit is compiled with shortstring types instead of string
+    types for optimization purposes.
 }
+{==== Compiler directives ===========================================}
+{$B-} { Full boolean evaluation          }
+{$I-} { IO Checking                      }
+{$F+} { FAR routine calls                }
+{$P-} { Implicit open strings            }
+{$T-} { Typed pointers                   }
+{$V+} { Strict VAR strings checking      }
+{$X-} { Extended syntax                  }
+{$IFNDEF TP}
+ {$H-} { Memory allocated strings        }
+ {$DEFINE ANSISTRINGS}
+ {$J+} { Writeable constants             }
+ {$METHODINFO OFF} 
+{$ENDIF}
+{====================================================================}
 unit iso3166;
+
 
 interface
 
-uses cmntyp, utils;
+uses cmntyp,sysutils;
 
 
 {** @abstract(Verifies if the 2 letter country code is valid)
@@ -122,7 +141,7 @@ begin
   isvalidcountrycode:=false;
   if length(s) > 2 then
     exit;
-  s:=upstring(s);
+  s:=UpperCase(s);
   for i:=1 to MAX_ENTRIES do
     begin
       if CountryInfo[i].code = s then
@@ -140,7 +159,7 @@ begin
   getcountryname_fr:='';
   if length(s) > 2 then
     exit;
-  s:=upstring(s);  
+  s:=UpperCase(s);  
   for i:=1 to MAX_ENTRIES do
     begin
       if CountryInfo[i].code = s then
@@ -158,7 +177,7 @@ begin
   getcountryname_en:='';
   if length(s) > 2 then
     exit;
-  s:=upstring(s);  
+  s:=UpperCase(s);  
   for i:=1 to MAX_ENTRIES do
     begin
       if CountryInfo[i].code = s then
@@ -173,6 +192,9 @@ end;
 end.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.5  2011/11/24 00:27:38  carl
+  + update to new architecture of dates and times, as well as removal of some duplicate files.
+
   Revision 1.4  2006/08/31 03:05:36  carl
   + Better documentation
 

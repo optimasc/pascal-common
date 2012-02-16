@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: extdos.pas,v 1.9 2011-11-24 00:27:37 carl Exp $
+    $Id: extdos.pas,v 1.10 2012-02-16 05:40:08 carl Exp $
     Copyright (c) 2004-2006 by Carl Eric Codere
 
     Extended Operating system routines
@@ -30,7 +30,8 @@ interface
 
 uses 
    cmntyp,
-   utils,
+   sysutils,
+   cmnutils,
    unicode,
    dateutil,
 {$IFDEF WIN32}
@@ -50,7 +51,7 @@ const
   EXTDOS_STATUS_OK = 0;
   {** Return code: This routine is unsupported on this operating system. }
   EXTDOS_STATUS_UNSUPPORTED = -1;
-  {** Return code: Conversion operation from native date to TJulianDateTime was invalid. }
+  {** Return code: Conversion operation from native date to TJuliandDate was invalid. }
   EXTDOS_STATUS_DATE_CONVERT_ERROR = -2;
   {** Return code: Filesystem does not support this date }
   EXTDOS_STATUS_DATE_UNSUPPORTED = -3;
@@ -113,11 +114,11 @@ type
     {** Owner (User name) of the resource on disk }
     owner: utf8string;
     {** Creation time of the resource }
-    ctime: TJulianDateTime;
+    ctime: TJuliandDate;
     {** Last modification time of the resource }
-    mtime: TJulianDateTime;
+    mtime: TJuliandDate;
     {** Last access time of the resource }
-    atime: TJulianDateTime;
+    atime: TJuliandDate;
     {** Number of links to resource }
     nlink: integer;
     {** Attributes for this file }
@@ -181,7 +182,7 @@ function GetFileOwner(fname: putf8char): utf8string;
    @param(atime The file access date in UTC/GMT format)
    @returns(0 on success, otherwise an error code)
 }
-function GetFileATime(fname: putf8char; var atime: TJulianDateTime): integer;
+function GetFileATime(fname: putf8char; var atime: TJuliandDate): integer;
 
 {** @abstract(Returns the last modification date and time of a file) 
 
@@ -194,7 +195,7 @@ function GetFileATime(fname: putf8char; var atime: TJulianDateTime): integer;
    @param(atime The file modification date in UTC/GMT format)
    @returns(0 on success, otherwise an error code)
 }
-function GetFileMTime(fname: putf8char; var mtime: TJulianDateTime): integer;
+function GetFileMTime(fname: putf8char; var mtime: TJuliandDate): integer;
 
 {** @abstract(Returns the creation date and time of a file) 
 
@@ -207,7 +208,7 @@ function GetFileMTime(fname: putf8char; var mtime: TJulianDateTime): integer;
    @param(atime The file creation date in UTC/GMT format)
    @returns(0 on success, otherwise an error code)
 }
-function GetFileCTime(fname: putf8char; var ctime: TJulianDateTime): integer;
+function GetFileCTime(fname: putf8char; var ctime: TJuliandDate): integer;
 
 {** @abstract(Returns the size of a file).
 
@@ -286,7 +287,7 @@ function SetCurrentDirectory(const DirStr: utf8string): boolean;
    @param(atime The new access time)
    @returns(0 on success, otherwise an error code)
 }
-function SetFileATime(fname: putf8char; newatime: TJulianDateTime): integer;
+function SetFileATime(fname: putf8char; newatime: TJuliandDate): integer;
 
 {** @abstract(Change the modification time of a file) 
 
@@ -301,7 +302,7 @@ function SetFileATime(fname: putf8char; newatime: TJulianDateTime): integer;
    @param(mtime The new modification time)
    @returns(0 on success, otherwise an error code)
 }
-function SetFileMTime(fname: putf8char; newmtime: TJulianDateTime): integer;
+function SetFileMTime(fname: putf8char; newmtime: TJuliandDate): integer;
 
 {** @abstract(Change the creation time of a file) 
 
@@ -316,7 +317,7 @@ function SetFileMTime(fname: putf8char; newmtime: TJulianDateTime): integer;
    @param(mtime The new modification time)
    @returns(0 on success, otherwise an error code)
 }
-function SetFileCTime(fname: putf8char; newctime: TJulianDateTime): integer;
+function SetFileCTime(fname: putf8char; newctime: TJuliandDate): integer;
 
 {** @abstract(Searches the specified directory for the first entry
      matching the specified file name and set of attributes.)
@@ -417,6 +418,9 @@ implementation
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.9  2011/11/24 00:27:37  carl
+  + update to new architecture of dates and times, as well as removal of some duplicate files.
+
   Revision 1.8  2006/10/16 22:21:51  carl
   + extdos Initial Linux support
 

@@ -10,19 +10,19 @@ type
   end;
 
 
-{** Returns Year, Month, Day, Hour, Minute, Second, and Millisecond values for a TJulianDateTime.
+{** Returns Year, Month, Day, Hour, Minute, Second, and Millisecond values for a TJulianDate.
     This routine uses extended format which permits negative years.
 }
-{procedure DecodeDateTimeExt(const AValue: TJulianDateTime; var Year, Month, Day, Hour, Minute, Second, MilliSecond: Integer);}
+{procedure DecodeDateTimeExt(const AValue: TJulianDate; var Year, Month, Day, Hour, Minute, Second, MilliSecond: Integer);}
 
-{** Returns Year, Month, and Day values for a TJulianDateTime value. This is
+{** Returns Year, Month, and Day values for a TJulianDate value. This is
     the same as DecodeDateExt except that it also permits years in
     the negative range.
 }
-{procedure DecodeDateExt(Date: TJulianDateTime; var Year, Month, Day: integer);}
+{procedure DecodeDateExt(Date: TJulianDate; var Year, Month, Day: integer);}
 
 
-{** @abstract(Converts a string to a TJulianDateTime value with a Boolean success code.)
+{** @abstract(Converts a string to a TJulianDate value with a Boolean success code.)
 
     This routine also gives information if the value was successfully
     converted to UTC time or not (if no timezone information was
@@ -44,7 +44,30 @@ type
     will be set to 1 to be legal.
 
 }
-function TryStrToDateTimeExt(const S: string; var Value: TJulianDateTime; var UTC: boolean) : Boolean;
+function TryStrToDateTimeExt(const S: string; var Value: TJulianDate; var UTC: boolean) : Boolean;
+
+
+{** @abstract(Converts a string to a TEncodeDateTime value with a Boolean success code.)
+
+    Supported formats:
+    1) Format of Complete Representation for calendar dates
+    (as specified in ISO 8601), which should include the Time
+    designator character.
+    3) Format: 'YYYY-MM-DD HH:mm:ss [GMT|UTC|UT]'
+    4) Openoffice 1.1.x HTML date format: 'YYYYMMDD;HHmmssuu'
+    5) Adobe PDF 'D:YYYYMMDDHHMMSSOHH'mm'' format
+    6) RFC 822/2822 Date and time format.
+
+    In the case where the date does not contain the full representation,
+    the fields will be set to values indicating that they are undefined
+    (see TEncodedDateTime for more information)
+
+}
+function TryStrToEncodedDateTimeExt(const S: string; var dt: TEncodedDateTime) : Boolean;
+
+{** @abstract(Converts a TEncodedDateTime value to an ISO 8601 complete string representation) }
+function EncodedDateTimeToStrExt(DT: TEncodedDateTime): string;
+
 
 {** This routine encodes a complete date and time to its string
     representation. The encoded string conforms to the ISO 8601
@@ -72,14 +95,14 @@ function TryEncodeDateAndTimeToStr(const Year, Month, Day, Hour, Minute, Second,
   integer; UTC: boolean):string;}
 
 
-{** @abstract(Converts a TJulianDateTime value to a string in extended ISO 8601 date and time representation.)
+{** @abstract(Converts a TJulianDate value to a string in extended ISO 8601 date and time representation.)
 
     Returns the extended format representation of a date and time as recommended
     by ISO 8601 (Gregorian Calendar). The extended format ISO 8601 representation
     is of the form: YYYY-MM-DDThh:mm:ss[Z]. Sets the timezone designator
     if required.
 }
-function DateTimeToStrExt(DateTime: TJulianDateTime; utc: boolean): string; 
+function DateTimeToStrExt(DateTime: TJulianDate; utc: boolean): string; 
 
 
 {** @abstract(Returns the current date set in the operating system) }
@@ -92,32 +115,35 @@ procedure GetCurrentDate(var Year,Month,Day,DayOfWeek: integer);
 }
 procedure GetCurrentTime(var Hour,Minute,Second,Sec100: integer);
 
-{** @abstract(Converts a UNIX time_t to a TJulianDateTime)
+{** @abstract(Converts a UNIX time_t to a TJulianDate)
 
   This routine converts a UNIX time_t format time into a
-  TJulianDateTime format. The time_t is always according to UTC,
+  TJulianDate format. The time_t is always according to UTC,
   so the UTC value shall always return TRUE.
   
   On Turbo Pascal and Virtual Pascal this routine shall fail
   with all values greater that represent years greater than
   2038.
 }
-function TryUNIXToDateTimeExt(unixtime: big_integer_t; var DateTime: TJulianDateTime; var UTC: boolean): boolean;
+function TryUNIXToDateTimeExt(unixtime: big_integer_t; var DateTime: TJulianDate; var UTC: boolean): boolean;
 
-{** @abstract(Converts a Win32 FILETIME to a TJulianDateTime)
+{** @abstract(Converts a Win32 FILETIME to a TJulianDate)
 
   This routine converts a 64-bit FILETIME format time into a
-  TJulianDateTime format. The value is always according to UTC,
+  TJulianDate format. The value is always according to UTC,
   so the UTC value shall always return TRUE. Because floating
   point values are used, the precision of the returned timestamp
   will be +/- 2 seconds.
 
 }
-function TryFileTimeToDateTimeExt(ftime: tfiletime; var DateTime: TJulianDateTime; var UTC: boolean): boolean;
+function TryFileTimeToDateTimeExt(ftime: tfiletime; var DateTime: TJulianDate; var UTC: boolean): boolean;
 
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.5  2011/11/24 00:27:37  carl
+  + update to new architecture of dates and times, as well as removal of some duplicate files.
+
   Revision 1.4  2006/08/31 03:08:41  carl
   + Better documentation
 

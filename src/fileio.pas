@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: fileio.pas,v 1.9 2011-11-24 00:27:37 carl Exp $
+    $Id: fileio.pas,v 1.10 2012-02-16 05:40:08 carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Generic portable file I/O routines with debug support.
@@ -35,7 +35,7 @@ unit fileio;
 
 interface
 
-uses cmntyp;
+uses sysutils,cmntyp,cmnutils;
   
 {** @abstract(Assign a filename to a file)
 
@@ -126,7 +126,7 @@ procedure FileTruncate(var F: file);
 
 implementation
 
-uses dos,collects,utils,strings;
+uses dos,collects;
 
 {$IFDEF DEBUG}
   var OpenedFileCollection: TExtendedSortedStringCollection;
@@ -347,6 +347,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.9  2011/11/24 00:27:37  carl
+  + update to new architecture of dates and times, as well as removal of some duplicate files.
+
   Revision 1.8  2007/02/03 21:04:34  carl
    Workaround for Delphi 7 RTL bug
 

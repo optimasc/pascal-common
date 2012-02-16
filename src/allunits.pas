@@ -30,7 +30,7 @@ uses
   extdos,
 {$ENDIF}  
 {$ENDIF}
-  utils;
+  cmnutils;
   
 implementation  
   
