@@ -1,7 +1,5 @@
 
 
-uses strings;
-
 const
 
 
@@ -305,7 +303,7 @@ var
  i: integer;
 begin
   IsDevice:=false;
-  s:=Upstring(s);
+  s:=UpperCase(s);
   for i:=1 to MAX_DEVICE_NAMES do
     begin
       if DeviceList[i] =s then
@@ -375,7 +373,7 @@ end;
 {**************************************************************************}
 
 
-function getfileatime(fname: putf8char; var atime: TJulianDateTime): integer;
+function getfileatime(fname: putf8char; var atime: TJuliandDate): integer;
 var
   ResultVal: BOOL;
 {$IFNDEF FPC}  
@@ -445,7 +443,7 @@ begin
 end;
 
 
-function getfilectime(fname: putf8char; var ctime: TJulianDateTime): integer;
+function getfilectime(fname: putf8char; var ctime: TJuliandDate): integer;
 var
   ResultVal: BOOL;
 {$IFNDEF FPC}  
@@ -500,7 +498,7 @@ begin
   FileClose(F);
 end;
 
-function getfilemtime(fname: putf8char; var mtime: TJulianDateTime): integer;
+function getfilemtime(fname: putf8char; var mtime: TJuliandDate): integer;
 var
   ResultVal: BOOL;
 {$IFDEF FPC}
@@ -609,7 +607,7 @@ begin
                 end;
               s:=ucs4strpastoUTF8(pucs4char(@FinalUserName[0]));
               { EVERYONE indicates unknown owner }
-              if upstring(s) = 'EVERYONE' then
+              if UpperCase(s) = 'EVERYONE' then
                s:='';
               getfileowner:=s;
             end;
@@ -626,7 +624,7 @@ function SetFileTime(hFile: THandle;
         external 'kernel32.dll' name 'SetFileTime';
 
 
-function setfileatime(fname: putf8char; newatime: TJulianDateTime): integer;
+function setfileatime(fname: putf8char; newatime: TJuliandDate): integer;
 const
   FILE_WRITE_ATTRIBUTES = $100;
 var
@@ -693,7 +691,7 @@ begin
 end;
 
 
-function setfilemtime(fname: putf8char; newmtime: TJulianDateTime): integer;
+function setfilemtime(fname: putf8char; newmtime: TJuliandDate): integer;
 var
   ResultVal: BOOL;
   LastWriteTime: FILETIME;
@@ -746,7 +744,7 @@ begin
 end;
 
 
-function setfilectime(fname: putf8char; newctime: TJulianDateTime): integer;
+function setfilectime(fname: putf8char; newctime: TJuliandDate): integer;
 var
   ResultVal: BOOL;
   CreationTime: FILETIME;
@@ -1425,6 +1423,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.17  2011/11/24 00:27:40  carl
+  + update to new architecture of dates and times, as well as removal of some duplicate files.
+
   Revision 1.16  2010/01/21 11:56:09  carl
    * Bugfix with DirectoryExists and root directory for volumes
 
