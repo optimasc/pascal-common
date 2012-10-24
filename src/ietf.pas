@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: ietf.pas,v 1.13 2012-02-16 05:40:08 carl Exp $
+    $Id: ietf.pas,v 1.14 2012-10-24 15:17:59 Carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Unicode related routines
@@ -164,6 +164,19 @@ function urn_isvalidnid(nid: string): boolean;
 }
 function urn_split(urn:string; var urnidstr,nidstr,nssstr: string): boolean;
 
+{** @abstract(Creates an URN string from its namespace identifier and value)
+
+    The routine validates that the namespace is actually valid and
+    registered or is a private namespace.
+
+    @param(nidstr The actual namespace identifier)
+    @param(nss The namespace specific string)
+    @param(urn The URN string including the urn prefix, always constructed
+       even if the namespace identifier is invalid)
+    @returns(true if there was success in creating the string)
+}     
+function urn_create(const nidstr, nss: string; var urn: string): boolean;
+
 {** Splits a path string returned by uri_split into its
     individual components for URN. }
 function urn_pathsplit(path: string; var namespace, nss: string): boolean;
@@ -191,7 +204,10 @@ const
  control    = [#00..#$1F,#$7F];
 
 const
- NID_MAX_REG = 33;
+
+ URN_MAGIC = 'URN:';
+
+ NID_MAX_REG = 52;
  NID_IANA: array[1..NID_MAX_REG] of string[16] =
  (
   'IETF',
@@ -215,12 +231,31 @@ const
   'UCI',
   'CLEI',
   'TVA',
-  'FDC', 
-  'ISAN', 
-  'NZL', 
-  'OMA', 
-  'IVIS', 
+  'FDC',
+  'ISAN',
+  'NZL',
+  'OMA',
+  'IVIS',
   'S1000D',
+  'NFC',
+  'ISO',
+  'XMPP',
+  'GEANT',
+  'SERVICE',
+  'SMPTE',
+  'EPC',
+  'EPCGLOBAL',
+  'CGI',
+  'OGC',
+  'EBU',
+  '3GPP',
+  'DVB',
+  'NENA',
+  'CABLELABS',
+  'DGIWG',
+  'SCHAC',
+  'OGF',
+  'UCODE',
   'URN-1',
   'URN-2',
   'URN-3',
@@ -362,8 +397,6 @@ end;
 
 
 function urn_isvalid(s: string): boolean;
-const
- URN_MAGIC = 'URN:';
 var
  urnid: string;
  nidstr: string;
@@ -432,6 +465,18 @@ end;
    urn_pathsplit:=true;
  end;
 
+function urn_create(const nidstr, nss: string; var urn: string): boolean;
+ var
+   b: boolean;
+ Begin
+   urn_create := False;
+   urn:=URN_MAGIC;
+   b:=urn_isvalidnid(nidstr);
+   urn := urn + nidstr + ':' + nss;
+   if b then
+     b := urn_isvalid(urn);
+   urn_create := b;  
+ end;
 
 
 function urn_split(urn:string; var urnidstr,nidstr,nssstr: string): boolean;
@@ -749,6 +794,13 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.13  2012/02/16 05:40:08  carl
+  + Added standard compiler switches to all units
+  - Replace strings by sysutils
+  + Added Latin <-> UTF-8 conversion routines
+  + Updated IETF Locale parsing routines with new standard.
+  + Updated country codes
+
   Revision 1.12  2011/11/24 00:27:37  carl
   + update to new architecture of dates and times, as well as removal of some duplicate files.
 
