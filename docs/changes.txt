@@ -1,11 +1,17 @@
 History of major changes in the releases:
 
-1.5.0:
+2.0.0:
     + DEFAULT_FALLBACK_CHAR is used when unicode conversion produces
       an unknown character in a local character set (The default
       character is ? which is consistent with most libraries).
     + Added Properties collection in collects unit (TKeyValueCollection)
     + CRC unit now support open array values
+    * crc unit renamed to sums to avoid conflicts in lazarus
+    * ctypes removed to make the code more portable.
+    - removed daputils,gpautils,fpautils,tpautils and replaced with
+      cmntyp.
+    * renamed TDateTime of dateutil as TJuliandDate 
+    + Updated iso639 with new listing (the last one was from 2004)
 
 1.4.8:
     * Bugfix of http_pathsplit, would crash if path input parameter
