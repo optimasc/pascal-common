@@ -1,5 +1,5 @@
 {
-    $Id: dateutil.pas,v 1.14 2012-02-16 05:40:07 carl Exp $
+    $Id: dateutil.pas,v 1.15 2012-10-24 15:16:10 Carl Exp $
     Copyright (c) 2004 by Carl Eric Codere (Optima SC Inc.)
 
     Date and time utility routines
@@ -530,6 +530,28 @@ begin
     end;
   converttoisotime:=outstr;
 end;
+
+
+{ Tries converting a time string to an ISO date string
+  returns converted string if conversion had success,
+  otherwise returns an unmodified string.
+}
+function converttoisodate(datestr: string): string;
+var
+ i,idx: integer;
+ outstr: string;
+ alldigits: boolean;
+begin
+  datestr:=UpperCase(trim(datestr));
+  outstr:=datestr;
+  for i:=1 to length(outstr) do
+    Begin
+      if outstr[i] in [' ',':'] then
+        outstr[i]:='-';
+    end;
+  converttoisodate:=outstr;
+end;
+
 
 { Parse an ISO 8601 time string }
 function parsetimeISO(timestr: string; var hourval,minval, secval: word;
@@ -1567,6 +1589,13 @@ end;
 end.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.14  2012/02/16 05:40:07  carl
+  + Added standard compiler switches to all units
+  - Replace strings by sysutils
+  + Added Latin <-> UTF-8 conversion routines
+  + Updated IETF Locale parsing routines with new standard.
+  + Updated country codes
+
   Revision 1.13  2011/11/24 00:27:37  carl
   + update to new architecture of dates and times, as well as removal of some duplicate files.
 

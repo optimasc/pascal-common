@@ -346,7 +346,8 @@ begin
     begin
       datestring:=copy(outs,1,idx-1);
       timestring:=copy(outs,idx+1,length(outs));
-     timestring:=converttoisotime(timestring);
+      timestring:=converttoisotime(timestring);
+      datestring:=converttoisodate(datestring);
       if not parsetimeISO(timestring,hourval,minval,secval,offsethourval,offsetminval,utc) then
          error:=true;
       if not parsedateISO(datestring,yearval,monthval,dayval) then
@@ -630,6 +631,13 @@ end;
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.5  2012/02/16 05:40:07  carl
+  + Added standard compiler switches to all units
+  - Replace strings by sysutils
+  + Added Latin <-> UTF-8 conversion routines
+  + Updated IETF Locale parsing routines with new standard.
+  + Updated country codes
+
   Revision 1.4  2011/11/24 00:27:36  carl
   + update to new architecture of dates and times, as well as removal of some duplicate files.
 
