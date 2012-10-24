@@ -1,6 +1,6 @@
 
 
-uses strings,dos,dateutil,go32,unicode;
+uses sysutils,dos,dateutil,go32,unicode;
 
 const
 
@@ -159,7 +159,7 @@ end;
 {**************************************************************************}
 
 
-function getfileatime(fname: putf8char; var atime: TJulianDateTime): integer;
+function getfileatime(fname: putf8char; var atime: TJulianDate): integer;
 var
   F: File;
   status: integer;
@@ -193,7 +193,7 @@ begin
   FileClose(F);
 end;
 
-function getfilectime(fname: putf8char; var ctime: TJulianDateTime): integer;
+function getfilectime(fname: putf8char; var ctime: TJulianDate): integer;
 var
   F: File;
   status: integer;
@@ -227,7 +227,7 @@ begin
   FileClose(F);
 end;
 
-function getfilemtime(fname: putf8char; var mtime: TJulianDateTime): integer;
+function getfilemtime(fname: putf8char; var mtime: TJulianDate): integer;
 var
   F: File;
   status: integer;
@@ -261,7 +261,7 @@ begin
   getfileowner:='';
 end;
 
-function setfileatime(fname: putf8char; newatime: TJulianDateTime): integer;
+function setfileatime(fname: putf8char; newatime: TJulianDate): integer;
 const
   FILE_WRITE_ATTRIBUTES = $100;
 var
@@ -335,7 +335,7 @@ begin
 end;
 
 
-function setfilemtime(fname: putf8char; newmtime: TJulianDateTime): integer;
+function setfilemtime(fname: putf8char; newmtime: TJulianDate): integer;
 var
   ResultVal: BOOL;
   LastWriteTime: FILETIME;
@@ -387,7 +387,7 @@ begin
 end;
 
 
-function setfilectime(fname: putf8char; newctime: TJulianDateTime): integer;
+function setfilectime(fname: putf8char; newctime: TJulianDate): integer;
 var
   ResultVal: BOOL;
   CreationTime: FILETIME;
@@ -889,6 +889,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.2  2011/11/24 00:27:40  carl
+  + update to new architecture of dates and times, as well as removal of some duplicate files.
+
   Revision 1.1  2006/06/17 18:09:14  carl
   + Initial revision
 
