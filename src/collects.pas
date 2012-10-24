@@ -1,5 +1,5 @@
 {
-    $Id: collects.pas,v 1.10 2012-02-16 05:38:27 carl Exp $
+    $Id: collects.pas,v 1.11 2012-10-24 15:13:12 Carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Collections (Object style)
@@ -152,6 +152,11 @@ TYPE
   TLongintCollection = object(TExtendedCollection)
     procedure FreeItem(Item: pointer); virtual;
   end;
+
+
+  TObjectCollection = Object(TExtendedCollection)
+    procedure FreeItem(Item: pointer); virtual;
+  end;
   
   
   const KEY_NO_FASTKEY = high(word);
@@ -183,7 +188,7 @@ TYPE
       Destructor done; virtual;
       
       {** Returns the value to which the specified key is mapped in this 
-          hashtable. 
+          hashtable.
 
           @param(key A key in the hashtable)
           @returns(the value to which the key is mapped in this hashtable; 
@@ -215,7 +220,7 @@ TYPE
       {** Removes the key (and its corresponding value) from this hashtable. 
           This method does nothing if the key is not in the hashtable. }
       Function remove(key: string): Boolean;
-      
+
       {** Returns the number of elements in this hashtable }
       Function size: integer;
       
@@ -249,6 +254,26 @@ TYPE
     Function toString: string; virtual;
   end;
   
+  
+  
+  PKeyValueItem = ^TKeyValueItem;
+  {** @abstract(Simple item that stores a key-value pair for use in THashTable/TCollection.)
+
+      The pchar is simply stored and the value is disposed when the object is freed.
+  }
+  TKeyValueItem = Object(TCollectionItem)
+  public
+    Constructor Init(k: shortstring; p: pchar);
+    Destructor Done; virtual;
+    Function toString: string; virtual;
+    Function getKey: string;
+    Function getValue: pchar;
+  private
+    key: pshortstring;
+    value: pchar;
+  end;
+
+  
   PStringItem = ^TStringItem;
   {** @abstract(Simple String item that stores strings for use in THashTable/TCollection.) }
   TStringItem = Object(TCollectionItem)
@@ -273,25 +298,6 @@ TYPE
   private
     value: pchar;
   end;
-  
-  
-  PKeyValueItem = ^TKeyValueItem;
-  {** @abstract(Simple item that stores a key-value pair for use in THashTable/TCollection.)
-
-      The pchar is simply stored and the value is disposed when the object is freed.
-  }
-  TKeyValueItem = Object(TCollectionItem)
-  public
-    Constructor Init(k: shortstring; p: pchar);
-    Destructor Done; virtual;
-    Function toString: string; virtual;
-    Function getKey: string;
-    Function getValue: pchar;
-  private
-    key: pshortstring;
-    value: pchar;
-  end;
-  
 
 
 Implementation
@@ -308,6 +314,14 @@ type
     data: pointer;
   end;
 
+    procedure TObjectCollection.FreeItem(Item: pointer);
+     var
+      O: PObject;
+     Begin
+       O:=PObject(Item);
+       if assigned(O) then
+         Dispose(O, Done);
+     end;
 
      procedure TLongintCollection.FreeItem(Item: pointer);
      begin
@@ -1108,6 +1122,9 @@ end;
 End.
 {
   $Log: not supported by cvs2svn $
+  Revision 1.10  2012/02/16 05:38:27  carl
+  + Added key-value collection type
+
   Revision 1.9  2011/11/24 00:27:36  carl
   + update to new architecture of dates and times, as well as removal of some duplicate files.
 
