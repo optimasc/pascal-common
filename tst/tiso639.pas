@@ -8,10 +8,9 @@ procedure test_unit;
 implementation
 
 uses
+  sysutils,
   cmntyp,
-  iso639,
-  utils
-  ;
+  iso639;
 
 
   procedure testiso639;
@@ -36,27 +35,30 @@ uses
     if s <> '' then
         RunError(255);
     s:=getlangname_fr('en');
-    if upstring(s) <> 'ANGLAIS' then
+    if UpperCase(s) <> 'ANGLAIS' then
         RunError(255);
     s:=getlangname_fr('english');
-    if upstring(s) <> '' then
+    if UpperCase(s) <> '' then
         RunError(255);
     s:=getlangname_fr('xal');
-    if upstring(s) <> 'KALMOUK' then
+    if UpperCase(s) <> 'KALMOUK' then
         RunError(255);
     { Verify english decoding }
     s:=getlangname_en('');
     if s <> '' then
         RunError(255);
     s:=getlangname_en('fr');
-    if upstring(s) <> 'FRENCH' then
+    if UpperCase(s) <> 'FRENCH' then
         RunError(255);
     s:=getlangname_en('xal');
-    if upstring(s) <> 'KALMYK' then
+    if UpperCase(s) <> 'KALMYK' then
         RunError(255);
     s:=getlangname_en('english');
-    if upstring(s) <> '' then
+    if UpperCase(s) <> '' then
         RunError(255);
+    s:=getlangname_en('zun');
+    if UpperCase(s)<>'ZUNI' then
+      RunError(255);
   end;
 
   procedure test_getlangcode;
