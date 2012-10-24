@@ -373,7 +373,7 @@ end;
 {**************************************************************************}
 
 
-function getfileatime(fname: putf8char; var atime: TJuliandDate): integer;
+function getfileatime(fname: putf8char; var atime: TJulianDate): integer;
 var
   ResultVal: BOOL;
 {$IFNDEF FPC}  
@@ -443,7 +443,7 @@ begin
 end;
 
 
-function getfilectime(fname: putf8char; var ctime: TJuliandDate): integer;
+function getfilectime(fname: putf8char; var ctime: TJulianDate): integer;
 var
   ResultVal: BOOL;
 {$IFNDEF FPC}  
@@ -498,7 +498,7 @@ begin
   FileClose(F);
 end;
 
-function getfilemtime(fname: putf8char; var mtime: TJuliandDate): integer;
+function getfilemtime(fname: putf8char; var mtime: TJulianDate): integer;
 var
   ResultVal: BOOL;
 {$IFDEF FPC}
@@ -624,7 +624,7 @@ function SetFileTime(hFile: THandle;
         external 'kernel32.dll' name 'SetFileTime';
 
 
-function setfileatime(fname: putf8char; newatime: TJuliandDate): integer;
+function setfileatime(fname: putf8char; newatime: TJulianDate): integer;
 const
   FILE_WRITE_ATTRIBUTES = $100;
 var
@@ -691,7 +691,7 @@ begin
 end;
 
 
-function setfilemtime(fname: putf8char; newmtime: TJuliandDate): integer;
+function setfilemtime(fname: putf8char; newmtime: TJulianDate): integer;
 var
   ResultVal: BOOL;
   LastWriteTime: FILETIME;
@@ -744,7 +744,7 @@ begin
 end;
 
 
-function setfilectime(fname: putf8char; newctime: TJuliandDate): integer;
+function setfilectime(fname: putf8char; newctime: TJulianDate): integer;
 var
   ResultVal: BOOL;
   CreationTime: FILETIME;
@@ -1423,6 +1423,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.18  2012/02/16 05:35:49  carl
+  - remove strings unit
+
   Revision 1.17  2011/11/24 00:27:40  carl
   + update to new architecture of dates and times, as well as removal of some duplicate files.
 
