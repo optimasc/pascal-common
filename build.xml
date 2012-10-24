@@ -1,0 +1,692 @@
+<project name="Common Source" default="dist" basedir=".">
+
+
+<!--
+
+  This documents this build.xml file and explains the properties
+  file associated with each project. Each pascal project contains
+  a project.properties which defines information on how to build and
+  how to build the application. 
+  
+  PRE_REQUISITES:
+   General:
+     -> pasdoc installed and in your path environment
+     -> fpc    installed and in your path environment
+     -> pdflatex installed and in your path environment
+     -> ant-contrib.jar 1.0 or later installed in your lib directory of ant
+   Turbo Pascal target:
+     -> tpc.exe installed and in your path environment
+   Delphi target:
+     -> dcc32.exe installed and in your path environment
+     
+  
+  The following variables can be used in project.properties and will
+  be replaced at runtime with the correct information:
+  
+  package.os = Shall be replaced by a target os (win32,dos,go32v2,os2,linux)
+  package.compiler = Shall be replaced by target compiler (fpc,delphi,tp)
+  
+  These can be used to add specific path directories.
+  
+  The following targets exists:
+    -> dist : Generate distributable zip file using freepascal compiler
+    -> clean : Clean unused files and temporary files
+    -> build : Build using freepascal compiler and run unitary tests.
+    -> build-tpc : Build using turbo pascal compiler and run unitary tests.
+    -> build-dcc : Build using delphi compiler and run unitary tests.
+    -> docs      : Create documentation
+    -> all       : Calls the following:
+    				-> dist -> build,docs
+    				-> dist-cross
+    				-> build-tpc
+    				-> build-dcc
+    -> help      : Display information    				
+  Cross-compilation support (using freepascal)
+    -> build-cross : Depends on the values in project.properties, builds cross-binaries
+    -> dist-cross  : Depends on the values in project.properties, builds cross-binaries and cross zip files
+  
+-->
+    <description>Common utilities build system</description>
+    
+    
+    
+  <!-- Internal properties -->
+    
+  <!-- set global properties for this build -->
+  
+  <property name="src" value="src"/>
+  <property name="build" value="bin"/>
+  <property name="dist"  value="dist"/>
+  <property name="test"  value="test"/>
+  <property name="docs"  value="docs"/>
+  <property name="lib"  value="lib"/>
+  <property name="general_delete_file_patterns" 
+    value="**/*.aux  **/*.log  **/*.out **/*.toc **/*.tex **/*.tmp" />
+  <property name="build_delete_file_patterns" 
+    value="**/*.bak **/*.dcu **/*.ppu **/*.ppw **/*.ppa **/*.ow **/*.oo2 **/*.ppo **/*.ol **/*.o **/*.obj **/*.aw **/*.tpw **/*.tpp **/*.tpu **/*.TPW **/*.TPP **/*.TPU" />
+  
+  <property file="project.properties" />
+
+  <target name="init">
+    <taskdef resource="net/sf/antcontrib/antlib.xml"/>
+     
+    <!-- Create the target directories if they do not exist -->       
+    <mkdir dir="${dist}"/>
+    <mkdir dir="${src}"/>
+    <mkdir dir="${build}"/>
+    <mkdir dir="${lib}"/>
+    <mkdir dir="${docs}"/>
+    <mkdir dir="${docs}${file.separator}pasdoc/html"/>
+    <mkdir dir="${test}"/>
+    
+    <property name="build.resolved" location="${build}" />
+    
+    <taskdef resource="net/sf/antcontrib/antlib.xml"/>
+    <property name="dir.units" value="" />     
+    <property name="dir.includes" value="" />     
+    <property name="dir.objects" value="" />     
+    <property name="defines" value="" />
+    <filelist id="dirlist" dir="." files="${package.dir.units}" /> 
+       <pathconvert pathsep=" " property="package.dir.units.native" refid="dirlist">
+    </pathconvert>
+
+<!--     
+    <echo message="${package.dir.units}" file="data.tmp" />
+    <replace file="data.tmp" token="/" value="${file.separator}" />
+    <loadfile property="package.dir.units.native" srcFile="data.tmp">
+    </loadfile>
+-->     
+    
+    <filelist id="filelist" dir="." files="${package.file}" /> 
+       <pathconvert pathsep=" " property="package.file.native" refid="filelist">
+    </pathconvert>
+
+    <filelist id="tstdirlist" dir="." files="${package.dir.tests}" /> 
+       <pathconvert pathsep=" " property="package.dir.tests.native" refid="tstdirlist">
+    </pathconvert>
+    
+<!--     
+    <echo message="${package.dir.tests}" file="data.tmp" />
+    <replace file="data.tmp" token="/" value="${file.separator}" />
+    <loadfile property="package.dir.tests.native" srcFile="data.tmp">
+    </loadfile>
+-->     
+
+    <filelist id="tstfilelist" dir="." files="${package.dir.tests}${file.separator}testit.pas" /> 
+       <pathconvert pathsep=" " property="package.file.tests.native" refid="tstfilelist">
+    </pathconvert>
+    
+  </target>
+  
+  <target name="all" depends="init,build-tpc,build-dcc,dist,dist-cross">
+    <echo>Building full targets...</echo>
+  </target>
+  
+  <target name="help" depends="init">
+    <echo level="info">
+    The following targets exists:
+    -> dist : Generate distributable zip file using freepascal compiler
+    -> clean : Clean unused files and temporary files
+    -> build : Build using freepascal compiler and run unitary tests.
+    -> build-tpc : Build using turbo pascal compiler and run unitary tests.
+    -> build-dcc : Build using delphi compiler and run unitary tests.
+    -> docs      : Create documentation
+    -> all       : Calls the following:
+    				-> dist -> build,docs
+    				-> dist-cross
+    				-> build-tpc
+    				-> build-dcc
+    -> help      : Display information    				
+  Cross-compilation support (using freepascal)
+    -> build-cross : Depends on the values in project.properties, builds cross-binaries
+    -> dist-cross  : Depends on the values in project.properties, builds cross-binaries and cross zip files
+    </echo>
+  </target>
+
+  <target name="build" depends="init" description="Compile the source " >
+    <!-- Compile the unitary tests -->
+    <fpc-compile executable="fpc" 
+       compile-defines="${package.defines}"
+       compile-units="${package.dir.tests} ${package.dir.units}"
+       compile-file="${package.dir.tests}${file.separator}testit.pas"       
+    />
+    <!-- Run the unitary tests -->
+     <copy overwrite="true" todir="${build.resolved}">
+       <fileset dir="${package.dir.tests}">
+         <include name="**/*"/>
+       </fileset>
+     </copy>
+     <exec executable="${build.resolved}${file.separator}testit" dir="${build.resolved}" failonerror="true">
+       <arg line="" />
+     </exec>
+  
+    <fpc-compile executable="fpc" 
+       compile-defines="${package.defines}"
+       compile-units="${package.dir.units}"
+       compile-file="${package.file}"       
+    />
+  </target>
+  
+  
+  <target name="build-cross" depends="init" description="Compile the source " >
+    <taskdef resource="net/sf/antcontrib/antlib.xml"/>
+
+    <for list="${package.cross.binaries}" param="executable" delimiter=" " trim="true">
+       <sequential>
+        <clean />
+        <fpc-compile executable="@{executable}" 
+          compile-defines="${package.defines}"
+          compile-units="${package.dir.units}"
+          compile-file="${package.file}"       
+        />
+       </sequential>
+    </for>
+  </target>
+  
+  <target name="dist-cross" depends="init" description="Compile the source " >
+    <taskdef resource="net/sf/antcontrib/antlib.xml"/>
+
+    <!-- Complicated algorithm:
+        -> We have two lists, one with the executable of the compilers stored in package.cross.binaries
+           the other one in package.cross.targets which lists the actual target names.
+        -> So we first create a properties target1..targetN with each of them having the
+           target name, and then we use each of these properties to pass it to the
+           dist-bin to create the correct package.
+    -->           
+    <var name="counter" value="1"/>
+
+    
+    <for list="${package.cross.targets}" param="target" delimiter=" " trim="true">
+     <sequential>
+      <math result="counter" operand1="${counter}" operation="+" operand2="1" datatype="int"/>
+      <var name="target${counter}" value="@{target}" />
+     </sequential>
+    </for>
+    
+    <var name="counter" value="1"/>
+    <for list="${package.cross.binaries}" param="executable" delimiter=" " trim="true">
+       <sequential>
+        <math result="counter" operand1="${counter}" operation="+" operand2="1" datatype="int"/>
+        <clean />
+        <fpc-compile executable="@{executable}" 
+          compile-defines="${package.defines}"
+          compile-units="${package.dir.units}"
+          compile-file="${package.file}"       
+        />
+        <!-- Get the properties -->
+        <propertycopy override="true" name="prop" from="target${counter}"/>
+        <dist-bin 
+           package-name="${package.name}"  
+           package-title="${package.title}" 
+           package-version="${package.version}"
+           package-arch="${prop}" 
+           package-documents="${package.documents}"
+           package-binaries="${package.binaries}" 
+           package-url="${package.url}"
+           />
+       </sequential>
+    </for>
+  </target>
+  
+  
+  <target name="build-dcc" depends="init" description="Compile the source using Delphi compiler" >
+  
+    <clean />
+     <!-- Compile the unitary tests -->
+    <dcc-compile 
+       compile-defines="${package.defines}"
+       compile-units="${package.dir.tests.native} ${package.dir.units.native}"
+       compile-file="${package.file.tests.native}"       
+    />
+    <!-- Run the unitary tests -->
+     <copy overwrite="true" todir="${build.resolved}">
+       <fileset dir="${package.dir.tests}">
+         <include name="**/*"/>
+       </fileset>
+     </copy>
+     <exec executable="${build.resolved}${file.separator}testit" dir="${build.resolved}" failonerror="true">
+       <arg line="" />
+     </exec>
+     
+     <dcc-compile 
+          compile-defines="${package.defines}"
+          compile-units="${package.dir.units.native}"
+          compile-file="${package.file.native}"       
+     />
+  
+  </target>
+
+  <target name="build-tpc" depends="init" description="Compile the source using Turbo Pascal compiler" >
+    <clean />
+     <!-- Compile the unitary tests -->
+    <tpc-compile 
+       compile-defines="${package.defines}"
+       compile-units="${package.dir.tests.native} ${package.dir.units.native}"
+       compile-file="${package.file.tests.native}"       
+    />
+    <!-- Run the unitary tests -->
+     <copy overwrite="true" todir="${build.resolved}">
+       <fileset dir="${package.dir.tests}">
+         <include name="**/*"/>
+       </fileset>
+     </copy>
+     <exec executable="${build.resolved}${file.separator}testit" dir="${build.resolved}" failonerror="true">
+       <arg line="" />
+     </exec>
+     
+     <tpc-compile 
+          compile-defines="${package.defines}"
+          compile-units="${package.dir.units.native}"
+          compile-file="${package.file.native}"       
+     />
+  </target>
+
+
+
+  <target name="dist" depends="build,docs" description="Generate the distribution" >
+        
+    <!-- Create the distribution packages -->
+    <tstamp>
+       <format property="current_day" pattern="dd" />
+       <format property="current_month" pattern="MM" />
+       <format property="current_year" pattern="yyyy" />
+    </tstamp>
+    
+    <copy overwrite="true" file="master_pad_file.xml" tofile="pad_file.xml" />
+    <replace file="pad_file.xml"> 
+      <replacefilter 
+         token="&lt;Primary_Download_URL>" 
+        value="&lt;Primary_Download_URL>${package.url}${package.name}-${package.version}-src.zip"/>
+        
+      <replacefilter 
+         token="&lt;Program_Version>" 
+        value="&lt;Program_Version>${package.version}"/>
+        
+      <replacefilter 
+         token="&lt;Program_Release_Month>" 
+        value="&lt;Program_Release_Month>${current_month}"/>
+        
+      <replacefilter 
+         token="&lt;Program_Release_Year>" 
+        value="&lt;Program_Release_Year>${current_year}"/>
+        
+      <replacefilter 
+         token="&lt;Program_Release_Day>" 
+        value="&lt;Program_Release_Day>${current_day}"/>
+        
+      <replacefilter 
+         token="&lt;Program_Name>" 
+        value="&lt;Program_Name>${package.title}"/>
+    </replace>
+    
+    <!-- Create the source package that contains the following information
+          - test directory
+          - tst directory
+          - docs directory
+          - src directory 
+    -->      
+    <zip destfile="${package.name}-${package.version}-src.zip" comment="${package.title} source package, version ${package.version}">
+      <zipfileset dir="${basedir}" includes="pad_file.xml ${src}/** ${docs}/pasdoc/** ${docs}/javadoc/** ${docs}/doxygen/** ${package.documents} ${test}/** ${build} ${lib}" prefix="${package.name}" />
+    </zip>
+    
+    <dist-bin 
+       package-name="${package.name}"  
+       package-title="${package.title}" 
+       package-version="${package.version}"
+       package-arch="${package.cpu}-${package.os}" 
+       package-documents="${package.documents}"
+       package-binaries="${package.binaries}" 
+       package-url="${package.url}"
+       />
+  </target>
+
+  
+  <target name="docs" description="Create the automated pascal documentation" depends="init">
+  
+     <filelist id="doclist" dir="." files="${package.todocument}" /> 
+     <pathconvert pathsep=" " property="package.todocument.native" refid="doclist">
+     </pathconvert>
+     
+     <echo file="files.tmp">${package.todocument.native}</echo>
+     <replace file="files.tmp"
+               token=" "
+               value="${line.separator}" />
+     <delete file="{$docs}/pasdoc/${package.name}.pdf" />
+     <exec executable="pasdoc" dir="${basedir}" searchpath="true" failonerror="true">
+       <arg line="--staronly --title &quot;${package.title}&quot; --sort=functions,non-record-fields,methods,properties --format html  -D PASDOC -I ${src} --output .\${docs}\pasdoc\html -S files.tmp" />
+     </exec>
+     <exec executable="pasdoc" dir="${basedir}" searchpath="true" failonerror="true">
+       <arg line="--staronly --title &quot;${package.title}&quot; --sort=functions,non-record-fields,methods,properties --format latex  -D PASDOC -I ${src} --output .\${docs}\pasdoc -S files.tmp" />
+     </exec>
+     <exec executable="pdflatex" dir="${basedir}" searchpath="true" failonerror="true">
+       <arg line="./${docs}/pasdoc/docs.tex --output-directory=./${docs}/pasdoc" />
+     </exec>
+     <exec executable="pdflatex" dir="${basedir}" searchpath="true">
+       <arg line="./${docs}/pasdoc/docs.tex --output-directory=./${docs}/pasdoc" />
+     </exec>
+     <exec executable="pdflatex" dir="${basedir}" searchpath="true">
+       <arg line="./${docs}/pasdoc/docs.tex --output-directory=./${docs}/pasdoc" />
+     </exec>
+     <move   file="./${docs}/pasdoc/docs.pdf" tofile="./${docs}/pasdoc/${package.name}.pdf" />
+     <delete>
+       <fileset dir="${docs}" includes="${general_delete_file_patterns}"/>
+     </delete>
+     <delete file="files.tmp" />
+  </target>
+
+  <target name="clean" description="clean up" depends="init">
+    <clean />
+  </target>
+  
+  
+  
+<!-- Compile the data using the Delphi compiler
+    output variables:
+      package.os 
+      package.compiler 
+      package.cpu
+-->      
+<macrodef name="dcc-compile" description="Delphi compiler execution macro" backtrace="true">
+   <attribute name="arguments" default="" description="Extra arguments to pass to compiler" />
+   <attribute name="compile-defines" description="Defines list" />
+   <attribute name="compile-units" description="Units and include search path" />
+   <attribute name="compile-file" description="Main file to compile" />
+   <sequential>
+    <taskdef resource="net/sf/antcontrib/antlib.xml"/>
+    
+    <local name="current_tstamp" />
+    <var name="dir.units" value="" />     
+    <var name="dir.includes" value="" />     
+    <var name="dir.objects" value="" />     
+    <var name="defines" value="" />
+    <var name="package.os" value="win32" />
+    <var name="package.compiler" value="delphi" />
+    
+    
+    
+	<for list="@{compile-units}" param="dir" delimiter=" ">
+	  <sequential>
+	    <var name="dir.units" value= "${dir.units} -U@{dir}" />
+	    <var name="dir.includes" value= "${dir.includes} -I@{dir}" />
+	  </sequential>
+	</for>
+	<for list="@{compile-defines}" param="defs" delimiter=" ">
+	  <sequential>
+	    <var name="defines" value= "${defines} -D@{defs}" />
+	  </sequential>
+	</for>
+
+    <tstamp>
+       <format property="current_tstamp" pattern="yyyy-MM-dd" />
+    </tstamp>
+
+    <echo file="${src}${file.separator}version.inc">
+        const REVISION_STR = '${package.version}';
+        const BUILDDATE_STR = '${current_tstamp}';
+        const COMPILER_NAME = '${package.compiler}'
+        const PLATFORM_STR = 'win32'
+    </echo>
+    <exec executable="dcc32" dir="${basedir}" searchpath="true" >
+      <arg line="-E${build.resolved} -N${build.resolved} -$H+ -M -H -W -$R+ -U..\common\src\delphi -DCPU86 -DENDIAN_LITTLE  ${dir.units} ${dir.includes} ${defines} @{compile-file}" />
+    </exec>
+ </sequential>   
+</macrodef>  
+
+
+
+  
+
+<!-- Compile the data using the Turbo pascal compiler
+    output variables:
+      package.os 
+      package.compiler 
+      package.cpu
+-->      
+<macrodef name="tpc-compile" description="Turbo Pascal compiler execution macro" backtrace="true">
+   <attribute name="arguments" default="" description="Extra arguments to pass to compiler" />
+   <attribute name="compile-defines" description="Defines list" />
+   <attribute name="compile-units" description="Units and include search path" />
+   <attribute name="compile-file" description="Main file to compile" />
+   <sequential>
+    <taskdef resource="net/sf/antcontrib/antlib.xml"/>
+    
+    <local name="current_tstamp" />
+    <var name="dir.units" value="" />     
+    <var name="dir.includes" value="" />     
+    <var name="dir.objects" value="" />     
+    <var name="defines" value="" />
+    <var name="package.os" value="dos" />
+    <var name="package.compiler" value="tp" />
+    
+	<for list="@{compile-units}" param="dir" delimiter=" ">
+	  <sequential>
+	    <var name="dir.units" value= "${dir.units}@{dir};" />
+	    <var name="dir.includes" value= "${dir.includes}@{dir};" />
+	    <var name="dir.objects" value= "${dir.objects}@{dir};" />
+	  </sequential>
+	</for>
+	<for list="@{compile-defines}" param="defs" delimiter=" ">
+	  <sequential>
+	    <var name="defines" value= "${defines} -D@{defs}" />
+	  </sequential>
+	</for>
+
+    <tstamp>
+       <format property="current_tstamp" pattern="yyyy-MM-dd" />
+    </tstamp>
+    <echo file="${src}${file.separator}version.inc">
+        const REVISION_STR = '${package.version}';
+        const BUILDDATE_STR = '${current_tstamp}';
+        const COMPILER_NAME = '${package.compiler}'
+        const PLATFORM_STR = 'dos'
+    </echo>
+    
+    <echo file="tpc.cfg" message="-I${dir.includes} -U${dir.units}C:\PROGRAMS\BP\UNITS -O${dir.objects} -E${build.resolved} -M -L  -$N+ -$R+ -DTP -DENDIAN_LITTLE -$$M65520,0,655360 "/>
+    <exec executable="tpc" dir="${basedir}" searchpath="true" failonerror="true" >
+      <arg line="/T${basedir} @{compile-file}" />
+    </exec>
+   </sequential>
+</macrodef>  
+  
+<!-- Compile the data using the Freepascal compiler
+    output variables:
+      package.os 
+      package.compiler 
+      package.cpu
+-->      
+<macrodef name="fpc-compile" description="Freepascal compiler execution macro" backtrace="true">
+   <attribute name="executable" default="fpc" description="Executable name" />
+   <attribute name="arguments" default="" description="Extra arguments to pass to compiler" />
+   <attribute name="compile-defines" description="Defines list" />
+   <attribute name="compile-units" description="Units and include search path" />
+   <attribute name="compile-file" description="Main file to compile" />
+   <sequential>
+   
+    <taskdef resource="net/sf/antcontrib/antlib.xml"/>
+    
+    <var name="dir.units" value="" />     
+    <var name="dir.includes" value="" />     
+    <var name="dir.objects" value="" />     
+    <var name="defines" value="" />
+    <var name="package.compiler" value="fpc" />
+    <local name="package.os.internal" />
+    <local name="current_tstamp" />
+   
+   
+    <!-- Get the target operating system -->
+    <exec executable="@{executable}" dir="${basedir}" searchpath="true" output="target.tmp" >
+      <arg line="-iTO" />
+    </exec>
+    <exec executable="@{executable}" dir="${basedir}" searchpath="true" output="target1.tmp" >
+      <arg line="-iTP" />
+    </exec>
+    
+    <loadfile property="package.os.internal" srcFile="target.tmp">
+      <filterchain>
+        <striplinebreaks/>
+      </filterchain>
+    </loadfile>    
+    <delete file="target.tmp" />  
+    <var name="package.os" value="${package.os.internal}" />
+    
+    <loadfile property="package.cpu.internal" srcFile="target1.tmp">
+      <filterchain>
+        <striplinebreaks/>
+      </filterchain>
+    </loadfile>    
+    <delete file="target1.tmp" />  
+    
+    <var name="package.cpu" value="${package.cpu.internal}" />
+    
+	<for list="@{compile-units}" param="dir" delimiter=" ">
+	  <sequential>
+	    <var name="dir.units" value= "${dir.units} -Fu@{dir}" />
+	    <var name="dir.includes" value= "${dir.includes} -Fi@{dir}" />
+	  </sequential>
+	</for>
+	<for list="@{compile-defines}" param="defs" delimiter=" ">
+	  <sequential>
+	    <var name="defines" value= "${defines} -d@{defs}" />
+	  </sequential>
+	</for>
+
+    <tstamp>
+       <format property="current_tstamp" pattern="yyyy-MM-dd" />
+    </tstamp>
+
+    <echo file="${src}${file.separator}version.inc">
+        const REVISION_STR = '${package.version}';
+        const BUILDDATE_STR = '${current_tstamp}';
+        const COMPILER_NAME = '${package.compiler}'
+        const PLATFORM_STR = '${package.os}'
+    </echo>
+    <exec executable="@{executable}" dir="${basedir}" searchpath="true" failonerror="true">
+      <arg line="@{arguments} -FE${build} -FU${build}  -vihwn -Cr -CR -Co -Ct -Ci -gl -Sh  ${dir.units} ${dir.includes} ${defines} @{compile-file}" />
+    </exec>
+   </sequential>
+</macrodef>
+
+
+<macrodef name="clean" description="Clean macro" backtrace="true">
+  <sequential>
+    <!-- Delete the ${build} directory trees -->
+     <delete file="pad_file.xml" />
+     <delete>
+        <fileset dir="." includes="pad_file?.xml"/>
+        <fileset dir="." includes="tpc.cfg"/>
+     </delete>
+     <delete>
+       <fileset dir="." includes="${general_delete_file_patterns}"/>
+     </delete>
+     <delete>
+       <fileset dir="${build}" includes="${build_delete_file_patterns} *.*"/>
+    </delete>
+  </sequential>
+</macrodef>
+
+<!-- Create a zip distribution file for the specified platform with
+     the specified parameters -->
+<macrodef name="dist-bin" description="Create binary distributable macro" backtrace="true">
+   <attribute name="package-name" description="The package name" />
+   <attribute name="package-title" description="The package title" />
+   <attribute name="package-version" description="Package version" />
+   <attribute name="package-arch" description="Package target arch" />
+   <attribute name="package-documents" description="Package documents" />
+   <attribute name="package-binaries" description="Package binaries" />
+   <attribute name="package-url" description="Package url" />
+
+  <sequential>
+    <var name="pad_os" value="Other" />
+    <local name="current_day" />
+    <local name="current_month" />
+    <local name="current_year" />
+    
+    <!-- Create the distribution packages -->
+    <tstamp>
+       <format property="current_day" pattern="dd" />
+       <format property="current_month" pattern="MM" />
+       <format property="current_year" pattern="yyyy" />
+    </tstamp>
+    
+	<if>
+	  <contains string="@{platform-arch}" substring="win32" />
+ 	  <then>
+ 	    <var name="pad_os" value="Win95,Win98,WinME,WinNT 3.x,WinNT 4.x,Windows2000,WinXP,Windows2003" />
+ 	  </then>
+    <elseif>
+      <contains string="@{platform-arch}" substring="linux" />
+      <then>
+ 	    <var name="pad_os" value="Linux" />
+     </then>
+    </elseif>
+    <elseif>
+      <contains string="@{platform-arch}" substring="go32" />
+      <then>
+ 	    <var name="pad_os" value="MS-DOS" />
+     </then>
+    </elseif>
+    <elseif>
+      <contains string="@{platform-arch}" substring="dos" />
+      <then>
+ 	    <var name="pad_os" value="MS-DOS" />
+     </then>
+    </elseif>
+    <elseif>
+      <contains string="@{platform-arch}" substring="beos" />
+      <then>
+     </then>
+    </elseif>
+    <elseif>
+      <contains string="@{platform-arch}" substring="os2" />
+      <then>
+ 	    <var name="pad_os" value="OS/2" />
+     </then>
+    </elseif>
+    <elseif>
+      <contains string="@{platform-arch}" substring="beos" />
+      <then>
+ 	    <var name="pad_os" value="BEOS" />
+     </then>
+    </elseif>
+   </if>
+   
+    <copy overwrite="true" file="master_pad_file.xml" tofile="pad_file.xml" />
+    <replace file="pad_file.xml"> 
+      <replacefilter 
+         token="&lt;Primary_Download_URL>" 
+        value="&lt;Primary_Download_URL>@{package-url}@{package-name}-@{package-version}-@{package-arch}.zip"/>
+        
+      <replacefilter 
+         token="&lt;Program_Version>" 
+        value="&lt;Program_Version>@{package-version}"/>
+<!--        
+      <replacefilter 
+         token="&lt;Program_OS_Support>" 
+        value="&lt;Program_OS_Support>${pad_os}"/>
+-->        
+      <replacefilter 
+         token="&lt;Program_Release_Month>" 
+        value="&lt;Program_Release_Month>${current_month}"/>
+        
+      <replacefilter 
+         token="&lt;Program_Release_Year>" 
+        value="&lt;Program_Release_Year>${current_year}"/>
+        
+      <replacefilter 
+         token="&lt;Program_Release_Day>" 
+        value="&lt;Program_Release_Day>${current_day}"/>
+        
+      <replacefilter 
+         token="&lt;Program_Name>" 
+        value="&lt;Program_Name>@{package-title}"/>
+    </replace>
+   
+  
+    <zip destfile="@{package-name}-@{package-version}-@{package-arch}.zip" comment="@{package-title} binary @{package-arch} package, version @{package-version}">
+      <zipfileset dir="${basedir}" includes="pad_file.xml @{package-binaries} ${docs}/pasdoc/** ${docs}/javadoc/** ${docs}/doxygen/** @{package-documents}" prefix="@{package-name}" />
+    </zip>
+  </sequential>
+</macrodef>
+
+
+</project>

@@ -1,5 +1,5 @@
 {
-    $Id: posix.tem,v 1.1 2006-10-16 22:26:05 carl Exp $
+    $Id: posix.tem,v 1.2 2012-10-24 15:39:56 Carl Exp $
 
     Implements POSIX 1003.1-2001 conforming interface
 
@@ -174,5 +174,8 @@ implementation
 {
 
  $Log: not supported by cvs2svn $
+ Revision 1.1  2006/10/16 22:26:05  carl
+   + Generic POSIX templates for extdos
+
 
 }

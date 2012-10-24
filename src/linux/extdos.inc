@@ -42,7 +42,7 @@ Begin
      if idx > 0 then
        begin
          delete(s,1,idx);
-         GetActiveCharacterSet:=UpString(s);
+         GetActiveCharacterSet:=UpperCase(s);
        end;
    end;
 end;

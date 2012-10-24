@@ -54,5 +54,8 @@ const
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.1  2006/10/16 22:25:59  carl
+    + Generic POSIX templates for extdos
+
 
 }

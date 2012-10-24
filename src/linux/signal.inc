@@ -1,5 +1,5 @@
 {
-    $Id: signal.inc,v 1.1 2006-10-16 22:28:05 carl Exp $
+    $Id: signal.inc,v 1.2 2012-10-24 15:39:53 Carl Exp $
 
  **********************************************************************}
 
@@ -65,4 +65,7 @@ const
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.1  2006/10/16 22:28:05  carl
+    + First linux implementation of extdos
+
 }

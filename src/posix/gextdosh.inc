@@ -19,4 +19,7 @@ type
 
 {
    $Log: not supported by cvs2svn $
+   Revision 1.1  2006/10/16 22:26:03  carl
+     + Generic POSIX templates for extdos
+
 }
