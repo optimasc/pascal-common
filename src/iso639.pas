@@ -1,6 +1,6 @@
 {
  ****************************************************************************
-    $Id: iso639.pas,v 1.6 2012-02-16 05:40:09 carl Exp $
+    $Id: iso639.pas,v 1.7 2012-10-24 15:27:21 Carl Exp $
     Copyright (c) 2004 by Carl Eric Codere
 
     Language code unit
@@ -106,6 +106,23 @@ function getlangname_en(s: shortstring): shortstring;
   @returns(The 2 character language code)
 }
 function getlangcode_en(name: shortstring): shortstring;
+
+
+{** @abstract(Returns the 3 character code related to the english name of the language.) 
+    
+    
+    The search is not case sensitive (according to ISO 639-2). 
+    If there is no 3 character language code for this language, or
+    if the language name is not found, the routine
+    returns an empty string.
+  
+    The language name string should be encoded according to
+    ISO-8859-1.
+  
+  @param(name The name of the language)
+  @returns(The 3 character language code)
+}
+function getlangcode2_en(name: shortstring): shortstring;
 
 {** @abstract(Returns the 2 character code related to the french name of the language.) 
     
@@ -261,6 +278,44 @@ begin
     end;
 end;
 
+
+function getlangcode2_en(name: shortstring): shortstring;
+var
+ i: integer;
+ name_en: string;
+ s: string;
+ index: integer;
+begin
+  name:=UpperCase(name);
+  getlangcode2_en:='';
+  for i:=1 to MAX_ENTRIES do
+    begin
+      name_en:=CleanName(strpas(Lang_Info^[i].name_en));
+      repeat
+        index:=pos(';',name_en);
+        if index<>0 then
+         begin
+          s:=copy(name_en,1,index-1);
+          delete(name_en,1,index);
+         end
+        else
+          s:=name_en;
+
+         { Now check if there are several names for the same language,
+           each alternate name is separated by the others with a ;
+           character.
+         }
+         { Check the 3-digit code }
+         if UpperCase(trim(s)) = name then
+         begin
+            getlangcode2_en:=Lang_Info^[i].biblio_code;
+            exit;
+         end;
+      until (index=0);
+    end;
+end;
+
+
 function getlangcode_en(name: shortstring): shortstring;
 var
  i: integer;
@@ -357,6 +412,13 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.6  2012/02/16 05:40:09  carl
+  + Added standard compiler switches to all units
+  - Replace strings by sysutils
+  + Added Latin <-> UTF-8 conversion routines
+  + Updated IETF Locale parsing routines with new standard.
+  + Updated country codes
+
   Revision 1.5  2011/11/24 00:27:38  carl
   + update to new architecture of dates and times, as well as removal of some duplicate files.
 
