@@ -3,24 +3,37 @@
 }
 
 { Takes as a parameter the path where the execution will take place }
+{==== Compiler directives ===========================================}
+{$B-} { Full boolean evaluation          }
+{$I+} { IO Checking                      }
+{$F+} { FAR routine calls                }
+{$P-} { Implicit open strings            }
+{$T-} { Typed pointers                   }
+{$V+} { Strict VAR strings checking      }
+{$X+} { Extended syntax                  }
+{$IFNDEF TP}
+ {$H+} { Memory allocated strings        }
+ {$DEFINE ANSISTRINGS}
+ {$J+} { Writeable constants             }
+ {$METHODINFO OFF} 
+{$ENDIF}
+{====================================================================}
+
 Program Testit;
 
-{$I+}
-{$X+}
-{$T+}
 uses cmntyp,
      locale,
      ietf,
+     cmnutils,
      unicode,
+     collects,
      dos,
-     strings,
      iso639,
-     utils,
      testdate,
      testsgml,
      testietf,
      tiso639,
-     collects
+     sysutils
      ;
 
   var
@@ -518,11 +531,17 @@ procedure testucs4strtrim;
    (ord(#10),ord(#13),0);
    utf32null3: array[0..7] of ucs4char =
    (ord(#10),ord('e'),Ord('l'),Ord('l'),Ord('o'),10,9,0);
+var
+  p: pucs4char;
 begin
-  ucs4strtrim(pucs4char(@utf32null));
-  ucs4strtrim(pucs4char(@utf32null1));
-  ucs4strtrim(pucs4char(@utf32null2));
-  ucs4strtrim(pucs4char(@utf32null3));
+  p:=ucs4strtrim(pucs4char(@utf32null));
+  ucs4strdispose(p);
+  p:=ucs4strtrim(pucs4char(@utf32null1));
+  ucs4strdispose(p);
+  p:=ucs4strtrim(pucs4char(@utf32null2));
+  ucs4strdispose(p);
+  p:=ucs4strtrim(pucs4char(@utf32null3));
+  ucs4strdispose(p);
 end;
 
 procedure testucs4removeaccents;
@@ -655,6 +674,8 @@ const
  CASE_2 = CASE_1+',""';
  { Invalid case }
  CASE_3 = CASE_2+'","';
+
+ SIMPLE_CASE_4 = NAME_1+'; '+NAME_2+'; '+NAME_3;
 
 { Tests the stroken routine }
 procedure TestStrToken;
@@ -796,6 +817,24 @@ Begin
    RunError(255);
  s:=StrToken(origstring,',',true);
  s:=StrToken(origstring,',',true);
+ {********************** Case 10 ***********************}
+ { With delimiter greater than one character            }
+ origstring:=SIMPLE_CASE_4;
+ s:=StrToken(origstring,'; ',true);
+ if s <> NAME_1 then
+   RunError(255);
+ if origString = '' then
+   RunError(255);
+ s:=StrToken(origstring,'; ',true);
+ if s <> NAME_2 then
+   RunError(255);
+ if origString = '' then
+   RunError(255);
+ s:=StrToken(origstring,'; ',true);
+ if s <> NAME_3 then
+   RunError(255);
+ if origString <> '' then
+   RunError(255);
 end;
 
 
@@ -804,7 +843,7 @@ procedure TestKeys;
 var
  KeyValues: THashTable;
  count: integer;
- p: PHashItem;
+ p: PCollectionItem;
  s: string;
  b: Boolean;
 begin
@@ -813,53 +852,56 @@ begin
   {-- Simple property verification --}
 
   { Try to retrieve a non existent property when property list is empty }
-  p:=PHashItem(KeyValues.get(''));
+  p:=PKeyValueItem(KeyValues.get(''));
   if p<>nil then
     RunError(255);
   b:=KeyValues.containsKey('MyOtherkey');
   if b then
     RunError(255);
-  KeyValues.put('MyOtherkey',12,New(PStringHashItem, Init('value_new')));
-  KeyValues.put('Mykey',13,New(PStringHashItem, Init('value_old')));
+  KeyValues.put('MyOtherkey',12,New(PStringItem, Init('value_new')));
+  KeyValues.put('Mykey',13,New(PStringItem, Init('value_old')));
 
-  p:=PHashItem(KeyValues.get('Mykey'));
+  p:=PCollectionItem(KeyValues.get('Mykey'));
   if p^.toString <> 'value_old' then
     RunError(255);
-  p:=PHashItem(KeyValues.getByFastIndex(13));
+    
+  p:=PCollectionItem(KeyValues.getByFastIndex(13));
   if p^.toString <> 'value_old' then
     RunError(255);
   { Try to retrieve a non existent property when property list is not empty }
-  p:=PHashItem(KeyValues.get('MyInvalidkey'));
+  p:=PCollectionItem(KeyValues.get('MyInvalidkey'));
   if p<>nil then
     RunError(255);
-  p:=PHashItem(KeyValues.getByFastIndex(12));
+  p:=PCollectionItem(KeyValues.getByFastIndex(12));
   if p^.toString <> 'value_new'  then
     RunError(255);
-  p:=PHashItem(KeyValues.get('MyOtherkey'));
+  p:=PCollectionItem(KeyValues.get('MyOtherkey'));
   if p^.toString <> 'value_new' then
     RunError(255);
+    
+    
   { Overwrite a property with an existing property }
 
-  KeyValues.put('MyOtherkey',12,new(PStringHashITem, Init('new_value')));
+  KeyValues.put('MyOtherkey',12,new(PStringItem, Init('new_value')));
   p:=nil;
-  p:=PHashItem(KeyValues.getByFastIndex(12));
+  p:=PCollectionItem(KeyValues.getByFastIndex(12));
   if p^.toString <> 'new_value' then
     RunError(255);
   p:=nil;
-  p:=PHashItem(KeyValues.get('MyOtherkey'));
+  p:=PCollectionItem(KeyValues.get('MyOtherkey'));
   if p^.toString <> 'new_value' then
     RunError(255);
 
   { Overwrite a property with a new fast key index  }
   p:=nil;
-  KeyValues.put('Mykey',14,new(PStringHashItem, Init('new_my_key_value')));
+  KeyValues.put('Mykey',14,new(PStringItem, Init('new_my_key_value')));
 
   p:=nil;   
-  p:=PHashItem(KeyValues.getByFastIndex(14));
+  p:=PCollectionItem(KeyValues.getByFastIndex(14));
   if p^.toString <> 'new_my_key_value' then
     RunError(255);
   p:=nil;
-  p:=PHashItem(KeyValues.get('Mykey'));
+  p:=PCollectionItem(KeyValues.get('Mykey'));
   if p^.toString <> 'new_my_key_value'  then
     RunError(255);
 
@@ -961,6 +1003,19 @@ Begin
    RunError(255);
 end;
 
+procedure testUTF8Utils;
+const
+  TEST_ISO88591_STRING = 'Ceci est l''ami de mon p'#232're et ma m'#232're';
+  TEST_CJK_STRING  = '  '#$24#$68#$65#$6C#$70#$5F#$73#$69#$6D#$70#$6C#$69#$66#$69#$65#$64#$20#$3D#$20#$27#$E8#$BF#$99#$E6#$98 +
+                         #$AF#$E4#$B8#$80#$E4#$BB#$BD#$E9#$9D#$9E#$E5#$B8#$B8#$E9#$97#$B4#$E5#$8D#$95#$E7#$9A#$84#$E8#$AF#$B4 +
+                         #$E6#$98#$8E#$E4#$B9#$A6#$E2#$80#$A6#$27#$3B;
+var
+  s: UTF8String;
+Begin
+  s:=ISO88591ToUtf8(TEST_ISO88591_STRING);
+  Assert(UTF8IsLegalISO88591(s)=True);
+  Assert(UTF8IsLegalISO88591(TEST_CJK_STRING)=False);
+end;
 
 
 var
@@ -1016,11 +1071,15 @@ Begin
   testbasechar;
   TestStrGetNextLine;
   testkeys;
+  TestUTF8Utils;
   WriteLn(ErrOutput,'Std Error OUTPUT');
 end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.22  2011/11/24 00:26:59  carl
+  + update to new architecture of dates and times.
+
   Revision 1.21  2011/04/12 00:46:03  carl
   + Hash Key value collection unitary tests
   + UCS4 Trim routine unitary tests
