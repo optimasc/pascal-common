@@ -17,7 +17,7 @@ uses
 
 procedure test_date;
 var
- d: TJulianDateTime;
+ d: TJulianDate;
  Hour,Minute,Second,Year,Month,Day,Msec: word;
 begin
   { Testing Date }
@@ -40,9 +40,9 @@ procedure test_tryencode;
 var
  Year,Month,Day: word;
  Hour,Minute,Second,MSecond: word;
- AValue: TJulianDateTime;
- DateValue:TJulianDateTime;
- TimeValue:TJulianDateTime;
+ AValue: TJulianDate;
+ DateValue:TJulianDate;
+ TimeValue:TJulianDate;
  AYear,AMonth,ADay: word;
  AHour,AMinute,ASecond,AMSecond: word;
  s: string;
@@ -205,8 +205,8 @@ procedure test_same;
 var
  Year,Month,Day: word;
  Hour,Minute,Second,MSecond: word;
- AValueA: TJulianDateTime;
- AValueB: TJulianDateTime;
+ AValueA: TJulianDate;
+ AValueB: TJulianDate;
 begin
  Year:=0;
  Month:=06;
@@ -250,7 +250,7 @@ procedure test_encode;
 var
  Year,Month,Day: word;
  Hour,Minute,Second,MSecond: word;
- AValue: TJulianDateTime;
+ AValue: TJulianDate;
 begin
 
  {*********************** ISO 8601 compatible *************************}
@@ -410,7 +410,7 @@ procedure test_encodeext;
 var
  Year,Month,Day: word;
  Hour,Minute,Second,MSecond: word;
- AValue: TJulianDateTime;
+ AValue: TJulianDate;
  UTC: boolean;
 begin
  {*********************** ISO 8601 compatible *************************}
@@ -512,10 +512,94 @@ begin
     RunError(255);
 end;
 
+
+procedure validateDT(dt: dateutil.TEncodedDateTime;
+  year,month,day,hour,min,sec,msec: longint; tzset: boolean; offhour,offmin: longint);
+Begin
+ Assert(dt.date.year = year);
+ Assert(dt.date.month = month);
+ Assert(dt.date.day = day);
+ Assert(dt.time.hour = hour);
+ Assert(dt.time.min = min);
+ Assert(dt.time.sec = sec);
+ Assert(dt.time.fracsec = msec);
+ Assert(dt.time.tzset = tzset);
+ Assert(dt.time.tzhour = offhour);
+ Assert(dt.time.tzmin = offmin);
+end;
+
+procedure test_encodedtext;
+var
+ Year,Month,Day: word;
+ Hour,Minute,Second,MSecond: word;
+ DT: TEncodedDateTime;
+ UTC: boolean;
+begin
+ {*********************** ISO 8601 compatible *************************}
+  {**************************************************}
+  if TryStrToEncodedDateTimeExt('1500-06-05T12:59:01+01:00',DT) = false then
+    RunError(255);
+  ValidateDT(dt,1500,06,05,12,59,01,-1,true,01,00);
+
+  if TryStrToEncodedDateTimeExt('1979-06-05T12:59:01Z',DT) = false then
+    RunError(255);
+  ValidateDT(dt,1979,06,05,12,59,01,-1,true,00,00);
+
+  if TryStrToEncodedDateTimeExt('1500-06-05',DT) = false then
+    RunError(255);
+  ValidateDT(dt,1500,06,05,-1,-1,-1,-1,false,-1,-1);
+
+  if TryStrToEncodedDateTimeExt('1400',DT) = false then
+    RunError(255);
+  ValidateDT(dt,1400,00,00,-1,-1,-1,-1,false,-1,-1);
+
+ {*********************** NON ISO 8601 compatible *************************}
+ { Format: YYYY-MM-DD HH:mm:ss TZ                                          }
+  if TryStrToEncodedDateTimeExt('2000-01-01  23:45:45  UT',DT) = false then
+    RunError(255);
+  ValidateDT(dt,2000,01,01,23,45,45,-1,true,00,00);
+  
+ { Format : RFC 822 }
+  if TryStrToEncodedDateTimeExt('Mon, 15 Aug 05 15:52:01 +0000',DT) = false then
+    RunError(255);
+  ValidateDT(dt,1905,08,15,15,52,01,-1,true,00,00);
+
+  { Format : RFC 2822 }
+  if TryStrToEncodedDateTimeExt('Mon, 15 Aug 2005 15:52:01 +0200',DT) = false then
+    RunError(255);
+  ValidateDT(dt,2005,08,15,15,52,01,-1,true,02,00);
+
+
+
+ { Format: YYYYMMDD;HHmmssuu (Openoffice)                              }
+  if TryStrToEncodedDateTimeExt(' 20000101;23454588  ',DT) = false then
+    RunError(255);
+
+  ValidateDT(dt,2000,01,01,23,45,45,-1,false,-1,-1);
+ { Format:D:YYYYMMDDHHmmssOhh'mm' (Adobe PDF)                               }
+  if TryStrToEncodedDateTimeExt(' D:2004 ',DT) = false then
+    RunError(255);
+
+  ValidateDT(dt,2004,00,00,-1,-1,-1,-1,false,-1,-1);
+
+  {***}
+  if TryStrToEncodedDateTimeExt(' D:20040912235959 ',DT) = false then
+    RunError(255);
+  ValidateDT(dt,2004,09,12,23,59,59,-1,false,-1,-1);
+
+  if TryStrToEncodedDateTimeExt(' D:20040912235959Z',DT) = false then
+    RunError(255);
+  ValidateDT(dt,2004,09,12,23,59,59,-1,true,00,00);
+
+  if TryStrToEncodedDateTimeExt(' D:20040912235959-05''30''',DT) = false then
+    RunError(255);
+  ValidateDT(dt,2004,09,12,23,59,59,-1,true,-05,-30);
+end;
+
 procedure test_filetimedate;
 var
  ft: tfiletime;
- DateTime:TJulianDateTime;
+ DateTime:TJulianDate;
  utc:boolean;
  Year,Month,Day,Hour,Minute,Second,Millisecond: word;
 Begin
@@ -567,6 +651,7 @@ begin
   test_same;
   test_encode;
   test_encodeext;
+  test_encodedtext;
   test_filetimedate;
 end;
 
@@ -601,6 +686,9 @@ end.
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.5  2011/11/24 00:26:59  carl
+  + update to new architecture of dates and times.
+
   Revision 1.4  2004/11/29 03:52:21  carl
     + Support for new routines of dateutil
 
