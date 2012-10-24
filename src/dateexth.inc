@@ -57,6 +57,7 @@ function TryStrToDateTimeExt(const S: string; var Value: TJulianDate; var UTC: b
     4) Openoffice 1.1.x HTML date format: 'YYYYMMDD;HHmmssuu'
     5) Adobe PDF 'D:YYYYMMDDHHMMSSOHH'mm'' format
     6) RFC 822/2822 Date and time format.
+    7) TIFF 'YYYY:MM:DD HH:MM:SS' format
 
     In the case where the date does not contain the full representation,
     the fields will be set to values indicating that they are undefined
@@ -141,6 +142,13 @@ function TryFileTimeToDateTimeExt(ftime: tfiletime; var DateTime: TJulianDate; v
 
 {
   $Log: not supported by cvs2svn $
+  Revision 1.6  2012/02/16 05:40:07  carl
+  + Added standard compiler switches to all units
+  - Replace strings by sysutils
+  + Added Latin <-> UTF-8 conversion routines
+  + Updated IETF Locale parsing routines with new standard.
+  + Updated country codes
+
   Revision 1.5  2011/11/24 00:27:37  carl
   + update to new architecture of dates and times, as well as removal of some duplicate files.
 
