@@ -58,7 +58,7 @@
   <property name="build" value="bin"/>
   <property name="dist"  value="dist"/>
   <property name="test"  value="test"/>
-  <property name="docs"  value="docs"/>
+  <property name="docs"  value="doc"/>
   <property name="lib"  value="lib"/>
   <property name="general_delete_file_patterns" 
     value="**/*.aux  **/*.log  **/*.out **/*.toc **/*.tex **/*.tmp" />
