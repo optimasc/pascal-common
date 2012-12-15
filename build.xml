@@ -15,7 +15,11 @@
      -> pdflatex installed and in your path environment
      -> ant-contrib.jar 1.0 or later installed in your lib directory of ant
    Turbo Pascal target:
-     -> tpc.exe installed and in your path environment
+     -> tpc.exe 7.0 installed and in your path environment
+     -> The path of the location of files must be a short as possible and must not contain long file names,
+        otherwise execution errors shall occur.
+     -> Total length of unit directory location is 127 characters, same thing for includie directories otherwise compilation shall fail.
+        (To partially resolve the issues with this, the paths are made relative when compiling using this target)
    Delphi target:
      -> dcc32.exe installed and in your path environment
      
@@ -25,22 +29,28 @@
   
   package.os = Shall be replaced by a target os (win32,dos,go32v2,os2,linux)
   package.compiler = Shall be replaced by target compiler (fpc,delphi,tp)
+  package.compiler.version = Shall be replaced by target compiler version 
   
   These can be used to add specific path directories.
   
   The following targets exists:
-    -> dist : Generate distributable zip file using freepascal compiler
-    -> clean : Clean unused files and temporary files
-    -> build : Build using freepascal compiler and run unitary tests.
-    -> build-tpc : Build using turbo pascal compiler and run unitary tests.
-    -> build-dcc : Build using delphi compiler and run unitary tests.
-    -> docs      : Create documentation
-    -> all       : Calls the following:
-    				-> dist -> build,docs
-    				-> dist-cross
-    				-> build-tpc
-    				-> build-dcc
-    -> help      : Display information    				
+  
+  
+  
+all               Build and test everything; create a distribution, optionally install using freepascal
+clean             Delete all generated files and directories. 
+dist              Produce the distributables 
+distclean         Clean up the distribution files only. 
+docs              Generate all documentation. 
+init              Initialize the build: create directories, call <tstamp> and other common actions. 
+test              Run the unit tests using freepascal in path
+build             Build using freepascal compiler in path
+build-tpc         Build using turbo pascal compiler 
+test-tpc          Run unitary tests using turbo pascal compiler units
+build-dcc         Build using delphi compiler
+test-dcc          Run unitary tests using delphi compiler units
+help
+
   Cross-compilation support (using freepascal)
     -> build-cross : Depends on the values in project.properties, builds cross-binaries
     -> dist-cross  : Depends on the values in project.properties, builds cross-binaries and cross zip files
@@ -54,12 +64,14 @@
     
   <!-- set global properties for this build -->
   
+
   <property name="src" value="src"/>
-  <property name="build" value="bin"/>
+  <property name="bin" value="bin"/>
   <property name="dist"  value="dist"/>
   <property name="test"  value="test"/>
   <property name="docs"  value="doc"/>
   <property name="lib"  value="lib"/>
+  <property name="res"  value="res"/>
   <property name="general_delete_file_patterns" 
     value="**/*.aux  **/*.log  **/*.out **/*.toc **/*.tex **/*.tmp" />
   <property name="build_delete_file_patterns" 
@@ -73,22 +85,30 @@
     <!-- Create the target directories if they do not exist -->       
     <mkdir dir="${dist}"/>
     <mkdir dir="${src}"/>
-    <mkdir dir="${build}"/>
+    <mkdir dir="${bin}"/>
     <mkdir dir="${lib}"/>
     <mkdir dir="${docs}"/>
     <mkdir dir="${docs}${file.separator}pasdoc/html"/>
     <mkdir dir="${test}"/>
     
-    <property name="build.resolved" location="${build}" />
+    <property name="build.resolved" location="${bin}" />
+    <property name="build.relative" value=".${file.separator}${bin}" />
     
     <taskdef resource="net/sf/antcontrib/antlib.xml"/>
     <property name="dir.units" value="" />     
     <property name="dir.includes" value="" />     
     <property name="dir.objects" value="" />     
     <property name="defines" value="" />
+    
     <filelist id="dirlist" dir="." files="${package.dir.units}" /> 
-       <pathconvert pathsep=" " property="package.dir.units.native" refid="dirlist">
+    <pathconvert pathsep=" " property="package.dir.units.native" refid="dirlist">
     </pathconvert>
+
+    <filelist id="dirlist.relative" dir="." files="${package.dir.units.native}" /> 
+    <pathconvert pathsep=" " property="package.dir.units.relative" refid="dirlist.relative">
+        <globmapper from="${basedir}${file.separator}*" to=".${file.separator}*" />
+     </pathconvert>
+
 
 <!--     
     <echo message="${package.dir.units}" file="data.tmp" />
@@ -101,9 +121,21 @@
        <pathconvert pathsep=" " property="package.file.native" refid="filelist">
     </pathconvert>
 
+    <filelist id="filelist.relative" dir="." files="${package.file}" /> 
+    <pathconvert pathsep=" " property="package.file.native.relative" refid="filelist.relative">
+        <globmapper from="${basedir}${file.separator}*" to=".${file.separator}*" />
+     </pathconvert>
+    
+
     <filelist id="tstdirlist" dir="." files="${package.dir.tests}" /> 
        <pathconvert pathsep=" " property="package.dir.tests.native" refid="tstdirlist">
     </pathconvert>
+
+    <filelist id="tstdirlist.relative" dir="." files="${package.dir.tests.native}" /> 
+    <pathconvert pathsep=" " property="package.dir.tests.relative" refid="tstdirlist.relative">
+        <globmapper from="${basedir}${file.separator}*" to=".${file.separator}*" />
+     </pathconvert>
+
     
 <!--     
     <echo message="${package.dir.tests}" file="data.tmp" />
@@ -118,37 +150,73 @@
     
   </target>
   
-  <target name="all" depends="init,build-tpc,build-dcc,dist,dist-cross">
-    <echo>Building full targets...</echo>
+  <target name="all-win32" depends="init">
+    <antcall target="all" />
+    <antcall target="build-tpc" />
+    <antcall target="dist" />
+    <antcall target="build-dcc" />
+    <antcall target="dist" />
+
+    <antcall target="build-tpc" />
+    <antcall target="test-tpc" />
+    <antcall target="build-dcc" />
+    <antcall target="test-dcc" />
   </target>
+  
+  
+  <target name="all" depends="init">
+    <echo>Building full targets...</echo>
+    <antcall target="docs" />
+    <antcall target="build" />
+    <antcall target="dist" />
+    <antcall target="dist-cross" />
+
+    <antcall target="build" />
+    <antcall target="test" />
+  </target>
+  
   
   <target name="help" depends="init">
     <echo level="info">
-    The following targets exists:
-    -> dist : Generate distributable zip file using freepascal compiler
-    -> clean : Clean unused files and temporary files
-    -> build : Build using freepascal compiler and run unitary tests.
-    -> build-tpc : Build using turbo pascal compiler and run unitary tests.
-    -> build-dcc : Build using delphi compiler and run unitary tests.
-    -> docs      : Create documentation
-    -> all       : Calls the following:
-    				-> dist -> build,docs
-    				-> dist-cross
-    				-> build-tpc
-    				-> build-dcc
-    -> help      : Display information    				
-  Cross-compilation support (using freepascal)
-    -> build-cross : Depends on the values in project.properties, builds cross-binaries
-    -> dist-cross  : Depends on the values in project.properties, builds cross-binaries and cross zip files
+all               Build and test everything; create a distribution
+clean             Delete all generated files and directories. 
+dist              Produce the distributables 
+distclean         Clean up the distribution files only. 
+docs              Generate all documentation. 
+init              Initialize the build: create directories
+test              Run the unit tests using freepascal in path
+build             Build using freepascal compiler in path
+build-tpc         Build using turbo pascal compiler 
+test-tpc          Run unitary tests using turbo pascal compiler units
+build-dcc         Build using delphi compiler
+test-dcc          Run unitary tests using delphi compiler units
+help
+
+Cross-compilation support (using freepascal)
+build-cross     Depends on the values in project.properties, builds cross-binaries
+dist-cross      Depends on the values in project.properties, builds cross-binaries and cross zip files
     </echo>
   </target>
 
+
   <target name="build" depends="init" description="Compile the source " >
+
+    <clean />
+    <fpc-compile executable="fpc" 
+       compile-defines="${package.defines}"
+       compile-units="${package.dir.units}"
+       compile-file="${package.file}"       
+       create-config="true"
+    />
+  </target>
+  
+  <target name="test" depends="init" description="Run the unitary tests " >
     <!-- Compile the unitary tests -->
     <fpc-compile executable="fpc" 
        compile-defines="${package.defines}"
        compile-units="${package.dir.tests} ${package.dir.units}"
        compile-file="${package.dir.tests}${file.separator}testit.pas"       
+       create-config="false"
     />
     <!-- Run the unitary tests -->
      <copy overwrite="true" todir="${build.resolved}">
@@ -160,13 +228,9 @@
        <arg line="" />
      </exec>
   
-    <fpc-compile executable="fpc" 
-       compile-defines="${package.defines}"
-       compile-units="${package.dir.units}"
-       compile-file="${package.file}"       
-    />
   </target>
-  
+
+
   
   <target name="build-cross" depends="init" description="Compile the source " >
     <taskdef resource="net/sf/antcontrib/antlib.xml"/>
@@ -178,6 +242,7 @@
           compile-defines="${package.defines}"
           compile-units="${package.dir.units}"
           compile-file="${package.file}"       
+          create-config="false"
         />
        </sequential>
     </for>
@@ -194,6 +259,7 @@
            dist-bin to create the correct package.
     -->           
     <var name="counter" value="1"/>
+    <var name="package.internal.arch" />
 
     
     <for list="${package.cross.targets}" param="target" delimiter=" " trim="true">
@@ -208,23 +274,36 @@
        <sequential>
         <math result="counter" operand1="${counter}" operation="+" operand2="1" datatype="int"/>
         <clean />
+        
+        
         <fpc-compile executable="@{executable}" 
           compile-defines="${package.defines}"
           compile-units="${package.dir.units}"
           compile-file="${package.file}"       
+          create-config="false"
         />
         <!-- Get the properties -->
         <propertycopy override="true" name="prop" from="target${counter}"/>
-        <dist-bin 
-           package-name="${package.name}"  
-           package-title="${package.title}" 
-           package-version="${package.version}"
-           package-arch="${prop}" 
-           package-documents="${package.documents}"
-           package-binaries="${package.binaries}" 
-           package-url="${package.url}"
-           />
-       </sequential>
+        <var file="package.properties" />
+        
+	<!-- Set package,internal.arch to correct string depending on the compiler type -->    
+	<condition property="package.internal.arch${counter}" else="${prop}" value="${prop}-${package.compiler}${package.compiler.version}">
+	<istrue value="${package.library}"/>
+	</condition>
+
+        <!-- Get the properties -->
+        <propertycopy override="true" name="package.internal.arch" from="package.internal.arch${counter}"/>
+    
+	<dist-bin 
+       	package-name="${package.name}"  
+       	package-title="${package.title}" 
+       	package-version="${package.version}"
+       	package-arch="${package.internal.arch}" 
+       	package-documents="${package.documents}"
+       	package-binaries="${package.binaries}" 
+       	package-url="${package.url}"
+        />
+      </sequential>  
     </for>
   </target>
   
@@ -232,11 +311,24 @@
   <target name="build-dcc" depends="init" description="Compile the source using Delphi compiler" >
   
     <clean />
+     
+     <dcc-compile 
+          compile-defines="${package.defines}"
+          compile-units="${package.dir.units.relative}"
+          compile-file="${package.file.native}"       
+          create-config="true"
+     />
+  </target>
+  
+  
+  
+  <target name="test-dcc" depends="init" description="Run the delphi compiled unitary tests" >
      <!-- Compile the unitary tests -->
     <dcc-compile 
        compile-defines="${package.defines}"
-       compile-units="${package.dir.tests.native} ${package.dir.units.native}"
+       compile-units="${package.dir.tests.native} ${package.dir.units.relative}"
        compile-file="${package.file.tests.native}"       
+       create-config="false"
     />
     <!-- Run the unitary tests -->
      <copy overwrite="true" todir="${build.resolved}">
@@ -247,21 +339,32 @@
      <exec executable="${build.resolved}${file.separator}testit" dir="${build.resolved}" failonerror="true">
        <arg line="" />
      </exec>
-     
-     <dcc-compile 
-          compile-defines="${package.defines}"
-          compile-units="${package.dir.units.native}"
-          compile-file="${package.file.native}"       
-     />
-  
   </target>
+  
+
+<target name="distclean" depends="init" description="Clean the distribution files">
+     <delete>
+       <fileset dir="${dist}" includes="*.*"/>
+    </delete>
+</target>
+  
 
   <target name="build-tpc" depends="init" description="Compile the source using Turbo Pascal compiler" >
+    <clean />
+     <tpc-compile 
+          compile-defines="${package.defines}"
+          compile-units="${package.dir.units.relative}"
+          compile-file="${package.file.native.relative}"       
+     />
+  </target>
+
+
+  <target name="test-tpc" depends="init" description="Run the turbo pascal compiled unitary tests" >
     <clean />
      <!-- Compile the unitary tests -->
     <tpc-compile 
        compile-defines="${package.defines}"
-       compile-units="${package.dir.tests.native} ${package.dir.units.native}"
+       compile-units="${package.dir.tests.relative} ${package.dir.units.relative}"
        compile-file="${package.file.tests.native}"       
     />
     <!-- Run the unitary tests -->
@@ -273,18 +376,13 @@
      <exec executable="${build.resolved}${file.separator}testit" dir="${build.resolved}" failonerror="true">
        <arg line="" />
      </exec>
-     
-     <tpc-compile 
-          compile-defines="${package.defines}"
-          compile-units="${package.dir.units.native}"
-          compile-file="${package.file.native}"       
-     />
   </target>
 
 
-
-  <target name="dist" depends="build,docs" description="Generate the distribution" >
+  <!-- Prepare a distribution zip file. Requires package.properties to be present and valid -->
+  <target name="dist" depends="init" description="Generate the distribution" >
         
+    <property file="package.properties" />    
     <!-- Create the distribution packages -->
     <tstamp>
        <format property="current_day" pattern="dd" />
@@ -325,15 +423,20 @@
           - docs directory
           - src directory 
     -->      
-    <zip destfile="${package.name}-${package.version}-src.zip" comment="${package.title} source package, version ${package.version}">
-      <zipfileset dir="${basedir}" includes="pad_file.xml ${src}/** ${docs}/pasdoc/** ${docs}/javadoc/** ${docs}/doxygen/** ${package.documents} ${test}/** ${build} ${lib}" prefix="${package.name}" />
+    <zip destfile=".${file.separator}${dist}${file.separator}${package.name}-${package.version}-src.zip" comment="${package.title} source package, version ${package.version}">
+      <zipfileset dir="${basedir}" includes="pad_file.xml tpc.cfg dcc32.cfg fpc.cfg ${src}/** ${docs}/pasdoc/** ${docs}/javadoc/** ${docs}/doxygen/** ${package.documents} ${test}/** ${bin} ${lib}" prefix="${package.name}" />
     </zip>
+
+    <!-- Set package,internal.arch to correct string depending on the compiler type -->    
+    <condition property="package.internal.arch" else="${package.cpu}-${package.os}" value="${package.cpu}-${package.os}-${package.compiler}${package.compiler.version}">
+    <istrue value="${package.library}"/>
+    </condition>
     
     <dist-bin 
        package-name="${package.name}"  
        package-title="${package.title}" 
        package-version="${package.version}"
-       package-arch="${package.cpu}-${package.os}" 
+       package-arch="${package.internal.arch}" 
        package-documents="${package.documents}"
        package-binaries="${package.binaries}" 
        package-url="${package.url}"
@@ -378,6 +481,23 @@
     <clean />
   </target>
   
+
+<!-- Write the data output of a package information -->
+<macrodef name="package-write" description="Write information on a package">
+<attribute name="package.os" default="" description="The operating system target" />
+<attribute name="package.compiler" description="The package target compiler type" />
+<attribute name="package.compiler.version" description="The package target compiler version" />
+<attribute name="package.cpu" description="The package CPU target compiler" />
+<sequential>
+<propertyfile
+    file="package.properties" comment=" Auto-generated package properties for compilation">
+  <entry  key="package.os" value="@{package.os}"/>
+  <entry  key="package.cpu" value="@{package.cpu}"/>
+  <entry  key="package.compiler" value="@{package.compiler}"/>
+  <entry  key="package.compiler.version" value="@{package.compiler.version}"/>
+</propertyfile>
+</sequential>
+</macrodef>
   
   
 <!-- Compile the data using the Delphi compiler
@@ -391,6 +511,7 @@
    <attribute name="compile-defines" description="Defines list" />
    <attribute name="compile-units" description="Units and include search path" />
    <attribute name="compile-file" description="Main file to compile" />
+   <attribute name="create-config" description="Create a Delphi configuration file (boolean)" />
    <sequential>
     <taskdef resource="net/sf/antcontrib/antlib.xml"/>
     
@@ -399,15 +520,36 @@
     <var name="dir.includes" value="" />     
     <var name="dir.objects" value="" />     
     <var name="defines" value="" />
-    <var name="package.os" value="win32" />
-    <var name="package.compiler" value="delphi" />
     
+    <local name="package.os" />
+    <local name="package.compiler.version" />
+    <local name="package.cpu" />
+    <local name="package.compiler" />
+    <property name="package.compiler" value="delphi" />
+    <property name="package.os" value="win32" />
+    <property name="package.cpu" value="x86" />
+    
+    <!-- Get the target operating system -->
+    <exec executable="dcc32" dir="${basedir}" searchpath="true" output="target.tmp" >
+      <arg line="--version" />
+    </exec>
+    <loadfile property="package.compiler.version" srcFile="target.tmp">
+  	<filterchain>
+  	    <headfilter lines="1"/>
+  	    <striplinebreaks/>
+  	    <tokenfilter>
+	      <replaceregex pattern="[A-Za-z \)\(]+" flags="g" replace=""/>  	      
+  	    </tokenfilter>
+  	</filterchain>    
+    </loadfile>    
+    <delete file="target.tmp" />  
     
     
 	<for list="@{compile-units}" param="dir" delimiter=" ">
 	  <sequential>
-	    <var name="dir.units" value= "${dir.units} -U@{dir}" />
-	    <var name="dir.includes" value= "${dir.includes} -I@{dir}" />
+	    <var name="dir.units" value= "${dir.units}@{dir};" />
+	    <var name="dir.includes" value= "${dir.includes}@{dir};" />
+	    <var name="dir.objects" value= "${dir.objects}@{dir};" />
 	  </sequential>
 	</for>
 	<for list="@{compile-defines}" param="defs" delimiter=" ">
@@ -415,6 +557,15 @@
 	    <var name="defines" value= "${defines} -D@{defs}" />
 	  </sequential>
 	</for>
+	
+    <!-- The information on the compiler used is written to a temporary file -->    
+    <package-write
+         package.os="${package.os}" 
+         package.compiler="${package.compiler}" 
+         package.compiler.version="${package.compiler.version}"  
+         package.cpu="${package.cpu}" 
+     />    
+	
 
     <tstamp>
        <format property="current_tstamp" pattern="yyyy-MM-dd" />
@@ -424,22 +575,35 @@
         const REVISION_STR = '${package.version}';
         const BUILDDATE_STR = '${current_tstamp}';
         const COMPILER_NAME = '${package.compiler}'
-        const PLATFORM_STR = 'win32'
+        const COMPILER_VERSION = '${package.compiler.version}'
+        const PLATFORM_STR = '${package.os}-${package.cpu}'
     </echo>
+
+
+<if>
+ <equals arg1="${create-config}" arg2="true" />
+ <then>
+    <echo file="dcc32.cfg" message="-E${build.relative} -N${build.relative} -$H+ -M -H -W -$R+ -DCPU86 -DENDIAN_LITTLE  -U${dir.units} -I${dir.includes} ${defines}"/>
     <exec executable="dcc32" dir="${basedir}" searchpath="true" >
-      <arg line="-E${build.resolved} -N${build.resolved} -$H+ -M -H -W -$R+ -U..\common\src\delphi -DCPU86 -DENDIAN_LITTLE  ${dir.units} ${dir.includes} ${defines} @{compile-file}" />
+      <arg line="@{compile-file}" />
     </exec>
+ </then>
+ <else>
+    <exec executable="dcc32" dir="${basedir}" searchpath="true" >
+      <arg line="-E${build.relative} -N${build.relative} -$H+ -M -H -W -$R+ -DCPU86 -DENDIAN_LITTLE  -U${dir.units} -I${dir.includes} ${defines} @{compile-file}" />
+    </exec>
+ </else>
+</if>
  </sequential>   
 </macrodef>  
 
 
 
-  
 
 <!-- Compile the data using the Turbo pascal compiler
     output variables:
       package.os 
-      package.compiler 
+      package.compiler
       package.cpu
 -->      
 <macrodef name="tpc-compile" description="Turbo Pascal compiler execution macro" backtrace="true">
@@ -455,8 +619,15 @@
     <var name="dir.includes" value="" />     
     <var name="dir.objects" value="" />     
     <var name="defines" value="" />
-    <var name="package.os" value="dos" />
-    <var name="package.compiler" value="tp" />
+    
+    <local name="package.os" />
+    <local name="package.compiler.version" />
+    <local name="package.cpu" />
+    <local name="package.compiler" />
+    <property name="package.compiler" value="tp" />
+    <property name="package.compiler.version" value="7" />
+    <property name="package.os" value="dos" />
+    <property name="package.cpu" value="x86" />
     
 	<for list="@{compile-units}" param="dir" delimiter=" ">
 	  <sequential>
@@ -471,6 +642,14 @@
 	  </sequential>
 	</for>
 
+    <!-- The information on the compiler used is written to a temporary file -->    
+    <package-write
+         package.os="${package.os}" 
+         package.compiler="${package.compiler}" 
+         package.compiler.version="${package.compiler.version}"  
+         package.cpu="${package.cpu}" 
+     />    
+
     <tstamp>
        <format property="current_tstamp" pattern="yyyy-MM-dd" />
     </tstamp>
@@ -478,21 +657,33 @@
         const REVISION_STR = '${package.version}';
         const BUILDDATE_STR = '${current_tstamp}';
         const COMPILER_NAME = '${package.compiler}'
-        const PLATFORM_STR = 'dos'
+        const COMPILER_VERSION = '${package.compiler.version}'
+        const PLATFORM_STR = '${package.os}-${package.cpu}'
     </echo>
     
-    <echo file="tpc.cfg" message="-I${dir.includes} -U${dir.units}C:\PROGRAMS\BP\UNITS -O${dir.objects} -E${build.resolved} -M -L  -$N+ -$R+ -DTP -DENDIAN_LITTLE -$$M65520,0,655360 "/>
-    <exec executable="tpc" dir="${basedir}" searchpath="true" failonerror="true" >
+    <var name="tp.units" value="${dir.units}C:\PROGRAMS\BP\UNITS" />
+    <length string="${tp.units}" property="tp.units.length" />
+    <fail message="The search path for units and include files >= 127 characters, reduce your search path accordingly!">
+     <condition>
+         <length string="${tp.units}" when="greater" length="127" />
+     </condition>
+     </fail>    
+     <echo>${tp.units}</echo>
+    <echo file="tpc.cfg" message="-I${dir.includes} -U${tp.units} -O${dir.objects} -E${build.relative} -M -L  -$N+ -$R+ -DTP -DENDIAN_LITTLE -$$M65520,0,655360 "/>
+    <exec executable="tpc" dir="${basedir}" searchpath="true" failonerror="true" newenvironment="true" >
       <arg line="/T${basedir} @{compile-file}" />
     </exec>
-   </sequential>
+    
+    
+  </sequential>
 </macrodef>  
   
 <!-- Compile the data using the Freepascal compiler
-    output variables:
-      package.os 
+    output variables to package.properties file:
+      package.target.os
       package.compiler 
-      package.cpu
+      package.compiler.version
+      package.target
 -->      
 <macrodef name="fpc-compile" description="Freepascal compiler execution macro" backtrace="true">
    <attribute name="executable" default="fpc" description="Executable name" />
@@ -500,6 +691,7 @@
    <attribute name="compile-defines" description="Defines list" />
    <attribute name="compile-units" description="Units and include search path" />
    <attribute name="compile-file" description="Main file to compile" />
+   <attribute name="create-config" description="Create a freepascal configuration file (boolean)" />
    <sequential>
    
     <taskdef resource="net/sf/antcontrib/antlib.xml"/>
@@ -508,10 +700,15 @@
     <var name="dir.includes" value="" />     
     <var name="dir.objects" value="" />     
     <var name="defines" value="" />
-    <var name="package.compiler" value="fpc" />
-    <local name="package.os.internal" />
+
+
+    <local name="package.os" />
+    <local name="package.compiler.version" />
+    <local name="package.cpu" />
+    <local name="package.compiler" />
+    <property name="package.compiler" value="fpc" />
+
     <local name="current_tstamp" />
-   
    
     <!-- Get the target operating system -->
     <exec executable="@{executable}" dir="${basedir}" searchpath="true" output="target.tmp" >
@@ -520,24 +717,74 @@
     <exec executable="@{executable}" dir="${basedir}" searchpath="true" output="target1.tmp" >
       <arg line="-iTP" />
     </exec>
+    <exec executable="@{executable}" dir="${basedir}" searchpath="true" output="target2.tmp" >
+      <arg line="-iV" />
+    </exec>
     
-    <loadfile property="package.os.internal" srcFile="target.tmp">
+    <loadfile property="package.os" srcFile="target.tmp">
       <filterchain>
         <striplinebreaks/>
       </filterchain>
     </loadfile>    
     <delete file="target.tmp" />  
-    <var name="package.os" value="${package.os.internal}" />
     
-    <loadfile property="package.cpu.internal" srcFile="target1.tmp">
+    <loadfile property="package.cpu" srcFile="target1.tmp">
       <filterchain>
         <striplinebreaks/>
       </filterchain>
     </loadfile>    
     <delete file="target1.tmp" />  
     
-    <var name="package.cpu" value="${package.cpu.internal}" />
+    <loadfile property="package.compiler.version" srcFile="target2.tmp">
+      <filterchain>
+        <striplinebreaks/>
+      </filterchain>
+    </loadfile>    
+    <delete file="target2.tmp" />  
+
+    <!-- The information on the compiler used is written to a temporary file -->    
+    <package-write
+         package.os="${package.os}" 
+         package.compiler="${package.compiler}" 
+         package.compiler.version="${package.compiler.version}"  
+         package.cpu="${package.cpu}" 
+     />    
+         
     
+
+    <tstamp>
+       <format property="current_tstamp" pattern="yyyy-MM-dd" />
+    </tstamp>
+
+    <echo file="${src}${file.separator}version.inc">
+        const REVISION_STR = '${package.version}';
+        const BUILDDATE_STR = '${current_tstamp}';
+        const COMPILER_NAME = '${package.compiler}'
+        const COMPILER_VERSION = '${package.compiler.version}'
+        const PLATFORM_STR = '${package.os}-${package.cpu}'
+    </echo>
+
+
+<if>
+ <equals arg1="${create-config}" arg2="true" />
+ <then>
+	<for list="@{compile-units}" param="dir" delimiter=" ">
+	  <sequential>
+	    <var name="dir.units" value= "${dir.units}${line.separator}-Fu@{dir}" />
+	    <var name="dir.includes" value= "${dir.includes}${line.separator}-Fi@{dir}" />
+	  </sequential>
+	</for>
+	<for list="@{compile-defines}" param="defs" delimiter=" ">
+	  <sequential>
+	    <var name="defines" value= "${defines}${line.separator}-d@{defs}" />
+	  </sequential>
+	</for>
+    <echo file="fpccfg.cfg" message="@{arguments}${line.separator}-FE${build.relative}${line.separator}-FU${build.relative}${line.separator}-vihwn${line.separator}-Cr${line.separator}-CR${line.separator}-Co${line.separator}-Ct${line.separator}-Ci${line.separator}-gl${line.separator}-Sg${line.separator}-Sh${line.separator}${dir.units}${line.separator}${dir.includes}${line.separator}${defines}${line.separator}" />
+    <exec executable="@{executable}" dir="${basedir}" searchpath="true" failonerror="true">
+      <arg line="@fpccfg.cfg @{compile-file}" />
+    </exec>
+ </then>
+ <else>
 	<for list="@{compile-units}" param="dir" delimiter=" ">
 	  <sequential>
 	    <var name="dir.units" value= "${dir.units} -Fu@{dir}" />
@@ -549,40 +796,33 @@
 	    <var name="defines" value= "${defines} -d@{defs}" />
 	  </sequential>
 	</for>
-
-    <tstamp>
-       <format property="current_tstamp" pattern="yyyy-MM-dd" />
-    </tstamp>
-
-    <echo file="${src}${file.separator}version.inc">
-        const REVISION_STR = '${package.version}';
-        const BUILDDATE_STR = '${current_tstamp}';
-        const COMPILER_NAME = '${package.compiler}'
-        const PLATFORM_STR = '${package.os}'
-    </echo>
     <exec executable="@{executable}" dir="${basedir}" searchpath="true" failonerror="true">
-      <arg line="@{arguments} -FE${build} -FU${build}  -vihwn -Cr -CR -Co -Ct -Ci -gl -Sh  ${dir.units} ${dir.includes} ${defines} @{compile-file}" />
+      <arg line="@{arguments} -FE${build.relative} -FU${build.relative} -vihwn -Cr -CR -Co -Ct -Ci -gl -Sg -Sh ${dir.units} ${dir.includes} ${defines}  @{compile-file}" />
     </exec>
+ </else>
+</if>
    </sequential>
 </macrodef>
 
 
 <macrodef name="clean" description="Clean macro" backtrace="true">
   <sequential>
-    <!-- Delete the ${build} directory trees -->
+    <!-- Delete the ${bin} directory trees -->
      <delete file="pad_file.xml" />
      <delete>
         <fileset dir="." includes="pad_file?.xml"/>
-        <fileset dir="." includes="tpc.cfg"/>
+        <fileset dir="." includes="package.properties"/>
      </delete>
      <delete>
        <fileset dir="." includes="${general_delete_file_patterns}"/>
      </delete>
      <delete>
-       <fileset dir="${build}" includes="${build_delete_file_patterns} *.*"/>
+       <fileset dir="${bin}" includes="${build_delete_file_patterns} *.*"/>
     </delete>
   </sequential>
 </macrodef>
+
+
 
 <!-- Create a zip distribution file for the specified platform with
      the specified parameters -->
@@ -682,7 +922,7 @@
     </replace>
    
   
-    <zip destfile="@{package-name}-@{package-version}-@{package-arch}.zip" comment="@{package-title} binary @{package-arch} package, version @{package-version}">
+    <zip destfile=".${file.separator}${dist}${file.separator}@{package-name}-@{package-version}-@{package-arch}.zip" comment="@{package-title} binary @{package-arch} package, version @{package-version}">
       <zipfileset dir="${basedir}" includes="pad_file.xml @{package-binaries} ${docs}/pasdoc/** ${docs}/javadoc/** ${docs}/doxygen/** @{package-documents}" prefix="@{package-name}" />
     </zip>
   </sequential>
