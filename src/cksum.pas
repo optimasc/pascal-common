@@ -16,7 +16,7 @@
     
     
 }
-Unit sums;
+Unit cksum;
 
 Interface
 

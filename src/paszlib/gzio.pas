@@ -23,7 +23,7 @@ uses
   {$else}
   dos,
   {$endif}
-  zbase, crc, zdeflate, zinflate, sysutils;
+  zbase, zdeflate, zinflate, sysutils;
 
 type gzFile = pointer;
 type z_off_t = longint;
@@ -418,7 +418,7 @@ begin
       if (c <> Z_EOF) then begin
         Inc(s^.stream.avail_in);
         Dec(s^.stream.next_in);
-	s^.transparent := TRUE;
+   s^.transparent := TRUE;
       end;
       if (s^.stream.avail_in <> 0) then s^.z_err := Z_OK
       else s^.z_err := Z_STREAM_END;
@@ -597,9 +597,9 @@ begin
       {$I+}
       if (s^.stream.avail_in = 0) then begin
         s^.z_eof := true;
-	if (IOResult <> 0) then begin
-	  s^.z_err := Z_ERRNO;
-	  break;
+   if (IOResult <> 0) then begin
+     s^.z_err := Z_ERRNO;
+     break;
         end;
       end;
       s^.stream.next_in := s^.inbuf;
@@ -627,18 +627,18 @@ begin
 
       if (s^.crc <> filecrc) or (s^.stream.total_out <> filelen)
         then s^.z_err := Z_DATA_ERROR
-	else begin
-	  { Check for concatenated .gz files: }
-	  check_header(s);
-	  if (s^.z_err = Z_OK) then begin
+   else begin
+     { Check for concatenated .gz files: }
+     check_header(s);
+     if (s^.z_err = Z_OK) then begin
             total_in := s^.stream.total_in;
             total_out := s^.stream.total_out;
 
-	    inflateReset (s^.stream);
-	    s^.stream.total_in := total_in;
-	    s^.stream.total_out := total_out;
-	    s^.crc := crc32 (0, nil, 0);
-	  end;
+       inflateReset (s^.stream);
+       s^.stream.total_in := total_in;
+       s^.stream.total_out := total_out;
+       s^.crc := crc32 (0, nil, 0);
+     end;
       end; {IF-THEN-ELSE}
     end;
 
@@ -788,10 +788,10 @@ var
 begin
 {$ifdef HAS_snprintf}
     snprintf(buf, sizeof(buf), format, a1, a2, a3, a4, a5, a6, a7, a8,
-	     a9, a10, a11, a12, a13, a14, a15, a16, a17, a18, a19, a20);
+        a9, a10, a11, a12, a13, a14, a15, a16, a17, a18, a19, a20);
 {$else}
     sprintf(buf, format, a1, a2, a3, a4, a5, a6, a7, a8,
-	    a9, a10, a11, a12, a13, a14, a15, a16, a17, a18, a19, a20);
+       a9, a10, a11, a12, a13, a14, a15, a16, a17, a18, a19, a20);
 {$endif}
     len := strlen(buf); { old sprintf doesn't return the nb of bytes written }
     if (len <= 0) return 0;

@@ -13,8 +13,7 @@ interface
 
 {$I zconf.inc}
 
-//uses
-//  zutil;
+uses zbase;
 
 
 function crc32(crc : cardinal; buf : pbyte; len : cardinal) : cardinal;

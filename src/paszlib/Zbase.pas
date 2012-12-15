@@ -96,7 +96,14 @@ const
 { default windowBits for decompression. MAX_WBITS is for compression only }
 const
   DEF_WBITS = MAX_WBITS;
-
+  
+  
+{$IFDEF TP}
+  type cardinal = longint;
+{$ENDIF}
+{$IFDEF FPC}
+  type pcardinal = ^cardinal;
+{$ENDIF}
 
 type  Pbytearray=^Tbytearray;
       Pwordarray=^Twordarray;
@@ -405,7 +412,7 @@ function zError(err : integer) : string;
 const
   ZLIB_VERSION : string[10] = '1.1.2';
 
-resourcestring Sneed_dict     = 'need dictionary';
+               Sneed_dict     = 'need dictionary';
                Sstream_end    = 'stream end';
                Sfile_error    = 'file error';
                Sstream_error  = 'stream error';
@@ -424,7 +431,8 @@ procedure z_error (m : string);
 implementation
 
 function zError(err : integer) : string;
-
+var
+  res: string;
 begin
   case err of
     Z_VERSION_ERROR:
@@ -446,8 +454,8 @@ begin
     Z_NEED_DICT:
       zerror:=Sneed_dict;
     else
-      str(err,result);
-      zerror:='Unknown zlib error '+result;
+      str(err,res);
+      zerror:='Unknown zlib error '+res;
   end;
 end;
 

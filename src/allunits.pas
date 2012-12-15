@@ -5,7 +5,7 @@ interface
 uses
   dos,
   collects,
-  sums,
+  cksum,
   cmntyp,
   dateutil,
   fs,
@@ -20,7 +20,8 @@ uses
 {$IFDEF WIN32}
   extdos,
 {$ENDIF}
-  cmnutils;
+  cmnutils,
+  paszlib;
   
 implementation  
   
