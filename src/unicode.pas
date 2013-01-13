@@ -86,7 +86,7 @@ type
   {** UCS-2 base data type }
   ucs2char = word;
   pucs2char = ^ucs2char;
-  
+
   {** UCS-2 string declaration. Index 0 contains the active length
       of the string in characters.
   }
@@ -103,7 +103,7 @@ type
   }
   longucs4string = array[0..MAX_LONG_STRING_LENGTH] of ucs4char;
   plongucs4string = ^longucs4string;
-  
+
   {** UCS-2 long string declaration. Index 0 contains the active length
       of the string in characters. This type takes a lot more memory 
       than the regular ucs2string and should seldom be used.
@@ -132,12 +132,18 @@ const
        when converting to a single byte character set.
    }
    DEFAULT_FALLBACK_CHAR: string[1] = '?';
-   
+
+{$IFDEF TP}
    {** Maximum size of a null-terminated UCS-4 character string }
    MAX_UCS4_CHARS = high(smallint) div (sizeof(ucs4char));
    {** Maximum size of a null-terminated UCS-4 character string }
    MAX_UCS2_CHARS = high(smallint) div (sizeof(ucs2char))-1;
-
+{$ELSE}
+   {** Maximum size of a null-terminated UCS-4 character string }
+   MAX_UCS4_CHARS = high(word);
+   {** Maximum size of a null-terminated UCS-4 character string }
+   MAX_UCS2_CHARS = high(word);
+{$ENDIF}
   {** Return status: conversion successful }
   UNICODE_ERR_OK =     0;
   {** Return status: source sequence is illegal/malformed }
@@ -158,7 +164,7 @@ const
   
   BOM_UTF16_BE = #$FE#$FF;
   BOM_UTF16_LE = #$FF#$FE;
-  
+
 type
   ucs4strarray = array[0..MAX_UCS4_CHARS] of ucs4char;
   pucs4strarray = ^ucs4strarray;
@@ -447,7 +453,7 @@ type
  function ucs4strposISO8859_1(S: pucs4char; Str2: PChar): pucs4char;
 
  {** @abstract(Allocate and copy trimmed an UCS-4 null terminated string)
-     
+
      Allocates a new UCS-4 null terminated string, and copies
      the existing string, avoiding a copy of the whitespace at
      the start and end of the string
@@ -748,7 +754,7 @@ type
  
   {** @abstract(Converts a null-terminated ISO-8859-1 string to a Pascal-style
        ASCII encoded string.)
-       
+
        The returned string shall be empty if the pointer was nil.
 
   }
@@ -2674,7 +2680,7 @@ end;
    Begin
      p1^[i]:=ucs4char(p2^[i]);
    end;
-   p1^[namelength]:=0;  
+   p1^[namelength]:=0;
    ucs4strnewucs2:=FinalName;
  end;
  
@@ -2783,10 +2789,14 @@ end;
             else
               inc(totalsize);
           end;
+{$IFOPT R+}
+{$DEFINE RCHECK_ON}
+{$R-}
+{$ENDIF}
         { The size to allocate is the same to allocate }
-        Getmem(dest,totalsize*sizeof(ucs4char)+sizeof(ucs4char));        
+        Getmem(dest,totalsize*sizeof(ucs4char)+sizeof(ucs4char));
         CurrentIndex:=0;
-        { Now actually copy the data }  
+        { Now actually copy the data }
         for i:=0 to length(str)-1 do
           begin
             l:=p^[str[i+1]];
@@ -2801,6 +2811,10 @@ end;
         { add null character }
         dest^[currentindex]:=0;
         ucs4strnewstr:=pucs4char(dest);
+{$IFDEF RCHECK_ON}
+{$UNDEF RCHECK_ON}
+{$R+}
+{$ENDIF}
       end;
   end;
   
