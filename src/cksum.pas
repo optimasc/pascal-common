@@ -122,8 +122,8 @@ function UpdateCrc16(InitCrc: word; const b: Array of byte): word;
 }    
 function UpdateAdler32(InitAdler: longword; const b: Array of byte): longword;
 
-{** @abstract(Calculates an 8-bit fletcher checksum value)
-    Routine to get the Fletcher 8-bit checksum as
+{** @abstract(Calculates a 16-bit fletcher checksum value)
+    Routine to get the Fletcher 16-bit checksum as
     defined in IETF RFC 1146. 
     
     Normally to be compatible with the standard,
@@ -132,11 +132,11 @@ function UpdateAdler32(InitAdler: longword; const b: Array of byte): longword;
     taken as is. The routine can used on a single byte or 
     on a byte array.
     
-    @param(InitFletcher The value of the previous Fletcher8)
-    @param(b The byte to get the Fletcher8 of)
-    @returns(The updated Fletcher8 value)
+    @param(InitFletcher The value of the previous Fletcher16)
+    @param(b The byte to get the Fletcher16 of)
+    @returns(The updated Fletcher16 value)
 }    
-function UpdateFletcher8(InitFletcher: word; const b: Array of byte): word;
+function UpdateFletcher16(InitFletcher: word; const b: Array of byte): word;
 
 {** @abstract(Calculates a standard 16-bit CRC)
     Standard CRC-16 bit algorithm as used in the ARC archiver.
@@ -372,7 +372,7 @@ end;
 {$undef Range_check_on}
 {$endif Range_check_on}
 
-function UpdateFletcher8(InitFletcher: word; const b: Array of byte): word;
+function UpdateFletcher16(InitFletcher: word; const b: Array of byte): word;
 var
  i: longword;
  a,c: byte;
