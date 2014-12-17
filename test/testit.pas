@@ -12,6 +12,7 @@
 {$V+} { Strict VAR strings checking      }
 {$X+} { Extended syntax                  }
 {$IFNDEF TP}
+ {$C+} { Assertions on                   }
  {$H+} { Memory allocated strings        }
  {$DEFINE ANSISTRINGS}
  {$J+} { Writeable constants             }
@@ -32,6 +33,7 @@ uses cmntyp,
      testdate,
      testsgml,
      testietf,
+     testdata,
      tiso639,
      sysutils
      ;
@@ -677,6 +679,8 @@ const
 
  SIMPLE_CASE_4 = NAME_1+'; '+NAME_2+'; '+NAME_3;
 
+ COMPLEX_CASE = '"prép.\n La preposition introduit un complement d''objet indirect. L''eleve répond à l''institutrice."';
+
 { Tests the stroken routine }
 procedure TestStrToken;
 var
@@ -835,8 +839,15 @@ Begin
    RunError(255);
  if origString <> '' then
    RunError(255);
+ {********************** Case 11 ***********************}
+ { No delimiter found but within double quotes          }
+  origstring := COMPLEX_CASE;
+  s:=StrToken(origstring,',',true);
+  if s <> COMPLEX_CASE then
+   RunError(255);
+ if origString <> '' then
+   RunError(255);
 end;
-
 
 { This tests the Key Collection object }
 procedure TestKeys;
@@ -1071,6 +1082,10 @@ Begin
   testbasechar;
   TestStrGetNextLine;
   testkeys;
+  { Data structure testing }
+  test_list;
+  test_hash_table_static;
+  test_hash_table_dynamic;
   TestUTF8Utils;
   WriteLn(ErrOutput,'Std Error OUTPUT');
 end.
