@@ -53,17 +53,17 @@ CONST
 
   {** @abstract(Change the endian of a 16-bit value) }
   Procedure SwapWord(var x : word);
-  
-  
+
+
   {-------------------------- String utilities --------------------------}
 
-  {** @abstract(Trims and adds double quotes to the string if 
+  {** @abstract(Trims and adds double quotes to the string if
        it contains spaces).
-       
+
   }
   function AddDoubleQuotes(s: string): string;
-  
-  {** @abstract(Removes the leading and ending double quotes from 
+
+  {** @abstract(Removes the leading and ending double quotes from
      a string)
 
      If there is no double quotes at the beginning or end of the
@@ -112,6 +112,15 @@ function StrGetNextLine(var Text: String) : String;
       @param(code Result of operation, 0 when there is no error)
   }
   function EscapeToPascal(const s:string; var code: integer): string;
+  
+  
+  {** Converts a pascal style string to a C style string that contains
+      escape sequences.. Returns the converted string. 
+
+      @param(s String to convert)
+  }
+  function PascalToEscape(const s:string): string;
+  
 
 
  {** @abstract(Trim removes leading and trailing spaces and control 
@@ -133,7 +142,7 @@ function StrGetNextLine(var Text: String) : String;
   function hexstr(val : longint;cnt : byte) : string;
 
   {** @abstract(Convert a value to an ASCII decimal representation) 
-  
+
       To avoid left padding with zeros, set @code(cnt) to zero.
 
       @param(val Signed 32-bit value to convert)
@@ -247,6 +256,10 @@ function fillwithzero(s: string; newlength: integer): string;
   }
 function removenulls(const s: string): string;  
 
+{** Reads a text line from a text file. Both \r\n (Windows) and \n (UNIX) line 
+    endings are supported. 
+}
+Function ReadLine(var T: Text): String;
 
 
 const
@@ -268,8 +281,13 @@ const
 *}
 function NormalizeString(instr: pchar; normtype: word): pchar;
 
+const
+ CR = #13;
+ LF = #10;
 
-Const WhiteSpace = [' ',#10,#13,#9];
+
+
+Const WhiteSpace = [' ',LF,CR,#9];
 
 Implementation
 
@@ -322,7 +340,7 @@ uses sysutils;
       of the string }
     CleanString:=trim(outstr);  
   end;
- 
+
     
     
   function AddDoubleQuotes(s: string): string;
@@ -840,6 +858,63 @@ end;
 
 
 
+function PascalToEscape(const s:string): string;
+ var
+  tmpString: string;
+  i: integer;
+ Begin
+  tmpString := '';
+  for i:=1 to length(s) do
+    Begin
+      case s[i] of
+       #07:
+         Begin
+           tmpString := tmpString + '\a';
+         end;
+       #08:
+         Begin
+           tmpString := tmpString + '\b';
+         end;
+       #$0C:
+         Begin
+           tmpString := tmpString + '\f';
+         end;
+       #10:
+         Begin
+           tmpString := tmpString + '\n';
+         end;
+       #13:
+         Begin
+           tmpString := tmpString + '\r';
+         end;
+       #09:
+         Begin
+           tmpString := tmpString + '\t';
+         end;
+       #$0B:
+         Begin
+           tmpString := tmpString + '\v';
+         end;
+        '''':
+         Begin
+           tmpString := tmpString + '\''';
+         end;
+        '"': 
+         Begin
+           tmpString := tmpString + '\"';
+         end;
+        '\': 
+         Begin
+           tmpString := tmpString + '\\';
+         end;
+        else
+         Begin
+           tmpString := tmpString + s[i];
+         end;
+       end; { end case }
+    end; { endif }
+    PascalToEscape := tmpString;
+ end;
 
 
 Function EscapeToPascal(const s:string; var code: integer): string;
@@ -957,6 +1032,47 @@ begin
 end;
 
 
+    {** Reads a text line from a text file. Both \r\n (Windows) and \n (UNIX) line 
+        endings are supported. 
+    }
+    Function ReadLine(var T: Text): String;
+      var
+       outStr: String;
+       c: char;
+      Begin
+        outStr := '';
+        ReadLine := OutStr;
+        if EOF(T) then 
+          exit;
+        Read(T,c);  
+        Repeat 
+          case c of
+           CR:
+           Begin
+             Read(T,c);
+             { We exit the loop we have finished reading, CR+LF mode (Windows,DOS) }
+             if c=LF then
+               begin
+                  break;
+               end;
+             outStr := outStr + c;
+           end;
+          LF:
+           Begin
+             break;
+           end;
+          else
+           Begin
+             outStr:= outStr + c;
+           end; 
+          end; { end case }
+          Read(T,c); 
+        Until EOF(T);
+        ReadLine := OutStr;
+      end;
+
+
+
 function StrGetNextLine(var Text: String) : String;
 var
  s: string;
@@ -1018,6 +1134,11 @@ begin
          delete(Text,1,idx);
          StrToken:=TmpStr;
          apos := Pos(Delimiter, Text);
+         if (apos <= 0) then
+           Begin
+             exit;
+             Text:='';
+           end;
        end;
      { No special separation to do... }
    end;
@@ -1040,7 +1161,7 @@ var
  p,p1: pchar;
  inlen: integer;
  outidx: integer;
- 
+
  outlen: integer;
  outstr: pchar;
  i: integer;
