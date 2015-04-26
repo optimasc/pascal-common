@@ -20,8 +20,7 @@ uses
 {$IFDEF WIN32}
   extdos,
 {$ENDIF}
-  cmnutils,
-  paszlib;
+  cmnutils;
   
 implementation  
   
