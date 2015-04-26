@@ -35,6 +35,7 @@ uses cmntyp,
      testietf,
      testdata,
      tiso639,
+     testhsh,
      sysutils
      ;
 
@@ -1087,6 +1088,7 @@ Begin
   test_hash_table_static;
   test_hash_table_dynamic;
   TestUTF8Utils;
+  testhsh.testit;
   WriteLn(ErrOutput,'Std Error OUTPUT');
 end.
 

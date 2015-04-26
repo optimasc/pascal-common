@@ -2,97 +2,278 @@
     $Id: crc.pas,v 1.10 2012-02-16 05:40:10 carl Exp $
     Copyright (c) 2004-2014 by Carl Eric Codere
 
-    CRC and Chekcsum routines    
+    Hash generation routines
     
     See License.txt for more information on the licensing terms
-    for this source code.
+    for this source code. Some parts of the code is based on 
+    David Barton' s code, license below.
     
- **********************************************************************}
-{** @author(Carl Eric Codere) 
-    @abstract(CRC and checksum generation unit)
-
-    CRC and checksum generation routines, 
-    compatible with ISO 3309 and ITU-T-V42 among others.
-    
-    Also substantianl code from David Barton's DCPCrypt modules
-    related to cryptographic hashes. Copyright notice is reproduced
-    below.
+ Copyright (c) 1999-2002 David Barton                                       
+ Permission is hereby granted, free of charge, to any person obtaining a    
+ copy of this software and associated documentation files (the "Software"), 
+ to deal in the Software without restriction, including without limitation  
+ the rights to use, copy, modify, merge, publish, distribute, sublicense,   
+ and/or sell copies of the Software, and to permit persons to whom the      
+ Software is furnished to do so, subject to the following conditions:       
+                                                                            
+ The above copyright notice and this permission notice shall be included in 
+ all copies or substantial portions of the Software.                        
+                                                                            
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,   
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL    
+ THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING    
+ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER        
+ DEALINGS IN THE SOFTWARE.                                                  
 }
-{* Copyright (c) 1999-2002 David Barton                                       *}
-{* Permission is hereby granted, free of charge, to any person obtaining a    *}
-{* copy of this software and associated documentation files (the "Software"), *}
-{* to deal in the Software without restriction, including without limitation  *}
-{* the rights to use, copy, modify, merge, publish, distribute, sublicense,   *}
-{* and/or sell copies of the Software, and to permit persons to whom the      *}
-{* Software is furnished to do so, subject to the following conditions:       *}
-{*                                                                            *}
-{* The above copyright notice and this permission notice shall be included in *}
-{* all copies or substantial portions of the Software.                        *}
-{*                                                                            *}
-{* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR *}
-{* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,   *}
-{* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL    *}
-{* THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER *}
-{* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING    *}
-{* FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER        *}
-{* DEALINGS IN THE SOFTWARE.                                                  *}
-{******************************************************************************}
+
+{** @author(Carl Eric Codere) 
+    @abstract(hash generation unit)
+
+    Hash generation routines for different algorithms. The different algorithms
+    implemented are described hereafter. Each algorithm is described with the
+    following information:
+    
+    
+   
+ @definitionList(
+    @itemSpacing(Compact)
+   @itemLabel(Name)
+      @item(The common name of the algorithm)
+   @itemLabel(Origin)
+      @item(The author or usage of the algorithm)
+   @itemLabel(Category)
+      @item(The general usage of this algorithm)
+   @itemLabel(Width)
+      @item(The width in bits of the algorithm)
+   @itemLabel(Init)
+      @item(The initialization value)
+   @itemLabel(XorOut)
+      @item(The value the data is Xor'ed with at output)
+   @itemLabel(Check)
+      @item(The calculated value tested against the ASCII string '123456789')
+   )
+   
+   The algorithms implemented are as follows:
+   
+   @unorderedList(
+    @itemSpacing(Compact)
+    
+    @item(Name   : @bold("CRC-8")
+      @unorderedList(
+         @item(Origin : System Management Bus Specification, FLAC codec)
+         @item(Category : Data integrity)
+         @item(Width  : 8 bits)
+         @item(Poly   : $07)
+         @item(Init   : $00)
+         @item(XorOut : $00)
+         @item(Check  : $F4)
+     ))    
+     
+     
+    @item(Name   : @bold("sum8")
+      @unorderedList(
+        @item(Origin : )
+        @item(Category : Data integrity)
+        @item(Width  : 8 bits)
+        @item(Init   : $00)
+        @item(Check  : $DD)
+     ))    
+    
+    
+    @item(Name   : @bold("Fletcher-16")
+      @unorderedList(
+        @item(Origin : Fletcher, J. G. "An Arithmetic Checksum for Serial Transmissions". IEEE Transactions on Communications.
+           COM-30 (1): 247-252.)
+        @item(Category : Data integrity)
+        @item(Width  : 16 bits)
+        @item(Init   : $0000)
+        @item(XorOut : $0000)
+        @item(Check  : $1EDE)
+     ))
+    
+    @item(Name   : @bold("CRC-16")
+      @unorderedList(
+        @item(Origin : Rocksoft Model CRC Algorithm, ARC, LHA, ZOO, 'IEEE Micro' Aug 88 - A Tutorial on CRC Computations)
+        @item(Category : Data integrity, general purpose hashing)
+        @item(Width  : 16 bits)
+        @item(Poly   : $8005)
+        @item(Init   : $0000)
+        @item(XorOut : $0000)
+        @item(Check  : $BB3D)
+     ))
+    
+    @item(Name   : @bold("CCITT CRC-16")
+      @unorderedList(
+        @item(Origin : ITU-T X.25, IETF RFC 1171)
+        @item(Category : Data integrity)
+        @item(Width  : 16 bits)
+        @item(Poly   : $1021)
+        @item(Init   : $FFFF)
+        @item(XorOut : $FFFF)
+        @item(Check  : $906E)
+     ))
+     
+    
+    @item(Name   : @bold("CCITT CRC-32")
+      @unorderedList(
+        @item(Origin : ITU-T V.42, PKZIP, ISO 3309)
+        @item(Category : Data integrity, general purpose hashing)
+        @item(Width  : 32 bits)
+        @item(Poly   : $04C11DB7)
+        @item(Init   : $FFFFFFFF)
+        @item(XorOut : $FFFFFFFF)
+        @item(Check  : $CBF43926)
+     ))
+    
+    @item(Name   : @bold("CRC-32C")
+      @unorderedList(
+        @item(Origin : IETF RFC 3720, Castagnoli)
+        @item(Category : Data integrity, general purpose hashing)
+        @item(Width  : 32 bits)
+        @item(Poly   : $1EDC6F41)
+        @item(Init   : $FFFFFFFF)
+        @item(XorOut : $FFFFFFFF)
+        @item(Check  : $E3069283)
+     ))
+    
+    @item(Name   : @bold("Adler-32")
+      @unorderedList(
+        @item(Origin : IETF RFC 1950,gzip)
+        @item(Category : Data integrity)
+        @item(Width  : 32 bits)
+        @item(Init   : $00000001)
+        @item(XorOut : $00000000)
+        @item(Check  : $091E01DE)
+     ))
+     
+     
+    @item(Name   : @bold("Larson")
+      @unorderedList(
+        @item(Origin : Paul Larson)
+        @item(Category : Short string hashing)
+        @item(Width  : 32 bits)
+        @item(Init   : $00000000)
+        @item(XorOut : $00000000)
+        @item(Check  : )
+     ))
+     
+     
+    @item(Name   : @bold("DJB")
+      @unorderedList(
+        @item(Origin : Daniel J. Bernstein)
+        @item(Category : Short string hashing)
+        @item(Width  : 32 bits)
+        @item(Init   : $00001505)
+        @item(XorOut : $00000000)
+        @item(Check  : $35CDBB82)
+     ))
+     
+     
+    @item(Name   : @bold("ELF32")
+      @unorderedList(
+        @item(Origin : ELF Specification)
+        @item(Category : Short string hashing)
+        @item(Width  : 32 bits)
+        @item(Init   : $00000000)
+        @item(XorOut : $00000000)
+        @item(Check  : $0678AEE9)
+     ))
+     
+     
+    @item(Name   : @bold("PJW")
+      @unorderedList(
+        @item(Origin : Peter J. Weinberger of AT&T Bell Labs, Compilers (Principles, Techniques and Tools) 
+              by Aho, Sethi and Ulman, recommendation.)
+        @item(Category : Short string hashing)
+        @item(Width  : 32 bits)
+        @item(Init   : $00000000)
+        @item(XorOut : $00000000)
+        @item(Check  : $0678AEE9)
+     ))
+     
+     
+    @item(Name   : @bold("MD5")
+      @unorderedList(
+        @item(Origin : IETF RFC 1321 - Ron Rivest)
+        @item(Category : Data integrity, cryptographic hashing)
+        @item(Width  : 128 bits)
+        @item(Check  : 25F9E794323B453885F5181F1B624D0B)
+     ))
+
+
+    @item(Name   : @bold("SHA-1")
+      @unorderedList(
+        @item(Origin : US National Security agency)
+        @item(Category : Data integrity, cryptographic hashing)
+        @item(Width  : 160 bits)
+        @item(Check  : F7C3BC1D808E04732ADF679965CCC34CA7AE3441)
+     ))
+     
+    @item(Name   : @bold("SHA-256")
+      @unorderedList(
+        @item(Origina :US National Security agency)
+        @item(Category : Data integrity, cryptographic hashing)
+        @item(Width  : 256 bits)
+        @item(Check  : 15E2B0D3C33891EBB0F1EF609EC419420C20E320CE94C65FBC8C3312448EB225)
+     ))
+     
+   )
+   
+   
+General hash recommendations:   
+   
+   @unorderedList(
+    @itemSpacing(Compact)
+    @item(For general purpose hashing, the @italic(CCITT CRC-16) or
+       @italic(CCITT CRC-32) algorithm are the recommended algorithms)
+    @item(For short string hashing the @italic(Larson) algorithm is recommended. )
+    @item(For data integrity, @italic(CCITT CRC-8), @italic(CCITT CRC-16),
+      @italic(CCITT CRC-32) or @italic(MD5) are recommended
+   depending on the quality of the data integrity required and processing power required.)
+    @item(For cryptographic hashing, @italic(SHA-256) is the recommended hashing algorithm.)
+   )
+   
+How to use the different algorithms:
+
+  @orderedList(
+    @item(Call XXXInit, which will initialize the algorithm)
+    @item(Call XXXUpdate one or more time to calculate the hash on the data)
+    @item(Call XXXFinal to retrieve the final hash value, the buffer passed
+      should be of at least the number of bits specified in the algorithm
+      description)
+  )
+  
+  
+Reference information and validation provided by:
+  @unorderedList(
+    @item(Easy hash software by Ziin)
+    @item(VisualHash software by Dominik Reichl)
+    @item(Peter Kankowski. "An Empirical hash comparison", http://www.strchr.com/hash_functions)
+    @item(Greg Coo. "Catalogue of parametrised CRC algorithms", http://reveng.sourceforge.net/crc-catalogue/)
+    @item(Theresa C. Maxino, Philip J. Koopman (January 2009). "The Effectiveness
+       of Checksums for Embedded Control Networks".
+       IEEE Transactions on Dependable and Secure Computing.
+  )
+  
+    
+}
+
+{
+     Accroding to Maxino:
+     
+       Undetected errors from lowest efficiency to highest efficiency
+                            xor8 >> sum8 > adler8 > fletcher8 >> crc8
+                            xor16 >> sum16 > adler16 > fletcher16 >> crc16
+}
 
 Unit cksum;
 
+{$i defines.inc}
+
 Interface
 
-
-
-{ Some information:
-   Name: The name of the algorithm
-   Init: The initial value to use
-   XorOut: The final result should be xored
-           with this value. 0 indicates no xor
-           necessary.
-   Check: The resulting value against the
-          ASCII string 1234565789
-
-   Name   : "CCITT CRC-32"
-   Origin : ITU-T,pkzip,ISO 3309
-   Width  : 32 bit
-   Init   : FFFFFFFF
-   XorOut : FFFFFFFF
-   Check  : CBF43926
-
-   Name   : "Adler32"
-   Origin : IETF RFC 1950,gzip
-   Width  : 32 bit
-   Init   : 1
-   XorOut : 00000000
-   Check  : 091E01DE
-
-   Name   : "CCITT CRC-16"
-   Origin : ITU,X.25
-   Width  : 16 bit
-   Init   : FFFF
-   XorOut : 0000
-   Check  : 29B1 (unsure, since a particular
-     web site this indicates this is wrong,
-     but this concords with all other
-     implementation).
-
-   Name   : "Fletcher 8-bit"
-   Origin : IETF RFC 1146
-   Width  : 16 bit
-   Init   : 0000
-   XorOut : 0000
-   Check  : DD15 (to be confirmed against
-     another implementation).
-
-   Name   : "CRC-16" (used by ARC)
-   Origin : Rocksoft Model CRC Algorithm,ARC,
-            'IEEE Micro' Aug 88 - A Tutorial on CRC Computations
-   Width  : 16 bit
-   Init   : 0000
-   XorOut : 0000
-   Check  : BB3D
-}
 
 const
    INIT_CRC32      = $FFFFFFFF;
@@ -102,16 +283,55 @@ const
    INIT_CRC        = $0000; 
 
 Type
+{$IFNDEF SUPPORTS_LONGWORD}
+{$R-}
+{$Q-}
+  Longword = Longint;
+{$ENDIF}
+  PLongword = ^Longword;
   THashHandle = record
     hashValue: longword;
+    m_s1, m_s2: longword;
     Data: Pointer;
   end;
+
+
+
+{-----------------------------------------------------------------------}  
+{                          INTEGRITY HASHES                             }
+{-----------------------------------------------------------------------}  
   
-  
+procedure Crc8Init(var Handle: THashHandle);
+procedure crc8Update(var Handle: THashHandle; const Buffer; size: integer);
+{** @abstract(Returns the results of the CRC-8 calculation)
+
+    @param(Handle The initialized hash handle)
+    @param(HashValue the actual hash value result on 8 bits)
+}
+procedure crc8Final(var Handle: THashHandle; var hashValue);
 
 
+procedure Sum8Init(var Handle: THashHandle);
+procedure Sum8Update(var Handle: THashHandle; const Buffer; size: integer);
+{** @abstract(Returns the results of the Sum8 calculation)
 
-{** @abstrac(Initializes a CRC-32 CCITT hash calculator)
+    @param(Handle The initialized hash handle)
+    @param(HashValue the actual hash value result on 8 bits)
+}
+procedure Sum8Final(var Handle: THashHandle; var hashValue);
+
+
+procedure Crc32CInit(var Handle: THashHandle);
+procedure crc32cUpdate(var Handle: THashHandle; const Buffer; size: integer);
+{** @abstract(Returns the results of the CRC-32C calculation)
+
+    @param(Handle The initialized hash handle)
+    @param(HashValue the actual hash value result on 32 bits)
+}
+Procedure Crc32cFinal(var Handle: THashHandle; var HashValue);
+
+
+{** @abstract(Initializes a CRC-32 CCITT hash calculator)
 
     Initializes a hash calculator that is compatible with 
     ISO 3309, as well as being used in the zip archive format.
@@ -127,14 +347,14 @@ Procedure Crc32Init(var Handle: THashHandle);
     @param(size The length of the data in bytes)
 }    
 Procedure Crc32Update(var Handle: THashHandle; const Buffer; size: Integer);
-{** @abstracf(Returns the results of the CRC-32 CCITT calculation)
+{** @abstract(Returns the results of the CRC-32 CCITT calculation)
 
     @param(Handle The initialized hash handle)
     @param(HashValue the actual hash value result on 32 bits)
 }
 Procedure Crc32Final(var Handle: THashHandle; var HashValue);
 
-{** @abstrac(Initializes a CRC-16 CCITT hash calculator)
+{** @abstract(Initializes a CRC-16 CCITT hash calculator)
 
    Initializes a hash calculator that is compatible with X.25.
 
@@ -148,14 +368,14 @@ Procedure Crc16Init(var Handle: THashHandle);
     @param(size The length of the data in bytes)
 }    
 Procedure Crc16Update(var Handle: THashHandle; const Buffer; size: Integer);
-{** @abstracf(Returns the results of the CRC-16 CCITT calculation)
+{** @abstract(Returns the results of the CRC-16 CCITT calculation)
 
     @param(Handle The initialized hash handle)
     @param(HashValue the actual hash value result on 16 bits)
 }
 Procedure Crc16Final(var Handle: THashHandle; var HashValue);
 
-{** @abstrac(Initializes a Adler-32 hash calculator)
+{** @abstract(Initializes a Adler-32 hash calculator)
 
     Initializes a hash calculator that is compatible with 
     IETF RFC 1950, as well as being used in the gzip archive format.
@@ -170,7 +390,7 @@ Procedure Adler32Init(var Handle: THashHandle);
     @param(size The length of the data in bytes)
 }    
 Procedure Adler32Update(var Handle: THashHandle; const Buffer; size: Integer);
-{** @abstracf(Returns the results of the Adler-32 calculation)
+{** @abstract(Returns the results of the Adler-32 calculation)
 
     @param(Handle The initialized hash handle)
     @param(HashValue the actual hash value result on 32 bits)
@@ -178,7 +398,7 @@ Procedure Adler32Update(var Handle: THashHandle; const Buffer; size: Integer);
 Procedure Adler32Final(var Handle: THashHandle; var HashValue);
 
 
-{** @abstrac(Initializes a Fletcher 8-bit hash calculator)
+{** @abstract(Initializes a Fletcher 8-bit hash calculator)
 
     Initializes a hash calculator that is compatible with 
     IETF RFC 1146.
@@ -193,14 +413,14 @@ Procedure Fletcher16Init(var Handle: THashHandle);
     @param(size The length of the data in bytes)
 }    
 Procedure Fletcher16Update(var Handle: THashHandle; const Buffer; size: Integer);
-{** @abstracf(Returns the results of the Fletcher-16 calculation)
+{** @abstract(Returns the results of the Fletcher-16 calculation)
 
     @param(Handle The initialized hash handle)
     @param(HashValue the actual hash value result on 16 bits)
 }
 Procedure Fletcher16Final(var Handle: THashHandle; var HashValue);
 
-{** @abstrac(Initializes a CRC-16 hash calculator)
+{** @abstract(Initializes a CRC-16 hash calculator)
 
     Initializes a hash calculator that is compatible with 
     Rocksoft Model CRC Algorithm,ARC and 'IEEE Micro' Aug 88 
@@ -216,17 +436,56 @@ Procedure CrcInit(var Handle: THashHandle);
     @param(size The length of the data in bytes)
 }    
 Procedure CrcUpdate(var Handle: THashHandle; const Buffer; size: Integer);
-{** @abstracf(Returns the results of the CRC-16 calculation)
+{** @abstract(Returns the results of the CRC-16 calculation)
 
     @param(Handle The initialized hash handle)
     @param(HashValue the actual hash value result on 16 bits)
 }
 Procedure CrcFinal(var Handle: THashHandle; var HashValue);
 
+{-----------------------------------------------------------------------}  
+{                        GENERAL PURPOSES HASHES                        }
+{-----------------------------------------------------------------------}  
+
+procedure ElfInit(var Handle: THashHandle);
+procedure ElfUpdate(var Handle: THashHandle; const Buffer; size: integer);
+{** @abstract(Returns the results of the ELF hash calculation)
+
+    @param(Handle The initialized hash handle)
+    @param(HashValue the actual hash value result on 32 bits)
+}
+procedure ElfFinal(var Handle: THashHandle; var hashValue);
+
+procedure DJBInit(var Handle: THashHandle);
+procedure DJBUpdate(var Handle: THashHandle; const Buffer; size: integer);
+{** @abstract(Returns the results of Daniel J. Bernstein hash calculation)
+
+    @param(Handle The initialized hash handle)
+    @param(HashValue the actual hash value result on 32 bits)
+}
+procedure DJBFinal(var Handle: THashHandle; var hashValue);
+
+procedure PJWInit(var Handle: THashHandle);
+procedure PJWUpdate(var Handle: THashHandle; const Buffer; size: integer);
+{** @abstract(Returns the results of Peter J. Weinberger's  hash calculation).
+    
+    The actual implementation algorithm was taken from the book " Compilers 
+    (Principles, Techniques and Tools) by Aho, Sethi and Ulman" 
+    @param(Handle The initialized hash handle)
+    @param(HashValue the actual hash value result on 32 bits)
+}
+procedure PJWFinal(var Handle: THashHandle; var hashValue);
+
+procedure LarsonInit(var Handle: THashHandle);
+procedure LarsonUpdate(var Handle: THashHandle; const Buffer; size: integer);
+procedure LarsonFinal(var Handle: THashHandle; var hashValue);
+
+{-----------------------------------------------------------------------}  
+{                        CRYPTOGRAPHIC HASHES                           }
+{-----------------------------------------------------------------------}  
 
 
-
-{** @abstrac(Initializes a MD5 hash calculator)
+{** @abstract(Initializes a MD5 hash calculator)
 
     Initializes a hash calculator that is compatible with 
     the MD5 algorithm.
@@ -241,7 +500,7 @@ Procedure MD5Init(var Handle: THashHandle);
     @param(size The length of the data in bytes)
 }    
 Procedure MD5Update(var Handle: THashHandle; const Buffer; size: Integer);
-{** @abstracf(Returns the results of the MD5 calculation)
+{** @abstract(Returns the results of the MD5 calculation)
 
     @param(Handle The initialized hash handle)
     @param(HashValue the actual hash value result on 16 bits)
@@ -249,7 +508,7 @@ Procedure MD5Update(var Handle: THashHandle; const Buffer; size: Integer);
 Procedure MD5Final(var Handle: THashHandle; var HashValue);
 
 
-{** @abstrac(Initializes a SHA-1 hash calculator)
+{** @abstract(Initializes a SHA-1 hash calculator)
 
     Initializes a hash calculator that is compatible with 
     the SHA-1 algorithm.
@@ -264,7 +523,7 @@ Procedure SHA1Init(var Handle: THashHandle);
     @param(size The length of the data in bytes)
 }    
 Procedure SHA1Update(var Handle: THashHandle; const Buffer; size: Integer);
-{** @abstracf(Returns the results of the SHA-1 calculation)
+{** @abstract(Returns the results of the SHA-1 calculation)
 
     @param(Handle The initialized hash handle)
     @param(HashValue the actual hash value result on 16 bits)
@@ -272,7 +531,7 @@ Procedure SHA1Update(var Handle: THashHandle; const Buffer; size: Integer);
 Procedure SHA1Final(var Handle: THashHandle; var HashValue);
 
   
-{** @abstrac(Initializes a SHA-256 hash calculator)
+{** @abstract(Initializes a SHA-256 hash calculator)
 
     Initializes a hash calculator that is compatible with 
     the SHA-256 algorithm.
@@ -287,12 +546,56 @@ Procedure SHA256Init(var Handle: THashHandle);
     @param(size The length of the data in bytes)
 }    
 Procedure SHA256Update(var Handle: THashHandle; const Buffer; size: Integer);
-{** @abstracf(Returns the results of the SHA-1 calculation)
+{** @abstract(Returns the results of the SHA-1 calculation)
 
     @param(Handle The initialized hash handle)
     @param(HashValue the actual hash value result on 16 bits)
 }
 Procedure SHA256Final(var Handle: THashHandle; var HashValue);
+
+
+
+
+Implementation
+
+
+{** @exclude }
+const crc8table: Array[0..255] of byte = (
+                $00, $07, $0E, $09, $1C, $1B, $12, $15,
+                $38, $3F, $36, $31, $24, $23, $2A, $2D,
+                $70, $77, $7E, $79, $6C, $6B, $62, $65,
+                $48, $4F, $46, $41, $54, $53, $5A, $5D,
+
+                $E0, $E7, $EE, $E9, $FC, $FB, $F2, $F5,
+                $D8, $DF, $D6, $D1, $C4, $C3, $CA, $CD,
+                $90, $97, $9E, $99, $8C, $8B, $82, $85,
+                $A8, $AF, $A6, $A1, $B4, $B3, $BA, $BD,
+                $C7, $C0, $C9, $CE, $DB, $DC, $D5, $D2,
+                $FF, $F8, $F1, $F6, $E3, $E4, $ED, $EA,
+                $B7, $B0, $B9, $BE, $AB, $AC, $A5, $A2,
+                $8F, $88, $81, $86, $93, $94, $9D, $9A,
+                $27, $20, $29, $2E, $3B, $3C, $35, $32,
+                $1F, $18, $11, $16, $03, $04, $0D, $0A,
+                $57, $50, $59, $5E, $4B, $4C, $45, $42,
+                $6F, $68, $61, $66, $73, $74, $7D, $7A,
+                $89, $8E, $87, $80, $95, $92, $9B, $9C,
+                $B1, $B6, $BF, $B8, $AD, $AA, $A3, $A4,
+                $F9, $FE, $F7, $F0, $E5, $E2, $EB, $EC,
+                $C1, $C6, $CF, $C8, $DD, $DA, $D3, $D4,
+                $69, $6E, $67, $60, $75, $72, $7B, $7C,
+                $51, $56, $5F, $58, $4D, $4A, $43, $44,
+                $19, $1E, $17, $10, $05, $02, $0B, $0C,
+                $21, $26, $2F, $28, $3D, $3A, $33, $34,
+                $4E, $49, $40, $47, $52, $55, $5C, $5B,
+                $76, $71, $78, $7F, $6A, $6D, $64, $63,
+                $3E, $39, $30, $37, $22, $25, $2C, $2B,
+                $06, $01, $08, $0F, $1A, $1D, $14, $13,
+                $AE, $A9, $A0, $A7, $B2, $B5, $BC, $BB,
+                $96, $91, $98, $9F, $8A, $8D, $84, $83,
+                $DE, $D9, $D0, $D7, $C2, $C5, $CC, $CB,
+                $E6, $E1, $E8, $EF, $FA, $FD, $F4, $F3
+);
+
 
 
 {** @exclude }
@@ -367,38 +670,38 @@ const crctable32:array[0..255] of longword = (
 {** @exclude }
 CONST crctable16ccitt: ARRAY[0..255] OF WORD = 
 (
-    $0000,  $1021,  $2042,  $3063,  $4084,  $50a5,  $60c6,  $70e7,
-    $8108,  $9129,  $a14a,  $b16b,  $c18c,  $d1ad,  $e1ce,  $f1ef,
-    $1231,  $0210,  $3273,  $2252,  $52b5,  $4294,  $72f7,  $62d6,
-    $9339,  $8318,  $b37b,  $a35a,  $d3bd,  $c39c,  $f3ff,  $e3de,
-    $2462,  $3443,  $0420,  $1401,  $64e6,  $74c7,  $44a4,  $5485,
-    $a56a,  $b54b,  $8528,  $9509,  $e5ee,  $f5cf,  $c5ac,  $d58d,
-    $3653,  $2672,  $1611,  $0630,  $76d7,  $66f6,  $5695,  $46b4,
-    $b75b,  $a77a,  $9719,  $8738,  $f7df,  $e7fe,  $d79d,  $c7bc,
-    $48c4,  $58e5,  $6886,  $78a7,  $0840,  $1861,  $2802,  $3823,
-    $c9cc,  $d9ed,  $e98e,  $f9af,  $8948,  $9969,  $a90a,  $b92b,
-    $5af5,  $4ad4,  $7ab7,  $6a96,  $1a71,  $0a50,  $3a33,  $2a12,
-    $dbfd,  $cbdc,  $fbbf,  $eb9e,  $9b79,  $8b58,  $bb3b,  $ab1a,
-    $6ca6,  $7c87,  $4ce4,  $5cc5,  $2c22,  $3c03,  $0c60,  $1c41,
-    $edae,  $fd8f,  $cdec,  $ddcd,  $ad2a,  $bd0b,  $8d68,  $9d49,
-    $7e97,  $6eb6,  $5ed5,  $4ef4,  $3e13,  $2e32,  $1e51,  $0e70,
-    $ff9f,  $efbe,  $dfdd,  $cffc,  $bf1b,  $af3a,  $9f59,  $8f78,
-    $9188,  $81a9,  $b1ca,  $a1eb,  $d10c,  $c12d,  $f14e,  $e16f,
-    $1080,  $00a1,  $30c2,  $20e3,  $5004,  $4025,  $7046,  $6067,
-    $83b9,  $9398,  $a3fb,  $b3da,  $c33d,  $d31c,  $e37f,  $f35e,
-    $02b1,  $1290,  $22f3,  $32d2,  $4235,  $5214,  $6277,  $7256,
-    $b5ea,  $a5cb,  $95a8,  $8589,  $f56e,  $e54f,  $d52c,  $c50d,
-    $34e2,  $24c3,  $14a0,  $0481,  $7466,  $6447,  $5424,  $4405,
-    $a7db,  $b7fa,  $8799,  $97b8,  $e75f,  $f77e,  $c71d,  $d73c,
-    $26d3,  $36f2,  $0691,  $16b0,  $6657,  $7676,  $4615,  $5634,
-    $d94c,  $c96d,  $f90e,  $e92f,  $99c8,  $89e9,  $b98a,  $a9ab,
-    $5844,  $4865,  $7806,  $6827,  $18c0,  $08e1,  $3882,  $28a3,
-    $cb7d,  $db5c,  $eb3f,  $fb1e,  $8bf9,  $9bd8,  $abbb,  $bb9a,
-    $4a75,  $5a54,  $6a37,  $7a16,  $0af1,  $1ad0,  $2ab3,  $3a92,
-    $fd2e,  $ed0f,  $dd6c,  $cd4d,  $bdaa,  $ad8b,  $9de8,  $8dc9,
-    $7c26,  $6c07,  $5c64,  $4c45,  $3ca2,  $2c83,  $1ce0,  $0cc1,
-    $ef1f,  $ff3e,  $cf5d,  $df7c,  $af9b,  $bfba,  $8fd9,  $9ff8,
-    $6e17,  $7e36,  $4e55,  $5e74,  $2e93,  $3eb2,  $0ed1,  $1ef0
+  $0000, $1189, $2312, $329B, $4624, $57AD, $6536, $74BF,
+  $8C48, $9DC1, $AF5A, $BED3, $CA6C, $DBE5, $E97E, $F8F7,
+  $1081, $0108, $3393, $221A, $56A5, $472C, $75B7, $643E,
+  $9CC9, $8D40, $BFDB, $AE52, $DAED, $CB64, $F9FF, $E876,
+  $2102, $308B, $0210, $1399, $6726, $76AF, $4434, $55BD,
+  $AD4A, $BCC3, $8E58, $9FD1, $EB6E, $FAE7, $C87C, $D9F5,
+  $3183, $200A, $1291, $0318, $77A7, $662E, $54B5, $453C,
+  $BDCB, $AC42, $9ED9, $8F50, $FBEF, $EA66, $D8FD, $C974,
+  $4204, $538D, $6116, $709F, $0420, $15A9, $2732, $36BB,
+  $CE4C, $DFC5, $ED5E, $FCD7, $8868, $99E1, $AB7A, $BAF3,
+  $5285, $430C, $7197, $601E, $14A1, $0528, $37B3, $263A,
+  $DECD, $CF44, $FDDF, $EC56, $98E9, $8960, $BBFB, $AA72,
+  $6306, $728F, $4014, $519D, $2522, $34AB, $0630, $17B9,
+  $EF4E, $FEC7, $CC5C, $DDD5, $A96A, $B8E3, $8A78, $9BF1,
+  $7387, $620E, $5095, $411C, $35A3, $242A, $16B1, $0738,
+  $FFCF, $EE46, $DCDD, $CD54, $B9EB, $A862, $9AF9, $8B70,
+  $8408, $9581, $A71A, $B693, $C22C, $D3A5, $E13E, $F0B7,
+  $0840, $19C9, $2B52, $3ADB, $4E64, $5FED, $6D76, $7CFF,
+  $9489, $8500, $B79B, $A612, $D2AD, $C324, $F1BF, $E036,
+  $18C1, $0948, $3BD3, $2A5A, $5EE5, $4F6C, $7DF7, $6C7E,
+  $A50A, $B483, $8618, $9791, $E32E, $F2A7, $C03C, $D1B5,
+  $2942, $38CB, $0A50, $1BD9, $6F66, $7EEF, $4C74, $5DFD,
+  $B58B, $A402, $9699, $8710, $F3AF, $E226, $D0BD, $C134,
+  $39C3, $284A, $1AD1, $0B58, $7FE7, $6E6E, $5CF5, $4D7C,
+  $C60C, $D785, $E51E, $F497, $8028, $91A1, $A33A, $B2B3,
+  $4A44, $5BCD, $6956, $78DF, $0C60, $1DE9, $2F72, $3EFB,
+  $D68D, $C704, $F59F, $E416, $90A9, $8120, $B3BB, $A232,
+  $5AC5, $4B4C, $79D7, $685E, $1CE1, $0D68, $3FF3, $2E7A,
+  $E70E, $F687, $C41C, $D595, $A12A, $B0A3, $8238, $93B1,
+  $6B46, $7ACF, $4854, $59DD, $2D62, $3CEB, $0E70, $1FF9,
+  $F78F, $E606, $D49D, $C514, $B1AB, $A022, $92B9, $8330,
+  $7BC7, $6A4E, $58D5, $495C, $3DE3, $2C6A, $1EF1, $0F78
 );
 
 {** @exclude }
@@ -438,10 +741,362 @@ CONST crctable16: ARRAY[0..255] OF WORD =
     $08201,$042C0,$04380,$08341,$04100,$081C1,$08081,$04040
 );
 
+{ IETF RFC https://tools.ietf.org/html/rfc3720 }
+{* iSCSI & SCTP, G.hn payload, SSE4.2
+*}
+const crc32ctable : array[0..255] of longword =
+(
+$00000000, $f26b8303, $e13b70f7, $1350f3f4,
+$c79a971f, $35f1141c, $26a1e7e8, $d4ca64eb,
+$8ad958cf, $78b2dbcc, $6be22838, $9989ab3b,
+$4d43cfd0, $bf284cd3, $ac78bf27, $5e133c24,
+$105ec76f, $e235446c, $f165b798, $030e349b,
+$d7c45070, $25afd373, $36ff2087, $c494a384,
+$9a879fa0, $68ec1ca3, $7bbcef57, $89d76c54,
+$5d1d08bf, $af768bbc, $bc267848, $4e4dfb4b,
+$20bd8ede, $d2d60ddd, $c186fe29, $33ed7d2a,
+$e72719c1, $154c9ac2, $061c6936, $f477ea35,
+$aa64d611, $580f5512, $4b5fa6e6, $b93425e5,
+$6dfe410e, $9f95c20d, $8cc531f9, $7eaeb2fa,
+$30e349b1, $c288cab2, $d1d83946, $23b3ba45,
+$f779deae, $05125dad, $1642ae59, $e4292d5a,
+$ba3a117e, $4851927d, $5b016189, $a96ae28a,
+$7da08661, $8fcb0562, $9c9bf696, $6ef07595,
+$417b1dbc, $b3109ebf, $a0406d4b, $522bee48,
+$86e18aa3, $748a09a0, $67dafa54, $95b17957,
+$cba24573, $39c9c670, $2a993584, $d8f2b687,
+$0c38d26c, $fe53516f, $ed03a29b, $1f682198,
+$5125dad3, $a34e59d0, $b01eaa24, $42752927,
+$96bf4dcc, $64d4cecf, $77843d3b, $85efbe38,
+$dbfc821c, $2997011f, $3ac7f2eb, $c8ac71e8,
+$1c661503, $ee0d9600, $fd5d65f4, $0f36e6f7,
+$61c69362, $93ad1061, $80fde395, $72966096,
+$a65c047d, $5437877e, $4767748a, $b50cf789,
+$eb1fcbad, $197448ae, $0a24bb5a, $f84f3859,
+$2c855cb2, $deeedfb1, $cdbe2c45, $3fd5af46,
+$7198540d, $83f3d70e, $90a324fa, $62c8a7f9,
+$b602c312, $44694011, $5739b3e5, $a55230e6,
+$fb410cc2, $092a8fc1, $1a7a7c35, $e811ff36,
+$3cdb9bdd, $ceb018de, $dde0eb2a, $2f8b6829,
+$82f63b78, $709db87b, $63cd4b8f, $91a6c88c,
+$456cac67, $b7072f64, $a457dc90, $563c5f93,
+$082f63b7, $fa44e0b4, $e9141340, $1b7f9043,
+$cfb5f4a8, $3dde77ab, $2e8e845f, $dce5075c,
+$92a8fc17, $60c37f14, $73938ce0, $81f80fe3,
+$55326b08, $a759e80b, $b4091bff, $466298fc,
+$1871a4d8, $ea1a27db, $f94ad42f, $0b21572c,
+$dfeb33c7, $2d80b0c4, $3ed04330, $ccbbc033,
+$a24bb5a6, $502036a5, $4370c551, $b11b4652,
+$65d122b9, $97baa1ba, $84ea524e, $7681d14d,
+$2892ed69, $daf96e6a, $c9a99d9e, $3bc21e9d,
+$ef087a76, $1d63f975, $0e330a81, $fc588982,
+$b21572c9, $407ef1ca, $532e023e, $a145813d,
+$758fe5d6, $87e466d5, $94b49521, $66df1622,
+$38cc2a06, $caa7a905, $d9f75af1, $2b9cd9f2,
+$ff56bd19, $0d3d3e1a, $1e6dcdee, $ec064eed,
+$c38d26c4, $31e6a5c7, $22b65633, $d0ddd530,
+$0417b1db, $f67c32d8, $e52cc12c, $1747422f,
+$49547e0b, $bb3ffd08, $a86f0efc, $5a048dff,
+$8ecee914, $7ca56a17, $6ff599e3, $9d9e1ae0,
+$d3d3e1ab, $21b862a8, $32e8915c, $c083125f,
+$144976b4, $e622f5b7, $f5720643, $07198540,
+$590ab964, $ab613a67, $b831c993, $4a5a4a90,
+$9e902e7b, $6cfbad78, $7fab5e8c, $8dc0dd8f,
+$e330a81a, $115b2b19, $020bd8ed, $f0605bee,
+$24aa3f05, $d6c1bc06, $c5914ff2, $37faccf1,
+$69e9f0d5, $9b8273d6, $88d28022, $7ab90321,
+$ae7367ca, $5c18e4c9, $4f48173d, $bd23943e,
+$f36e6f75, $0105ec76, $12551f82, $e03e9c81,
+$34f4f86a, $c69f7b69, $d5cf889d, $27a40b9e,
+$79b737ba, $8bdcb4b9, $988c474d, $6ae7c44e,
+$be2da0a5, $4c4623a6, $5f16d052, $ad7d5351
+);
 
 
-Implementation
+procedure Sum8Init(var Handle: THashHandle);
+Begin
+  Handle.hashValue := 0;
+end;
 
+{$ifopt Q+}
+{$define Overflow_Check_On}
+{$Q-}
+{$endif}
+
+procedure Sum8Update(var Handle: THashHandle; const Buffer; size: integer);
+var
+ i: longword;
+ sum: longword;
+ PtrValue: ^Byte;
+Begin
+  sum:=Handle.hashValue;
+  PtrValue:=@Buffer;
+  Dec(size);
+  for i:=0 to size do
+    begin
+      Sum := (Sum + PtrValue^);
+      Inc(PtrValue);
+    end;
+  Handle.hashValue:=sum;
+end;
+
+{$ifdef Overflow_check_on}
+{$Q+}
+{$undef Overflow_check_on}
+{$endif Overflow_check_on}
+
+procedure Sum8Final(var Handle: THashHandle; var hashValue);
+var
+ b: byte;
+Begin
+  b:=byte(Handle.hashValue mod 256);
+  Move(b, hashValue, sizeof(b));
+end;
+
+
+ 
+procedure Crc32CInit(var Handle: THashHandle);
+Begin
+  handle.hashValue := longword($FFFFFFFF);
+end;
+ 
+{$ifopt R+}
+{$define Range_Check_On}
+{$R-}
+{$endif}
+
+Procedure Crc32CUpdate(var Handle: THashHandle; const Buffer; size: Integer);
+var
+ i: longword;
+ crc: longword;
+ PtrValue: ^Byte;
+Begin
+  crc:=Handle.hashValue;
+  PtrValue:=@Buffer;
+  Dec(size);
+  for i:=0 to size do
+    begin
+     CRC := longword(CRC shr 8) xor longword(crc32ctable[byte(CRC) xor byte(PtrValue^)]);
+     Inc(PtrValue);
+    end;
+  Handle.hashValue:=CRC;
+end;
+{$ifdef Range_check_on}
+{$R+}
+{$undef Range_check_on}
+{$endif Range_check_on}
+ 
+Procedure Crc32cFinal(var Handle: THashHandle; var HashValue);
+var
+ lw: longword;
+Begin
+  lw:=Handle.hashValue XOR INIT_CRC32;
+  Move(lw, hashValue, sizeof(lw));
+end;
+
+
+
+procedure ElfInit(var Handle: THashHandle);
+Begin
+  handle.hashValue := 0;
+end;
+ 
+procedure ElfUpdate(var Handle: THashHandle; const Buffer; size: integer);
+var
+hash: longword;
+x: longword;
+PtrByte: ^Byte;
+i: integer;
+Begin
+  Dec(size);
+  hash := longword(handle.hashValue);
+  PtrByte:=@Buffer;
+  for i:=0 to Size do
+   Begin
+    hash := (hash shl 4) + PtrByte^;
+    x    := hash and $F0000000;
+    if (x <> 0) then
+    begin
+      hash := hash xor (x shr 24);
+    end;
+    hash := hash and (not x);
+    Inc(PtrByte);
+   end;
+  handle.hashValue := hash;
+end;
+ 
+procedure ElfFinal(var Handle: THashHandle; var hashValue);
+var
+ lw: longword;
+Begin
+  lw:=longword(Handle.hashValue);
+  Move(lw, hashValue, sizeof(lw));
+end;
+
+
+
+procedure DJBInit(var Handle: THashHandle);
+Begin
+  handle.hashValue :=5381;
+end;
+
+{$ifopt Q+}
+{$define Overflow_Check_On}
+{$Q-}
+{$endif}
+ 
+procedure DJBUpdate(var Handle: THashHandle; const Buffer; size: integer);
+var
+hash: longword;
+x: longword;
+PtrByte: ^Byte;
+i: integer;
+Begin
+  Dec(size);
+  hash := longword(handle.hashValue);
+  PtrByte:=@Buffer;
+  for i:=0 to Size do
+   Begin
+    hash := longword(((hash shl 5) + hash) + PtrByte^);
+    Inc(PtrByte);
+   end;
+  handle.hashValue := hash;
+end;
+{$ifdef Overflow_check_on}
+{$Q+}
+{$undef Overflow_check_on}
+{$endif Overflow_check_on}
+
+ 
+procedure DJBFinal(var Handle: THashHandle; var hashValue);
+var
+ lw: longword;
+Begin
+  lw:=longword(Handle.hashValue);
+  Move(lw, hashValue, sizeof(lw));
+end;
+
+
+
+procedure PJWInit(var Handle: THashHandle);
+Begin
+  handle.hashValue :=0;
+end;
+ 
+ 
+
+procedure PJWUpdate(var Handle: THashHandle; const Buffer; size: integer);
+const BitsInCardinal = Sizeof(Longword) * 8;
+const ThreeQuarters  = (BitsInCardinal  * 3) div 4;
+const OneEighth      = BitsInCardinal div 8;
+const HighBits       : Longword = Longword((not Longword(0)) shl (BitsInCardinal - OneEighth));
+var
+hash: longword;
+tmp: longword;
+PtrByte: ^Byte;
+i: integer;
+Begin
+  Dec(size);
+  hash := longword(handle.hashValue);
+  PtrByte:=@Buffer;
+  for i:=0 to Size do
+   Begin
+    hash := (hash shl OneEighth) + PtrByte^;
+    tmp   := hash and HighBits;
+    If (tmp <> 0) then
+    begin
+      hash := (hash xor (tmp shr ThreeQuarters)) and (not HighBits);
+    end;
+    Inc(PtrByte);
+   end;
+  handle.hashValue := hash;
+end;
+ 
+procedure PJWFinal(var Handle: THashHandle; var hashValue);
+var
+ lw: longword;
+Begin
+  lw:=longword(Handle.hashValue);
+  Move(lw, hashValue, sizeof(lw));
+end;
+
+
+
+
+procedure LarsonInit(var Handle: THashHandle);
+Begin
+  handle.hashValue :=0;
+end;
+
+
+{$ifopt Q+}
+{$define Overflow_Check_On}
+{$Q-}
+{$endif}
+
+ 
+procedure LarsonUpdate(var Handle: THashHandle; const Buffer; size: integer);
+var
+hash: longword;
+tmp: longword;
+PtrByte: ^Byte;
+i: integer;
+Begin
+  Dec(size);
+  hash := longword(handle.hashValue);
+  PtrByte:=@Buffer;
+  for i:=0 to Size do
+   Begin
+      hash := (hash * 101) + PtrByte^;
+      Inc(PtrByte);
+   end;
+  handle.hashValue := hash;
+end;
+
+{$ifdef Overflow_check_on}
+{$Q+}
+{$undef Overflow_check_on}
+{$endif Overflow_check_on}
+
+ 
+procedure LarsonFinal(var Handle: THashHandle; var hashValue);
+var
+ lw: longword;
+Begin
+  lw:=longword(Handle.hashValue);
+  Move(lw, hashValue, sizeof(lw));
+end;
+
+
+procedure Crc8Init(var Handle: THashHandle);
+Begin
+  handle.hashValue := 0;
+end;
+ 
+procedure crc8Update(var Handle: THashHandle; const Buffer; size: integer);
+var
+crc: byte;
+PtrByte: ^Byte;
+i: integer;
+Begin
+  Dec(size);
+  crc := byte(handle.hashValue);
+  PtrByte:=@Buffer;
+  for i:=0 to Size do
+   Begin
+     crc := byte(crc8table[crc xor PTrByte^]);
+     Inc(PtrByte);
+   end;
+  handle.hashValue := crc;
+end;
+ 
+procedure crc8Final(var Handle: THashHandle; var hashValue);
+var
+ b: byte;
+Begin
+  b:=Handle.hashValue and $ff;
+  Move(b, hashValue, sizeof(b));
+end;
 
 
 
@@ -459,15 +1114,15 @@ Procedure Crc32Update(var Handle: THashHandle; const Buffer; size: Integer);
 var
  i: longword;
  crc: longword;
- Ptr: PByte;
+ PtrValue: ^Byte;
 Begin
   crc:=Handle.hashValue;
-  Ptr:=PByte(Buffer);
+  PtrValue:=@Buffer;
   Dec(size);
   for i:=0 to size do
     begin
-     CRC := longword(CRC shr 8) xor longword(crctable32[byte(CRC) xor (Ptr^)]);
-     Inc(Ptr);
+     CRC := longword(CRC shr 8) xor longword(crctable32[byte(CRC) xor byte(PtrValue^)]);
+     Inc(PtrValue);
     end;
   Handle.hashValue:=CRC;
 end;
@@ -488,25 +1143,32 @@ end;
 
 Procedure Crc16Init(var Handle: THashHandle);
 Begin
-  Handle.hashValue := INIT_CRC16;
+  Handle.hashValue := longword(INIT_CRC16);
 end;
-
 
 
 Procedure Crc16Update(var Handle: THashHandle; const Buffer; size: Integer);
 var
  i: longword;
  crc: word;
- Ptr: PByte;
+ Ptr: ^Byte;
+ idx: integer;
 begin
-   crc:=Handle.hashValue;
-   Ptr:=PByte(Buffer);
+   crc:=word(Handle.hashValue);
+   Ptr:=@Buffer;
    Dec(size);
-   for i:=0 to size do
+  for i:=0 to size do
+    begin
+     idx:=(crc and $ff) xor Ptr^;
+     crc:=crc shr 8;
+     crc:= (crc xor crctable16ccitt[idx]) and $ffff;
+     Inc(Ptr);
+    end;
+{   for i:=0 to size do
      begin
-       crc := crctable16ccitt[(((Crc SHR 8) XOR Ptr^) AND 255)]  XOR (Crc SHL 8);
+       crc := word(crctable16ccitt[( (Crc XOR Ptr^) AND 255)]  XOR (Crc SHL 8));
        Inc(Ptr);
-     end;
+     end;}
    Handle.hashValue := crc;  
 end;
 
@@ -514,7 +1176,8 @@ Procedure Crc16Final(var Handle: THashHandle; var HashValue);
 var
  w: word;
 Begin
-  w:=Handle.hashValue;
+  w:=word(Handle.hashValue);
+  w:=w XOR INIT_CRC16;
   Move(w, hashValue, sizeof(w));
 end;
 
@@ -522,6 +1185,8 @@ end;
 Procedure Adler32Init(var Handle: THashHandle);
 Begin
   Handle.hashValue := INIT_ADLER32;
+  Handle.m_s1 := handle.hashValue and longword($0000FFFF);
+  Handle.m_s2 := (handle.hashValue shr 16) and longword($0000FFFF);
 end;
 
 
@@ -536,22 +1201,21 @@ Procedure Adler32Update(var Handle: THashHandle; const Buffer; size: Integer);
 var
  i: longword;
  s1,s2: longword;
- Ptr: PByte;
+ Ptr: ^Byte;
  w: word;
 begin
-  w := Handle.hashValue;
   Dec(size);
-  Ptr := PByte(Buffer);
+  Ptr := @Buffer;
   for i:=0 to size do
     Begin
-      s1:=w and $ffff;
-      s2:= (w shr 16) and $ffff;
-      s1:= (s1 + Ptr^) mod BASE;
-      s2:= (s2 + s1) mod BASE;
+      handle.m_s1:=handle.m_s1 + Ptr^;
+      if(handle.m_s1 >= 65521) then
+        Dec(handle.m_s1,BASE);
+      Inc(handle.m_s2,handle.m_s1);
+      if(handle.m_s2 >= 65521) then
+        Dec(handle.m_s2,BASE);
       Inc(Ptr);
-      w:=(s2 shl 16) +s1;
    end;
- Handle.hashValue:=w;
 end;
 {$ifdef Range_check_on}
 {$R+}
@@ -562,7 +1226,8 @@ Procedure Adler32Final(var Handle: THashHandle; var HashValue);
 var
  lw: longword;
 Begin
-  lw:=Handle.hashValue;
+  handle.hashValue:=(handle.m_s2 shl 16) + handle.m_s1;
+  lw := handle.hashValue;
   Move(lw, hashValue, sizeof(lw));
 end;
 
@@ -570,6 +1235,8 @@ end;
 Procedure Fletcher16Init(var Handle: THashHandle);
 Begin
   Handle.hashValue := INIT_FLETCHER16;
+  handle.m_s1 := $FFFF;
+  handle.m_s2 := $FFFF;
 end;
 
 
@@ -577,30 +1244,28 @@ Procedure Fletcher16Update(var Handle: THashHandle; const Buffer; size: Integer)
 var
  i: longword;
  a,c: byte;
- Ptr: PByte;
- w: word;
+ Ptr: ^Byte;
+ sum1, sum2: word;
 begin
-  w := Handle.hashValue;
+  sum1 := Handle.m_s1;
+  sum2 := Handle.m_s2;
   Dec(size);
-  Ptr := PByte(Buffer);
+  Ptr := @Buffer;
   for i:=0 to size do
     begin
-     { 1st byte of data in memory }
-     a:=(w shr 8) and $ff;
-     c:=w and $ff;
-     a:=(a + Ptr^) and $ff;
-     c:=(c + a) and $ff;
-     Inc(Ptr);
-     w:=(a shl 8) or c;
+      sum1 := (longword(sum1) + longword(Ptr^)) mod 255;
+      sum2 := (longword(sum2) + longword(sum1)) mod 255;
+      Inc(Ptr);
    end;
-  Handle.HashValue := w;
+  handle.m_s1 := sum1; 
+  handle.m_s2 := sum2; 
 end;
 
 Procedure Fletcher16Final(var Handle: THashHandle; var HashValue);
 var
  w: word;
 Begin
-  w:=Handle.hashValue;
+  w:=word(handle.m_s2 shl 8) or (handle.m_s1);
   Move(w, hashValue, sizeof(w));
 end;
 
@@ -616,10 +1281,10 @@ var
  i: longword;
  crc: word;
  idx: integer;
- Ptr: PByte;
+ Ptr: ^Byte;
 begin
   crc:=handle.hashValue;
-  Ptr:=PByte(Buffer);
+  Ptr:=@Buffer;
   Dec(size);
   for i:=0 to size do
     begin
@@ -652,17 +1317,17 @@ begin
   RRot16:= (X shr c) or (X shl (16 - c));
 end;
 
-function LRot32(X: DWord; c: longint): DWord;
+function LRot32(X: LongWord; c: longint): LongWord;
 begin
   LRot32:= (X shl c) or (X shr (32 - c));
 end;
 
-function RRot32(X: DWord; c: longint): DWord;
+function RRot32(X: LongWord; c: longint): LongWord;
 begin
   RRot32:= (X shr c) or (X shl (32 - c));
 end;
 
-function SwapDWord(X: DWord): DWord;
+function SwapDWord(X: LongWord): LongWord;
 begin
   SwapDword:= (X shr 24) or ((X shr 8) and $FF00) or ((X shl 8) and $FF0000) or (X shl 24);
 end;
@@ -686,9 +1351,9 @@ end;
 type
   PSHA1Data = ^TSHA1Data;
   TSHA1Data= record
-    LenHi, LenLo: DWord;
-    Index: DWord;
-    CurrentHash: array[0..4] of DWord;
+    LenHi, LenLo: Longword;
+    Index: Longword;
+    CurrentHash: array[0..4] of Longword;
     HashBuffer: array[0..63] of byte;
   end;
   
@@ -705,11 +1370,15 @@ begin
 end;
   
 
+{$ifopt Q+}
+{$define Overflow_Check_On}
+{$Q-}
+{$endif}
 
 procedure SHA1Compress(var Data: TSHA1Data);
 var
-  A, B, C, D, E, T: DWord;
-  W: array[0..79] of DWord;
+  A, B, C, D, E, T: Longword;
+  W: array[0..79] of Longword;
   i: longint;
 begin
   with Data do begin
@@ -749,8 +1418,14 @@ begin
   FillChar(HashBuffer,Sizeof(HashBuffer),0);
   end;
 end;
+{$ifdef Overflow_check_on}
+{$Q+}
+{$undef Overflow_check_on}
+{$endif Overflow_check_on}
 
-procedure SHA1UpdateLen(var Data: TSHA1Data; Len: DWord);
+
+
+procedure SHA1UpdateLen(var Data: TSHA1Data; Len: Longword);
 Begin
   with Data do begin
   Inc(LenLo,(Len shl 3));
@@ -790,7 +1465,7 @@ begin
   PBuf:= @Buffer;
   while Size> 0 do
   begin
-    if (Sizeof(HashBuffer)-Index)<= DWord(Size) then
+    if (Sizeof(HashBuffer)-Index)<= Longword(Size) then
     begin
       Move(PBuf^,HashBuffer[Index],Sizeof(HashBuffer)-Index);
       Dec(Size,Sizeof(HashBuffer)-Index);
@@ -816,8 +1491,8 @@ begin
   HashBuffer[Index]:= $80;
   if Index>= 56 then
     SHA1Compress(Data^);
-  PDWord(@HashBuffer[56])^:= (LenHi shr 24) or ((LenHi shr 8) and $FF00) or ((LenHi shl 8) and $FF0000) or (LenHi shl 24);
-  PDWord(@HashBuffer[60])^:= (LenLo shr 24) or ((LenLo shr 8) and $FF00) or ((LenLo shl 8) and $FF0000) or (LenLo shl 24);
+  PLongword(@HashBuffer[56])^:= (LenHi shr 24) or ((LenHi shr 8) and $FF00) or ((LenHi shl 8) and $FF0000) or (LenHi shl 24);
+  PLongword(@HashBuffer[60])^:= (LenLo shr 24) or ((LenLo shr 8) and $FF00) or ((LenLo shl 8) and $FF0000) or (LenLo shl 24);
   SHA1Compress(Data^);
   CurrentHash[0]:= (CurrentHash[0] shr 24) or ((CurrentHash[0] shr 8) and $FF00)
     or ((CurrentHash[0] shl 8) and $FF0000) or (CurrentHash[0] shl 24);
@@ -859,11 +1534,15 @@ Begin
     end;
 end;
 
+{$ifopt Q+}
+{$define Overflow_Check_On}
+{$Q-}
+{$endif}
 
 Procedure SHA256Compress(var Data: TSHA256Data);
 var
-  a, b, c, d, e, f, g, h, t1, t2: DWord;
-  W: array[0..63] of DWord;
+  a, b, c, d, e, f, g, h, t1, t2: Longword;
+  W: array[0..63] of Longword;
   i: longword;
 begin
   with Data do
@@ -891,70 +1570,199 @@ Non-optimised version
   end;
 }
 
-  t1:= h + (((e shr 6) or (e shl 26)) xor ((e shr 11) or (e shl 21)) xor ((e shr 25) or (e shl 7))) + ((e and f) xor (not e and g)) + $428a2f98 + W[0]; t2:= (((a shr 2) or (a shl 30)) xor ((a shr 13) or (a shl 19)) xor ((a shr 22) xor (a shl 10))) + ((a and b) xor (a and c) xor (b and c)); h:= t1 + t2; d:= d + t1;
-  t1:= g + (((d shr 6) or (d shl 26)) xor ((d shr 11) or (d shl 21)) xor ((d shr 25) or (d shl 7))) + ((d and e) xor (not d and f)) + $71374491 + W[1]; t2:= (((h shr 2) or (h shl 30)) xor ((h shr 13) or (h shl 19)) xor ((h shr 22) xor (h shl 10))) + ((h and a) xor (h and b) xor (a and b)); g:= t1 + t2; c:= c + t1;
-  t1:= f + (((c shr 6) or (c shl 26)) xor ((c shr 11) or (c shl 21)) xor ((c shr 25) or (c shl 7))) + ((c and d) xor (not c and e)) + $b5c0fbcf + W[2]; t2:= (((g shr 2) or (g shl 30)) xor ((g shr 13) or (g shl 19)) xor ((g shr 22) xor (g shl 10))) + ((g and h) xor (g and a) xor (h and a)); f:= t1 + t2; b:= b + t1;
-  t1:= e + (((b shr 6) or (b shl 26)) xor ((b shr 11) or (b shl 21)) xor ((b shr 25) or (b shl 7))) + ((b and c) xor (not b and d)) + $e9b5dba5 + W[3]; t2:= (((f shr 2) or (f shl 30)) xor ((f shr 13) or (f shl 19)) xor ((f shr 22) xor (f shl 10))) + ((f and g) xor (f and h) xor (g and h)); e:= t1 + t2; a:= a + t1;
-  t1:= d + (((a shr 6) or (a shl 26)) xor ((a shr 11) or (a shl 21)) xor ((a shr 25) or (a shl 7))) + ((a and b) xor (not a and c)) + $3956c25b + W[4]; t2:= (((e shr 2) or (e shl 30)) xor ((e shr 13) or (e shl 19)) xor ((e shr 22) xor (e shl 10))) + ((e and f) xor (e and g) xor (f and g)); d:= t1 + t2; h:= h + t1;
-  t1:= c + (((h shr 6) or (h shl 26)) xor ((h shr 11) or (h shl 21)) xor ((h shr 25) or (h shl 7))) + ((h and a) xor (not h and b)) + $59f111f1 + W[5]; t2:= (((d shr 2) or (d shl 30)) xor ((d shr 13) or (d shl 19)) xor ((d shr 22) xor (d shl 10))) + ((d and e) xor (d and f) xor (e and f)); c:= t1 + t2; g:= g + t1;
-  t1:= b + (((g shr 6) or (g shl 26)) xor ((g shr 11) or (g shl 21)) xor ((g shr 25) or (g shl 7))) + ((g and h) xor (not g and a)) + $923f82a4 + W[6]; t2:= (((c shr 2) or (c shl 30)) xor ((c shr 13) or (c shl 19)) xor ((c shr 22) xor (c shl 10))) + ((c and d) xor (c and e) xor (d and e)); b:= t1 + t2; f:= f + t1;
-  t1:= a + (((f shr 6) or (f shl 26)) xor ((f shr 11) or (f shl 21)) xor ((f shr 25) or (f shl 7))) + ((f and g) xor (not f and h)) + $ab1c5ed5 + W[7]; t2:= (((b shr 2) or (b shl 30)) xor ((b shr 13) or (b shl 19)) xor ((b shr 22) xor (b shl 10))) + ((b and c) xor (b and d) xor (c and d)); a:= t1 + t2; e:= e + t1;
-  t1:= h + (((e shr 6) or (e shl 26)) xor ((e shr 11) or (e shl 21)) xor ((e shr 25) or (e shl 7))) + ((e and f) xor (not e and g)) + $d807aa98 + W[8]; t2:= (((a shr 2) or (a shl 30)) xor ((a shr 13) or (a shl 19)) xor ((a shr 22) xor (a shl 10))) + ((a and b) xor (a and c) xor (b and c)); h:= t1 + t2; d:= d + t1;
-  t1:= g + (((d shr 6) or (d shl 26)) xor ((d shr 11) or (d shl 21)) xor ((d shr 25) or (d shl 7))) + ((d and e) xor (not d and f)) + $12835b01 + W[9]; t2:= (((h shr 2) or (h shl 30)) xor ((h shr 13) or (h shl 19)) xor ((h shr 22) xor (h shl 10))) + ((h and a) xor (h and b) xor (a and b)); g:= t1 + t2; c:= c + t1;
-  t1:= f + (((c shr 6) or (c shl 26)) xor ((c shr 11) or (c shl 21)) xor ((c shr 25) or (c shl 7))) + ((c and d) xor (not c and e)) + $243185be + W[10]; t2:= (((g shr 2) or (g shl 30)) xor ((g shr 13) or (g shl 19)) xor ((g shr 22) xor (g shl 10))) + ((g and h) xor (g and a) xor (h and a)); f:= t1 + t2; b:= b + t1;
-  t1:= e + (((b shr 6) or (b shl 26)) xor ((b shr 11) or (b shl 21)) xor ((b shr 25) or (b shl 7))) + ((b and c) xor (not b and d)) + $550c7dc3 + W[11]; t2:= (((f shr 2) or (f shl 30)) xor ((f shr 13) or (f shl 19)) xor ((f shr 22) xor (f shl 10))) + ((f and g) xor (f and h) xor (g and h)); e:= t1 + t2; a:= a + t1;
-  t1:= d + (((a shr 6) or (a shl 26)) xor ((a shr 11) or (a shl 21)) xor ((a shr 25) or (a shl 7))) + ((a and b) xor (not a and c)) + $72be5d74 + W[12]; t2:= (((e shr 2) or (e shl 30)) xor ((e shr 13) or (e shl 19)) xor ((e shr 22) xor (e shl 10))) + ((e and f) xor (e and g) xor (f and g)); d:= t1 + t2; h:= h + t1;
-  t1:= c + (((h shr 6) or (h shl 26)) xor ((h shr 11) or (h shl 21)) xor ((h shr 25) or (h shl 7))) + ((h and a) xor (not h and b)) + $80deb1fe + W[13]; t2:= (((d shr 2) or (d shl 30)) xor ((d shr 13) or (d shl 19)) xor ((d shr 22) xor (d shl 10))) + ((d and e) xor (d and f) xor (e and f)); c:= t1 + t2; g:= g + t1;
-  t1:= b + (((g shr 6) or (g shl 26)) xor ((g shr 11) or (g shl 21)) xor ((g shr 25) or (g shl 7))) + ((g and h) xor (not g and a)) + $9bdc06a7 + W[14]; t2:= (((c shr 2) or (c shl 30)) xor ((c shr 13) or (c shl 19)) xor ((c shr 22) xor (c shl 10))) + ((c and d) xor (c and e) xor (d and e)); b:= t1 + t2; f:= f + t1;
-  t1:= a + (((f shr 6) or (f shl 26)) xor ((f shr 11) or (f shl 21)) xor ((f shr 25) or (f shl 7))) + ((f and g) xor (not f and h)) + $c19bf174 + W[15]; t2:= (((b shr 2) or (b shl 30)) xor ((b shr 13) or (b shl 19)) xor ((b shr 22) xor (b shl 10))) + ((b and c) xor (b and d) xor (c and d)); a:= t1 + t2; e:= e + t1;
-  t1:= h + (((e shr 6) or (e shl 26)) xor ((e shr 11) or (e shl 21)) xor ((e shr 25) or (e shl 7))) + ((e and f) xor (not e and g)) + $e49b69c1 + W[16]; t2:= (((a shr 2) or (a shl 30)) xor ((a shr 13) or (a shl 19)) xor ((a shr 22) xor (a shl 10))) + ((a and b) xor (a and c) xor (b and c)); h:= t1 + t2; d:= d + t1;
-  t1:= g + (((d shr 6) or (d shl 26)) xor ((d shr 11) or (d shl 21)) xor ((d shr 25) or (d shl 7))) + ((d and e) xor (not d and f)) + $efbe4786 + W[17]; t2:= (((h shr 2) or (h shl 30)) xor ((h shr 13) or (h shl 19)) xor ((h shr 22) xor (h shl 10))) + ((h and a) xor (h and b) xor (a and b)); g:= t1 + t2; c:= c + t1;
-  t1:= f + (((c shr 6) or (c shl 26)) xor ((c shr 11) or (c shl 21)) xor ((c shr 25) or (c shl 7))) + ((c and d) xor (not c and e)) + $0fc19dc6 + W[18]; t2:= (((g shr 2) or (g shl 30)) xor ((g shr 13) or (g shl 19)) xor ((g shr 22) xor (g shl 10))) + ((g and h) xor (g and a) xor (h and a)); f:= t1 + t2; b:= b + t1;
-  t1:= e + (((b shr 6) or (b shl 26)) xor ((b shr 11) or (b shl 21)) xor ((b shr 25) or (b shl 7))) + ((b and c) xor (not b and d)) + $240ca1cc + W[19]; t2:= (((f shr 2) or (f shl 30)) xor ((f shr 13) or (f shl 19)) xor ((f shr 22) xor (f shl 10))) + ((f and g) xor (f and h) xor (g and h)); e:= t1 + t2; a:= a + t1;
-  t1:= d + (((a shr 6) or (a shl 26)) xor ((a shr 11) or (a shl 21)) xor ((a shr 25) or (a shl 7))) + ((a and b) xor (not a and c)) + $2de92c6f + W[20]; t2:= (((e shr 2) or (e shl 30)) xor ((e shr 13) or (e shl 19)) xor ((e shr 22) xor (e shl 10))) + ((e and f) xor (e and g) xor (f and g)); d:= t1 + t2; h:= h + t1;
-  t1:= c + (((h shr 6) or (h shl 26)) xor ((h shr 11) or (h shl 21)) xor ((h shr 25) or (h shl 7))) + ((h and a) xor (not h and b)) + $4a7484aa + W[21]; t2:= (((d shr 2) or (d shl 30)) xor ((d shr 13) or (d shl 19)) xor ((d shr 22) xor (d shl 10))) + ((d and e) xor (d and f) xor (e and f)); c:= t1 + t2; g:= g + t1;
-  t1:= b + (((g shr 6) or (g shl 26)) xor ((g shr 11) or (g shl 21)) xor ((g shr 25) or (g shl 7))) + ((g and h) xor (not g and a)) + $5cb0a9dc + W[22]; t2:= (((c shr 2) or (c shl 30)) xor ((c shr 13) or (c shl 19)) xor ((c shr 22) xor (c shl 10))) + ((c and d) xor (c and e) xor (d and e)); b:= t1 + t2; f:= f + t1;
-  t1:= a + (((f shr 6) or (f shl 26)) xor ((f shr 11) or (f shl 21)) xor ((f shr 25) or (f shl 7))) + ((f and g) xor (not f and h)) + $76f988da + W[23]; t2:= (((b shr 2) or (b shl 30)) xor ((b shr 13) or (b shl 19)) xor ((b shr 22) xor (b shl 10))) + ((b and c) xor (b and d) xor (c and d)); a:= t1 + t2; e:= e + t1;
-  t1:= h + (((e shr 6) or (e shl 26)) xor ((e shr 11) or (e shl 21)) xor ((e shr 25) or (e shl 7))) + ((e and f) xor (not e and g)) + $983e5152 + W[24]; t2:= (((a shr 2) or (a shl 30)) xor ((a shr 13) or (a shl 19)) xor ((a shr 22) xor (a shl 10))) + ((a and b) xor (a and c) xor (b and c)); h:= t1 + t2; d:= d + t1;
-  t1:= g + (((d shr 6) or (d shl 26)) xor ((d shr 11) or (d shl 21)) xor ((d shr 25) or (d shl 7))) + ((d and e) xor (not d and f)) + $a831c66d + W[25]; t2:= (((h shr 2) or (h shl 30)) xor ((h shr 13) or (h shl 19)) xor ((h shr 22) xor (h shl 10))) + ((h and a) xor (h and b) xor (a and b)); g:= t1 + t2; c:= c + t1;
-  t1:= f + (((c shr 6) or (c shl 26)) xor ((c shr 11) or (c shl 21)) xor ((c shr 25) or (c shl 7))) + ((c and d) xor (not c and e)) + $b00327c8 + W[26]; t2:= (((g shr 2) or (g shl 30)) xor ((g shr 13) or (g shl 19)) xor ((g shr 22) xor (g shl 10))) + ((g and h) xor (g and a) xor (h and a)); f:= t1 + t2; b:= b + t1;
-  t1:= e + (((b shr 6) or (b shl 26)) xor ((b shr 11) or (b shl 21)) xor ((b shr 25) or (b shl 7))) + ((b and c) xor (not b and d)) + $bf597fc7 + W[27]; t2:= (((f shr 2) or (f shl 30)) xor ((f shr 13) or (f shl 19)) xor ((f shr 22) xor (f shl 10))) + ((f and g) xor (f and h) xor (g and h)); e:= t1 + t2; a:= a + t1;
-  t1:= d + (((a shr 6) or (a shl 26)) xor ((a shr 11) or (a shl 21)) xor ((a shr 25) or (a shl 7))) + ((a and b) xor (not a and c)) + $c6e00bf3 + W[28]; t2:= (((e shr 2) or (e shl 30)) xor ((e shr 13) or (e shl 19)) xor ((e shr 22) xor (e shl 10))) + ((e and f) xor (e and g) xor (f and g)); d:= t1 + t2; h:= h + t1;
-  t1:= c + (((h shr 6) or (h shl 26)) xor ((h shr 11) or (h shl 21)) xor ((h shr 25) or (h shl 7))) + ((h and a) xor (not h and b)) + $d5a79147 + W[29]; t2:= (((d shr 2) or (d shl 30)) xor ((d shr 13) or (d shl 19)) xor ((d shr 22) xor (d shl 10))) + ((d and e) xor (d and f) xor (e and f)); c:= t1 + t2; g:= g + t1;
-  t1:= b + (((g shr 6) or (g shl 26)) xor ((g shr 11) or (g shl 21)) xor ((g shr 25) or (g shl 7))) + ((g and h) xor (not g and a)) + $06ca6351 + W[30]; t2:= (((c shr 2) or (c shl 30)) xor ((c shr 13) or (c shl 19)) xor ((c shr 22) xor (c shl 10))) + ((c and d) xor (c and e) xor (d and e)); b:= t1 + t2; f:= f + t1;
-  t1:= a + (((f shr 6) or (f shl 26)) xor ((f shr 11) or (f shl 21)) xor ((f shr 25) or (f shl 7))) + ((f and g) xor (not f and h)) + $14292967 + W[31]; t2:= (((b shr 2) or (b shl 30)) xor ((b shr 13) or (b shl 19)) xor ((b shr 22) xor (b shl 10))) + ((b and c) xor (b and d) xor (c and d)); a:= t1 + t2; e:= e + t1;
-  t1:= h + (((e shr 6) or (e shl 26)) xor ((e shr 11) or (e shl 21)) xor ((e shr 25) or (e shl 7))) + ((e and f) xor (not e and g)) + $27b70a85 + W[32]; t2:= (((a shr 2) or (a shl 30)) xor ((a shr 13) or (a shl 19)) xor ((a shr 22) xor (a shl 10))) + ((a and b) xor (a and c) xor (b and c)); h:= t1 + t2; d:= d + t1;
-  t1:= g + (((d shr 6) or (d shl 26)) xor ((d shr 11) or (d shl 21)) xor ((d shr 25) or (d shl 7))) + ((d and e) xor (not d and f)) + $2e1b2138 + W[33]; t2:= (((h shr 2) or (h shl 30)) xor ((h shr 13) or (h shl 19)) xor ((h shr 22) xor (h shl 10))) + ((h and a) xor (h and b) xor (a and b)); g:= t1 + t2; c:= c + t1;
-  t1:= f + (((c shr 6) or (c shl 26)) xor ((c shr 11) or (c shl 21)) xor ((c shr 25) or (c shl 7))) + ((c and d) xor (not c and e)) + $4d2c6dfc + W[34]; t2:= (((g shr 2) or (g shl 30)) xor ((g shr 13) or (g shl 19)) xor ((g shr 22) xor (g shl 10))) + ((g and h) xor (g and a) xor (h and a)); f:= t1 + t2; b:= b + t1;
-  t1:= e + (((b shr 6) or (b shl 26)) xor ((b shr 11) or (b shl 21)) xor ((b shr 25) or (b shl 7))) + ((b and c) xor (not b and d)) + $53380d13 + W[35]; t2:= (((f shr 2) or (f shl 30)) xor ((f shr 13) or (f shl 19)) xor ((f shr 22) xor (f shl 10))) + ((f and g) xor (f and h) xor (g and h)); e:= t1 + t2; a:= a + t1;
-  t1:= d + (((a shr 6) or (a shl 26)) xor ((a shr 11) or (a shl 21)) xor ((a shr 25) or (a shl 7))) + ((a and b) xor (not a and c)) + $650a7354 + W[36]; t2:= (((e shr 2) or (e shl 30)) xor ((e shr 13) or (e shl 19)) xor ((e shr 22) xor (e shl 10))) + ((e and f) xor (e and g) xor (f and g)); d:= t1 + t2; h:= h + t1;
-  t1:= c + (((h shr 6) or (h shl 26)) xor ((h shr 11) or (h shl 21)) xor ((h shr 25) or (h shl 7))) + ((h and a) xor (not h and b)) + $766a0abb + W[37]; t2:= (((d shr 2) or (d shl 30)) xor ((d shr 13) or (d shl 19)) xor ((d shr 22) xor (d shl 10))) + ((d and e) xor (d and f) xor (e and f)); c:= t1 + t2; g:= g + t1;
-  t1:= b + (((g shr 6) or (g shl 26)) xor ((g shr 11) or (g shl 21)) xor ((g shr 25) or (g shl 7))) + ((g and h) xor (not g and a)) + $81c2c92e + W[38]; t2:= (((c shr 2) or (c shl 30)) xor ((c shr 13) or (c shl 19)) xor ((c shr 22) xor (c shl 10))) + ((c and d) xor (c and e) xor (d and e)); b:= t1 + t2; f:= f + t1;
-  t1:= a + (((f shr 6) or (f shl 26)) xor ((f shr 11) or (f shl 21)) xor ((f shr 25) or (f shl 7))) + ((f and g) xor (not f and h)) + $92722c85 + W[39]; t2:= (((b shr 2) or (b shl 30)) xor ((b shr 13) or (b shl 19)) xor ((b shr 22) xor (b shl 10))) + ((b and c) xor (b and d) xor (c and d)); a:= t1 + t2; e:= e + t1;
-  t1:= h + (((e shr 6) or (e shl 26)) xor ((e shr 11) or (e shl 21)) xor ((e shr 25) or (e shl 7))) + ((e and f) xor (not e and g)) + $a2bfe8a1 + W[40]; t2:= (((a shr 2) or (a shl 30)) xor ((a shr 13) or (a shl 19)) xor ((a shr 22) xor (a shl 10))) + ((a and b) xor (a and c) xor (b and c)); h:= t1 + t2; d:= d + t1;
-  t1:= g + (((d shr 6) or (d shl 26)) xor ((d shr 11) or (d shl 21)) xor ((d shr 25) or (d shl 7))) + ((d and e) xor (not d and f)) + $a81a664b + W[41]; t2:= (((h shr 2) or (h shl 30)) xor ((h shr 13) or (h shl 19)) xor ((h shr 22) xor (h shl 10))) + ((h and a) xor (h and b) xor (a and b)); g:= t1 + t2; c:= c + t1;
-  t1:= f + (((c shr 6) or (c shl 26)) xor ((c shr 11) or (c shl 21)) xor ((c shr 25) or (c shl 7))) + ((c and d) xor (not c and e)) + $c24b8b70 + W[42]; t2:= (((g shr 2) or (g shl 30)) xor ((g shr 13) or (g shl 19)) xor ((g shr 22) xor (g shl 10))) + ((g and h) xor (g and a) xor (h and a)); f:= t1 + t2; b:= b + t1;
-  t1:= e + (((b shr 6) or (b shl 26)) xor ((b shr 11) or (b shl 21)) xor ((b shr 25) or (b shl 7))) + ((b and c) xor (not b and d)) + $c76c51a3 + W[43]; t2:= (((f shr 2) or (f shl 30)) xor ((f shr 13) or (f shl 19)) xor ((f shr 22) xor (f shl 10))) + ((f and g) xor (f and h) xor (g and h)); e:= t1 + t2; a:= a + t1;
-  t1:= d + (((a shr 6) or (a shl 26)) xor ((a shr 11) or (a shl 21)) xor ((a shr 25) or (a shl 7))) + ((a and b) xor (not a and c)) + $d192e819 + W[44]; t2:= (((e shr 2) or (e shl 30)) xor ((e shr 13) or (e shl 19)) xor ((e shr 22) xor (e shl 10))) + ((e and f) xor (e and g) xor (f and g)); d:= t1 + t2; h:= h + t1;
-  t1:= c + (((h shr 6) or (h shl 26)) xor ((h shr 11) or (h shl 21)) xor ((h shr 25) or (h shl 7))) + ((h and a) xor (not h and b)) + $d6990624 + W[45]; t2:= (((d shr 2) or (d shl 30)) xor ((d shr 13) or (d shl 19)) xor ((d shr 22) xor (d shl 10))) + ((d and e) xor (d and f) xor (e and f)); c:= t1 + t2; g:= g + t1;
-  t1:= b + (((g shr 6) or (g shl 26)) xor ((g shr 11) or (g shl 21)) xor ((g shr 25) or (g shl 7))) + ((g and h) xor (not g and a)) + $f40e3585 + W[46]; t2:= (((c shr 2) or (c shl 30)) xor ((c shr 13) or (c shl 19)) xor ((c shr 22) xor (c shl 10))) + ((c and d) xor (c and e) xor (d and e)); b:= t1 + t2; f:= f + t1;
-  t1:= a + (((f shr 6) or (f shl 26)) xor ((f shr 11) or (f shl 21)) xor ((f shr 25) or (f shl 7))) + ((f and g) xor (not f and h)) + $106aa070 + W[47]; t2:= (((b shr 2) or (b shl 30)) xor ((b shr 13) or (b shl 19)) xor ((b shr 22) xor (b shl 10))) + ((b and c) xor (b and d) xor (c and d)); a:= t1 + t2; e:= e + t1;
-  t1:= h + (((e shr 6) or (e shl 26)) xor ((e shr 11) or (e shl 21)) xor ((e shr 25) or (e shl 7))) + ((e and f) xor (not e and g)) + $19a4c116 + W[48]; t2:= (((a shr 2) or (a shl 30)) xor ((a shr 13) or (a shl 19)) xor ((a shr 22) xor (a shl 10))) + ((a and b) xor (a and c) xor (b and c)); h:= t1 + t2; d:= d + t1;
-  t1:= g + (((d shr 6) or (d shl 26)) xor ((d shr 11) or (d shl 21)) xor ((d shr 25) or (d shl 7))) + ((d and e) xor (not d and f)) + $1e376c08 + W[49]; t2:= (((h shr 2) or (h shl 30)) xor ((h shr 13) or (h shl 19)) xor ((h shr 22) xor (h shl 10))) + ((h and a) xor (h and b) xor (a and b)); g:= t1 + t2; c:= c + t1;
-  t1:= f + (((c shr 6) or (c shl 26)) xor ((c shr 11) or (c shl 21)) xor ((c shr 25) or (c shl 7))) + ((c and d) xor (not c and e)) + $2748774c + W[50]; t2:= (((g shr 2) or (g shl 30)) xor ((g shr 13) or (g shl 19)) xor ((g shr 22) xor (g shl 10))) + ((g and h) xor (g and a) xor (h and a)); f:= t1 + t2; b:= b + t1;
-  t1:= e + (((b shr 6) or (b shl 26)) xor ((b shr 11) or (b shl 21)) xor ((b shr 25) or (b shl 7))) + ((b and c) xor (not b and d)) + $34b0bcb5 + W[51]; t2:= (((f shr 2) or (f shl 30)) xor ((f shr 13) or (f shl 19)) xor ((f shr 22) xor (f shl 10))) + ((f and g) xor (f and h) xor (g and h)); e:= t1 + t2; a:= a + t1;
-  t1:= d + (((a shr 6) or (a shl 26)) xor ((a shr 11) or (a shl 21)) xor ((a shr 25) or (a shl 7))) + ((a and b) xor (not a and c)) + $391c0cb3 + W[52]; t2:= (((e shr 2) or (e shl 30)) xor ((e shr 13) or (e shl 19)) xor ((e shr 22) xor (e shl 10))) + ((e and f) xor (e and g) xor (f and g)); d:= t1 + t2; h:= h + t1;
-  t1:= c + (((h shr 6) or (h shl 26)) xor ((h shr 11) or (h shl 21)) xor ((h shr 25) or (h shl 7))) + ((h and a) xor (not h and b)) + $4ed8aa4a + W[53]; t2:= (((d shr 2) or (d shl 30)) xor ((d shr 13) or (d shl 19)) xor ((d shr 22) xor (d shl 10))) + ((d and e) xor (d and f) xor (e and f)); c:= t1 + t2; g:= g + t1;
-  t1:= b + (((g shr 6) or (g shl 26)) xor ((g shr 11) or (g shl 21)) xor ((g shr 25) or (g shl 7))) + ((g and h) xor (not g and a)) + $5b9cca4f + W[54]; t2:= (((c shr 2) or (c shl 30)) xor ((c shr 13) or (c shl 19)) xor ((c shr 22) xor (c shl 10))) + ((c and d) xor (c and e) xor (d and e)); b:= t1 + t2; f:= f + t1;
-  t1:= a + (((f shr 6) or (f shl 26)) xor ((f shr 11) or (f shl 21)) xor ((f shr 25) or (f shl 7))) + ((f and g) xor (not f and h)) + $682e6ff3 + W[55]; t2:= (((b shr 2) or (b shl 30)) xor ((b shr 13) or (b shl 19)) xor ((b shr 22) xor (b shl 10))) + ((b and c) xor (b and d) xor (c and d)); a:= t1 + t2; e:= e + t1;
-  t1:= h + (((e shr 6) or (e shl 26)) xor ((e shr 11) or (e shl 21)) xor ((e shr 25) or (e shl 7))) + ((e and f) xor (not e and g)) + $748f82ee + W[56]; t2:= (((a shr 2) or (a shl 30)) xor ((a shr 13) or (a shl 19)) xor ((a shr 22) xor (a shl 10))) + ((a and b) xor (a and c) xor (b and c)); h:= t1 + t2; d:= d + t1;
-  t1:= g + (((d shr 6) or (d shl 26)) xor ((d shr 11) or (d shl 21)) xor ((d shr 25) or (d shl 7))) + ((d and e) xor (not d and f)) + $78a5636f + W[57]; t2:= (((h shr 2) or (h shl 30)) xor ((h shr 13) or (h shl 19)) xor ((h shr 22) xor (h shl 10))) + ((h and a) xor (h and b) xor (a and b)); g:= t1 + t2; c:= c + t1;
-  t1:= f + (((c shr 6) or (c shl 26)) xor ((c shr 11) or (c shl 21)) xor ((c shr 25) or (c shl 7))) + ((c and d) xor (not c and e)) + $84c87814 + W[58]; t2:= (((g shr 2) or (g shl 30)) xor ((g shr 13) or (g shl 19)) xor ((g shr 22) xor (g shl 10))) + ((g and h) xor (g and a) xor (h and a)); f:= t1 + t2; b:= b + t1;
-  t1:= e + (((b shr 6) or (b shl 26)) xor ((b shr 11) or (b shl 21)) xor ((b shr 25) or (b shl 7))) + ((b and c) xor (not b and d)) + $8cc70208 + W[59]; t2:= (((f shr 2) or (f shl 30)) xor ((f shr 13) or (f shl 19)) xor ((f shr 22) xor (f shl 10))) + ((f and g) xor (f and h) xor (g and h)); e:= t1 + t2; a:= a + t1;
-  t1:= d + (((a shr 6) or (a shl 26)) xor ((a shr 11) or (a shl 21)) xor ((a shr 25) or (a shl 7))) + ((a and b) xor (not a and c)) + $90befffa + W[60]; t2:= (((e shr 2) or (e shl 30)) xor ((e shr 13) or (e shl 19)) xor ((e shr 22) xor (e shl 10))) + ((e and f) xor (e and g) xor (f and g)); d:= t1 + t2; h:= h + t1;
-  t1:= c + (((h shr 6) or (h shl 26)) xor ((h shr 11) or (h shl 21)) xor ((h shr 25) or (h shl 7))) + ((h and a) xor (not h and b)) + $a4506ceb + W[61]; t2:= (((d shr 2) or (d shl 30)) xor ((d shr 13) or (d shl 19)) xor ((d shr 22) xor (d shl 10))) + ((d and e) xor (d and f) xor (e and f)); c:= t1 + t2; g:= g + t1;
-  t1:= b + (((g shr 6) or (g shl 26)) xor ((g shr 11) or (g shl 21)) xor ((g shr 25) or (g shl 7))) + ((g and h) xor (not g and a)) + $bef9a3f7 + W[62]; t2:= (((c shr 2) or (c shl 30)) xor ((c shr 13) or (c shl 19)) xor ((c shr 22) xor (c shl 10))) + ((c and d) xor (c and e) xor (d and e)); b:= t1 + t2; f:= f + t1;
-  t1:= a + (((f shr 6) or (f shl 26)) xor ((f shr 11) or (f shl 21)) xor ((f shr 25) or (f shl 7))) + ((f and g) xor (not f and h)) + $c67178f2 + W[63]; t2:= (((b shr 2) or (b shl 30)) xor ((b shr 13) or (b shl 19)) xor ((b shr 22) xor (b shl 10))) + ((b and c) xor (b and d) xor (c and d)); a:= t1 + t2; e:= e + t1;
+  t1:= h + (((e shr 6) or (e shl 26)) xor ((e shr 11) or (e shl 21)) xor ((e shr 25) or (e shl 7))) +
+     ((e and f) xor (not e and g)) + $428a2f98 + W[0]; t2:= (((a shr 2) or (a shl 30)) xor ((a shr 13)
+ 
+  or (a shl 19)) xor ((a shr 22) xor (a shl 10))) + ((a and b) xor (a and c) xor (b and c)); h:= t1 + t2; d:= d + t1;
+  t1:= g + (((d shr 6) or (d shl 26)) xor ((d shr 11) or (d shl 21)) xor ((d shr 25) or (d shl 7))) + 
+    ((d and e) xor (not d and f)) + $71374491 + W[1]; t2:= (((h shr 2) or (h shl 30)) xor ((h shr 13)
+ or (h shl 19)) xor ((h shr 22) xor (h shl 10))) + ((h and a) xor (h and b) xor (a and b)); g:= t1 + t2; c:= c + t1;
+  t1:= f + (((c shr 6) or (c shl 26)) xor ((c shr 11) or (c shl 21)) xor ((c shr 25) or (c shl 7)))
+ + ((c and d) xor (not c and e)) + $b5c0fbcf + W[2]; t2:= (((g shr 2) or (g shl 30)) xor ((g shr 13)
+ or (g shl 19)) xor ((g shr 22) xor (g shl 10))) + ((g and h) xor (g and a) xor (h and a)); f:= t1 + t2; b:= b + t1;
+  t1:= e + (((b shr 6) or (b shl 26)) xor ((b shr 11) or (b shl 21)) xor ((b shr 25) or (b shl 7)))
+ + ((b and c) xor (not b and d)) + $e9b5dba5 + W[3]; t2:= (((f shr 2) or (f shl 30)) xor ((f shr 13)
+ or (f shl 19)) xor ((f shr 22) xor (f shl 10))) + ((f and g) xor (f and h) xor (g and h)); e:= t1 + t2; a:= a + t1;
+  t1:= d + (((a shr 6) or (a shl 26)) xor ((a shr 11) or (a shl 21)) xor ((a shr 25) or (a shl 7)))
+ + ((a and b) xor (not a and c)) + $3956c25b + W[4]; t2:= (((e shr 2) or (e shl 30)) xor ((e shr 13)
+ or (e shl 19)) xor ((e shr 22) xor (e shl 10))) + ((e and f) xor (e and g) xor (f and g)); d:= t1 + t2; h:= h + t1;
+  t1:= c + (((h shr 6) or (h shl 26)) xor ((h shr 11) or (h shl 21)) xor ((h shr 25) or (h shl 7)))
+ + ((h and a) xor (not h and b)) + $59f111f1 + W[5]; t2:= (((d shr 2) or (d shl 30)) xor ((d shr 13)
+ or (d shl 19)) xor ((d shr 22) xor (d shl 10))) + ((d and e) xor (d and f) xor (e and f)); c:= t1 + t2; g:= g + t1;
+  t1:= b + (((g shr 6) or (g shl 26)) xor ((g shr 11) or (g shl 21)) xor ((g shr 25) or (g shl 7)))
+ + ((g and h) xor (not g and a)) + $923f82a4 + W[6]; t2:= (((c shr 2) or (c shl 30)) xor ((c shr 13)
+ or (c shl 19)) xor ((c shr 22) xor (c shl 10))) + ((c and d) xor (c and e) xor (d and e)); b:= t1 + t2; f:= f + t1;
+  t1:= a + (((f shr 6) or (f shl 26)) xor ((f shr 11) or (f shl 21)) xor ((f shr 25) or (f shl 7)))
+ + ((f and g) xor (not f and h)) + $ab1c5ed5 + W[7]; t2:= (((b shr 2) or (b shl 30)) xor ((b shr 13)
+ or (b shl 19)) xor ((b shr 22) xor (b shl 10))) + ((b and c) xor (b and d) xor (c and d)); a:= t1 + t2; e:= e + t1;
+  t1:= h + (((e shr 6) or (e shl 26)) xor ((e shr 11) or (e shl 21)) xor ((e shr 25) or (e shl 7)))
+ + ((e and f) xor (not e and g)) + $d807aa98 + W[8]; t2:= (((a shr 2) or (a shl 30)) xor ((a shr 13)
+ or (a shl 19)) xor ((a shr 22) xor (a shl 10))) + ((a and b) xor (a and c) xor (b and c)); h:= t1 + t2; d:= d + t1;
+  t1:= g + (((d shr 6) or (d shl 26)) xor ((d shr 11) or (d shl 21)) xor ((d shr 25) or (d shl 7)))
+ + ((d and e) xor (not d and f)) + $12835b01 + W[9]; t2:= (((h shr 2) or (h shl 30)) xor ((h shr 13)
+ or (h shl 19)) xor ((h shr 22) xor (h shl 10))) + ((h and a) xor (h and b) xor (a and b)); g:= t1 + t2; c:= c + t1;
+  t1:= f + (((c shr 6) or (c shl 26)) xor ((c shr 11) or (c shl 21)) xor ((c shr 25) or (c shl 7)))
+ + ((c and d) xor (not c and e)) + $243185be + W[10]; t2:= (((g shr 2) or (g shl 30)) xor ((g shr 13)
+ or (g shl 19)) xor ((g shr 22) xor (g shl 10))) + ((g and h) xor (g and a) xor (h and a)); f:= t1 + t2; b:= b + t1;
+  t1:= e + (((b shr 6) or (b shl 26)) xor ((b shr 11) or (b shl 21)) xor ((b shr 25) or (b shl 7)))
+ + ((b and c) xor (not b and d)) + $550c7dc3 + W[11]; t2:= (((f shr 2) or (f shl 30)) xor ((f shr 13)
+ or (f shl 19)) xor ((f shr 22) xor (f shl 10))) + ((f and g) xor (f and h) xor (g and h)); e:= t1 + t2; a:= a + t1;
+  t1:= d + (((a shr 6) or (a shl 26)) xor ((a shr 11) or (a shl 21)) xor ((a shr 25) or (a shl 7)))
+ + ((a and b) xor (not a and c)) + $72be5d74 + W[12]; t2:= (((e shr 2) or (e shl 30)) xor ((e shr 13)
+ or (e shl 19)) xor ((e shr 22) xor (e shl 10))) + ((e and f) xor (e and g) xor (f and g)); d:= t1 + t2; h:= h + t1;
+  t1:= c + (((h shr 6) or (h shl 26)) xor ((h shr 11) or (h shl 21)) xor ((h shr 25) or (h shl 7)))
+ + ((h and a) xor (not h and b)) + $80deb1fe + W[13]; t2:= (((d shr 2) or (d shl 30)) xor ((d shr 13)
+ or (d shl 19)) xor ((d shr 22) xor (d shl 10))) + ((d and e) xor (d and f) xor (e and f)); c:= t1 + t2; g:= g + t1;
+  t1:= b + (((g shr 6) or (g shl 26)) xor ((g shr 11) or (g shl 21)) xor ((g shr 25) or (g shl 7)))
+ + ((g and h) xor (not g and a)) + $9bdc06a7 + W[14]; t2:= (((c shr 2) or (c shl 30)) xor ((c shr 13)
+ or (c shl 19)) xor ((c shr 22) xor (c shl 10))) + ((c and d) xor (c and e) xor (d and e)); b:= t1 + t2; f:= f + t1;
+  t1:= a + (((f shr 6) or (f shl 26)) xor ((f shr 11) or (f shl 21)) xor ((f shr 25) or (f shl 7)))
+ + ((f and g) xor (not f and h)) + $c19bf174 + W[15]; t2:= (((b shr 2) or (b shl 30)) xor ((b shr 13)
+ or (b shl 19)) xor ((b shr 22) xor (b shl 10))) + ((b and c) xor (b and d) xor (c and d)); a:= t1 + t2; e:= e + t1;
+  t1:= h + (((e shr 6) or (e shl 26)) xor ((e shr 11) or (e shl 21)) xor ((e shr 25) or (e shl 7)))
+ + ((e and f) xor (not e and g)) + $e49b69c1 + W[16]; t2:= (((a shr 2) or (a shl 30)) xor ((a shr 13)
+ or (a shl 19)) xor ((a shr 22) xor (a shl 10))) + ((a and b) xor (a and c) xor (b and c)); h:= t1 + t2; d:= d + t1;
+  t1:= g + (((d shr 6) or (d shl 26)) xor ((d shr 11) or (d shl 21)) xor ((d shr 25) or (d shl 7)))
+ + ((d and e) xor (not d and f)) + $efbe4786 + W[17]; t2:= (((h shr 2) or (h shl 30)) xor ((h shr 13)
+ or (h shl 19)) xor ((h shr 22) xor (h shl 10))) + ((h and a) xor (h and b) xor (a and b)); g:= t1 + t2; c:= c + t1;
+  t1:= f + (((c shr 6) or (c shl 26)) xor ((c shr 11) or (c shl 21)) xor ((c shr 25) or (c shl 7)))
+ + ((c and d) xor (not c and e)) + $0fc19dc6 + W[18]; t2:= (((g shr 2) or (g shl 30)) xor ((g shr 13)
+ or (g shl 19)) xor ((g shr 22) xor (g shl 10))) + ((g and h) xor (g and a) xor (h and a)); f:= t1 + t2; b:= b + t1;
+  t1:= e + (((b shr 6) or (b shl 26)) xor ((b shr 11) or (b shl 21)) xor ((b shr 25) or (b shl 7)))
+ + ((b and c) xor (not b and d)) + $240ca1cc + W[19]; t2:= (((f shr 2) or (f shl 30)) xor ((f shr 13)
+ or (f shl 19)) xor ((f shr 22) xor (f shl 10))) + ((f and g) xor (f and h) xor (g and h)); e:= t1 + t2; a:= a + t1;
+  t1:= d + (((a shr 6) or (a shl 26)) xor ((a shr 11) or (a shl 21)) xor ((a shr 25) or (a shl 7)))
+ + ((a and b) xor (not a and c)) + $2de92c6f + W[20]; t2:= (((e shr 2) or (e shl 30)) xor ((e shr 13)
+ or (e shl 19)) xor ((e shr 22) xor (e shl 10))) + ((e and f) xor (e and g) xor (f and g)); d:= t1 + t2; h:= h + t1;
+  t1:= c + (((h shr 6) or (h shl 26)) xor ((h shr 11) or (h shl 21)) xor ((h shr 25) or (h shl 7)))
+ + ((h and a) xor (not h and b)) + $4a7484aa + W[21]; t2:= (((d shr 2) or (d shl 30)) xor ((d shr 13)
+ or (d shl 19)) xor ((d shr 22) xor (d shl 10))) + ((d and e) xor (d and f) xor (e and f)); c:= t1 + t2; g:= g + t1;
+  t1:= b + (((g shr 6) or (g shl 26)) xor ((g shr 11) or (g shl 21)) xor ((g shr 25) or (g shl 7)))
+ + ((g and h) xor (not g and a)) + $5cb0a9dc + W[22]; t2:= (((c shr 2) or (c shl 30)) xor ((c shr 13)
+ or (c shl 19)) xor ((c shr 22) xor (c shl 10))) + ((c and d) xor (c and e) xor (d and e)); b:= t1 + t2; f:= f + t1;
+  t1:= a + (((f shr 6) or (f shl 26)) xor ((f shr 11) or (f shl 21)) xor ((f shr 25) or (f shl 7)))
+ + ((f and g) xor (not f and h)) + $76f988da + W[23]; t2:= (((b shr 2) or (b shl 30)) xor ((b shr 13)
+ or (b shl 19)) xor ((b shr 22) xor (b shl 10))) + ((b and c) xor (b and d) xor (c and d)); a:= t1 + t2; e:= e + t1;
+  t1:= h + (((e shr 6) or (e shl 26)) xor ((e shr 11) or (e shl 21)) xor ((e shr 25) or (e shl 7)))
+ + ((e and f) xor (not e and g)) + $983e5152 + W[24]; t2:= (((a shr 2) or (a shl 30)) xor ((a shr 13)
+ or (a shl 19)) xor ((a shr 22) xor (a shl 10))) + ((a and b) xor (a and c) xor (b and c)); h:= t1 + t2; d:= d + t1;
+  t1:= g + (((d shr 6) or (d shl 26)) xor ((d shr 11) or (d shl 21)) xor ((d shr 25) or (d shl 7)))
+ + ((d and e) xor (not d and f)) + $a831c66d + W[25]; t2:= (((h shr 2) or (h shl 30)) xor ((h shr 13)
+ or (h shl 19)) xor ((h shr 22) xor (h shl 10))) + ((h and a) xor (h and b) xor (a and b)); g:= t1 + t2; c:= c + t1;
+  t1:= f + (((c shr 6) or (c shl 26)) xor ((c shr 11) or (c shl 21)) xor ((c shr 25) or (c shl 7)))
+ + ((c and d) xor (not c and e)) + $b00327c8 + W[26]; t2:= (((g shr 2) or (g shl 30)) xor ((g shr 13)
+ or (g shl 19)) xor ((g shr 22) xor (g shl 10))) + ((g and h) xor (g and a) xor (h and a)); f:= t1 + t2; b:= b + t1;
+  t1:= e + (((b shr 6) or (b shl 26)) xor ((b shr 11) or (b shl 21)) xor ((b shr 25) or (b shl 7)))
+ + ((b and c) xor (not b and d)) + $bf597fc7 + W[27]; t2:= (((f shr 2) or (f shl 30)) xor ((f shr 13)
+ or (f shl 19)) xor ((f shr 22) xor (f shl 10))) + ((f and g) xor (f and h) xor (g and h)); e:= t1 + t2; a:= a + t1;
+  t1:= d + (((a shr 6) or (a shl 26)) xor ((a shr 11) or (a shl 21)) xor ((a shr 25) or (a shl 7)))
+ + ((a and b) xor (not a and c)) + $c6e00bf3 + W[28]; t2:= (((e shr 2) or (e shl 30)) xor ((e shr 13)
+ or (e shl 19)) xor ((e shr 22) xor (e shl 10))) + ((e and f) xor (e and g) xor (f and g)); d:= t1 + t2; h:= h + t1;
+  t1:= c + (((h shr 6) or (h shl 26)) xor ((h shr 11) or (h shl 21)) xor ((h shr 25) or (h shl 7)))
+ + ((h and a) xor (not h and b)) + $d5a79147 + W[29]; t2:= (((d shr 2) or (d shl 30)) xor ((d shr 13)
+ or (d shl 19)) xor ((d shr 22) xor (d shl 10))) + ((d and e) xor (d and f) xor (e and f)); c:= t1 + t2; g:= g + t1;
+  t1:= b + (((g shr 6) or (g shl 26)) xor ((g shr 11) or (g shl 21)) xor ((g shr 25) or (g shl 7)))
+ + ((g and h) xor (not g and a)) + $06ca6351 + W[30]; t2:= (((c shr 2) or (c shl 30)) xor ((c shr 13)
+ or (c shl 19)) xor ((c shr 22) xor (c shl 10))) + ((c and d) xor (c and e) xor (d and e)); b:= t1 + t2; f:= f + t1;
+  t1:= a + (((f shr 6) or (f shl 26)) xor ((f shr 11) or (f shl 21)) xor ((f shr 25) or (f shl 7)))
+ + ((f and g) xor (not f and h)) + $14292967 + W[31]; t2:= (((b shr 2) or (b shl 30)) xor ((b shr 13)
+ or (b shl 19)) xor ((b shr 22) xor (b shl 10))) + ((b and c) xor (b and d) xor (c and d)); a:= t1 + t2; e:= e + t1;
+  t1:= h + (((e shr 6) or (e shl 26)) xor ((e shr 11) or (e shl 21)) xor ((e shr 25) or (e shl 7)))
+ + ((e and f) xor (not e and g)) + $27b70a85 + W[32]; t2:= (((a shr 2) or (a shl 30)) xor ((a shr 13)
+ or (a shl 19)) xor ((a shr 22) xor (a shl 10))) + ((a and b) xor (a and c) xor (b and c)); h:= t1 + t2; d:= d + t1;
+  t1:= g + (((d shr 6) or (d shl 26)) xor ((d shr 11) or (d shl 21)) xor ((d shr 25) or (d shl 7)))
+ + ((d and e) xor (not d and f)) + $2e1b2138 + W[33]; t2:= (((h shr 2) or (h shl 30)) xor ((h shr 13)
+ or (h shl 19)) xor ((h shr 22) xor (h shl 10))) + ((h and a) xor (h and b) xor (a and b)); g:= t1 + t2; c:= c + t1;
+  t1:= f + (((c shr 6) or (c shl 26)) xor ((c shr 11) or (c shl 21)) xor ((c shr 25) or (c shl 7)))
+ + ((c and d) xor (not c and e)) + $4d2c6dfc + W[34]; t2:= (((g shr 2) or (g shl 30)) xor ((g shr 13)
+ or (g shl 19)) xor ((g shr 22) xor (g shl 10))) + ((g and h) xor (g and a) xor (h and a)); f:= t1 + t2; b:= b + t1;
+  t1:= e + (((b shr 6) or (b shl 26)) xor ((b shr 11) or (b shl 21)) xor ((b shr 25) or (b shl 7)))
+ + ((b and c) xor (not b and d)) + $53380d13 + W[35]; t2:= (((f shr 2) or (f shl 30)) xor ((f shr 13)
+ or (f shl 19)) xor ((f shr 22) xor (f shl 10))) + ((f and g) xor (f and h) xor (g and h)); e:= t1 + t2; a:= a + t1;
+  t1:= d + (((a shr 6) or (a shl 26)) xor ((a shr 11) or (a shl 21)) xor ((a shr 25) or (a shl 7)))
+ + ((a and b) xor (not a and c)) + $650a7354 + W[36]; t2:= (((e shr 2) or (e shl 30)) xor ((e shr 13)
+ or (e shl 19)) xor ((e shr 22) xor (e shl 10))) + ((e and f) xor (e and g) xor (f and g)); d:= t1 + t2; h:= h + t1;
+  t1:= c + (((h shr 6) or (h shl 26)) xor ((h shr 11) or (h shl 21)) xor ((h shr 25) or (h shl 7)))
+ + ((h and a) xor (not h and b)) + $766a0abb + W[37]; t2:= (((d shr 2) or (d shl 30)) xor ((d shr 13)
+ or (d shl 19)) xor ((d shr 22) xor (d shl 10))) + ((d and e) xor (d and f) xor (e and f)); c:= t1 + t2; g:= g + t1;
+  t1:= b + (((g shr 6) or (g shl 26)) xor ((g shr 11) or (g shl 21)) xor ((g shr 25) or (g shl 7)))
+ + ((g and h) xor (not g and a)) + $81c2c92e + W[38]; t2:= (((c shr 2) or (c shl 30)) xor ((c shr 13)
+ or (c shl 19)) xor ((c shr 22) xor (c shl 10))) + ((c and d) xor (c and e) xor (d and e)); b:= t1 + t2; f:= f + t1;
+  t1:= a + (((f shr 6) or (f shl 26)) xor ((f shr 11) or (f shl 21)) xor ((f shr 25) or (f shl 7)))
+ + ((f and g) xor (not f and h)) + $92722c85 + W[39]; t2:= (((b shr 2) or (b shl 30)) xor ((b shr 13)
+ or (b shl 19)) xor ((b shr 22) xor (b shl 10))) + ((b and c) xor (b and d) xor (c and d)); a:= t1 + t2; e:= e + t1;
+  t1:= h + (((e shr 6) or (e shl 26)) xor ((e shr 11) or (e shl 21)) xor ((e shr 25) or (e shl 7)))
+ + ((e and f) xor (not e and g)) + $a2bfe8a1 + W[40]; t2:= (((a shr 2) or (a shl 30)) xor ((a shr 13)
+ or (a shl 19)) xor ((a shr 22) xor (a shl 10))) + ((a and b) xor (a and c) xor (b and c)); h:= t1 + t2; d:= d + t1;
+  t1:= g + (((d shr 6) or (d shl 26)) xor ((d shr 11) or (d shl 21)) xor ((d shr 25) or (d shl 7)))
+ + ((d and e) xor (not d and f)) + $a81a664b + W[41]; t2:= (((h shr 2) or (h shl 30)) xor ((h shr 13)
+ or (h shl 19)) xor ((h shr 22) xor (h shl 10))) + ((h and a) xor (h and b) xor (a and b)); g:= t1 + t2; c:= c + t1;
+  t1:= f + (((c shr 6) or (c shl 26)) xor ((c shr 11) or (c shl 21)) xor ((c shr 25) or (c shl 7)))
+ + ((c and d) xor (not c and e)) + $c24b8b70 + W[42]; t2:= (((g shr 2) or (g shl 30)) xor ((g shr 13)
+ or (g shl 19)) xor ((g shr 22) xor (g shl 10))) + ((g and h) xor (g and a) xor (h and a)); f:= t1 + t2; b:= b + t1;
+  t1:= e + (((b shr 6) or (b shl 26)) xor ((b shr 11) or (b shl 21)) xor ((b shr 25) or (b shl 7)))
+ + ((b and c) xor (not b and d)) + $c76c51a3 + W[43]; t2:= (((f shr 2) or (f shl 30)) xor ((f shr 13)
+ or (f shl 19)) xor ((f shr 22) xor (f shl 10))) + ((f and g) xor (f and h) xor (g and h)); e:= t1 + t2; a:= a + t1;
+  t1:= d + (((a shr 6) or (a shl 26)) xor ((a shr 11) or (a shl 21)) xor ((a shr 25) or (a shl 7)))
+ + ((a and b) xor (not a and c)) + $d192e819 + W[44]; t2:= (((e shr 2) or (e shl 30)) xor ((e shr 13)
+ or (e shl 19)) xor ((e shr 22) xor (e shl 10))) + ((e and f) xor (e and g) xor (f and g)); d:= t1 + t2; h:= h + t1;
+  t1:= c + (((h shr 6) or (h shl 26)) xor ((h shr 11) or (h shl 21)) xor ((h shr 25) or (h shl 7)))
+ + ((h and a) xor (not h and b)) + $d6990624 + W[45]; t2:= (((d shr 2) or (d shl 30)) xor ((d shr 13)
+ or (d shl 19)) xor ((d shr 22) xor (d shl 10))) + ((d and e) xor (d and f) xor (e and f)); c:= t1 + t2; g:= g + t1;
+  t1:= b + (((g shr 6) or (g shl 26)) xor ((g shr 11) or (g shl 21)) xor ((g shr 25) or (g shl 7)))
+ + ((g and h) xor (not g and a)) + $f40e3585 + W[46]; t2:= (((c shr 2) or (c shl 30)) xor ((c shr 13)
+ or (c shl 19)) xor ((c shr 22) xor (c shl 10))) + ((c and d) xor (c and e) xor (d and e)); b:= t1 + t2; f:= f + t1;
+  t1:= a + (((f shr 6) or (f shl 26)) xor ((f shr 11) or (f shl 21)) xor ((f shr 25) or (f shl 7)))
+ + ((f and g) xor (not f and h)) + $106aa070 + W[47]; t2:= (((b shr 2) or (b shl 30)) xor ((b shr 13)
+ or (b shl 19)) xor ((b shr 22) xor (b shl 10))) + ((b and c) xor (b and d) xor (c and d)); a:= t1 + t2; e:= e + t1;
+  t1:= h + (((e shr 6) or (e shl 26)) xor ((e shr 11) or (e shl 21)) xor ((e shr 25) or (e shl 7)))
+ + ((e and f) xor (not e and g)) + $19a4c116 + W[48]; t2:= (((a shr 2) or (a shl 30)) xor ((a shr 13)
+ or (a shl 19)) xor ((a shr 22) xor (a shl 10))) + ((a and b) xor (a and c) xor (b and c)); h:= t1 + t2; d:= d + t1;
+  t1:= g + (((d shr 6) or (d shl 26)) xor ((d shr 11) or (d shl 21)) xor ((d shr 25) or (d shl 7)))
+ + ((d and e) xor (not d and f)) + $1e376c08 + W[49]; t2:= (((h shr 2) or (h shl 30)) xor ((h shr 13)
+ or (h shl 19)) xor ((h shr 22) xor (h shl 10))) + ((h and a) xor (h and b) xor (a and b)); g:= t1 + t2; c:= c + t1;
+  t1:= f + (((c shr 6) or (c shl 26)) xor ((c shr 11) or (c shl 21)) xor ((c shr 25) or (c shl 7)))
+ + ((c and d) xor (not c and e)) + $2748774c + W[50]; t2:= (((g shr 2) or (g shl 30)) xor ((g shr 13)
+ or (g shl 19)) xor ((g shr 22) xor (g shl 10))) + ((g and h) xor (g and a) xor (h and a)); f:= t1 + t2; b:= b + t1;
+  t1:= e + (((b shr 6) or (b shl 26)) xor ((b shr 11) or (b shl 21)) xor ((b shr 25) or (b shl 7)))
+ + ((b and c) xor (not b and d)) + $34b0bcb5 + W[51]; t2:= (((f shr 2) or (f shl 30)) xor ((f shr 13)
+ or (f shl 19)) xor ((f shr 22) xor (f shl 10))) + ((f and g) xor (f and h) xor (g and h)); e:= t1 + t2; a:= a + t1;
+  t1:= d + (((a shr 6) or (a shl 26)) xor ((a shr 11) or (a shl 21)) xor ((a shr 25) or (a shl 7)))
+ + ((a and b) xor (not a and c)) + $391c0cb3 + W[52]; t2:= (((e shr 2) or (e shl 30)) xor ((e shr 13)
+ or (e shl 19)) xor ((e shr 22) xor (e shl 10))) + ((e and f) xor (e and g) xor (f and g)); d:= t1 + t2; h:= h + t1;
+  t1:= c + (((h shr 6) or (h shl 26)) xor ((h shr 11) or (h shl 21)) xor ((h shr 25) or (h shl 7)))
+ + ((h and a) xor (not h and b)) + $4ed8aa4a + W[53]; t2:= (((d shr 2) or (d shl 30)) xor ((d shr 13)
+ or (d shl 19)) xor ((d shr 22) xor (d shl 10))) + ((d and e) xor (d and f) xor (e and f)); c:= t1 + t2; g:= g + t1;
+  t1:= b + (((g shr 6) or (g shl 26)) xor ((g shr 11) or (g shl 21)) xor ((g shr 25) or (g shl 7)))
+ + ((g and h) xor (not g and a)) + $5b9cca4f + W[54]; t2:= (((c shr 2) or (c shl 30)) xor ((c shr 13)
+ or (c shl 19)) xor ((c shr 22) xor (c shl 10))) + ((c and d) xor (c and e) xor (d and e)); b:= t1 + t2; f:= f + t1;
+  t1:= a + (((f shr 6) or (f shl 26)) xor ((f shr 11) or (f shl 21)) xor ((f shr 25) or (f shl 7)))
+ + ((f and g) xor (not f and h)) + $682e6ff3 + W[55]; t2:= (((b shr 2) or (b shl 30)) xor ((b shr 13)
+ or (b shl 19)) xor ((b shr 22) xor (b shl 10))) + ((b and c) xor (b and d) xor (c and d)); a:= t1 + t2; e:= e + t1;
+  t1:= h + (((e shr 6) or (e shl 26)) xor ((e shr 11) or (e shl 21)) xor ((e shr 25) or (e shl 7)))
+ + ((e and f) xor (not e and g)) + $748f82ee + W[56]; t2:= (((a shr 2) or (a shl 30)) xor ((a shr 13)
+ or (a shl 19)) xor ((a shr 22) xor (a shl 10))) + ((a and b) xor (a and c) xor (b and c)); h:= t1 + t2; d:= d + t1;
+  t1:= g + (((d shr 6) or (d shl 26)) xor ((d shr 11) or (d shl 21)) xor ((d shr 25) or (d shl 7)))
+ + ((d and e) xor (not d and f)) + $78a5636f + W[57]; t2:= (((h shr 2) or (h shl 30)) xor ((h shr 13)
+ or (h shl 19)) xor ((h shr 22) xor (h shl 10))) + ((h and a) xor (h and b) xor (a and b)); g:= t1 + t2; c:= c + t1;
+  t1:= f + (((c shr 6) or (c shl 26)) xor ((c shr 11) or (c shl 21)) xor ((c shr 25) or (c shl 7)))
+ + ((c and d) xor (not c and e)) + $84c87814 + W[58]; t2:= (((g shr 2) or (g shl 30)) xor ((g shr 13)
+ or (g shl 19)) xor ((g shr 22) xor (g shl 10))) + ((g and h) xor (g and a) xor (h and a)); f:= t1 + t2; b:= b + t1;
+  t1:= e + (((b shr 6) or (b shl 26)) xor ((b shr 11) or (b shl 21)) xor ((b shr 25) or (b shl 7)))
+ + ((b and c) xor (not b and d)) + $8cc70208 + W[59]; t2:= (((f shr 2) or (f shl 30)) xor ((f shr 13)
+ or (f shl 19)) xor ((f shr 22) xor (f shl 10))) + ((f and g) xor (f and h) xor (g and h)); e:= t1 + t2; a:= a + t1;
+  t1:= d + (((a shr 6) or (a shl 26)) xor ((a shr 11) or (a shl 21)) xor ((a shr 25) or (a shl 7)))
+ + ((a and b) xor (not a and c)) + $90befffa + W[60]; t2:= (((e shr 2) or (e shl 30)) xor ((e shr 13)
+ or (e shl 19)) xor ((e shr 22) xor (e shl 10))) + ((e and f) xor (e and g) xor (f and g)); d:= t1 + t2; h:= h + t1;
+  t1:= c + (((h shr 6) or (h shl 26)) xor ((h shr 11) or (h shl 21)) xor ((h shr 25) or (h shl 7)))
+ + ((h and a) xor (not h and b)) + $a4506ceb + W[61]; t2:= (((d shr 2) or (d shl 30)) xor ((d shr 13)
+ or (d shl 19)) xor ((d shr 22) xor (d shl 10))) + ((d and e) xor (d and f) xor (e and f)); c:= t1 + t2; g:= g + t1;
+  t1:= b + (((g shr 6) or (g shl 26)) xor ((g shr 11) or (g shl 21)) xor ((g shr 25) or (g shl 7)))
+ + ((g and h) xor (not g and a)) + $bef9a3f7 + W[62]; t2:= (((c shr 2) or (c shl 30)) xor ((c shr 13)
+ or (c shl 19)) xor ((c shr 22) xor (c shl 10))) + ((c and d) xor (c and e) xor (d and e)); b:= t1 + t2; f:= f + t1;
+  t1:= a + (((f shr 6) or (f shl 26)) xor ((f shr 11) or (f shl 21)) xor ((f shr 25) or (f shl 7)))
+ + ((f and g) xor (not f and h)) + $c67178f2 + W[63]; t2:= (((b shr 2) or (b shl 30)) xor ((b shr 13)
+ or (b shl 19)) xor ((b shr 22) xor (b shl 10))) + ((b and c) xor (b and d) xor (c and d)); a:= t1 + t2; e:= e + t1;
 
   CurrentHash[0]:= CurrentHash[0] + a;
   CurrentHash[1]:= CurrentHash[1] + b;
@@ -968,6 +1776,10 @@ Non-optimised version
   FillChar(HashBuffer,Sizeof(HashBuffer),0);
   end;
 end;
+{$ifdef Overflow_check_on}
+{$Q+}
+{$undef Overflow_check_on}
+{$endif Overflow_check_on}
 
 
 Procedure SHA256Init(var Handle: THashHandle);
@@ -1007,7 +1819,7 @@ Begin
   PBuf:= @Buffer;
   while Size> 0 do
   begin
-    if (Sizeof(HashBuffer)-Index)<= DWord(Size) then
+    if (Sizeof(HashBuffer)-Index)<= Longword(Size) then
     begin
       Move(PBuf^,HashBuffer[Index],Sizeof(HashBuffer)-Index);
       Dec(Size,Sizeof(HashBuffer)-Index);
@@ -1035,8 +1847,8 @@ Begin
   HashBuffer[Index]:= $80;
   if Index>= 56 then
     SHA256Compress(Data^);
-  PDWord(@HashBuffer[56])^:= SwapDWord(LenHi);
-  PDWord(@HashBuffer[60])^:= SwapDWord(LenLo);
+  PLongword(@HashBuffer[56])^:= SwapDWord(LenHi);
+  PLongword(@HashBuffer[60])^:= SwapDWord(LenLo);
   SHA256Compress(Data^);
   CurrentHash[0]:= SwapDWord(CurrentHash[0]);
   CurrentHash[1]:= SwapDWord(CurrentHash[1]);
@@ -1059,17 +1871,20 @@ Type
  PMD5Data = ^TMD5Data;
  TMD5Data = record
     LenHi, LenLo: longword;
-    Index: DWord;
-    CurrentHash: array[0..3] of DWord;
+    Index: Longword;
+    CurrentHash: array[0..3] of Longword;
     HashBuffer: array[0..63] of byte;
  end;
 
-
+{$ifopt Q+}
+{$define Overflow_Check_On}
+{$Q-}
+{$endif}
 
 procedure MD5Compress(var HData: TMD5Data);
 var
-  Data: array[0..15] of dword;
-  A, B, C, D: dword;
+  Data: array[0..15] of Longword;
+  A, B, C, D: Longword;
 begin
 
   With HData do
@@ -1157,6 +1972,10 @@ begin
   FillChar(HashBuffer,Sizeof(HashBuffer),0);
   end;
 end;
+{$ifdef Overflow_check_on}
+{$Q+}
+{$undef Overflow_check_on}
+{$endif Overflow_check_on}
 
 
 Procedure MD5Burn(var Data: TMD5Data);
@@ -1204,7 +2023,7 @@ Begin
   PBuf:= @Buffer;
   while Size> 0 do
   begin
-    if (Sizeof(HashBuffer)-Index)<= DWord(Size) then
+    if (Sizeof(HashBuffer)-Index)<= Longword(Size) then
     begin
       Move(PBuf^,HashBuffer[Index],Sizeof(HashBuffer)-Index);
       Dec(Size,Sizeof(HashBuffer)-Index);
@@ -1231,8 +2050,8 @@ Begin
   HashBuffer[Index]:= $80;
   if Index>= 56 then
     MD5Compress(Data^);
-  PDWord(@HashBuffer[56])^:= LenLo;
-  PDWord(@HashBuffer[60])^:= LenHi;
+  PLongword(@HashBuffer[56])^:= LenLo;
+  PLongword(@HashBuffer[60])^:= LenHi;
   MD5Compress(Data^);
   Move(CurrentHash,HashValue,Sizeof(CurrentHash));
   MD5Burn(Data^);
