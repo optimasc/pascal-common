@@ -679,10 +679,17 @@ type
   }      
   procedure utf8stringdispose(var p : putf8shortstring);
 
-  {** @abstract(Converts an ISO-8859-1 encoded string to an UTF-8 encoded string)
+  {** @abstract(Converts an ISO-8859-1 (Latin1) encoded string to an UTF-8 encoded string)
        
   }    
   function ISO88591ToUtf8(const S: string): utf8string;
+  
+  
+  {** @abstract(Converts an UTF-8 encoded string string to an ISO-8859-1 (Latin1) encoded string)
+       
+  }    
+  function Utf8ToISO88591(const S: string): utf8string;
+  
   
   {** @abstract(Verifies if the UTF-8 string contains only valid UTF-8 characters)
        
@@ -1374,9 +1381,42 @@ const
         exit;
       end;
    end;
-    
-    
-    
+   
+   
+  function UTF8ToISO88591(const S: UTF8String): string;
+   var
+    i: integer;
+    outStr: string;
+    b1,b2: byte;
+    w: word;
+   Begin
+     outStr := '';
+     UTF8ToISO88591:= outStr;
+     i:=1;
+     while i<=length(s) do
+      Begin
+        if s[i] <= chr(127) then
+          Begin
+            outStr := outStr + s[i];
+            Inc(i);
+            continue;
+          end;
+        if ((ord(s[i]) and $E0)=$C0) and ((ord(s[i+1]) and $C0)=$80) then
+          Begin
+            b1 := (ord(s[i]) and $1F);
+            b2 := (ord(s[i+1]) and $3F);
+            w:= word((b1 shl 6) or b2);
+            outStr := outStr + char(w);
+            Inc(i,2);
+            continue;
+          end;
+      end;
+      UTF8ToISO88591:=OutStr;
+   end;
+
+
+
+
   function convertUCS4toUTF8(s: array of ucs4char; var outstr: utf8string): integer;
   var
    i: integer;
