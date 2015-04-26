@@ -1,13 +1,10 @@
-ifndef VERSION
-VERSION=0.0
-endif
 ## Target compilers
-USETPC=1
-USEFPC2=1
-USEVPC=1
-USEFPC=1
+#USETPC=1
+#USEFPC2=1
+#USEVPC=1
+#USEFPC=1
 #USEGPC=1
-USEDELPHI=1
+#USEDELPHI=1
 
 
 #######################################################################
@@ -27,28 +24,35 @@ USEDELPHI=1
 # DOCFILES: Files that will go into the resulting docs directory
 # LIBFILES: Files that will go into the resulting lib directory
 # INCFILES: Files that will go into the resulting include directory
-# TSTFILES: Files that will go into the tst directory
+# TSTFILES: Files that will go into the test directory
 # OUTDIR : Base directory where libs, units, objects files will go
 # DATAFILES : Files to copy for the tests
 # FILESTODOCUMENT: Files to document
 # DATE : Utility name to get the ISO Date
 
-PACKAGENAME:=common
+
+PACKAGE_VERSION_MAJOR=1
+PACKAGE_VERSION_MINOR=0
+PACKAGE_VERSION_PATCH=0
+DEBUG=1
+
+
+PROJECT_NAME:=common
 DOCTITLE:=Common pascal units documentation
-UNITDIRS := ./src ./tst ./lib ./src/$(OS)
+UNITDIRS= ./src ./test ./lib ./src/$(COMPILER_TARGET_OS)
 FILE:=./src/allunits.pas
 BINFILES:=./bin/*
-DOCFILES:=./docs/license.txt ./docs/changes.txt ./docs/copying ./docs/copying.fpc ./docs/readme.txt ./docs/$(PACKAGENAME).pdf ./docs/html
+DOCFILES:=./doc/license.txt ./doc/changes.txt ./doc/copying ./doc/copying.fpc ./doc/readme.txt ./doc/$(PROJECT_NAME).pdf ./doc/html
 #LIBFILES
-SRCFILES:=./src/*
-DATAFILES:=./tst/*.txt
+SOURCES:=./src/*
+DATAFILES:=./test/*.txt
 FILESTODOCUMENT:=./src/crc.pas ./src/locale.pas ./src/unicode.pas ./src/utils.pas ./src/ietf.pas ./src/extdos.pas \
-	./src/collects.pas ./src/iso639.pas ./src/iso3166.pas ./src/dateutil.pas ./src/fileio.pas ./src/fs.pas
-TSTFILES:=./tst/*
+    ./src/collects.pas ./src/iso639.pas ./src/iso3166.pas ./src/dateutil.pas ./src/fileio.pas ./src/fs.pas
+TSTFILES:=./test/*
 DOWNLOAD_URL:=http://www.optimasc.com/products/utilities/
 
 
-PATHSEP:=\\
+#PATHSEP:=\\
 BINDIR := ./bin
 OUTDIR := ./bin
 DATE := getdate.exe
