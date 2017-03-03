@@ -1,4 +1,5 @@
 Unit BitStrm;
+{$i switches.inc}
 
 interface
 
@@ -13,15 +14,20 @@ uses
 
 Type
 
+{$IFNDEF USE_OBJECTS}
+   PStream = ^TStream;
+{$ENDIF}
+
+
 {$IFDEF TP}
    longword = longint;
 {$ENDIF}
    endian_t = (BF_UNKNOWN_ENDIAN, BF_LITTLE_ENDIAN, BF_BIG_ENDIAN);
 
 
-   TBitWriter  = {$IFDEF USE_OBJECTS}object{$ELSE}class{$ENDIF}
+   TBitWriter  = {$IFDEF USE_OBJECTS}object(TObject){$ELSE}class{$ENDIF}
      endian: endian_t;   {* endianess of architecture *}
-     bitBuffer: byte;    {* bits waiting to be read/written *}
+     bitBuffer: word;    {* bits waiting to be read/written *}
      bitCount: byte;     {* number of bits in bitBuffer *}
      procedure WriteBit(bit: byte);
      procedure ByteAlign;
@@ -34,9 +40,9 @@ Type
    end;
 
 
-   TBitReader  = {$IFDEF USE_OBJECTS}object{$ELSE}class{$ENDIF}
+   TBitReader  = {$IFDEF USE_OBJECTS}object(TObject){$ELSE}class{$ENDIF}
      endian: endian_t;   {* endianess of architecture *}
-     bitBuffer: byte;    {* bits waiting to be read/written *}
+     bitBuffer: word;    {* bits waiting to be read/written *}
      bitCount: byte;     {* number of bits in bitBuffer *}
      TotalRead: longword;{**number of bytes actually read }
      function ReadBit: byte;
@@ -51,7 +57,7 @@ Type
 
 
    TStreamBitWriter = {$IFDEF USE_OBJECTS}object{$ELSE}class{$ENDIF}(TBitWriter)
-     S: TStream;
+     S: PStream;
      constructor Create(var Stream: TStream); {$IFNDEF USE_OBJECTS}virtual;{$ENDIF}
      destructor Destroy; {$IFNDEF USE_OBJECTS}override;{$ENDIF}
 {$IFDEF USE_OBJECTS}
@@ -62,7 +68,7 @@ Type
    end;
 
    TStreamBitReader = {$IFDEF USE_OBJECTS}object{$ELSE}class{$ENDIF}(TBitReader)
-     S: TStream;
+     S: PStream;
      constructor Create(var Stream: TStream); {$IFNDEF USE_OBJECTS}virtual;{$ENDIF}
      destructor Destroy; {$IFNDEF USE_OBJECTS}override;{$ENDIF}
 {$IFDEF USE_OBJECTS}
@@ -102,97 +108,72 @@ Type
 
 implementation
 
-type
-   TLongBuffer = array[0..3] of byte;
 
    {*************************************************************************}
 
    procedure TBitWriter.WriteIntegerBE(value: longword; count: integer);
     var
-      tmp: byte;
-      remaining, offset: integer;
-      v: longword;
+     i: integer;
     begin
-      offset := 0;
-      remaining := count;
-      v := value;
+     for i := count - 1 downto  0 do
+      Begin
+{          writeBit((Value shr i) and $01);}
 
-     {* write whole bytes *}
-      while (remaining >= 8) do
-       begin
-         v := value shr (remaining - 8);
-         WriteByte(byte(v));
-         Inc(offset);
-         dec(remaining, 8);
-       end;
+           {-- Unrolled the call here --}
+           bitBuffer := bitBuffer or  (((Value shr i) and $01) shl bitCount);
+           inc(bitCount);
 
-      if (remaining <> 0) then
-       begin
-         {* write remaining bits *}
-        tmp := byte(value);
+           if (BitCount = 8) then
+            Begin
+              WriteInternalByte(bitBuffer);
 
-        while (remaining > 0) do
-          begin
-             tmp := byte(value shr (remaining - 1));
-             WriteBit(tmp and $1);
-             dec(remaining);
-          end;
-       end;
+             {* reset buffer *}
+             bitCount := 0;
+             bitBuffer := 0;
+           end;
+         
+      End;
     end;
 
    procedure TBitWriter.WriteIntegerLE(value: longword; count: integer);
     var
-      tmp: byte;
-      remaining, offset: integer;
-      v: longword;
+      i: integer;
     begin
-      offset := 0;
-      remaining := count;
-      v := value;
+        for i := 0 to count-1 do
+        Begin
+{          writeBit((Value shr i) and $01);}
 
-     {* write whole bytes *}
-      while (remaining >= 8) do
-       begin
-         WriteByte(byte(v));
-         v := value shr (remaining - 8);
-         Inc(offset);
-         dec(remaining, 8);
-       end;
+           {-- Unrolled the call here --}
+           bitBuffer := bitBuffer or  (((Value shr i) and $01) shl bitCount);
+           inc(bitCount);
 
-      if (remaining <> 0) then
-       begin
-         {* write remaining bits *}
-        tmp := byte(value);
+           if (BitCount = 8) then
+            Begin
+              WriteInternalByte(bitBuffer);
 
-        while (remaining > 0) do
-          begin
-             tmp := value shr (remaining - 1);
-             WriteBit(tmp and $1);
-             dec(remaining);
-          end;
-       end;
+             {* reset buffer *}
+             bitCount := 0;
+             bitBuffer := 0;
+           end;
+        end;
     end;
-    
-    
-   procedure TBitWriter.WriteBit(bit: byte);
-   begin
-    Inc(bitCount);
-    bitBuffer := byte(bitBuffer shl 1);
 
-    if (bit <> 0) then
-     bitBuffer := bitBuffer or 1;
 
-    {* write bit buffer if we have 8 bits *}
-    if (bitCount = 8) then
-    begin
+  procedure TBitWriter.WriteBit(bit: byte);
+    Begin
+      bitBuffer := bitBuffer or  (Bit shl bitCount);
+      inc(bitCount);
+
+      if (BitCount = 8) then
+      Begin
         WriteInternalByte(bitBuffer);
 
         {* reset buffer *}
         bitCount := 0;
         bitBuffer := 0;
-    end;
+     end;
+  end;
 
-   end;
 
    procedure TBitWriter.WriteByte(b: byte);
     var
@@ -206,8 +187,8 @@ type
         end;
 
       {* figure out what to write *}
-      tmp := (byte(b)) shr (bitCount);
-      tmp := tmp or ((bitBuffer) shl (8 - bitCount));
+      tmp := (byte(b)) shl (bitCount);
+      tmp := tmp or ((bitBuffer) shr (8 - bitCount));
 
       WriteInternalByte(tmp);
       bitBuffer := b;
@@ -219,7 +200,7 @@ type
         {* write out any unwritten bits *}
         if (bitCount <> 0) then
           begin
-            bitBuffer := bitBuffer shl (8 - bitCount);
+{            bitBuffer := bitBuffer shl (8 - bitCount); }
             WriteInternalByte(bitBuffer);
             bitBuffer := 0;
             bitCount := 0;
@@ -242,6 +223,8 @@ type
       ByteAlign;
 {$IFNDEF USE_OBJECTS}
       inherited Destroy;
+{$ELSE}
+      inherited done;
 {$ENDIF}
     end;
 
@@ -250,7 +233,7 @@ type
 {$IFNDEF USE_OBJECTS}
       Inherited Create;
 {$ENDIF}
-      S := Stream;
+      S := @Stream;
       bitBuffer:=0;
       bitCount:=0;
     end;
@@ -258,7 +241,7 @@ type
 
    procedure TStreamBitWriter.WriteInternalByte(b: byte);
     Begin
-      S.Write(b,sizeof(b));
+      S^.Write(b,sizeof(b));
     end;
 
 
@@ -280,25 +263,30 @@ type
 
 
 
+
  function TBitReader.ReadBit: byte;
   var
    returnValue: byte;
   begin
-    if bitCount = 0 then
+    if bitCount = 8 then
      begin
         {* buffer is empty, read another character *}
         returnValue:=ReadInternalByte;
-        bitCount := 8;
+        bitCount := 0;
         bitBuffer := returnValue;
      end;
 
+    returnValue := bitBuffer and (1 shl bitCount);
     {* bit to return is msb in buffer *}
-    Dec(bitCount);
+    Inc(bitCount);
 
-    returnValue := bitBuffer shr bitCount;
-
-    ReadBit := returnValue and $01;
+    if (returnValue = 0) then
+      readbit :=0
+    else
+      readBit := 1;
   end;
+
+
 
  function TBitReader.ReadByte: byte;
   var
@@ -327,76 +315,74 @@ type
 
  function TBitReader.ReadIntegerBE(count: integer): longword;
   var
-   offset: integer;
-   remaining: integer;
    returnValue: longword;
-   b : byte;
-   value: longword;
+   i: integer;
+   return: longword;
+   readbitval: byte;
   begin
-    offset := count;
-    remaining := count;
-    returnValue := 0;
+    return := 0;
+      for i := count - 1 downto 0 do
+       Begin
+{         returnValue := returnValue or  (readBit shl i);}
 
-    {* read whole bytes *}
-    while (remaining >= 8) do
-     begin
-        Dec(offset, 8);
-        Dec(Remaining, 8);
-        returnValue := longword(returnValue) or longword(longword(ReadByte) shl (offset));
-     end;
+           {-- Unrolled call to readBit --}
+           if bitCount = 8 then
+             begin
+              {* buffer is empty, read another character *}
+              returnValue:=ReadInternalByte;
+              bitCount := 0;
+              bitBuffer := returnValue;
+             end;
 
-    if (remaining <> 0) then
-      begin
-        offset := 0;
-        Value := 0;
-        {* read remaining bits *}
-        while (remaining > 0) do
-          begin
-            b := ReadBit;
-            Value := longword(Value) or longword(longword(b) shl (remaining - 1));
-            dec(Remaining);
-            Inc(offset);
-          end;
-        returnValue :=  longword(returnValue) or longword(value);
-      end;
-    ReadIntegerBE := returnValue;
+           returnValue := bitBuffer and (1 shl bitCount);
+          {* bit to return is msb in buffer *}
+          Inc(bitCount);
+
+          if (returnValue = 0) then
+            readbitval :=0
+          else
+            readBitval := 1;
+
+          return := return or (ReadBitval shl i);
+        end;
+
+    ReadIntegerBE := return;
   end;
 
  function TBitReader.ReadIntegerLE(count: integer): longword;
   var
-   offset: integer;
-   remaining: integer;
    returnValue: longword;
-   value: longword;
+   return: longword;
+   i: integer;
+   readbitval: byte;
   begin
-    offset := 0;
-    remaining := count;
-    returnValue := 0;
-    
+        return := 0;
+        for i := 0 to count-1 do
+        Begin
+{          returnValue := returnValue or (ReadBit shl i);}
 
-    {* read whole bytes *}
-    while (remaining >= 8) do
-     begin
-        returnValue := longword(returnValue) or longword(longword(ReadByte) shl (offset));
-        Dec(Remaining, 8);
-        Inc(offset, 8);
-     end;
+           {-- Unrolled call to readBit --}
+           if bitCount = 8 then
+             begin
+              {* buffer is empty, read another character *}
+              returnValue:=ReadInternalByte;
+              bitCount := 0;
+              bitBuffer := returnValue;
+             end;
 
-    if (remaining <> 0) then
-      begin
-        Value := 0;
-        returnValue :=  longword(returnValue) shl (count-offset);
-        offset := 0;
-        {* read remaining bits *}
-        while (remaining > 0) do
-          begin
-            Value := longword(value) or longword(longword(ReadBit) shl (remaining - 1));
-            dec(Remaining);
-            Inc(offset);
-          end;
-        returnValue :=  longword(returnValue) or longword(value);
-      end;
-    ReadIntegerLE := returnValue;
+           returnValue := bitBuffer and (1 shl bitCount);
+          {* bit to return is msb in buffer *}
+          Inc(bitCount);
+
+          if (returnValue = 0) then
+            readbitval :=0
+          else
+            readBitval := 1;
+
+          return := return or (ReadBitVal shl i);
+        end;
+
+    ReadIntegerLE := return;
   end;
 
   procedure TBitReader.ByteAlign;
@@ -416,16 +402,20 @@ type
   begin
 {$IFNDEF USE_OBJECTS}
       Inherited Create;
+{$ELSE}
+      Inherited Init;
 {$ENDIF}
-      S := Stream;
+      S := @Stream;
       bitBuffer:=0;
-      bitCount:=0;
+      bitCount:=8;
   end;
 
  destructor TStreamBitReader.Destroy;
   begin
 {$IFNDEF USE_OBJECTS}
       inherited Destroy;
+{$ELSE}
+      inherited done;
 {$ENDIF}
   end;
 
@@ -434,7 +424,7 @@ type
   var
    returnValue: byte;
   begin
-   S.Read(returnValue,sizeof(returnValue));
+   S^.Read(returnValue,sizeof(returnValue));
    Inc(TotalRead);
    ReadInternalByte:=returnValue;
   end;
@@ -455,6 +445,8 @@ type
       ByteAlign;
 {$IFNDEF USE_OBJECTS}
       inherited Destroy;
+{$ELSE}
+      inherited done;
 {$ENDIF}
     end;
 
@@ -492,17 +484,21 @@ type
   begin
 {$IFNDEF USE_OBJECTS}
       Inherited Create;
+{$ELSE}
+      Inherited Init;
 {$ENDIF}
       TotalRead := 0;
       Buf := Buffer;
       bitBuffer:=0;
-      bitCount:=0;
+      bitCount:=8;
   end;
 
  destructor TMemoryBitReader.Destroy;
   begin
 {$IFNDEF USE_OBJECTS}
       inherited Destroy;
+{$ELSE}
+      inherited done;
 {$ENDIF}
   end;
 
