@@ -1,7 +1,26 @@
-{** This unit is used to validate and convert filenames 
-    according to a specific filesystem convention. }
-unit fs;
+{** @abstract(Returns information on different filesystem types.) 
 
+    @author(Carl Eric Codere)
+}
+unit fs;
+{==== Compiler directives ===========================================}
+{$B-} { Full boolean evaluation          }
+{$I-} { IO Checking                      }
+{$F+} { FAR routine calls                }
+{$P-} { Implicit open strings            }
+{$T-} { Typed pointers                   }
+{$V+} { Strict VAR strings checking      }
+{$X-} { Extended syntax                  }
+{$IFNDEF TP}
+ {$H-} { Memory allocated strings        }
+ {$DEFINE ANSISTRINGS}
+ {$J+} { Writeable constants             }
+ {$METHODINFO OFF}
+{$ENDIF}
+{====================================================================}
+{$IFDEF FPC}
+{$MODE OBJFPC}
+{$ENDIF}
 
 
 interface
@@ -11,80 +30,47 @@ uses unicode;
 
 type
 
-{** FAT12/FAT16 MS-DOS compatible filesystem 
-    validation object }
-TDOSFileSystem = object
-  {** Verifies if the filename specified is compatible
-      with this type of filesystem }
-  function isValidFilename(s: ucs4string): boolean;
-{ function isValidPathName(s: ucs4string): boolean;  }
-{  function renameFileName(fname: ucs2string): utf8string;}
-end;
+  {** Enumeration of possible filesystem types }
+  TFilesystem = 
+   (
+    {** FAT12/FAT16 MS-DOS compatible filesystem }
+    fsFAT,
+    {** NTFS compatible filesystem (Windows NT and later) }
+    fsNTFS,
+    {** Base POSIX-1995 filesystem.  }
+    fsPOSIX,
+    {** HPFS compatible filesystem (OS/2)}
+    fsHPFS,
+    {** FFS compatible filesystem (AmigaOS)}
+    fsFFS,
+    {** ISO 9660 Level 1 compatible filesystem }
+    fsISO9660lvl1,
+    {** ISO 9660 Level 2 compatible filesystem }
+    fsISO9660lvl2,
+    {** UDF compatible filesystem }
+    fsUDF,
+    {** MacOS HFS+ compatible filesystem }
+    fsHFSPlus,
+    {** Joliet compatible filesystem }
+    fsJoliet
+    );
+    
+    
+    
+{** @abstract(Returns true if the specified filename is valid for the specified filesystem) 
 
-{** NTFS compatible filesystem validation object }
-TWin32FileSystem = object
-  {** Verifies if the filename specified is compatible
-      with this type of filesystem }
-  function isValidFilename(s: ucs4string): boolean;
-end;
+    @param(s The name to verify)
+    @param(fs The filesystem to check against)
+    @returns(true if the filename is valid, otherwise returns false)
+}
+Function FSIsValidFileName(s: ucs4string; fs: TFileSystem): boolean;    
 
+{** @abstract(Returns the maximum filename length allowed for the specified filesystem) 
 
-{** Base POSIX-1995 filesystem validation object.  }
-TPOSIXFileSystem = object
-  {** Verifies if the filename specified is compatible
-      with this type of filesystem }
-  function isValidFilename(s: ucs4string): boolean;
-  function GetMaxFilenameLength: integer;
-end;
-
-{** HPFS compatible filesystem validation object }
-TOS2FileSystem = object
-  {** Verifies if the filename specified is compatible
-      with this type of filesystem }
-  function isValidFilename(s: ucs4string): boolean;
-end;
-
-{** FFS compatible filesystem validation object }
-TAmigaFFSFileSystem = object
-  {** Verifies if the filename specified is compatible
-      with this type of filesystem }
-  function isValidFilename(s: ucs4string): boolean;
-end;
-
-{** ISO 9660 Level 1 compatible filesystem validation object }
-TISO9660Level1FileSystem = object
-  {** Verifies if the filename specified is compatible
-      with this type of filesystem }
-  function isValidFilename(s: ucs4string): boolean;
-end;
-
-{** ISO 9660 Level 2 compatible filesystem validation object }
-TISO9660Level2Filesystem = object
-  {** Verifies if the filename specified is compatible
-      with this type of filesystem }
-  function isValidFilename(s: ucs4string): boolean;
-end;
-
-{** UDF compatible filesystem validation object }
-TUDFFilesystem = object
-  {** Verifies if the filename specified is compatible
-      with this type of filesystem }
-  function isValidFilename(s: ucs4string): boolean;
-end;
-
-{** CD-ROM Joliet extensions compatible filesystem validation object }
-TJolietFileSystem = object
-  {** Verifies if the filename specified is compatible
-      with this type of filesystem }
-  function isValidFilename(s: ucs4string): boolean;
-end;
-
-{** MacOS HFS+ compatible filesystem validation object }
-THFSPlusFileSystem = object
-  {** Verifies if the filename specified is compatible
-      with this type of filesystem }
-  function isValidFilename(s: ucs4string): boolean;
-end;
+    @param(fs The filesystem to check against)
+    @returns(The maximum allowed length of the filename in bytes)
+}
+Function FSGetMaxFilenameLength(fs: TFileSystem): integer;    
 
 
 implementation
@@ -123,14 +109,14 @@ const
      'LPT9'
    );
 
-  function TDOSFileSystem.isValidFilename(s: ucs4string): boolean;
+  function fsFATisValidFilename(s: ucs4string): boolean;
   var
     name: ucs4string;
     ext: ucs4string;
     idx: integer; 
     i: integer;
   begin
-    isValidFilename:=false;
+    fsFATisValidFilename:=false;
     ucs4_setlength(name,0);
     ucs4_setlength(ext,0);
     if (ucs4_length(s) > MAX_DOS_FILENAME_LENGTH) then
@@ -163,7 +149,7 @@ const
         if not (chr(ext[i]) in DOSFilenameChars) then
           exit;
       end;
-    isValidFilename:=true;
+    fsFATisValidFilename:=true;
   end;
 
   {***************************************************************************************************}
@@ -200,11 +186,11 @@ const
      'LPT9'
    );
   
-  function TWin32FileSystem.isValidFilename(s: ucs4string): boolean;
+  function fsNTFSisValidFilename(s: ucs4string): boolean;
   var
     i: integer;
   begin
-    isValidFilename:=false;
+    fsNTFSisValidFilename:=false;
     if (ucs4_length(s) > MAX_WIN32_FILENAME_LENGTH) then
       exit;
     { Reserved names that are not allowed to be used in DOS systems }
@@ -227,7 +213,7 @@ const
     { The ending character of a filename should not be a . or space character }  
     if (s[ucs4_length(s)] = ucs4char(' ')) or (s[ucs4_length(s)] = ucs4char('.')) then
       exit;
-    isValidFilename:=true;
+    fsNTFSisValidFilename:=true;
   end;
   
   {***************************************************************************************************}
@@ -237,11 +223,9 @@ const
 const
   MAX_OS2_FILENAME_LENGTH = 254;
 
-  function TOS2FileSystem.isValidFilename(s: ucs4string): boolean;
-  var
-    Win32Filesystem: TWin32FileSystem;
+  function fsHPFSisValidFilename(s: ucs4string): boolean;
   begin
-    isValidFilename:=false;
+    fsHPFSisValidFilename:=false;
     if (ucs4_length(s) > MAX_OS2_FILENAME_LENGTH) then
       exit;
     { Every character is coded on a byte, it actually depends on the active codepage
@@ -252,7 +236,7 @@ const
         if (s[i] > high(byte)) then
           
       end;*)
-    isValidFilename:=Win32FileSystem.isValidFilename(s);   
+    fsHPFSisValidFilename:=fsNTFSisValidFilename(s);   
   end;
 
   {***************************************************************************************************}
@@ -263,11 +247,11 @@ const
   MAX_POSIX_PATH_LENGTH = 256;
   POSIXFilenameChars = ['A'..'Z','a'..'z','0'..'9','.','_','-'];
   
-  function TPOSIXFileSystem.isValidFilename(s: ucs4string): boolean;
+  function fsPosixisValidFilename(s: ucs4string): boolean;
   var
     i: integer;
   begin
-    isValidFilename:=false;
+    fsPosixisValidFilename:=false;
     if (ucs4_length(s) > MAX_POSIX_FILENAME_LENGTH) then
       exit;
     for i:=1 to ucs4_length(s) do
@@ -275,16 +259,9 @@ const
         if not (char(s[i]) in (POSIXFilenameChars)) then
           exit;      
       end;
-    isValidFilename:=true;
+    fsPosixisValidFilename:=true;
   end;
   
-  
- function TPOSIXFileSystem.GetMaxFilenameLength: integer;
- begin
-   GetMaxFilenameLength:=MAX_POSIX_FILENAME_LENGTH;
- end;
-  
-
   {***************************************************************************************************}
   {                               Amiga filesystems (FFS/OFS)                                         }
   {***************************************************************************************************}
@@ -295,11 +272,11 @@ const
   { ISO-8859-1 characters are supported. }
   AmigaDisallowedFilenameChars = [#0..#31,'/',':',#128..#159];
   
-  function TAmigaFFSFileSystem.isValidFilename(s: ucs4string): boolean;
+  function fsFFSisValidFilename(s: ucs4string): boolean;
   var
     i: integer;
   begin
-    isValidFilename:=false;
+    fsFFSisValidFilename:=false;
     if (ucs4_length(s) > MAX_AMIGA_FILENAME_LENGTH) then
       exit;
     for i:=1 to ucs4_length(s) do 
@@ -310,7 +287,7 @@ const
         if  (integer(s[i]) > high(byte)) then
           exit;
       end;
-    isValidFilename:=true;
+    fsFFSisValidFilename:=true;
   end;
 
   {***************************************************************************************************}
@@ -324,14 +301,14 @@ const
   ISO9660FilenameChars = ['A'..'Z','0'..'9','_'];
   
   
-  function TISO9660Level1FileSystem.isValidFilename(s: ucs4string): boolean;
+  function fsISO9660Level1isValidFilename(s: ucs4string): boolean;
   var
     name: ucs4string;
     ext: ucs4string;
     idx: integer; 
     i: integer;
   begin
-    isValidFilename:=false;
+    fsISO9660Level1isValidFilename:=false;
     ucs4_setlength(name,0);
     ucs4_setlength(ext,0);
     if (ucs4_length(s) > MAX_ISO9660LEVEL1_FILENAME_LENGTH) then
@@ -355,17 +332,17 @@ const
         if not (chr(ext[i]) in ISO9660FilenameChars) then
           exit;
       end;
-    isValidFilename:=true;
+    fsISO9660Level1isValidFilename:=true;
   end;
 
-   function TISO9660Level2Filesystem.isValidFilename(s: ucs4string): boolean;
+  function fsISO9660Level2isValidFilename(s: ucs4string): boolean;
   var
     name: ucs4string;
     ext: ucs4string;
     idx: integer; 
     i: integer;
   begin
-    isValidFilename:=false;
+    fsISO9660Level2isValidFilename:=false;
     ucs4_setlength(name,0);
     ucs4_setlength(ext,0);
     if (ucs4_length(s) > MAX_ISO9660LEVEL2_FILENAME_LENGTH) then
@@ -389,7 +366,7 @@ const
         if not (chr(ext[i]) in ISO9660FilenameChars) then
           exit;      
       end;
-    isValidFilename:=true;
+    fsISO9660Level2isValidFilename:=true;
   end;
   
   {***************************************************************************************************}
@@ -399,11 +376,11 @@ const
   MAX_UDF_FILENAME_LENGTH = 255;
   MAX_UDF_PATH_LENGTH = 1023;
   
-  function TUDFFileSystem.isValidFilename(s: ucs4string): boolean;
+  function fsUDFisValidFilename(s: ucs4string): boolean;
   var
     i: integer;
   begin
-    isValidFilename:=false;
+    fsUDFisValidFilename:=false;
     if (ucs4_length(s) > MAX_UDF_FILENAME_LENGTH) then
       exit;
     for i:=1 to ucs4_length(s) do 
@@ -412,7 +389,7 @@ const
         if (s[i] > high(word)) or  (not ucs4_isvalid(s[i]) or (not ucs2_isvalid(s[i] and $ffff))) then
            exit;
       end;
-    isValidFilename:=true;
+    fsUDFisValidFilename:=true;
   end;
   
   {***************************************************************************************************}
@@ -422,11 +399,11 @@ const
   MAX_JOLIET_FILENAME_LENGTH = 64;
   JolietDisallowedFilenameChars = [#0..#31,'*','/',':',';','?','\'];
   
-  function TJolietFileSystem.isValidFilename(s: ucs4string): boolean;
+  function fsJolietisValidFilename(s: ucs4string): boolean;
   var
     i: integer;
   begin
-    isValidFilename:=false;
+    fsJolietisValidFilename:=false;
     if (ucs4_length(s) > MAX_JOLIET_FILENAME_LENGTH) then
       exit;
     for i:=1 to ucs4_length(s) do 
@@ -437,7 +414,7 @@ const
         if (s[i] > high(word)) or  (not ucs4_isvalid(s[i]) or (not ucs2_isvalid(s[i] and $ffff))) then
            exit;
       end;
-    isValidFilename:=true;
+    fsJolietisValidFilename:=true;
   end;
   
   {***************************************************************************************************}
@@ -447,11 +424,11 @@ const
   MAX_HFSPLUS_FILENAME_LENGTH = 255;
   HFSPlusDisallowedFilenameChars = [':',#0];
   
-  function THFSPlusFileSystem.isValidFilename(s: ucs4string): boolean;
+  function fsHFSPlusisValidFilename(s: ucs4string): boolean;
   var
     i: integer;
   begin
-    isValidFilename:=false;
+    fsHFSPlusisValidFilename:=false;
     if (ucs4_length(s) > MAX_HFSPLUS_FILENAME_LENGTH) then
       exit;
     for i:=1 to ucs4_length(s) do 
@@ -462,10 +439,64 @@ const
         if (s[i] > high(word)) or  (not ucs4_isvalid(s[i]) or (not ucs2_isvalid(s[i] and $ffff))) then
            exit;
       end;
-    isValidFilename:=true;
+    fsHFSPlusisValidFilename:=true;
   end;
+
+Type
+ TIsValidFileNameFunc = function (s: ucs4string): boolean;
+
+const ValidFileNameFuncs : Array[TFileSystem] of TIsValidFilenameFunc = 
+(
+  {$ifdef fpc}@{$endif}fsFATisValidFilename,
+  {$ifdef fpc}@{$endif}fsNTFSisValidFilename,
+  {$ifdef fpc}@{$endif}fsPOSIXisValidFilename,
+  {$ifdef fpc}@{$endif}fsHPFSisValidFilename,
+  {$ifdef fpc}@{$endif}fsFFSisValidFilename,
+  {$ifdef fpc}@{$endif}fsISO9660Level1isValidFilename,
+  {$ifdef fpc}@{$endif}fsISO9660Level2isValidFilename,
+  {$ifdef fpc}@{$endif}fsUDFisValidFilename,
+  {$ifdef fpc}@{$endif}fsHFSPlusIsValidFilename,
+  {$ifdef fpc}@{$endif}fsJolietIsValidFilename
+);
+
+const MaxFilenameLength: Array[TFileSystem] of integer =
+(
+    {** FAT12/FAT16 MS-DOS compatible filesystem }
+    MAX_DOS_FILENAME_LENGTH,
+    {** NTFS compatible filesystem (Windows NT and later) }
+    MAX_WIN32_FILENAME_LENGTH,
+    {** Base POSIX-1995 filesystem.  }
+    MAX_POSIX_FILENAME_LENGTH,
+    {** HPFS compatible filesystem (OS/2)}
+    MAX_OS2_FILENAME_LENGTH,
+    {** FFS compatible filesystem (AmigaOS)}
+    MAX_AMIGA_FILENAME_LENGTH,
+    {** ISO 9660 Level 1 compatible filesystem }
+    MAX_ISO9660LEVEL1_FILENAME_LENGTH,
+    {** ISO 9660 Level 2 compatible filesystem }
+    MAX_ISO9660LEVEL2_FILENAME_LENGTH,
+    {** UDF compatible filesystem }
+    MAX_UDF_FILENAME_LENGTH,
+    {** MacOS HFS+ compatible filesystem }
+    MAX_HFSPLUS_FILENAME_LENGTH,
+    {** Joliet compatible filesystem }
+    MAX_JOLIET_FILENAME_LENGTH
+);
+ 
   
-  
+Function FSIsValidFileName(s: ucs4string; fs: TFileSystem): boolean;
+var 
+ Func:TIsValidFileNameFunc;
+Begin
+  Func:=ValidFileNameFuncs[fs];
+  FSIsValidFileName:=Func(s);
+end;
+
+
+Function FSGetMaxFilenameLength(fs: TFileSystem): integer;    
+Begin
+ FSGetMaxFilenameLength:=MaxFileNameLength[fs]; 
+end;
   
     
 end.
