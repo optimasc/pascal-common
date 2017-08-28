@@ -52,6 +52,7 @@ interface
 Error Unsupported target
 {$ENDIF}
 
+
   TYPE
     { The biggest integer type available to this compiler }
     big_integer_t = longint;
@@ -250,8 +251,10 @@ type
   cardinal = word;
   { An integer which has the size of a pointer }
   ptrint = longint;
+  pinteger = ^integer;
   TDateTime = Double;
   ansichar = char;
+  pansichar = PChar;
   pbyte = ^byte;
 
 
@@ -392,5 +395,6 @@ procedure initialize;
 Begin
  initialize;
 end.
+
 
 
