@@ -30,8 +30,14 @@ Unit list;
  {$METHODINFO OFF}
 {$ENDIF}
 {====================================================================}
-
+{$IFDEF FPC}
+{$MODE OBJFPC}
+{$ENDIF}
 interface
+
+{$IFDEF TP}
+Uses cmntyp;
+{$ENDIF}
 
 Type
   {** Key-Value Iterator function prototype }
@@ -64,7 +70,11 @@ Type
   end;
 
   PLinkedListTable = ^TLinkedListTable;
+{$IFNDEF TP}  
   TlinkedListTable = Array[0..high(word)] of TLinkedListHandle;
+{$ELSE}
+  TlinkedListTable = Array[0..1024] of TLinkedListHandle;
+{$ENDIF}
 
 
 const
@@ -85,7 +95,7 @@ const
     @param(list The initialized list)
     @param(destroy A callback that is used to free the memory of the elements, 
           this can be @nil if the memory of the elements is not
-  	  managed by this list.)
+      managed by this list.)
  
 }
 Procedure list_init(var List: TLinkedListHandle; Destroy: TDestroyFunction);
@@ -231,12 +241,12 @@ Begin
    *                                                                            *
    *****************************************************************************}
 
-	while (list_size(list) > 0) do
+  while (list_size(list) > 0) do
         Begin
-	    if (list_rem_next(list, nil, data) = 0) and
+      if (list_rem_next(list, nil, data) = 0) and
               assigned(list.destroy) then
-	        list.destroy(data);
-	end;
+          list.destroy(data);
+  end;
         Fillchar(list, sizeof(list),0);
 end;
 
@@ -266,7 +276,7 @@ Begin
    *                                                                         *
    **************************************************************************}
   if (list_size(list) = 0) then
-  	list.tail := new_element;
+    list.tail := new_element;
 
   new_element^.next := list.head;
   list.head := new_element;
@@ -298,33 +308,33 @@ Begin
   if (element = nil) then
     Begin
 
-  	{**************************************************************************
-  	 *                                                                         *
-  	 *  Handle insertion at the head of the list.                              *
-  	 *                                                                         *
-  	 **************************************************************************}
+    {**************************************************************************
+     *                                                                         *
+     *  Handle insertion at the head of the list.                              *
+     *                                                                         *
+     **************************************************************************}
 
-  	if (list_size(list) = 0) then
+    if (list_size(list) = 0) then
             list.tail := new_element;
 
 
-  	new_element^.next := list.head;
-  	list.head := new_element;
+    new_element^.next := list.head;
+    list.head := new_element;
   end
   else
   Begin
 
-  	{**************************************************************************
-  	 *                                                                         *
-  	 *  Handle insertion somewhere other than at the head.                     *
-  	 *                                                                         *
-  	 **************************************************************************}
+    {**************************************************************************
+     *                                                                         *
+     *  Handle insertion somewhere other than at the head.                     *
+     *                                                                         *
+     **************************************************************************}
 
-  	if (element^.next = nil) then
-  		list.tail := new_element;
+    if (element^.next = nil) then
+      list.tail := new_element;
 
-  	new_element^.next := element^.next;
-  	element^.next := new_element;
+    new_element^.next := element^.next;
+    element^.next := new_element;
 
   end;
 
@@ -344,76 +354,76 @@ Begin
   old_element := nil;
   list_rem_next := EXIT_SUCCESS;
 
-	{*****************************************************************************
-	 *                                                                            *
-	 *  Do not allow removal from an empty list.                                  *
-	 *                                                                            *
-	 *****************************************************************************}
+  {*****************************************************************************
+   *                                                                            *
+   *  Do not allow removal from an empty list.                                  *
+   *                                                                            *
+   *****************************************************************************}
 
-	if (list_size(list) = 0) then
+  if (list_size(list) = 0) then
           Begin
-	     list_rem_next:=EXIT_FAILURE;
+       list_rem_next:=EXIT_FAILURE;
              exit;
           end;
 
-	{*****************************************************************************
-	 *                                                                            *
-	 *  Remove the element from the list.                                         *
-	 *                                                                            *
-	 *****************************************************************************}
+  {*****************************************************************************
+   *                                                                            *
+   *  Remove the element from the list.                                         *
+   *                                                                            *
+   *****************************************************************************}
 
-	if (element = nil) then
-	 Begin
+  if (element = nil) then
+   Begin
 
-		{**************************************************************************
-		 *                                                                         *
-		 *  Handle removal from the head of the list.                              *
-		 *                                                                         *
-		 **************************************************************************}
+    {**************************************************************************
+     *                                                                         *
+     *  Handle removal from the head of the list.                              *
+     *                                                                         *
+     **************************************************************************}
 
                 data := list.head^.data;
-		old_element := list.head;
-		list.head := list.head^.next;
+    old_element := list.head;
+    list.head := list.head^.next;
 
-		if (list_size(list) = 0) then
-			list.tail := nil;
+    if (list_size(list) = 0) then
+      list.tail := nil;
 
-	 end
-	else
-	Begin
+   end
+  else
+  Begin
 
-		{**************************************************************************
-		 *                                                                         *
-		 *  Handle removal from somewhere other than the head.                     *
-		 *                                                                         *
-		 **************************************************************************}
+    {**************************************************************************
+     *                                                                         *
+     *  Handle removal from somewhere other than the head.                     *
+     *                                                                         *
+     **************************************************************************}
 
-		if (element^.next = nil) then
+    if (element^.next = nil) then
                    Begin
                       list_rem_next:=EXIT_FAILURE;
                       exit;
                     end;
-		data := element^.next^.data;
-		old_element := element^.next;
-		element^.next := element^.next^.next;
+    data := element^.next^.data;
+    old_element := element^.next;
+    element^.next := element^.next^.next;
 
-		if (element^.next = nil) then
-			list.tail := element;
+    if (element^.next = nil) then
+      list.tail := element;
 
-	end;
+  end;
 
-	{*****************************************************************************
-	 *                                                                            *
-	 *  Free the storage allocated by the abstract data type.                     *
-	 *                                                                            *
-	 *****************************************************************************}
+  {*****************************************************************************
+   *                                                                            *
+   *  Free the storage allocated by the abstract data type.                     *
+   *                                                                            *
+   *****************************************************************************}
          dispose(old_element);
 
-	{*****************************************************************************
-	 *                                                                            *
-	 *  Adjust the size of the list to account for the removed element.           *
-	 *                                                                            *
-	 *****************************************************************************}
+  {*****************************************************************************
+   *                                                                            *
+   *  Adjust the size of the list to account for the removed element.           *
+   *                                                                            *
+   *****************************************************************************}
         Dec(list.size);
 end;
 
@@ -451,7 +461,7 @@ Begin
   { Zero-based values }
   Dec(n);
   for k := 0 to n  do
-  	tmp := tmp^.next;
+    tmp := tmp^.next;
 
   if (tmp = nil) then
     Begin
@@ -475,13 +485,13 @@ Begin
 
   if list.head^.data = data then
   Begin
-  	cur := list.head;
-  	list.head := list.head^.next;
-  	{ Free up the memory as required }
-  	if Assigned(list.destroy) then
-  	Begin
-  	   list.destroy(cur^.data);
-  	end;
+    cur := list.head;
+    list.head := list.head^.next;
+    { Free up the memory as required }
+    if Assigned(list.destroy) then
+    Begin
+       list.destroy(cur^.data);
+    end;
         Dec(list.size);
         exit;
   end;
@@ -491,8 +501,8 @@ Begin
 
   while (cur <> nil) and (not (cur^.data = data)) do
   Begin
-  	prev := cur;
-  	cur := cur^.next;
+    prev := cur;
+    cur := cur^.next;
   end;
 
   if cur = nil then
@@ -550,12 +560,12 @@ Begin
 
   tmp := list.head;
   if (iterator(tmp^.data, p) = 0) then
-  	exit;
+    exit;
   for k:=0 to size - 1 do
     Begin
-  	tmp := tmp^.next;
-  	if (iterator(tmp^.data, p) = 0) then
-  		exit;
+    tmp := tmp^.next;
+    if (iterator(tmp^.data, p) = 0) then
+      exit;
     end;
 end;
 
