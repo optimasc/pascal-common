@@ -27,15 +27,12 @@
  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER        
  DEALINGS IN THE SOFTWARE.                                                  
 }
-
-{** @author(Carl Eric Codere) 
-    @abstract(hash generation unit)
-
+{** @abstract(hash generation unit)
     Hash generation routines for different algorithms. The different algorithms
     implemented are described hereafter. Each algorithm is described with the
     following information:
     
-    
+    @author(Carl Eric Codere) 
    
  @definitionList(
     @itemSpacing(Compact)
