@@ -1,5 +1,7 @@
 Unit BitStrm;
-{$i switches.inc}
+{$IFDEF FPC}
+{$MODE OBJFPC}
+{$ENDIF}
 
 interface
 
