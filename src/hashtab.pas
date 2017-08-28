@@ -32,7 +32,12 @@ Unit hashtab;
 {$ENDIF}
 interface
 
-Uses list;
+Uses list
+{$IFDEF TP}
+     ,cmntyp
+{$ENDIF};
+
+
 
 Type
 
@@ -179,8 +184,8 @@ var
   bucket: longword;
 Begin
   hashtab_lookup_entry := nil;
-  	{* Hash the key. *}
-  	bucket := htbl.hash(key) mod htbl.buckets;
+    {* Hash the key. *}
+    bucket := htbl.hash(key) mod htbl.buckets;
 
         element := list_get_head_node(htbl.table^[bucket]);
         while Assigned(element) do
@@ -219,21 +224,21 @@ Begin
     Begin
        entry := PHashTableEntry(list_data(element));
        if htbl.match(key, PHashTableEntry(entry)^.key) then
-  	Begin
-  		{*  Remove the data from the bucket. *}
-  		if (list_rem_next(htbl.table^[bucket], prev, entry) = 0) then
-  		Begin
+    Begin
+      {*  Remove the data from the bucket. *}
+      if (list_rem_next(htbl.table^[bucket], prev, entry) = 0) then
+      Begin
                        Dec(htbl.size);
                        hashtab_remove := hashtab_free_entry(htbl, PHashTableEntry(entry));
                        exit;
-  		end
-  		else
-  		Begin
+      end
+      else
+      Begin
                        hashtab_remove := hashtab_free_entry(htbl, PHashTableEntry(entry));
                        exit;
-  		end;
-  	end; {end if }
-  	prev := element;
+      end;
+    end; {end if }
+    prev := element;
         element := list_next(element);
   end; { end while }
 end;
@@ -274,7 +279,7 @@ Begin
   count := buckets - 1;
   for i := 0 to count  do
     Begin
-  	list_init(htbl.table^[i], nil);
+    list_init(htbl.table^[i], nil);
     end;
   {*  Initialize the hash table. *}
   htbl.hash := hash;
@@ -380,8 +385,8 @@ Begin
       size := list_size(htbl.table^[i]) - 1;
       for j:=0 to size do
        Begin
-  	 entry := list_get(list, j);
-  	if (iteratorFunc(entry^.key, entry^.value,p)=0) then
+     entry := list_get(list, j);
+    if (iteratorFunc(entry^.key, entry^.value,p)=0) then
             exit;
         end;
      end;

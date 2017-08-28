@@ -56,7 +56,7 @@ Type
    @param(index The index of the driver to retrieve information on, starting
      with index 1)
    @returns(nil if out of bounds, otherwise a structure containing the
-    information on the hash algorithm and callbacks.    
+    information on the hash algorithm and callbacks.)
    
 }
 function GetHashInfo(index: integer): PHashInfo;
