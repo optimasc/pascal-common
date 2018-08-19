@@ -123,7 +123,7 @@ Procedure hashtab_destroy(var htbl: THashTableHandle);
    @return(The old value that is replaced if there was already a value
      with the same key and no callbacks to free element memory were set,
      otherwise nil.)
- 
+
 }
 Function hashtab_insert(var htbl: THashTableHandle; Key: Pointer; Data: Pointer): Pointer;
 
@@ -138,7 +138,13 @@ Function hashtab_insert(var htbl: THashTableHandle; Key: Pointer; Data: Pointer)
 Procedure hashtab_iterate(var htbl: THashTableHandle; IteratorFunc: TIteratorFunction; P :pointer);
 
 
+
+
+
+
+
 implementation
+
 
 Type
 PHashTableEntry = ^THashTableEntry;
@@ -148,6 +154,8 @@ THashTableEntry = record
   {** Pointer to the value. *}
   Value: Pointer;
 end;
+
+
 
 
 {------------------------------ Hash table -----------------------------------}
@@ -266,6 +274,8 @@ var
   i: integer;
   count: integer;
 Begin
+   if buckets = 0 then
+    buckets:=8;
   {* Allocate space for the hash table. *}
   GetMem(htbl.table,buckets*sizeof(TLinkedListHandle));
   if htbl.table = nil then
