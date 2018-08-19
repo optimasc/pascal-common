@@ -150,7 +150,7 @@ type
 {$IFNDEF PASDOC}  
 {$i extdosh.inc}  
 {$ELSE}
-{$i win32\extdosh.inc}  
+{$i win32/extdosh.inc}  
 {$ENDIF}
 
 
