@@ -828,6 +828,8 @@ var
 Begin
   sum:=Handle.hashValue;
   PtrValue:=@Buffer;
+  if size = 0 then
+   exit;
   Dec(size);
   for i:=0 to size do
     begin
@@ -851,12 +853,12 @@ Begin
 end;
 
 
- 
+
 procedure Crc32CInit(var Handle: THashHandle);
 Begin
   handle.hashValue := longword($FFFFFFFF);
 end;
- 
+
 {$ifopt R+}
 {$define Range_Check_On}
 {$R-}
@@ -870,6 +872,8 @@ var
 Begin
   crc:=Handle.hashValue;
   PtrValue:=@Buffer;
+  if size = 0 then
+   exit;
   Dec(size);
   for i:=0 to size do
     begin
@@ -882,7 +886,7 @@ end;
 {$R+}
 {$undef Range_check_on}
 {$endif Range_check_on}
- 
+
 Procedure Crc32cFinal(var Handle: THashHandle; var HashValue);
 var
  lw: longword;
@@ -897,7 +901,7 @@ procedure ElfInit(var Handle: THashHandle);
 Begin
   handle.hashValue := 0;
 end;
- 
+
 procedure ElfUpdate(var Handle: THashHandle; const Buffer; size: integer);
 var
 hash: longword;
@@ -905,6 +909,8 @@ x: longword;
 PtrByte: ^Byte;
 i: integer;
 Begin
+  if size = 0 then
+   exit;
   Dec(size);
   hash := longword(handle.hashValue);
   PtrByte:=@Buffer;
@@ -921,7 +927,7 @@ Begin
    end;
   handle.hashValue := hash;
 end;
- 
+
 procedure ElfFinal(var Handle: THashHandle; var hashValue);
 var
  lw: longword;
@@ -941,7 +947,7 @@ end;
 {$define Overflow_Check_On}
 {$Q-}
 {$endif}
- 
+
 procedure DJBUpdate(var Handle: THashHandle; const Buffer; size: integer);
 var
 hash: longword;
@@ -949,6 +955,8 @@ x: longword;
 PtrByte: ^Byte;
 i: integer;
 Begin
+  if size = 0 then
+   exit;
   Dec(size);
   hash := longword(handle.hashValue);
   PtrByte:=@Buffer;
@@ -964,7 +972,7 @@ end;
 {$undef Overflow_check_on}
 {$endif Overflow_check_on}
 
- 
+
 procedure DJBFinal(var Handle: THashHandle; var hashValue);
 var
  lw: longword;
@@ -979,8 +987,8 @@ procedure PJWInit(var Handle: THashHandle);
 Begin
   handle.hashValue :=0;
 end;
- 
- 
+
+
 
 procedure PJWUpdate(var Handle: THashHandle; const Buffer; size: integer);
 const BitsInCardinal = Sizeof(Longword) * 8;
@@ -993,6 +1001,8 @@ tmp: longword;
 PtrByte: ^Byte;
 i: integer;
 Begin
+  if size = 0 then
+   exit;
   Dec(size);
   hash := longword(handle.hashValue);
   PtrByte:=@Buffer;
@@ -1008,7 +1018,7 @@ Begin
    end;
   handle.hashValue := hash;
 end;
- 
+
 procedure PJWFinal(var Handle: THashHandle; var hashValue);
 var
  lw: longword;
@@ -1031,7 +1041,7 @@ end;
 {$Q-}
 {$endif}
 
- 
+
 procedure LarsonUpdate(var Handle: THashHandle; const Buffer; size: integer);
 var
 hash: longword;
@@ -1039,6 +1049,8 @@ tmp: longword;
 PtrByte: ^Byte;
 i: integer;
 Begin
+  if size = 0 then
+   exit;
   Dec(size);
   hash := longword(handle.hashValue);
   PtrByte:=@Buffer;
@@ -1055,7 +1067,7 @@ end;
 {$undef Overflow_check_on}
 {$endif Overflow_check_on}
 
- 
+
 procedure LarsonFinal(var Handle: THashHandle; var hashValue);
 var
  lw: longword;
@@ -1069,13 +1081,15 @@ procedure Crc8Init(var Handle: THashHandle);
 Begin
   handle.hashValue := 0;
 end;
- 
+
 procedure crc8Update(var Handle: THashHandle; const Buffer; size: integer);
 var
 crc: byte;
 PtrByte: ^Byte;
 i: integer;
 Begin
+  if size = 0 then
+   exit;
   Dec(size);
   crc := byte(handle.hashValue);
   PtrByte:=@Buffer;
@@ -1086,7 +1100,7 @@ Begin
    end;
   handle.hashValue := crc;
 end;
- 
+
 procedure crc8Final(var Handle: THashHandle; var hashValue);
 var
  b: byte;
@@ -1115,6 +1129,8 @@ var
 Begin
   crc:=Handle.hashValue;
   PtrValue:=@Buffer;
+  if size = 0 then
+   exit;
   Dec(size);
   for i:=0 to size do
     begin
@@ -1151,6 +1167,8 @@ var
  Ptr: ^Byte;
  idx: integer;
 begin
+  if size = 0 then
+   exit;
    crc:=word(Handle.hashValue);
    Ptr:=@Buffer;
    Dec(size);
@@ -1166,7 +1184,7 @@ begin
        crc := word(crctable16ccitt[( (Crc XOR Ptr^) AND 255)]  XOR (Crc SHL 8));
        Inc(Ptr);
      end;}
-   Handle.hashValue := crc;  
+   Handle.hashValue := crc;
 end;
 
 Procedure Crc16Final(var Handle: THashHandle; var HashValue);
@@ -1193,7 +1211,7 @@ end;
 {$endif}
 const
   BASE = 65521;
-  
+
 Procedure Adler32Update(var Handle: THashHandle; const Buffer; size: Integer);
 var
  i: longword;
@@ -1201,6 +1219,8 @@ var
  Ptr: ^Byte;
  w: word;
 begin
+  if size = 0 then
+   exit;
   Dec(size);
   Ptr := @Buffer;
   for i:=0 to size do
@@ -1244,6 +1264,8 @@ var
  Ptr: ^Byte;
  sum1, sum2: word;
 begin
+  if size = 0 then
+   exit;
   sum1 := Handle.m_s1;
   sum2 := Handle.m_s2;
   Dec(size);
@@ -1254,8 +1276,8 @@ begin
       sum2 := (longword(sum2) + longword(sum1)) mod 255;
       Inc(Ptr);
    end;
-  handle.m_s1 := sum1; 
-  handle.m_s2 := sum2; 
+  handle.m_s1 := sum1;
+  handle.m_s2 := sum2;
 end;
 
 Procedure Fletcher16Final(var Handle: THashHandle; var HashValue);
@@ -1280,6 +1302,8 @@ var
  idx: integer;
  Ptr: ^Byte;
 begin
+  if size = 0 then
+   exit;
   crc:=handle.hashValue;
   Ptr:=@Buffer;
   Dec(size);
